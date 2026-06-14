@@ -1,0 +1,150 @@
+{
+  "sections": {
+    "hero_banner": {
+      "type": "hero-banner",
+      "settings": {
+        "alignment": "left",
+        "full_height": true
+      }
+    },
+    "featured_categories": {
+      "type": "featured-categories",
+      "settings": {
+        "title": "Jewelry categories",
+        "bg_color": "#FDFBF7"
+      }
+    },
+    "new_arrivals": {
+      "type": "new-arrivals",
+      "settings": {
+        "title": "Fresh Designs, Just For You",
+        "subheading": "NEW [emblem] ARRIVALS",
+        "description": "Discover our latest handcrafted pieces, made to shine every day."
+      }
+    },
+    "best_sellers": {
+      "type": "best-sellers",
+      "settings": {
+        "title": "BEST SELLERS",
+        "subheading": "OUR MOST LOVED",
+        "description": "Handpicked favorites that our customers can't get enough of.",
+        "bg_color": "#FFFFFF"
+      }
+    },
+    "why_choose_us": {
+      "type": "why-choose-us",
+      "settings": {
+        "title": "Why Choose Us",
+        "subheading": "THE SWASTIK DIFFERENCE",
+        "description": "Discover the pillars of trust, craft, and care that define the Swastik experience.",
+        "bg_color": "#FDFBF7"
+      }
+    },
+    "shop_by_occasion": {
+      "type": "shop-by-occasion",
+      "blocks": {
+        "wedding": {
+          "type": "occasion",
+          "settings": {
+            "title": "Wedding",
+            "description": "Timeless designs for your most precious moments.",
+            "icon": "wedding"
+          }
+        },
+        "daily_wear": {
+          "type": "occasion",
+          "settings": {
+            "title": "Daily Wear",
+            "description": "Elegant & lightweight pieces for everyday you.",
+            "icon": "daily_wear"
+          }
+        },
+        "gifts": {
+          "type": "occasion",
+          "settings": {
+            "title": "Gifts",
+            "description": "Meaningful pieces for the ones who matter.",
+            "icon": "gifts"
+          }
+        },
+        "festive": {
+          "type": "occasion",
+          "settings": {
+            "title": "Festive Collection",
+            "description": "Shine brighter with festive ready designs.",
+            "icon": "festive"
+          }
+        }
+      },
+      "block_order": [
+        "wedding",
+        "daily_wear",
+        "gifts",
+        "festive"
+      ],
+      "settings": {
+        "title": "Find the Perfect Piece for Every Moment",
+        "subheading": "SHOP BY OCCASION",
+        "description": "Handpicked jewelry styles for life's celebrated milestones.",
+        "bg_color": "#FFFFFF"
+      }
+    },
+    "brand_story": {
+      "type": "brand-story",
+      "settings": {}
+    },
+    "newsletter": {
+      "type": "newsletter",
+      "settings": {}
+    },
+    "expert_consultation": {
+      "type": "expert-consultation",
+      "blocks": {
+        "phone_call": {
+          "type": "contact_option",
+          "settings": {
+            "title": "Phone Call",
+            "description": "Speak directly with our experts",
+            "icon": "phone",
+            "link": "tel:+1234567890"
+          }
+        },
+        "whatsapp_chat": {
+          "type": "contact_option",
+          "settings": {
+            "title": "WhatsApp Chat",
+            "description": "Quick assistance on the go",
+            "icon": "whatsapp",
+            "link": "https://wa.me/1234567890"
+          }
+        },
+        "video_call": {
+          "type": "contact_option",
+          "settings": {
+            "title": "Video Call",
+            "description": "Virtual jewelry viewing",
+            "icon": "video",
+            "link": "#"
+          }
+        }
+      },
+      "block_order": [
+        "phone_call",
+        "whatsapp_chat",
+        "video_call"
+      ],
+      "settings": {}
+    }
+  },
+  "order": [
+    "hero_banner",
+    "featured_categories",
+    "new_arrivals",
+    "best_sellers",
+    "why_choose_us",
+    "shop_by_occasion",
+    "brand_story",
+    "newsletter",
+    "expert_consultation"
+  ]
+}

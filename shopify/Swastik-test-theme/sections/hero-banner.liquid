@@ -1,0 +1,297 @@
+{% comment %}
+  Renders a customizable hero banner section with a background image, text overlay, and call-to-action buttons.
+{% endcomment %}
+
+<div class="hero-banner hero-banner--{{ section.settings.alignment }} {% if section.settings.full_height %}hero-banner--full-height{% endif %}" 
+     style="
+       --hero-height: {{ section.settings.hero_height }}px;
+       --overlay-opacity: {{ section.settings.overlay_opacity | divided_by: 100.0 }};
+     ">
+  
+  {% if section.settings.image != blank %}
+    <div class="hero-banner__bg-image">
+      {{ section.settings.image | image_url: width: 2000 | image_tag: class: 'hero-banner__img', loading: 'lazy' }}
+    </div>
+  {% else %}
+    <!-- Default fallback to HeroPageImage.png asset if no image is uploaded -->
+    <div class="hero-banner__bg-image">
+      <img src="{{ 'HeroPageImage.png' | asset_url }}" 
+           alt="{{ section.settings.title | default: 'Swastik Jewels Heritage' }}" 
+           class="hero-banner__img" 
+           loading="eager"
+           width="2000"
+           height="1000"
+           style="object-fit: cover; width: 100%; height: 100%;"
+           onerror="this.style.display='none'; this.parentNode.classList.add('hero-banner__bg-fallback');">
+    </div>
+  {% endif %}
+
+  <div class="hero-banner__overlay"></div>
+
+  <div class="hero-banner__content fade-in">
+    <div class="hero-banner__text-box">
+      {% if section.settings.subheading != blank %}
+        <span class="hero-banner__subheading">{{ section.settings.subheading | escape }}</span>
+      {% endif %}
+      
+      {% if section.settings.title != blank %}
+        <h1 class="hero-banner__title serif-font">{{ section.settings.title | escape }}</h1>
+      {% endif %}
+
+      {% if section.settings.description != blank %}
+        <p class="hero-banner__description">{{ section.settings.description | escape }}</p>
+      {% endif %}
+
+      <div class="hero-banner__buttons">
+        {% if section.settings.button_1_label != blank and section.settings.button_1_link != blank %}
+          <a href="{{ section.settings.button_1_link }}" class="btn btn-primary btn-white">
+            {{ section.settings.button_1_label | escape }}
+          </a>
+        {% endif %}
+        
+        {% if section.settings.button_2_label != blank and section.settings.button_2_link != blank %}
+          <a href="{{ section.settings.button_2_link }}" class="btn btn-secondary hero-banner__btn-secondary">
+            {{ section.settings.button_2_label | escape }}
+          </a>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</div>
+
+{% stylesheet %}
+  .hero-banner {
+    position: relative;
+    height: var(--hero-height, 650px);
+    width: 100%;
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+  }
+
+  .hero-banner--full-height {
+    height: calc(100vh - 7rem);
+    min-height: 600px;
+  }
+
+  .hero-banner__bg-image,
+  .hero-banner__bg-fallback,
+  .hero-banner__overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+  }
+
+  .hero-banner__img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: right top;
+  }
+
+  .hero-banner__bg-fallback {
+    background: linear-gradient(135deg, var(--color-primary, #013F3E) 0%, #002221 100%);
+  }
+
+  .hero-banner__overlay {
+    background-color: #000000;
+    opacity: var(--overlay-opacity, 0.3);
+    z-index: 2;
+  }
+
+  .hero-banner__content {
+    position: relative;
+    z-index: 3;
+    display: flex;
+    width: 100%;
+    max-width: 1600px;
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: 4.8rem;
+    padding-right: 4.8rem;
+  }
+
+  .hero-banner__text-box {
+    max-width: 55ch;
+    color: #FFFFFF;
+  }
+
+  .hero-banner--left .hero-banner__content {
+    justify-content: flex-start;
+    text-align: left;
+  }
+
+  .hero-banner--center .hero-banner__content {
+    justify-content: center;
+    text-align: center;
+  }
+  .hero-banner--center .hero-banner__text-box {
+    margin: 0 auto;
+  }
+
+  .hero-banner--right .hero-banner__content {
+    justify-content: flex-end;
+    text-align: right;
+  }
+
+  .hero-banner__subheading {
+    display: inline-block;
+    font-size: 1.4rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.3em;
+    color: var(--color-accent, #D4AF37);
+    margin-bottom: 1.5rem;
+  }
+
+  .hero-banner__title {
+    color: #FFFFFF;
+    font-size: 5.8rem;
+    margin-bottom: 2.2rem;
+    line-height: 1.15;
+    letter-spacing: -0.01em;
+  }
+
+  .hero-banner__description {
+    font-size: 1.6rem;
+    margin-bottom: 3.5rem;
+    color: rgba(255, 255, 255, 0.85);
+    font-weight: 300;
+    line-height: 1.65;
+  }
+
+  .hero-banner__buttons {
+    display: flex;
+    gap: 1.5rem;
+    justify-content: inherit;
+  }
+
+  .hero-banner__btn-secondary {
+    border-color: #FFFFFF;
+    color: #FFFFFF;
+  }
+  .hero-banner__btn-secondary:hover {
+    background-color: #FFFFFF;
+    color: var(--color-primary, #013F3E);
+    border-color: #FFFFFF;
+  }
+
+  @media (max-width: 768px) {
+    .hero-banner {
+      height: 480px !important;
+    }
+    .hero-banner__content {
+      padding-left: 2rem;
+      padding-right: 2rem;
+    }
+    .hero-banner__title {
+      font-size: 3.4rem;
+    }
+    .hero-banner__description {
+      font-size: 1.4rem;
+      margin-bottom: 2.5rem;
+    }
+    .hero-banner__buttons {
+      flex-direction: column;
+      gap: 1rem;
+    }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Hero banner",
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Background image"
+    },
+    {
+      "type": "checkbox",
+      "id": "full_height",
+      "default": true,
+      "label": "Use full viewport height"
+    },
+    {
+      "type": "range",
+      "id": "hero_height",
+      "min": 400,
+      "max": 800,
+      "step": 50,
+      "default": 650,
+      "unit": "px",
+      "label": "Banner height"
+    },
+    {
+      "type": "range",
+      "id": "overlay_opacity",
+      "min": 0,
+      "max": 90,
+      "step": 5,
+      "default": 30,
+      "unit": "%",
+      "label": "Overlay opacity"
+    },
+    {
+      "type": "select",
+      "id": "alignment",
+      "label": "Text alignment",
+      "options": [
+        { "value": "left", "label": "Left" },
+        { "value": "center", "label": "Center" },
+        { "value": "right", "label": "Right" }
+      ],
+      "default": "left"
+    },
+    {
+      "type": "text",
+      "id": "subheading",
+      "default": "Swastik Jewels Heritage",
+      "label": "Subheading"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "default": "Timeless Elegance, Handcrafted For You",
+      "label": "Heading"
+    },
+    {
+      "type": "text",
+      "id": "description",
+      "default": "Explore the fine artistry and heritage of luxury gold and gemstone masterpieces.",
+      "label": "Description text"
+    },
+    {
+      "type": "text",
+      "id": "button_1_label",
+      "default": "Shop the collection",
+      "label": "Primary button text"
+    },
+    {
+      "type": "url",
+      "id": "button_1_link",
+      "label": "Primary button link"
+    },
+    {
+      "type": "text",
+      "id": "button_2_label",
+      "default": "Our heritage",
+      "label": "Secondary button text"
+    },
+    {
+      "type": "url",
+      "id": "button_2_link",
+      "label": "Secondary button link"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Hero banner"
+    }
+  ]
+}
+{% endschema %}

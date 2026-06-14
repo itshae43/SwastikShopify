@@ -1,0 +1,593 @@
+{% comment %}
+  Renders the main store header, styled on a dark brand green background with gold logo and white navigation menus.
+{% endcomment %}
+
+<div class="header-section-wrapper">
+  {% if section.settings.show_announcement %}
+    <div class="announcement-bar">
+      <div class="announcement-bar__content">
+        <!-- Left: Location -->
+        <div class="announcement-bar__left">
+          <svg class="announcement-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M15 10.5a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
+            <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1 1 15 0Z" />
+          </svg>
+          <span class="announcement-bar__text">{{ section.settings.announcement_left_text | escape }}</span>
+        </div>
+        
+        <!-- Center: Brand Statement -->
+        <div class="announcement-bar__center">
+          <span class="announcement-bar__text">{{ section.settings.announcement_center_text | escape }}</span>
+        </div>
+        
+        <!-- Right: Shipping -->
+        <div class="announcement-bar__right">
+          <svg class="announcement-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M12 21a9.004 9.004 0 0 0 8.716-6.747M12 21a9.004 9.004 0 0 1-8.716-6.747M12 21c2.485 0 4.5-4.03 4.5-9S14.485 3 12 3m0 18c-2.485 0-4.5-4.03-4.5-9S9.515 3 12 3m0 0a8.997 8.997 0 0 1 7.843 4.582M12 3a8.997 8.997 0 0 0-7.843 4.582m15.686 0A11.953 11.953 0 0 1 12 10.5c-2.998 0-5.74-.705-8.157-1.918m16.314 0a9 9 0 0 1-16.314 0" />
+          </svg>
+          <span class="announcement-bar__text">{{ section.settings.announcement_right_text | escape }}</span>
+        </div>
+      </div>
+    </div>
+  {% endif %}
+
+  <header class="header">
+    <!-- Left: Brand Logo (Image + Stacked Text) -->
+    <div class="header__logo">
+      <a href="{{ routes.root_url }}" class="header__logo-link">
+        <img src="{{ 'LogoSwastik.png' | asset_url }}" 
+             alt="Swastik Jewels" 
+             class="header__logo-img" 
+             width="65"
+             height="65"
+             style="max-width: {{ section.settings.logo_width }}px; height: auto;">
+        <div class="header__logo-text-wrapper">
+          <span class="header__logo-title">Swastik</span>
+          <span class="header__logo-subtitle">JEWELS</span>
+        </div>
+      </a>
+    </div>
+
+    <!-- Center: Navigation Menu -->
+    <nav class="header__nav" role="navigation">
+      <ul class="header__menu-list">
+        {% if section.settings.menu != blank %}
+          {% for link in section.settings.menu.links %}
+            <li class="header__menu-item {% if link.links != blank %}header__menu-item--has-dropdown{% endif %}">
+              <a href="{{ link.url }}" class="header__menu-link {% if link.active %}header__menu-link--active{% endif %}">
+                {{ link.title }}
+                {% if link.links != blank %}
+                  <svg class="icon icon-chevron-down" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="m19.5 8.25-7.5 7.5-7.5-7.5" />
+                  </svg>
+                {% endif %}
+              </a>
+              {% if link.links != blank %}
+                <ul class="header__dropdown-menu">
+                  {% for childlink in link.links %}
+                    <li>
+                      <a href="{{ childlink.url }}">{{ childlink.title }}</a>
+                    </li>
+                  {% endfor %}
+                </ul>
+              {% endif %}
+            </li>
+          {% endfor %}
+        {% else %}
+          <!-- Fallback menu matching the request exactly -->
+          <li class="header__menu-item header__menu-item--has-dropdown">
+            <a href="#" class="header__menu-link">
+              Jewellery
+              <svg class="icon icon-chevron-down" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="m19.5 8.25-7.5 7.5-7.5-7.5" />
+              </svg>
+            </a>
+            <ul class="header__dropdown-menu">
+              <li><a href="{{ routes.collections_url }}/rings">Rings</a></li>
+              <li><a href="{{ routes.collections_url }}/necklaces">Necklaces</a></li>
+              <li><a href="{{ routes.collections_url }}/earrings">Earrings</a></li>
+              <li><a href="{{ routes.collections_url }}/bracelets">Bracelets</a></li>
+            </ul>
+          </li>
+          <li class="header__menu-item">
+            <a href="{{ routes.collections_url }}/bridal" class="header__menu-link">Bridal</a>
+          </li>
+          <li class="header__menu-item">
+            <a href="{{ routes.collections_url }}/diamonds" class="header__menu-link">Diamonds</a>
+          </li>
+          <li class="header__menu-item header__menu-item--has-dropdown">
+            <a href="#" class="header__menu-link">
+              Collections
+              <svg class="icon icon-chevron-down" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="m19.5 8.25-7.5 7.5-7.5-7.5" />
+              </svg>
+            </a>
+            <ul class="header__dropdown-menu">
+              <li><a href="{{ routes.collections_url }}/festive">Festive Collection</a></li>
+              <li><a href="{{ routes.collections_url }}/heritage">Heritage Edit</a></li>
+              <li><a href="{{ routes.collections_url }}/daily">Daily Wear</a></li>
+            </ul>
+          </li>
+          <li class="header__menu-item header__menu-item--has-dropdown">
+            <a href="#" class="header__menu-link">
+              Our Story
+              <svg class="icon icon-chevron-down" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="m19.5 8.25-7.5 7.5-7.5-7.5" />
+              </svg>
+            </a>
+            <ul class="header__dropdown-menu">
+              <li><a href="/pages/about-us">About Us</a></li>
+              <li><a href="/pages/craftsmanship">Craftsmanship</a></li>
+              <li><a href="/pages/heritage">Heritage</a></li>
+            </ul>
+          </li>
+        {% endif %}
+      </ul>
+    </nav>
+
+    <!-- Right: Gold Rate Pill, Wishlist, Cart, Profile Actions -->
+    <div class="header__icons">
+      <!-- Gold price pill -->
+      <div class="header__gold-price">
+        <span class="gold-dot"></span>
+        <span class="gold-text">{{ section.settings.gold_price | default: 'Gold 13,620/g' }}</span>
+      </div>
+
+      <!-- Wishlist Link & Count -->
+      <a href="/pages/wishlist" class="header__icon-link header__wishlist-trigger" aria-label="Wishlist">
+        <svg class="icon icon-wishlist" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12Z" />
+        </svg>
+        {% assign wishlist_count = section.settings.wishlist_count | default: 2 %}
+        {% if wishlist_count > 0 %}
+          <span class="header__badge">{{ wishlist_count }}</span>
+        {% endif %}
+      </a>
+
+      <!-- Cart Link & Count -->
+      <a href="{{ routes.cart_url }}" class="header__icon-link header__cart-trigger" aria-label="Cart">
+        <svg class="icon icon-cart" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 3h1.386c.51 0 .955.343 1.087.835l.383 1.437M7.5 14.25a3 3 0 0 0-3 3h15.75m-12.75-3h11.218c1.121-2.3 2.1-4.684 2.924-7.138a60.114 60.114 0 0 0-16.536-1.84M7.5 14.25 5.106 5.272M6 20.25a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Zm12.75 0a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Z" />
+        </svg>
+        {% assign cart_count = cart.item_count %}
+        {% if cart_count == 0 and section.settings.mock_cart_count %}
+          {% assign cart_count = 3 %}
+        {% endif %}
+        {% if cart_count > 0 %}
+          <span class="header__badge">{{ cart_count }}</span>
+        {% endif %}
+      </a>
+
+      <!-- Profile Link -->
+      <a href="{{ routes.account_url }}" class="header__icon-link header__profile-trigger" aria-label="Account">
+        <svg class="icon icon-profile" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z" />
+        </svg>
+      </a>
+    </div>
+  </header>
+</div>
+
+{% stylesheet %}
+  @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Inter:wght@300;400;500;600;700&display=swap');
+
+  .header-section-wrapper {
+    background-color: var(--color-primary, #002E28);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  }
+
+  /* Announcement Bar */
+  .announcement-bar {
+    background-color: #F7F4F0;
+    color: var(--color-primary, #002E28);
+    padding: 0.8rem 4.0rem;
+    border-bottom: 1px solid rgba(0, 46, 40, 0.06);
+  }
+  .announcement-bar__content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    max-width: 1600px;
+    margin: 0 auto;
+  }
+  .announcement-bar__left,
+  .announcement-bar__center,
+  .announcement-bar__right {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+  }
+  .announcement-bar__left {
+    justify-content: flex-start;
+    flex: 1 1 33.33%;
+  }
+  .announcement-bar__center {
+    justify-content: center;
+    flex: 1 1 33.33%;
+  }
+  .announcement-bar__right {
+    justify-content: flex-end;
+    flex: 1 1 33.33%;
+  }
+  .announcement-bar__text {
+    margin: 0;
+    font-family: 'Inter', sans-serif;
+    font-size: 1.15rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--color-primary, #002E28);
+  }
+  .announcement-icon {
+    width: 1.5rem;
+    height: 1.5rem;
+    color: var(--color-accent, #D4AF37);
+    stroke-width: 1.5px;
+    display: inline-block;
+  }
+
+  /* Header Container */
+  .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 1.4rem;
+    padding-bottom: 1.4rem;
+    min-height: 7.2rem;
+    width: 100%;
+    max-width: 1600px;
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: 4rem;
+    padding-right: 4rem;
+    box-sizing: border-box;
+  }
+
+  /* Brand Logo & Name stacked */
+  .header__logo {
+    flex: 1 1 25%;
+    display: flex;
+    justify-content: flex-start;
+  }
+  .header__logo-link {
+    display: flex;
+    align-items: center;
+    gap: 1.4rem;
+    text-decoration: none;
+  }
+  .header__logo-img {
+    display: block;
+    max-height: 6.5rem;
+    width: auto;
+    object-fit: contain;
+  }
+  .header__logo-text-wrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    line-height: 1;
+  }
+  .header__logo-title {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: 3.4rem;
+    font-weight: 700;
+    letter-spacing: 0.01em;
+    color: var(--color-accent, #D4AF37);
+    text-transform: none;
+    white-space: nowrap;
+    line-height: 0.95;
+    margin: 0;
+  }
+  .header__logo-subtitle {
+    font-family: 'Inter', sans-serif;
+    font-size: 1.1rem;
+    font-weight: 500;
+    letter-spacing: 0.58em;
+    color: var(--color-accent, #D4AF37);
+    text-transform: uppercase;
+    white-space: nowrap;
+    margin-top: 0.3rem;
+    line-height: 1;
+  }
+
+  /* Nav menu - Centered */
+  .header__nav {
+    flex: 1 1 50%;
+    display: flex;
+    justify-content: center;
+  }
+  .header__menu-list {
+    list-style: none;
+    display: flex;
+    gap: 3.2rem;
+    margin: 0;
+    padding: 0;
+    align-items: center;
+  }
+  .header__menu-item {
+    position: relative;
+    padding: 1rem 0;
+  }
+  .header__menu-link {
+    font-family: 'Inter', sans-serif;
+    font-size: 1.35rem;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: rgba(255, 255, 255, 0.9);
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    transition: color 0.25s ease;
+  }
+  .header__menu-link svg {
+    width: 1.2rem;
+    height: 1.2rem;
+    color: var(--color-accent, #D4AF37);
+    transition: transform 0.25s ease;
+    stroke-width: 2.5px;
+  }
+  .header__menu-link:hover {
+    color: var(--color-accent, #D4AF37);
+  }
+  .header__menu-item:hover .header__menu-link svg {
+    transform: rotate(180deg);
+  }
+
+  /* Hover Dropdowns */
+  .header__dropdown-menu {
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%) translateY(10px);
+    background-color: #002520;
+    border: 1px solid rgba(212, 175, 55, 0.2);
+    border-radius: 4px;
+    padding: 1rem 0;
+    min-width: 18rem;
+    list-style: none;
+    margin: 0;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.25s ease, transform 0.25s ease, visibility 0.25s;
+    z-index: 110;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.45);
+  }
+  .header__menu-item:hover .header__dropdown-menu {
+    opacity: 1;
+    visibility: visible;
+    transform: translateX(-50%) translateY(0);
+  }
+  .header__dropdown-menu li {
+    padding: 0;
+  }
+  .header__dropdown-menu a {
+    display: block;
+    padding: 0.8rem 2.2rem;
+    font-family: 'Inter', sans-serif;
+    font-size: 1.2rem;
+    color: rgba(255, 255, 255, 0.8);
+    text-decoration: none;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    transition: all 0.2s ease;
+  }
+  .header__dropdown-menu a:hover {
+    color: var(--color-accent, #D4AF37);
+    background-color: rgba(255, 255, 255, 0.02);
+    padding-left: 2.6rem;
+  }
+
+  /* Icons - Right Aligned */
+  .header__icons {
+    flex: 1 1 25%;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 2.4rem;
+  }
+
+  /* Gold Price Badge */
+  .header__gold-price {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    border: 1px solid rgba(212, 175, 55, 0.25);
+    background-color: rgba(255, 255, 255, 0.03);
+    padding: 0.6rem 1.4rem;
+    border-radius: 2rem;
+    font-family: 'Inter', sans-serif;
+    font-size: 1.2rem;
+    font-weight: 500;
+    color: rgba(255, 255, 255, 0.9);
+    cursor: default;
+    transition: border-color 0.25s ease, background-color 0.25s ease;
+    white-space: nowrap;
+  }
+  .header__gold-price:hover {
+    border-color: rgba(212, 175, 55, 0.5);
+    background-color: rgba(255, 255, 255, 0.05);
+  }
+  .gold-dot {
+    width: 0.6rem;
+    height: 0.6rem;
+    border-radius: 50%;
+    background-color: var(--color-accent, #D4AF37);
+    display: inline-block;
+  }
+  .gold-text {
+    letter-spacing: 0.04em;
+  }
+
+  /* Icons styling */
+  .header__icon-link {
+    display: block;
+    color: #FFFFFF;
+    position: relative;
+    transition: color 0.25s ease, transform 0.25s ease;
+    text-decoration: none;
+  }
+  .header__icon-link:hover {
+    color: var(--color-accent, #D4AF37);
+    transform: scale(1.05);
+  }
+  .header__icon-link svg {
+    width: 2.2rem;
+    height: 2.2rem;
+    display: block;
+    stroke-width: 1.5px;
+  }
+
+  /* Circle badges */
+  .header__badge {
+    position: absolute;
+    top: -0.6rem;
+    right: -0.8rem;
+    background-color: var(--color-accent, #D4AF37);
+    color: var(--color-primary, #002E28);
+    font-family: 'Inter', sans-serif;
+    font-size: 0.9rem;
+    font-weight: 700;
+    width: 1.5rem;
+    height: 1.5rem;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    line-height: 1;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+  }
+
+  @media (max-width: 1024px) {
+    .header__menu-list {
+      gap: 2rem;
+    }
+    .header__icons {
+      gap: 1.8rem;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .announcement-bar {
+      padding: 0.8rem 2rem;
+    }
+    .announcement-bar__left,
+    .announcement-bar__right {
+      display: none;
+    }
+    .announcement-bar__center {
+      flex: 1 1 100%;
+    }
+    .header {
+      padding-top: 1.2rem;
+      padding-bottom: 1.2rem;
+      min-height: 6.4rem;
+      padding-left: 2rem;
+      padding-right: 2rem;
+    }
+    .header__nav {
+      display: none; /* hidden on mobile mobile menu */
+    }
+    .header__gold-price {
+      display: none; /* hide price pill on mobile */
+    }
+    .header__logo-title {
+      font-size: 2rem;
+      font-weight: 700;
+    }
+    .header__logo-subtitle {
+      font-size: 0.7rem;
+      letter-spacing: 0.5em;
+      margin-top: 0.2rem;
+    }
+    .header__logo-img {
+      max-height: 4.8rem;
+    }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Header",
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "logo_image",
+      "label": "Logo image"
+    },
+    {
+      "type": "range",
+      "id": "logo_width",
+      "min": 30,
+      "max": 150,
+      "step": 5,
+      "default": 65,
+      "unit": "px",
+      "label": "Custom logo width"
+    },
+    {
+      "type": "text",
+      "id": "gold_price",
+      "default": "Gold 13,620/g",
+      "label": "Gold Price Text"
+    },
+    {
+      "type": "range",
+      "id": "wishlist_count",
+      "min": 0,
+      "max": 10,
+      "default": 2,
+      "label": "Mock Wishlist Count"
+    },
+    {
+      "type": "checkbox",
+      "id": "mock_cart_count",
+      "default": true,
+      "label": "Use mock cart count of 3 if empty"
+    },
+    {
+      "type": "header",
+      "content": "Announcement Bar"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_announcement",
+      "default": true,
+      "label": "Show announcement bar"
+    },
+    {
+      "type": "text",
+      "id": "announcement_left_text",
+      "default": "DELHI • SINCE 1997",
+      "label": "Left text"
+    },
+    {
+      "type": "text",
+      "id": "announcement_center_text",
+      "default": "MADE FOR MOMENTS THAT MATTER.",
+      "label": "Center text"
+    },
+    {
+      "type": "text",
+      "id": "announcement_right_text",
+      "default": "WORLDWIDE SHIPPING",
+      "label": "Right text"
+    },
+    {
+      "type": "header",
+      "content": "Navigation"
+    },
+    {
+      "type": "link_list",
+      "id": "menu",
+      "label": "Menu"
+    }
+  ]
+}
+{% endschema %}
