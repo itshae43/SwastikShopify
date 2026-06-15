@@ -753,15 +753,7 @@
       });
     });
 
-    // 2. Wishlist Heart Toggle
-    const wishlistBtns = document.querySelectorAll('.best-sellers__wishlist-btn');
-    wishlistBtns.forEach(btn => {
-      btn.addEventListener('click', (e) => {
-        e.preventDefault();
-        e.stopPropagation();
-        btn.classList.toggle('active');
-      });
-    });
+    // 2. Wishlist Heart Toggle handled globally in theme-ajax-sync.liquid
 
     // 3. Card Carousel Dots & Auto-Rotate on Hover
     const cards = document.querySelectorAll('.best-sellers__card');

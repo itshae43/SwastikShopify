@@ -984,15 +984,7 @@
       });
     });
 
-    // Wishlist heart toggle
-    const wishlistBtns = section.querySelectorAll('.new-arrivals__wishlist-btn');
-    wishlistBtns.forEach(btn => {
-      btn.addEventListener('click', (e) => {
-        e.preventDefault();
-        e.stopPropagation();
-        btn.classList.toggle('active');
-      });
-    });
+    // Wishlist heart toggle handled globally in theme-ajax-sync.liquid
   }
 
   // Load handler
