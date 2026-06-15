@@ -12,62 +12,70 @@
     "hero_banner": {
       "type": "hero-banner",
       "blocks": {
-        "slide_1": {
+        "slide_TfG9ap": {
           "type": "slide",
           "settings": {
+            "alignment": "left",
             "subheading": "OWN YOUR GLOW",
             "title": "Diamonds That Speak Your Code",
             "description": "Ethically crafted, stackable fine jewelry designed for your daily edit. Because you don’t need an excuse to shine.",
             "button_1_label": "Shop Daily Ice",
-            "button_1_link": "/collections/all",
+            "button_1_link": "",
             "button_2_label": "Discover the Vibe",
-            "button_2_link": "/pages/our-story"
+            "button_2_link": ""
           }
         },
-        "slide_2": {
+        "slide_FVQX8V": {
           "type": "slide",
           "settings": {
-            "subheading": "LESS TALK, MORE SHINE",
-            "title": "Liquid Ice, Stacked Your Way",
-            "description": "From sleek tennis bracelets to bold statement bands. Layer them up, make them yours, and elevate any fit instantly.",
-            "button_1_label": "Shop Tennis Collection",
-            "button_1_link": "/collections/bracelets",
-            "button_2_label": "View Stacking Guide",
-            "button_2_link": "/pages/style-guide"
+            "alignment": "left",
+            "subheading": "OWN YOUR GLOW",
+            "title": "Diamonds That Speak Your Code",
+            "description": "Ethically crafted, stackable fine jewelry designed for your daily edit. Because you don’t need an excuse to shine.",
+            "button_1_label": "Shop Daily Ice",
+            "button_1_link": "",
+            "button_2_label": "Discover the Vibe",
+            "button_2_link": ""
           }
         },
-        "slide_3": {
+        "slide_BBJitT": {
           "type": "slide",
           "settings": {
-            "subheading": "REDEFINING FOREVER",
-            "title": "Diamonds Without Rules",
-            "description": "Gender-fluid silhouettes, organic textures, and bold cuts. Fine jewelry for the next era of love and individuality.",
-            "button_1_label": "Shop Fluid Jewelry",
-            "button_1_link": "/collections/gender-neutral",
-            "button_2_label": "Our Ethical Craft",
-            "button_2_link": "/pages/sustainability"
+            "alignment": "left",
+            "subheading": "OWN YOUR GLOW",
+            "title": "Diamonds That Speak Your Code",
+            "description": "Ethically crafted, stackable fine jewelry designed for your daily edit. Because you don’t need an excuse to shine.",
+            "button_1_label": "Shop Daily Ice",
+            "button_1_link": "",
+            "button_2_label": "Discover the Vibe",
+            "button_2_link": ""
+          }
+        },
+        "slide_3apqTf": {
+          "type": "slide",
+          "settings": {
+            "alignment": "left",
+            "subheading": "OWN YOUR GLOW",
+            "title": "Diamonds That Speak Your Code",
+            "description": "Ethically crafted, stackable fine jewelry designed for your daily edit. Because you don’t need an excuse to shine.",
+            "button_1_label": "Shop Daily Ice",
+            "button_1_link": "",
+            "button_2_label": "Discover the Vibe",
+            "button_2_link": ""
           }
         }
       },
       "block_order": [
-        "slide_1",
-        "slide_2",
-        "slide_3"
+        "slide_TfG9ap",
+        "slide_FVQX8V",
+        "slide_BBJitT",
+        "slide_3apqTf"
       ],
       "settings": {
         "autoplay": true,
         "autoplay_speed": 6,
-        "full_height": true,
-        "hero_height": 700,
-        "overlay_opacity": 35,
-        "alignment": "left",
-        "subheading": "Swastik Jewels Heritage",
-        "title": "Timeless Elegance, Handcrafted For You",
-        "description": "Explore the fine artistry and heritage of luxury gold and gemstone masterpieces.",
-        "button_1_label": "Shop the collection",
-        "button_1_link": "",
-        "button_2_label": "Our heritage",
-        "button_2_link": ""
+        "hero_height": 650,
+        "overlay_opacity": 30
       }
     },
     "featured_categories": {
@@ -237,8 +245,8 @@
   "order": [
     "hero_banner",
     "featured_categories",
-    "best_sellers",
     "new_arrivals",
+    "best_sellers",
     "why_choose_us",
     "shop_by_occasion",
     "brand_story",
