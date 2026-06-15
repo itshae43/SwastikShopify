@@ -12,23 +12,37 @@
     "hero_banner": {
       "type": "hero-banner",
       "settings": {
+        "full_height": true,
+        "hero_height": 650,
+        "overlay_opacity": 30,
         "alignment": "left",
-        "full_height": true
+        "subheading": "Swastik Jewels Heritage",
+        "title": "Timeless Elegance, Handcrafted For You",
+        "description": "Explore the fine artistry and heritage of luxury gold and gemstone masterpieces.",
+        "button_1_label": "Shop the collection",
+        "button_1_link": "",
+        "button_2_label": "Our heritage",
+        "button_2_link": ""
       }
     },
     "featured_categories": {
       "type": "featured-categories",
       "settings": {
         "title": "Jewelry categ",
-        "bg_color": "#FDFBF7"
+        "bg_color": "#fdfbf7"
       }
     },
     "new_arrivals": {
       "type": "new-arrivals",
       "settings": {
-        "title": "Fresh Designs, Just For You",
         "subheading": "NEW [emblem] ARRIVALS",
-        "description": "Discover our latest handcrafted pieces, made to shine every day."
+        "title": "Fresh Designs, Just For You",
+        "description": "Discover our latest handcrafted pieces, made to shine every day.",
+        "collection": "new-arrivals",
+        "view_all_link": "",
+        "view_all_text": "VIEW ALL",
+        "bg_color": "#ffffff",
+        "card_bg_color": "#ffffff"
       }
     },
     "best_sellers": {
@@ -37,7 +51,7 @@
         "title": "BEST SELLERS",
         "subheading": "OUR MOST LOVED",
         "description": "Handpicked favorites that our customers can't get enough of.",
-        "bg_color": "#FFFFFF"
+        "bg_color": "#ffffff"
       }
     },
     "why_choose_us": {
@@ -46,7 +60,7 @@
         "title": "Why Choose Us",
         "subheading": "THE SWASTIK DIFFERENCE",
         "description": "Discover the pillars of trust, craft, and care that define the Swastik experience.",
-        "bg_color": "#FDFBF7"
+        "bg_color": "#fdfbf7"
       }
     },
     "shop_by_occasion": {
@@ -57,6 +71,7 @@
           "settings": {
             "title": "Wedding",
             "description": "Timeless designs for your most precious moments.",
+            "link": "",
             "icon": "wedding"
           }
         },
@@ -65,6 +80,7 @@
           "settings": {
             "title": "Daily Wear",
             "description": "Elegant & lightweight pieces for everyday you.",
+            "link": "",
             "icon": "daily_wear"
           }
         },
@@ -73,6 +89,7 @@
           "settings": {
             "title": "Gifts",
             "description": "Meaningful pieces for the ones who matter.",
+            "link": "",
             "icon": "gifts"
           }
         },
@@ -81,6 +98,7 @@
           "settings": {
             "title": "Festive Collection",
             "description": "Shine brighter with festive ready designs.",
+            "link": "",
             "icon": "festive"
           }
         }
@@ -95,16 +113,30 @@
         "title": "Find the Perfect Piece for Every Moment",
         "subheading": "SHOP BY OCCASION",
         "description": "Handpicked jewelry styles for life's celebrated milestones.",
-        "bg_color": "#FFFFFF"
+        "bg_color": "#ffffff",
+        "view_all_link": ""
       }
     },
     "brand_story": {
       "type": "brand-story",
-      "settings": {}
+      "settings": {
+        "layout": "left",
+        "bg_color": "cream",
+        "subheading": "Honoring Fine Artistry",
+        "title": "Handcrafted to Perfection",
+        "content": "Swastik Jewels embodies a legacy of craftsmanship, bringing together rare gemstones and meticulous gold designs. Every piece of jewelry is individually hand-finished to reflect unmatched brilliance.\n\nFrom modern daily statement pieces to ancestral royal heirlooms, we craft stories to be passed down through generations.",
+        "button_label": "Discover our craftsmanship",
+        "button_link": ""
+      }
     },
     "newsletter": {
       "type": "newsletter",
-      "settings": {}
+      "settings": {
+        "bg_color": "cream",
+        "subheading": "Join the Inner Circle",
+        "title": "Exclusive Invitations",
+        "description": "Subscribe to receive early access to new collection launches, trunk shows, and private exhibitions."
+      }
     },
     "expert_consultation": {
       "type": "expert-consultation",
@@ -142,7 +174,19 @@
         "whatsapp_chat",
         "video_call"
       ],
-      "settings": {}
+      "settings": {
+        "subheading": "PERSONALIZED SERVICE",
+        "title": "Not Sure What to Choose?",
+        "description": "Our certified jewelry experts are here to help you find the perfect piece. Get personalized recommendations based on your preferences and budget.",
+        "button_text": "Book Free Consultation",
+        "button_link": "",
+        "sub_text": "Available Mon-Sat, 10 AM - 8 PM | Free Expert Advice",
+        "bg_color": "#ebf5f4",
+        "text_color": "#013f3e",
+        "card_bg_color": "#ffffff",
+        "btn_bg_color": "#013f3e",
+        "btn_text_color": "#ffffff"
+      }
     }
   },
   "order": [
