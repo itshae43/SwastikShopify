@@ -13,7 +13,17 @@
   "sections": {
     "header": {
       "type": "header",
-      "settings": {}
+      "settings": {
+        "logo_width": 65,
+        "gold_price": "Gold 13,620/g",
+        "wishlist_count": 2,
+        "mock_cart_count": true,
+        "show_announcement": true,
+        "announcement_left_text": "DELHI • SINCE 1997",
+        "announcement_center_text": "MADE FOR MOMENTS THAT MATTER",
+        "announcement_right_text": "WORLDWIDE SHIPPING",
+        "menu": ""
+      }
     }
   },
   "order": [
