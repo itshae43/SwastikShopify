@@ -114,6 +114,30 @@
           }
         }
       }
+    },
+    "gold_collection_showcase": {
+      "name": "Gold Collection Showcase",
+      "explore": "Explore",
+      "settings": {
+        "subheading": "Subheading",
+        "heading": "Heading",
+        "description": "Description",
+        "button_label": "Button Label",
+        "button_link": "Button Link",
+        "bg_color": "Background Color",
+        "text_color": "Text Color",
+        "accent_color": "Accent Color"
+      },
+      "blocks": {
+        "collection": {
+          "name": "Collection Item",
+          "settings": {
+            "collection": "Collection",
+            "title": "Custom Title Override",
+            "image": "Custom Image Override"
+          }
+        }
+      }
     }
   }
 }

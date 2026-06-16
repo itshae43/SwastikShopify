@@ -142,11 +142,55 @@
         "bg_color": "#fdfbf7"
       }
     },
-    "featured_categories": {
-      "type": "featured-categories",
+    "gold_collection_showcase": {
+      "type": "gold-collection-showcase",
+      "blocks": {
+        "ring": {
+          "type": "collection",
+          "settings": {
+            "title": "GOLD RINGS"
+          }
+        },
+        "earring": {
+          "type": "collection",
+          "settings": {
+            "title": "GOLD EARRINGS"
+          }
+        },
+        "necklace": {
+          "type": "collection",
+          "settings": {
+            "title": "GOLD NECKLACES"
+          }
+        },
+        "bangle": {
+          "type": "collection",
+          "settings": {
+            "title": "GOLD BANGLES"
+          }
+        },
+        "mangalsutra": {
+          "type": "collection",
+          "settings": {
+            "title": "MANGALSUTRA"
+          }
+        }
+      },
+      "block_order": [
+        "ring",
+        "earring",
+        "necklace",
+        "bangle",
+        "mangalsutra"
+      ],
       "settings": {
-        "title": "Jewelry categ",
-        "bg_color": "#fdfbf7"
+        "subheading": "TIMELESS. TRADITIONAL. YOU.",
+        "heading": "GOLD JEWELLERY",
+        "description": "Classic designs crafted in pure gold, made for every celebration.",
+        "button_label": "EXPLORE GOLD COLLECTION",
+        "bg_color": "#fbf6f0",
+        "text_color": "#0a2a26",
+        "accent_color": "#b38245"
       }
     },
     "new_arrivals": {
@@ -309,7 +353,7 @@
   "order": [
     "hero_banner",
     "discover_grid",
-    "featured_categories",
+    "gold_collection_showcase",
     "new_arrivals",
     "best_sellers",
     "why_choose_us",
