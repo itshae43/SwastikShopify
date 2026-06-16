@@ -55,16 +55,23 @@
       <ul class="header__menu-list">
         {% if section.settings.menu != blank %}
           {% for link in section.settings.menu.links %}
-            <li class="header__menu-item {% if link.links != blank %}header__menu-item--has-dropdown{% endif %}">
+            {%- assign downcase_title = link.title | downcase -%}
+            {%- assign show_dropdown = false -%}
+            {%- if link.links != blank -%}
+              {%- if downcase_title != 'our story' -%}
+                {%- assign show_dropdown = true -%}
+              {%- endif -%}
+            {%- endif -%}
+            <li class="header__menu-item {% if show_dropdown %}header__menu-item--has-dropdown{% endif %}">
               <a href="{{ link.url }}" class="header__menu-link {% if link.active %}header__menu-link--active{% endif %}">
                 {{ link.title }}
-                {% if link.links != blank %}
+                {% if show_dropdown %}
                   <svg class="icon icon-chevron-down" viewBox="0 0 24 24" fill="none" stroke="currentColor">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="m19.5 8.25-7.5 7.5-7.5-7.5" />
                   </svg>
                 {% endif %}
               </a>
-              {% if link.links != blank %}
+              {% if show_dropdown %}
                 <ul class="header__dropdown-menu">
                   {% for childlink in link.links %}
                     <li>
@@ -110,18 +117,8 @@
               <li><a href="{{ routes.collections_url }}/daily">Daily Wear</a></li>
             </ul>
           </li>
-          <li class="header__menu-item header__menu-item--has-dropdown">
-            <a href="#" class="header__menu-link">
-              Our Story
-              <svg class="icon icon-chevron-down" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="m19.5 8.25-7.5 7.5-7.5-7.5" />
-              </svg>
-            </a>
-            <ul class="header__dropdown-menu">
-              <li><a href="/pages/about-us">About Us</a></li>
-              <li><a href="/pages/craftsmanship">Craftsmanship</a></li>
-              <li><a href="/pages/heritage">Heritage</a></li>
-            </ul>
+          <li class="header__menu-item">
+            <a href="/pages/about-us" class="header__menu-link">Our Story</a>
           </li>
         {% endif %}
       </ul>
