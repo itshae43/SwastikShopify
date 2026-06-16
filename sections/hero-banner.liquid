@@ -39,8 +39,13 @@
               {%- if slide_index > 3 -%}
                 {%- assign slide_index = 3 -%}
               {%- endif -%}
-              {%- assign desktop_fallback_name = 'hero_slide_' | append: slide_index | append: '_desktop.png' -%}
-              {%- assign mobile_fallback_name = 'hero_slide_' | append: slide_index | append: '_mobile.png' -%}
+              {%- if slide_index == 1 -%}
+                {%- assign desktop_fallback_name = 'Slideshow_Desktop_1.png' -%}
+                {%- assign mobile_fallback_name = 'Slideshow_Mobile_1.png' -%}
+              {%- else -%}
+                {%- assign desktop_fallback_name = 'hero_slide_' | append: slide_index | append: '_desktop.png' -%}
+                {%- assign mobile_fallback_name = 'hero_slide_' | append: slide_index | append: '_mobile.png' -%}
+              {%- endif -%}
               
               <source media="(max-width: 767px)" srcset="{{ mobile_fallback_name | asset_url }}">
               <source media="(min-width: 768px)" srcset="{{ desktop_fallback_name | asset_url }}">
@@ -90,9 +95,9 @@
       {% comment %} Fallback slide when no blocks have been added yet {% endcomment %}
       <div class="slideshow__slide is-active hero-banner--left">
         <picture class="slideshow__bg-image">
-          <source media="(max-width: 767px)" srcset="{{ 'hero_slide_1_mobile.png' | asset_url }}">
-          <source media="(min-width: 768px)" srcset="{{ 'hero_slide_1_desktop.png' | asset_url }}">
-          <img src="{{ 'hero_slide_1_desktop.png' | asset_url }}" alt="Swastik Jewels" class="slideshow__img" loading="eager" width="1440" height="700">
+          <source media="(max-width: 767px)" srcset="{{ 'Slideshow_Mobile_1.png' | asset_url }}">
+          <source media="(min-width: 768px)" srcset="{{ 'Slideshow_Desktop_1.png' | asset_url }}">
+          <img src="{{ 'Slideshow_Desktop_1.png' | asset_url }}" alt="Swastik Jewels" class="slideshow__img" loading="eager" width="1440" height="700">
         </picture>
         <div class="hero-banner__overlay"></div>
         <div class="hero-banner__content fade-in">
@@ -271,6 +276,19 @@
   /* Ken Burns zoom effect on active slide image */
   .slideshow__slide.is-active .slideshow__img {
     transform: scale(1.05);
+  }
+
+  /* Individual slide image customizations */
+  .slideshow__slide:nth-child(1) .slideshow__img {
+    filter: contrast(1.03) saturate(1.05); /* Enhances the 1st slide without extra brightness */
+  }
+
+  .slideshow__slide:nth-child(2) .slideshow__img {
+    /* Custom styles for 2nd slide (e.g. filter: brightness(1.0);) if needed */
+  }
+
+  .slideshow__slide:nth-child(3) .slideshow__img {
+    /* Custom styles for 3rd slide if needed */
   }
 
   .hero-banner__overlay {
