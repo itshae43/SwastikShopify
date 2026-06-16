@@ -321,6 +321,7 @@
     align-items: center;
     gap: 0.6rem;
     transition: color 0.25s ease;
+    white-space: nowrap;
   }
   .header__menu-link svg {
     width: 1.2rem;
@@ -461,12 +462,71 @@
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
   }
 
-  @media (max-width: 1024px) {
+  @media (max-width: 1366px) {
+    .header {
+      padding-left: 3rem;
+      padding-right: 3rem;
+    }
     .header__menu-list {
-      gap: 2rem;
+      gap: 2.4rem;
     }
     .header__icons {
-      gap: 1.8rem;
+      gap: 2rem;
+    }
+  }
+
+  @media (max-width: 1200px) {
+    .header {
+      padding-left: 2rem;
+      padding-right: 2rem;
+    }
+    .header__logo {
+      flex: 0 1 auto;
+    }
+    .header__nav {
+      flex: 1 1 auto;
+    }
+    .header__icons {
+      flex: 0 1 auto;
+      gap: 1.6rem;
+    }
+    .header__menu-list {
+      gap: 1.6rem;
+    }
+    .header__menu-link {
+      font-size: 1.25rem;
+      gap: 0.4rem;
+    }
+    .header__logo-link {
+      gap: 1rem;
+    }
+    .header__logo-img {
+      max-height: 5.5rem;
+    }
+    .header__logo-title {
+      font-size: 3rem;
+    }
+    .header__logo-subtitle {
+      font-size: 1rem;
+      letter-spacing: 0.5em;
+    }
+  }
+
+  @media (max-width: 1024px) {
+    .header__menu-list {
+      gap: 1.2rem;
+    }
+    .header__menu-link {
+      font-size: 1.15rem;
+      letter-spacing: 0.05em;
+      gap: 0.3rem;
+    }
+    .header__icons {
+      gap: 1.2rem;
+    }
+    .header__gold-price {
+      padding: 0.5rem 1rem;
+      font-size: 1.1rem;
     }
   }
 
