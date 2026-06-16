@@ -1,11 +1,6 @@
-{% doc %}
-  Renders a showcase section with a text promotional banner on the left and a grid/slider of collection oval cards on the right.
-
-  @example
-  {% section 'gold-collection-showcase' %}
-{% enddoc %}
 
 {%- liquid
+
   assign bg_color = section.settings.bg_color | default: '#fbf6f0'
   assign text_color = section.settings.text_color | default: '#0a2a26'
   assign accent_color = section.settings.accent_color | default: '#b38245'
