@@ -92,6 +92,28 @@
       "title": "Exclusive invitations",
       "subheading": "Join the inner circle",
       "description": "Subscribe to receive early access to new collection launches, trunk shows, and private exhibitions."
+    },
+    "discover_grid": {
+      "name": "Discover Category Grid",
+      "settings": {
+        "title": "Discover, Designed For You",
+        "subheading": "Discover",
+        "description": "Explore our finest diamond creations, crafted for every occasion, every emotion, every you."
+      },
+      "blocks": {
+        "card": {
+          "name": "Category Card",
+          "settings": {
+            "image": "Card Image",
+            "number": "Card Number",
+            "title": "Card Title",
+            "link": "Card Link",
+            "color_scheme": "Color Scheme",
+            "cream": "Cream Theme",
+            "dark_green": "Dark Green Theme"
+          }
+        }
+      }
     }
   }
 }

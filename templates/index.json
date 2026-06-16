@@ -93,6 +93,55 @@
         "overlay_opacity": 10
       }
     },
+    "discover_grid": {
+      "type": "discover-grid",
+      "blocks": {
+        "rings": {
+          "type": "card",
+          "settings": {
+            "number": "01",
+            "title": "RINGS",
+            "color_scheme": "cream"
+          }
+        },
+        "earrings": {
+          "type": "card",
+          "settings": {
+            "number": "02",
+            "title": "EARRINGS",
+            "color_scheme": "dark-green"
+          }
+        },
+        "pendants": {
+          "type": "card",
+          "settings": {
+            "number": "03",
+            "title": "PENDANTS",
+            "color_scheme": "cream"
+          }
+        },
+        "tennis": {
+          "type": "card",
+          "settings": {
+            "number": "04",
+            "title": "TENNIS COLLECTION",
+            "color_scheme": "dark-green"
+          }
+        }
+      },
+      "block_order": [
+        "rings",
+        "earrings",
+        "pendants",
+        "tennis"
+      ],
+      "settings": {
+        "subheading": "DISCOVER",
+        "title": "DIAMONDS, DESIGNED FOR YOU",
+        "description": "Explore our finest diamond creations, crafted for every occasion, every emotion, every you.",
+        "bg_color": "#fdfbf7"
+      }
+    },
     "featured_categories": {
       "type": "featured-categories",
       "settings": {
@@ -259,6 +308,7 @@
   },
   "order": [
     "hero_banner",
+    "discover_grid",
     "featured_categories",
     "new_arrivals",
     "best_sellers",
