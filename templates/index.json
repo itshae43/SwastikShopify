@@ -90,7 +90,7 @@
         "autoplay": true,
         "autoplay_speed": 6,
         "hero_height": 650,
-        "overlay_opacity": 30
+        "overlay_opacity": 10
       }
     },
     "featured_categories": {
