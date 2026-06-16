@@ -9,70 +9,46 @@
 ">
   <div class="new-arrivals__container">
     
-    <!-- Section Header Row -->
-    <div class="new-arrivals__header-row">
-      <div class="new-arrivals__header-text">
-        {% if section.settings.subheading != blank %}
-          <div class="new-arrivals__subheading-wrapper">
-            <span class="new-arrivals__divider-line"></span>
-            <span class="new-arrivals__subheading">
-              {{ section.settings.subheading | split: '[emblem]' | first | escape }}
-              <span class="new-arrivals__subheading-emblem">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M6 3H18L22 9L12 22L2 9L6 3Z" fill="var(--color-accent, #D4AF37)"/>
-                  <path d="M6 3L10 9L12 3L14 9L18 3" stroke="#FFFFFF" stroke-width="0.8" stroke-linecap="round" stroke-linejoin="round"/>
-                  <path d="M2 9H22" stroke="#FFFFFF" stroke-width="0.8" stroke-linecap="round" stroke-linejoin="round"/>
-                  <path d="M10 9L12 22L14 9" stroke="#FFFFFF" stroke-width="0.8" stroke-linecap="round" stroke-linejoin="round"/>
-                </svg>
-              </span>
-              {{ section.settings.subheading | split: '[emblem]' | last | escape }}
+    <!-- Section Header -->
+    <div class="new-arrivals__header">
+      {% if section.settings.subheading != blank %}
+        <div class="new-arrivals__subheading-wrapper">
+          <span class="new-arrivals__divider-line"></span>
+          <span class="new-arrivals__subheading">
+            {{ section.settings.subheading | split: '[emblem]' | first | escape }}
+            <span class="new-arrivals__subheading-emblem">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M6 3H18L22 9L12 22L2 9L6 3Z" fill="var(--color-accent, #D4AF37)"/>
+                <path d="M6 3L10 9L12 3L14 9L18 3" stroke="#FFFFFF" stroke-width="0.8" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M2 9H22" stroke="#FFFFFF" stroke-width="0.8" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M10 9L12 22L14 9" stroke="#FFFFFF" stroke-width="0.8" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
             </span>
-            <span class="new-arrivals__divider-line"></span>
-          </div>
-        {% endif %}
-        
-        {% if section.settings.title != blank %}
-          <h2 class="new-arrivals__heading serif-font">{{ section.settings.title | escape }}</h2>
-        {% endif %}
-        
-        {% if section.settings.description != blank %}
-          <p class="new-arrivals__description">{{ section.settings.description | escape }}</p>
-        {% endif %}
-        
-        <div class="new-arrivals__divider-ornament">
-          <span class="ornament-line"></span>
-          <span class="ornament-sparkle">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M6 3H18L22 9L12 22L2 9L6 3Z" fill="var(--color-accent, #D4AF37)"/>
-              <path d="M6 3L10 9L12 3L14 9L18 3" stroke="#FFFFFF" stroke-width="0.8" stroke-linecap="round" stroke-linejoin="round"/>
-              <path d="M2 9H22" stroke="#FFFFFF" stroke-width="0.8" stroke-linecap="round" stroke-linejoin="round"/>
-              <path d="M10 9L12 22L14 9" stroke="#FFFFFF" stroke-width="0.8" stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>
+            {{ section.settings.subheading | split: '[emblem]' | last | escape }}
           </span>
-          <span class="ornament-line"></span>
+          <span class="new-arrivals__divider-line"></span>
         </div>
-      </div>
-
-      <!-- Carousel Navigation Header (Top-Right on Desktop) -->
-      <div class="new-arrivals__carousel-controls">
-        <button class="new-arrivals__nav-btn new-arrivals__nav-btn--prev" aria-label="Previous Slide">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <path d="M15 18l-6-6 6-6"/>
+      {% endif %}
+      
+      {% if section.settings.title != blank %}
+        <h2 class="new-arrivals__heading serif-font">{{ section.settings.title | escape }}</h2>
+      {% endif %}
+      
+      {% if section.settings.description != blank %}
+        <p class="new-arrivals__description">{{ section.settings.description | escape }}</p>
+      {% endif %}
+      
+      <div class="new-arrivals__divider-ornament">
+        <span class="ornament-line"></span>
+        <span class="ornament-sparkle">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M6 3H18L22 9L12 22L2 9L6 3Z" fill="var(--color-accent, #D4AF37)"/>
+            <path d="M6 3L10 9L12 3L14 9L18 3" stroke="#FFFFFF" stroke-width="0.8" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M2 9H22" stroke="#FFFFFF" stroke-width="0.8" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M10 9L12 22L14 9" stroke="#FFFFFF" stroke-width="0.8" stroke-linecap="round" stroke-linejoin="round"/>
           </svg>
-        </button>
-        <button class="new-arrivals__nav-btn new-arrivals__nav-btn--next" aria-label="Next Slide">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <path d="M9 18l6-6-6-6"/>
-          </svg>
-        </button>
-        {% if section.settings.view_all_link != blank %}
-          <a href="{{ section.settings.view_all_link }}" class="new-arrivals__view-all-link">
-            {{ section.settings.view_all_text | default: 'VIEW ALL' }}
-            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
-              <path d="M9 5l7 7-7 7"/>
-            </svg>
-          </a>
-        {% endif %}
+        </span>
+        <span class="ornament-line"></span>
       </div>
     </div>
 
@@ -256,6 +232,17 @@
       </div>
     </div>
 
+    {% if section.settings.view_all_link != blank %}
+      <div class="new-arrivals__footer">
+        <a href="{{ section.settings.view_all_link }}" class="btn-view-all">
+          {{ section.settings.view_all_text | default: 'VIEW ALL' }}
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+            <path d="M9 5l7 7-7 7"/>
+          </svg>
+        </a>
+      </div>
+    {% endif %}
+
   </div>
 </div>
 
@@ -275,31 +262,30 @@
     position: relative;
   }
 
-  /* Header Row Styling */
-  .new-arrivals__header-row {
+  /* Section Header Styling */
+  .new-arrivals__header {
+    text-align: center;
+    max-width: 80rem;
+    margin: 0 auto 5rem auto;
     display: flex;
-    justify-content: space-between;
-    align-items: flex-end;
-    margin-bottom: 5rem;
-    gap: 4rem;
-  }
-
-  .new-arrivals__header-text {
-    flex-grow: 1;
+    flex-direction: column;
+    align-items: center;
   }
 
   /* Subheading with Emblem */
   .new-arrivals__subheading-wrapper {
-    display: inline-flex;
+    display: flex;
     align-items: center;
+    justify-content: center;
     gap: 2rem;
     margin-bottom: 1.5rem;
+    width: 100%;
   }
 
   .new-arrivals__divider-line {
     height: 1px;
     background-color: var(--color-accent, #D4AF37);
-    width: 60px;
+    width: 80px;
     opacity: 0.5;
   }
 
@@ -342,7 +328,9 @@
   .new-arrivals__divider-ornament {
     display: inline-flex;
     align-items: center;
+    justify-content: center;
     gap: 1.2rem;
+    margin-top: 1rem;
   }
 
   .new-arrivals__divider-ornament .ornament-line {
@@ -359,77 +347,50 @@
     line-height: 1;
   }
 
-  /* Carousel Controls Header (Top-Right) */
-  .new-arrivals__carousel-controls {
-    display: flex;
-    align-items: center;
-    gap: 1.6rem;
-    padding-bottom: 1rem;
+  /* Section Footer / View All Styling */
+  .new-arrivals__footer {
+    text-align: center;
+    margin-top: 5rem;
   }
 
-  .new-arrivals__nav-btn {
-    width: 4.4rem;
-    height: 4.4rem;
-    border-radius: 50%;
-    border: 1px solid rgba(1, 63, 62, 0.2);
-    background-color: #FFFFFF;
-    color: var(--color-primary, #013F3E);
-    cursor: pointer;
+  .btn-view-all {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-    padding: 0;
-    outline: none;
-  }
-
-  .new-arrivals__nav-btn svg {
-    transition: transform 0.3s ease;
-  }
-
-  .new-arrivals__nav-btn:hover {
-    border-color: var(--color-primary, #013F3E);
-    background-color: rgba(1, 63, 62, 0.03);
-    transform: scale(1.05);
-  }
-
-  .new-arrivals__nav-btn--prev:hover svg {
-    transform: translateX(-2px);
-  }
-
-  .new-arrivals__nav-btn--next:hover svg {
-    transform: translateX(2px);
-  }
-
-  .new-arrivals__nav-btn:active {
-    transform: scale(0.95);
-  }
-
-  .new-arrivals__view-all-link {
-    font-family: 'Inter', sans-serif;
-    font-size: 1.25rem;
-    font-weight: 600;
+    gap: 1.2rem;
+    padding: 1.6rem 4rem;
+    border: 1px solid var(--color-primary, #013F3E);
     color: var(--color-primary, #013F3E);
-    text-decoration: none;
+    font-family: 'Inter', sans-serif;
+    font-size: 1.3rem;
+    font-weight: 600;
+    letter-spacing: 0.15em;
+    border-radius: 4px;
+    transition: background-color 0.35s ease, border-color 0.35s ease, transform 0.35s cubic-bezier(0.165, 0.84, 0.44, 1), box-shadow 0.35s ease, color 0.35s ease;
     text-transform: uppercase;
-    letter-spacing: 0.1em;
-    display: inline-flex;
-    align-items: center;
-    gap: 0.8rem;
-    margin-left: 1.6rem;
-    transition: color 0.3s ease;
+    text-decoration: none;
+    background: transparent;
+    cursor: pointer;
   }
 
-  .new-arrivals__view-all-link svg {
+  .btn-view-all svg {
     transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
   }
 
-  .new-arrivals__view-all-link:hover {
-    color: var(--color-accent, #D4AF37);
+  .btn-view-all:hover {
+    background-color: var(--color-primary, #013F3E);
+    color: #FFFFFF;
+    transform: translateY(-2px) scale(1.02);
+    box-shadow: 0 8px 20px rgba(1, 63, 62, 0.2);
   }
 
-  .new-arrivals__view-all-link:hover svg {
+  .btn-view-all:hover svg {
     transform: translateX(4px);
+  }
+
+  .btn-view-all:active {
+    transform: translateY(1px) scale(0.98);
+    box-shadow: 0 3px 8px rgba(1, 63, 62, 0.15);
   }
 
   /* Slider Viewport and Overlays */
@@ -802,7 +763,7 @@
       flex: 0 0 calc(50% - 1.6rem); /* 2 columns */
     }
     .new-arrivals__side-arrow {
-      display: none; /* Hide overlay arrows on smaller screens, rely on header buttons & swipe */
+      display: none; /* Hide overlay arrows on smaller screens, rely on touch swipe */
     }
   }
 
@@ -815,18 +776,32 @@
       padding-left: 2rem;
       padding-right: 2rem;
     }
-    .new-arrivals__header-row {
-      flex-direction: column;
-      align-items: flex-start;
-      gap: 2rem;
-      margin-bottom: 4rem;
+    .new-arrivals__header {
+      margin-bottom: 3.5rem;
     }
-    .new-arrivals__carousel-controls {
-      width: 100%;
-      justify-content: flex-start;
+    .new-arrivals__divider-line {
+      width: 45px;
+    }
+    .new-arrivals__subheading-wrapper {
+      gap: 1.2rem;
+    }
+    .new-arrivals__subheading {
+      font-size: 1.15rem;
+      letter-spacing: 0.2em;
     }
     .new-arrivals__heading {
-      font-size: 3.2rem;
+      font-size: 3rem;
+    }
+    .new-arrivals__description {
+      font-size: 1.35rem;
+      margin-bottom: 1.5rem;
+    }
+    .new-arrivals__footer {
+      margin-top: 3.5rem;
+    }
+    .btn-view-all {
+      padding: 1.2rem 3rem;
+      font-size: 1.2rem;
     }
     .new-arrivals__slider {
       gap: 1.6rem;
