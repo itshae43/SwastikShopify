@@ -291,11 +291,12 @@
     font-size: 13px;
   }
 
+  /* 2-column grid: cards 1 and 4 span both, cards 2 and 3 each take one */
   .discover-grid-container {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr) !important;
-    grid-template-rows: auto auto;
-    gap: 12px !important;
+    display: grid !important;
+    grid-template-columns: 1fr 1fr !important;
+    grid-template-rows: auto auto auto !important;
+    gap: 10px !important;
     width: 100%;
   }
 
@@ -304,173 +305,129 @@
     display: none !important;
   }
 
-  /* Horizontal Card (1) - Rings */
-  .discover-grid-card--1 {
-    grid-column: 1 / 3 !important;
-    grid-row: 1 !important;
-    flex-direction: row !important;
-    justify-content: space-between !important;
-    align-items: center !important;
-    min-height: 130px !important;
-    padding: 12px 14px !important; /* Balanced padding */
-    position: relative !important;
-    border: 1px solid rgba(255, 255, 255, 0.06) !important;
-  }
-
-  .discover-grid-card--1 .discover-grid-card-content {
-    max-width: calc(100% - 88px) !important;
-    width: calc(100% - 88px) !important;
-    display: flex;
-    flex-direction: column;
-    justify-content: center !important;
-  }
-
-  .discover-grid-card--1 .discover-grid-card-image-wrap {
-    position: relative !important;
-    width: 76px !important;
-    height: 76px !important;
-    flex-shrink: 0 !important;
-    margin: 0 !important;
-    border-radius: 8px;
-    overflow: hidden;
-    display: flex !important;
-    align-items: center !important;
-    justify-content: center !important;
-    background-color: #f7f3eb !important; /* Cream inner box */
-    padding: 6px !important;
-    box-sizing: border-box;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
-  }
-
-  .discover-grid-card--1 .discover-grid-card-image {
-    object-fit: contain !important;
-    max-width: 100% !important;
-    max-height: 100% !important;
-    width: auto !important;
-    height: auto !important;
-  }
-
-  /* Vertical Cards (2, 3) and Horizontal Card (4) in Row 2 */
+  /* Shared card base on mobile: horizontal row layout */
+  .discover-grid-card--1,
   .discover-grid-card--2,
   .discover-grid-card--3,
   .discover-grid-card--4 {
-    box-sizing: border-box;
-    position: relative !important;
-    min-height: 130px !important;
-    border: 1px solid rgba(255, 255, 255, 0.06) !important;
-  }
-
-  .discover-grid-card--2,
-  .discover-grid-card--3 {
-    flex-direction: column !important;
-    justify-content: center !important;
+    display: flex !important;
+    flex-direction: row !important;
+    justify-content: flex-start !important;
     align-items: center !important;
-    padding: 12px 8px !important; /* Balanced padding for vertical alignment */
+    min-height: 110px !important;
+    padding: 14px 14px !important;
+    box-sizing: border-box !important;
+    border-radius: 14px !important;
+    position: relative !important;
+    border: 1px solid rgba(255, 255, 255, 0.05) !important;
   }
 
-  .discover-grid-card--2 {
-    grid-column: 3 !important;
+  /* Card 1 (Rings) — full width, Row 1 */
+  .discover-grid-card--1 {
+    grid-column: 1 / 3 !important;
     grid-row: 1 !important;
   }
 
-  .discover-grid-card--3 {
+  /* Cards 2 (Earrings) and 3 (Pendants) — equal halves, Row 2 */
+  .discover-grid-card--2 {
     grid-column: 1 !important;
     grid-row: 2 !important;
   }
 
-  .discover-grid-card--4 {
-    grid-column: 2 / 4 !important;
+  .discover-grid-card--3 {
+    grid-column: 2 !important;
     grid-row: 2 !important;
-    flex-direction: row !important;
-    justify-content: space-between !important;
-    align-items: center !important;
-    padding: 12px 12px !important; /* Compact padding for horizontal card */
   }
 
+  /* Card 4 (Tennis Collection) — full width, Row 3 */
+  .discover-grid-card--4 {
+    grid-column: 1 / 3 !important;
+    grid-row: 3 !important;
+  }
+
+  /* Content: text block on left */
+  .discover-grid-card--1 .discover-grid-card-content,
   .discover-grid-card--2 .discover-grid-card-content,
-  .discover-grid-card--3 .discover-grid-card-content {
-    max-width: 100% !important;
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: center !important;
-    text-align: center !important;
-    justify-content: center !important;
-  }
-
+  .discover-grid-card--3 .discover-grid-card-content,
   .discover-grid-card--4 .discover-grid-card-content {
-    max-width: calc(100% - 77px) !important;
-    width: calc(100% - 77px) !important;
-    display: flex;
-    flex-direction: column;
+    flex: 1 !important;
+    max-width: none !important;
+    width: auto !important;
+    display: flex !important;
+    flex-direction: column !important;
     justify-content: center !important;
+    align-items: flex-start !important;
+    text-align: left !important;
   }
 
+  /* Image wrap: square thumbnail on the right */
+  .discover-grid-card--1 .discover-grid-card-image-wrap,
   .discover-grid-card--2 .discover-grid-card-image-wrap,
   .discover-grid-card--3 .discover-grid-card-image-wrap,
   .discover-grid-card--4 .discover-grid-card-image-wrap {
     position: relative !important;
-    order: -1 !important;
-    border-radius: 6px;
-    overflow: hidden;
-    background: transparent !important;
+    order: 1 !important;
+    flex-shrink: 0 !important;
+    width: 72px !important;
+    height: 72px !important;
+    margin-left: 10px !important;
+    border-radius: 8px !important;
+    overflow: hidden !important;
     display: flex !important;
     align-items: center !important;
     justify-content: center !important;
+    background-color: rgba(255, 255, 255, 0.08) !important;
   }
 
-  .discover-grid-card--2 .discover-grid-card-image-wrap,
-  .discover-grid-card--3 .discover-grid-card-image-wrap {
-    width: 100% !important;
-    height: 50px !important;
-    margin-bottom: 6px !important;
-  }
-
+  /* Card 1 & 4 get slightly bigger image since they're wider */
+  .discover-grid-card--1 .discover-grid-card-image-wrap,
   .discover-grid-card--4 .discover-grid-card-image-wrap {
-    width: 65px !important;
-    height: 65px !important;
-    flex-shrink: 0 !important;
-    margin: 0 !important;
+    width: 84px !important;
+    height: 84px !important;
+    background-color: #f7f3eb !important;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.08) !important;
+    padding: 6px !important;
+    box-sizing: border-box !important;
   }
 
+  .discover-grid-card--1 .discover-grid-card-image,
   .discover-grid-card--2 .discover-grid-card-image,
   .discover-grid-card--3 .discover-grid-card-image,
   .discover-grid-card--4 .discover-grid-card-image {
+    width: 100% !important;
+    height: 100% !important;
     object-fit: contain !important;
-    max-width: 100% !important;
-    max-height: 100% !important;
-    width: auto !important;
-    height: auto !important;
   }
 
-  /* Hide description on mobile for narrow cards 2 and 3 */
+  /* Show description only on wide cards */
   .discover-grid-card--2 .discover-grid-card-desc,
   .discover-grid-card--3 .discover-grid-card-desc {
     display: none !important;
   }
 
-  /* Typography adjustments for mobile */
+  /* Typography */
   .discover-grid-card-title {
-    font-size: 11px !important;
-    margin-bottom: 4px !important;
-    font-weight: normal !important;
+    font-size: 12px !important;
+    margin: 0 0 4px !important;
+    font-weight: 600 !important;
     line-height: 1.2 !important;
     letter-spacing: 0.08em !important;
+    text-transform: uppercase !important;
   }
 
   .discover-grid-card--1 .discover-grid-card-title,
   .discover-grid-card--4 .discover-grid-card-title {
-    font-size: 14px !important;
+    font-size: 15px !important;
   }
 
   .discover-grid-card-desc {
     font-size: 10px !important;
-    margin: 0 !important;
-    line-height: 1.3 !important;
+    margin: 0 0 6px !important;
+    line-height: 1.35 !important;
     opacity: 0.8 !important;
   }
 
-  /* Explore link flows naturally inside content on mobile */
+  /* Explore link */
   .discover-grid-card-link {
     display: inline-flex !important;
     align-items: center !important;
@@ -478,7 +435,7 @@
     font-family: 'Inter', sans-serif !important;
     font-size: 8px !important;
     font-weight: 600 !important;
-    letter-spacing: 0.12em !important;
+    letter-spacing: 0.14em !important;
     text-transform: uppercase !important;
   }
 
