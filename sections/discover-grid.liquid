@@ -110,6 +110,9 @@
 
 .discover-grid-card {
   display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
   position: relative;
   text-decoration: none;
   border-radius: 16px;
@@ -130,6 +133,7 @@
 .discover-grid-card--cream {
   background-color: #f7f3eb;
   color: #0b2e27;
+  border: 1px solid rgba(11, 46, 39, 0.05);
 }
 .discover-grid-card--cream .discover-grid-card-title {
   color: #0b2e27 !important;
@@ -142,8 +146,9 @@
 }
 
 .discover-grid-card--dark-green {
-  background-color: #0b2e27;
+  background: linear-gradient(135deg, #0b2e27 0%, #051a15 100%);
   color: #ffffff;
+  border: 1px solid rgba(255, 255, 255, 0.05);
 }
 .discover-grid-card--dark-green .discover-grid-card-title {
   color: #ffffff !important;
@@ -157,35 +162,23 @@
 
 /* Desktop Grid Assignments */
 .discover-grid-card--1 {
-  grid-column: 1;
-  grid-row: 1 / 3;
-  flex-direction: column;
-  justify-content: space-between;
-  min-height: 480px;
+  grid-column: 1 / 3;
+  grid-row: 1;
 }
 
 .discover-grid-card--2 {
-  grid-column: 2;
+  grid-column: 3;
   grid-row: 1;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: center;
 }
 
 .discover-grid-card--3 {
-  grid-column: 3;
-  grid-row: 1;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: center;
+  grid-column: 1;
+  grid-row: 2;
 }
 
 .discover-grid-card--4 {
   grid-column: 2 / 4;
   grid-row: 2;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: center;
 }
 
 /* Card Elements Layout */
@@ -194,10 +187,6 @@
   flex-direction: column;
   z-index: 2;
   max-width: 50%;
-}
-
-.discover-grid-card--1 .discover-grid-card-content {
-  max-width: 100%;
 }
 
 .discover-grid-card-number {
@@ -268,12 +257,6 @@
   pointer-events: none;
 }
 
-.discover-grid-card--1 .discover-grid-card-image-wrap {
-  width: 100%;
-  height: 60%;
-  position: relative;
-}
-
 .discover-grid-card-image {
   width: 100%;
   height: 100%;
@@ -310,7 +293,7 @@
 
   .discover-grid-container {
     display: grid;
-    grid-template-columns: 1fr 1fr 2fr;
+    grid-template-columns: repeat(3, 1fr) !important;
     grid-template-rows: auto auto;
     gap: 12px !important;
     width: 100%;
@@ -323,28 +306,29 @@
 
   /* Horizontal Card (1) - Rings */
   .discover-grid-card--1 {
-    grid-column: 1 / 4 !important;
+    grid-column: 1 / 3 !important;
     grid-row: 1 !important;
     flex-direction: row !important;
     justify-content: space-between !important;
     align-items: center !important;
     min-height: 130px !important;
-    padding: 12px 16px 32px 16px !important; /* Balanced padding with room for absolute link */
+    padding: 12px 14px !important; /* Balanced padding */
     position: relative !important;
+    border: 1px solid rgba(255, 255, 255, 0.06) !important;
   }
 
   .discover-grid-card--1 .discover-grid-card-content {
-    max-width: calc(100% - 92px) !important;
-    width: calc(100% - 92px) !important;
+    max-width: calc(100% - 88px) !important;
+    width: calc(100% - 88px) !important;
     display: flex;
     flex-direction: column;
-    justify-content: flex-start !important;
+    justify-content: center !important;
   }
 
   .discover-grid-card--1 .discover-grid-card-image-wrap {
     position: relative !important;
-    width: 80px !important;
-    height: 80px !important;
+    width: 76px !important;
+    height: 76px !important;
     flex-shrink: 0 !important;
     margin: 0 !important;
     border-radius: 8px;
@@ -355,6 +339,7 @@
     background-color: #f7f3eb !important; /* Cream inner box */
     padding: 6px !important;
     box-sizing: border-box;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
   }
 
   .discover-grid-card--1 .discover-grid-card-image {
@@ -372,31 +357,34 @@
     box-sizing: border-box;
     position: relative !important;
     min-height: 130px !important;
+    border: 1px solid rgba(255, 255, 255, 0.06) !important;
   }
 
   .discover-grid-card--2,
   .discover-grid-card--3 {
     flex-direction: column !important;
-    justify-content: flex-start !important;
-    grid-row: 2 !important;
-    padding: 10px 8px 30px 8px !important; /* Tighter padding for narrow cards */
+    justify-content: center !important;
+    align-items: center !important;
+    padding: 12px 8px !important; /* Balanced padding for vertical alignment */
   }
 
   .discover-grid-card--2 {
-    grid-column: 1 !important;
+    grid-column: 3 !important;
+    grid-row: 1 !important;
   }
 
   .discover-grid-card--3 {
-    grid-column: 2 !important;
+    grid-column: 1 !important;
+    grid-row: 2 !important;
   }
 
   .discover-grid-card--4 {
-    grid-column: 3 !important;
+    grid-column: 2 / 4 !important;
     grid-row: 2 !important;
     flex-direction: row !important;
     justify-content: space-between !important;
     align-items: center !important;
-    padding: 10px 10px 30px 10px !important; /* Compact padding for horizontal card */
+    padding: 12px 12px !important; /* Compact padding for horizontal card */
   }
 
   .discover-grid-card--2 .discover-grid-card-content,
@@ -405,9 +393,9 @@
     width: 100%;
     display: flex;
     flex-direction: column;
-    flex-grow: 1;
-    justify-content: flex-start !important;
-    padding-bottom: 6px !important;
+    align-items: center !important;
+    text-align: center !important;
+    justify-content: center !important;
   }
 
   .discover-grid-card--4 .discover-grid-card-content {
@@ -415,7 +403,7 @@
     width: calc(100% - 77px) !important;
     display: flex;
     flex-direction: column;
-    justify-content: flex-start !important;
+    justify-content: center !important;
   }
 
   .discover-grid-card--2 .discover-grid-card-image-wrap,
@@ -455,10 +443,9 @@
     height: auto !important;
   }
 
-  /* Hide description on mobile for cards 2, 3, and 4 */
+  /* Hide description on mobile for narrow cards 2 and 3 */
   .discover-grid-card--2 .discover-grid-card-desc,
-  .discover-grid-card--3 .discover-grid-card-desc,
-  .discover-grid-card--4 .discover-grid-card-desc {
+  .discover-grid-card--3 .discover-grid-card-desc {
     display: none !important;
   }
 
@@ -468,6 +455,7 @@
     margin-bottom: 4px !important;
     font-weight: normal !important;
     line-height: 1.2 !important;
+    letter-spacing: 0.08em !important;
   }
 
   .discover-grid-card--1 .discover-grid-card-title,
@@ -477,24 +465,26 @@
 
   .discover-grid-card-desc {
     font-size: 10px !important;
-    margin: 0 0 8px 0 !important;
-    line-height: 1.25 !important;
+    margin: 0 !important;
+    line-height: 1.3 !important;
     opacity: 0.8 !important;
   }
 
-  /* Absolute position Explore link for Bento Grid alignment */
+  /* Explore link flows naturally inside content on mobile */
   .discover-grid-card-link {
-    position: absolute !important;
-    right: 8px !important;
-    bottom: 8px !important;
-    margin: 0 !important;
-    font-size: 10px !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    margin-top: 8px !important;
+    font-family: 'Inter', sans-serif !important;
+    font-size: 8px !important;
+    font-weight: 600 !important;
+    letter-spacing: 0.12em !important;
+    text-transform: uppercase !important;
   }
 
-  .discover-grid-card--1 .discover-grid-card-link {
-    right: 12px !important;
-    bottom: 12px !important;
-    font-size: 11px !important;
+  .discover-grid-card--1 .discover-grid-card-link,
+  .discover-grid-card--4 .discover-grid-card-link {
+    font-size: 9px !important;
   }
 }
 {% endstylesheet %}
