@@ -15,11 +15,23 @@
         "slide_3mK94L": {
           "type": "slide",
           "settings": {
-            "image_desktop": "shopify://shop_images/Untitled_design_2.png",
             "alignment": "left",
             "subheading": "",
             "title": "",
             "description": "",
+            "button_1_label": "Shop Daily Ice",
+            "button_1_link": "",
+            "button_2_label": "Discover the Vibe",
+            "button_2_link": ""
+          }
+        },
+        "slide_AkqDUq": {
+          "type": "slide",
+          "settings": {
+            "alignment": "left",
+            "subheading": "OWN YOUR GLOW",
+            "title": "Diamonds That Speak Your Code",
+            "description": "Ethically crafted, stackable fine jewelry designed for your daily edit. Because you don’t need an excuse to shine.",
             "button_1_label": "Shop Daily Ice",
             "button_1_link": "",
             "button_2_label": "Discover the Vibe",
@@ -38,53 +50,12 @@
             "button_2_label": "Discover the Vibe",
             "button_2_link": ""
           }
-        },
-        "slide_FVQX8V": {
-          "type": "slide",
-          "settings": {
-            "alignment": "left",
-            "subheading": "OWN YOUR GLOW",
-            "title": "Diamonds That Speak Your Code",
-            "description": "Ethically crafted, stackable fine jewelry designed for your daily edit. Because you don’t need an excuse to shine.",
-            "button_1_label": "Shop Daily Ice",
-            "button_1_link": "",
-            "button_2_label": "Discover the Vibe",
-            "button_2_link": ""
-          }
-        },
-        "slide_BBJitT": {
-          "type": "slide",
-          "settings": {
-            "alignment": "left",
-            "subheading": "OWN YOUR GLOW",
-            "title": "Diamonds That Speak Your Code",
-            "description": "Ethically crafted, stackable fine jewelry designed for your daily edit. Because you don’t need an excuse to shine.",
-            "button_1_label": "Shop Daily Ice",
-            "button_1_link": "",
-            "button_2_label": "Discover the Vibe",
-            "button_2_link": ""
-          }
-        },
-        "slide_3apqTf": {
-          "type": "slide",
-          "settings": {
-            "alignment": "left",
-            "subheading": "OWN YOUR GLOW",
-            "title": "Diamonds That Speak Your Code",
-            "description": "Ethically crafted, stackable fine jewelry designed for your daily edit. Because you don’t need an excuse to shine.",
-            "button_1_label": "Shop Daily Ice",
-            "button_1_link": "",
-            "button_2_label": "Discover the Vibe",
-            "button_2_link": ""
-          }
         }
       },
       "block_order": [
         "slide_3mK94L",
-        "slide_TfG9ap",
-        "slide_FVQX8V",
-        "slide_BBJitT",
-        "slide_3apqTf"
+        "slide_AkqDUq",
+        "slide_TfG9ap"
       ],
       "settings": {
         "autoplay": true,
@@ -101,6 +72,7 @@
           "settings": {
             "number": "01",
             "title": "RINGS",
+            "link": "",
             "color_scheme": "cream"
           }
         },
@@ -109,6 +81,7 @@
           "settings": {
             "number": "02",
             "title": "EARRINGS",
+            "link": "",
             "color_scheme": "dark-green"
           }
         },
@@ -117,6 +90,7 @@
           "settings": {
             "number": "03",
             "title": "PENDANTS",
+            "link": "",
             "color_scheme": "cream"
           }
         },
@@ -125,6 +99,7 @@
           "settings": {
             "number": "04",
             "title": "TENNIS COLLECTION",
+            "link": "",
             "color_scheme": "dark-green"
           }
         }
@@ -148,30 +123,35 @@
         "ring": {
           "type": "collection",
           "settings": {
+            "collection": "",
             "title": "GOLD RINGS"
           }
         },
         "earring": {
           "type": "collection",
           "settings": {
+            "collection": "",
             "title": "GOLD EARRINGS"
           }
         },
         "necklace": {
           "type": "collection",
           "settings": {
+            "collection": "",
             "title": "GOLD NECKLACES"
           }
         },
         "bangle": {
           "type": "collection",
           "settings": {
+            "collection": "",
             "title": "GOLD BANGLES"
           }
         },
         "mangalsutra": {
           "type": "collection",
           "settings": {
+            "collection": "",
             "title": "MANGALSUTRA"
           }
         }
@@ -188,6 +168,7 @@
         "heading": "GOLD JEWELLERY",
         "description": "Classic designs crafted in pure gold, made for every celebration.",
         "button_label": "EXPLORE GOLD COLLECTION",
+        "button_link": "",
         "bg_color": "#fbf6f0",
         "text_color": "#0a2a26",
         "accent_color": "#b38245"
