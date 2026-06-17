@@ -95,6 +95,7 @@
     },
     "discover_grid": {
       "name": "Discover Category Grid",
+      "explore": "Explore",
       "settings": {
         "title": "Discover, Designed For You",
         "subheading": "Discover",

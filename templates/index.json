@@ -72,8 +72,9 @@
           "settings": {
             "number": "01",
             "title": "RINGS",
+            "description": "Explore exquisite ring designs for every moment.",
             "link": "",
-            "color_scheme": "cream"
+            "color_scheme": "dark-green"
           }
         },
         "earrings": {
@@ -81,6 +82,7 @@
           "settings": {
             "number": "02",
             "title": "EARRINGS",
+            "description": "Adorn yourself with elegant earring collections.",
             "link": "",
             "color_scheme": "dark-green"
           }
@@ -90,8 +92,9 @@
           "settings": {
             "number": "03",
             "title": "PENDANTS",
+            "description": "Discover unique pendant creations.",
             "link": "",
-            "color_scheme": "cream"
+            "color_scheme": "dark-green"
           }
         },
         "tennis": {
@@ -99,6 +102,7 @@
           "settings": {
             "number": "04",
             "title": "TENNIS COLLECTION",
+            "description": "A timeless selection of flawless tennis pieces.",
             "link": "",
             "color_scheme": "dark-green"
           }
