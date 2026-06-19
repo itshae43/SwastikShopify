@@ -172,6 +172,28 @@
           }
         }
       }
+    },
+    "store_highlights": {
+      "name": "Store Highlights",
+      "settings": {
+        "bg_color": "Background Color",
+        "border_color": "Border Color",
+        "icon_color": "Icon Color",
+        "text_color": "Text Color",
+        "desc_color": "Description Color",
+        "autoplay": "Enable Autoplay",
+        "autoplay_speed": "Autoplay Speed (seconds)"
+      },
+      "blocks": {
+        "highlight": {
+          "name": "Highlight Item",
+          "settings": {
+            "icon": "Icon",
+            "title": "Title",
+            "description": "Description"
+          }
+        }
+      }
     }
   }
 }

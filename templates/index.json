@@ -410,6 +410,65 @@
         "autoplay": true,
         "autoplay_speed": 6
       }
+    },
+    "store_highlights": {
+      "type": "store-highlights",
+      "blocks": {
+        "hallmark": {
+          "type": "highlight",
+          "settings": {
+            "icon": "hallmark",
+            "title": "BIS HALLMARKED",
+            "description": "100% certified gold you can trust."
+          }
+        },
+        "diamond": {
+          "type": "highlight",
+          "settings": {
+            "icon": "diamond",
+            "title": "CERTIFIED DIAMONDS",
+            "description": "Sourced with integrity, crafted to perfection."
+          }
+        },
+        "shipping": {
+          "type": "highlight",
+          "settings": {
+            "icon": "shipping",
+            "title": "WORLDWIDE SHIPPING",
+            "description": "Delivering your moments, wherever you are."
+          }
+        },
+        "exchange": {
+          "type": "highlight",
+          "settings": {
+            "icon": "exchange",
+            "title": "LIFETIME EXCHANGE",
+            "description": "Our promise of trust, forever."
+          }
+        },
+        "support": {
+          "type": "highlight",
+          "settings": {
+            "icon": "support",
+            "title": "EXPERT SUPPORT",
+            "description": "Here for you at every step of the way."
+          }
+        }
+      },
+      "block_order": [
+        "hallmark",
+        "diamond",
+        "shipping",
+        "exchange",
+        "support"
+      ],
+      "settings": {
+        "bg_color": "#fdfbf7",
+        "border_color": "#ebe7df",
+        "icon_color": "#b38245",
+        "text_color": "#0a2a26",
+        "desc_color": "#555555"
+      }
     }
   },
   "order": [
@@ -422,6 +481,7 @@
     "shop_by_occasion",
     "brand_story",
     "newsletter",
+    "store_highlights",
     "testimonials_slider",
     "expert_consultation"
   ]
