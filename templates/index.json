@@ -411,6 +411,46 @@
         "autoplay_speed": 6
       }
     },
+    "made_for_every_bond": {
+      "type": "made-for-every-bond",
+      "blocks": {
+        "mother": {
+          "type": "bond",
+          "settings": {
+            "title": "For Mothers",
+            "subtitle": "Her love, our forever.",
+            "icon": "mother"
+          }
+        },
+        "sister": {
+          "type": "bond",
+          "settings": {
+            "title": "For Sisters",
+            "subtitle": "Partners in all things.",
+            "icon": "sister"
+          }
+        },
+        "bride": {
+          "type": "bond",
+          "settings": {
+            "title": "For Brides",
+            "subtitle": "For the beginning of forever.",
+            "icon": "bride"
+          }
+        }
+      },
+      "block_order": [
+        "mother",
+        "sister",
+        "bride"
+      ],
+      "settings": {
+        "heading_main": "Made for",
+        "heading_accent": "Every Bond",
+        "description": "Beautiful jewellery for the people who make every moment special.",
+        "button_label": "Explore Collection"
+      }
+    },
     "store_highlights": {
       "type": "store-highlights",
       "blocks": {
@@ -481,6 +521,7 @@
     "shop_by_occasion",
     "brand_story",
     "newsletter",
+    "made_for_every_bond",
     "store_highlights",
     "testimonials_slider",
     "expert_consultation"
