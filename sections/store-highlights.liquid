@@ -178,8 +178,8 @@
     scroll-snap-type: x mandatory;
     scroll-behavior: smooth;
     -webkit-overflow-scrolling: touch;
-    padding-left: 2rem;
-    padding-right: 2rem;
+    padding-left: calc((100% - 280px) / 2);
+    padding-right: calc((100% - 280px) / 2);
     scrollbar-width: none;
     gap: 1.6rem;
   }
@@ -189,8 +189,7 @@
   .store-highlights__item {
     flex: 0 0 280px;
     padding: 2.4rem 2rem;
-    scroll-snap-align: start;
-    scroll-margin-left: 2rem;
+    scroll-snap-align: center;
     justify-content: flex-start;
     background: #ffffff;
     border-radius: 16px;
