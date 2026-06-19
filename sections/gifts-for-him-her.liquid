@@ -1,0 +1,509 @@
+{%- liquid
+  assign bg_color = section.settings.bg_color | default: '#fdfbf7'
+  assign text_color = section.settings.text_color | default: '#0a2a26'
+  assign accent_color = section.settings.accent_color | default: '#b38245'
+  assign border_color = section.settings.border_color | default: '#ebe7df'
+  
+  assign image_him = section.settings.image_him
+  assign image_her = section.settings.image_her
+  assign link_him = section.settings.link_him | default: '#'
+  assign link_her = section.settings.link_her | default: '#'
+-%}
+
+<div class="gifts-banner" style="--bg-color: {{ bg_color }}; --text-color: {{ text_color }}; --accent-color: {{ accent_color }}; --border-color: {{ border_color }};">
+  <div class="gifts-banner__wrapper">
+    <!-- Left Column (Him Image) -->
+    <a href="{{ link_him }}" class="gifts-banner__side gifts-banner__side--him" aria-label="Gifts for {{ section.settings.title_him | default: 'Him' }}">
+      <div class="gifts-banner__image-container">
+        {%- if image_him != blank -%}
+          {{ image_him | image_url: width: 800, height: 600, crop: 'center' | image_tag: loading: 'lazy', alt: 'Gifts for Him', class: 'gifts-banner__img' }}
+        {%- else -%}
+          <img src="{{ 'gifts_him.png' | asset_url }}" alt="Gifts for Him" loading="lazy" width="800" height="600" class="gifts-banner__img">
+        {%- endif -%}
+      </div>
+      <!-- Custom Wave Overlay Right -->
+      <svg class="gifts-banner__wave gifts-banner__wave--right" viewBox="0 0 100 500" preserveAspectRatio="none" aria-hidden="true">
+        <path d="M 100 0 L 100 500 L 100 500 C 60 420 0 330 0 250 C 0 170 60 80 100 0 Z" fill="var(--bg-color)" />
+      </svg>
+      <!-- Mobile Only Overlay Markup -->
+      <div class="gifts-banner__side-mobile-overlay">
+        <span class="gifts-banner__side-mobile-tagline">GIFTS FOR</span>
+        <h3 class="gifts-banner__side-mobile-title">
+          {{ section.settings.title_him | default: 'Him' | escape }}
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="5" y1="12" x2="19" y2="12"></line>
+            <polyline points="12 5 19 12 12 19"></polyline>
+          </svg>
+        </h3>
+      </div>
+    </a>
+
+    <!-- Center Content Column -->
+    <div class="gifts-banner__center">
+      <!-- Him Block -->
+      <a href="{{ link_him }}" class="gifts-banner__content-box gifts-banner__content-box--him">
+        <div class="gifts-banner__icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="20 12 20 22 4 22 4 12"></polyline>
+            <rect x="2" y="7" width="20" height="5"></rect>
+            <line x1="12" y1="22" x2="12" y2="7"></line>
+            <path d="M12 7H7.5a2.5 2.5 0 0 1 0-5C11 2 12 7 12 7z"></path>
+            <path d="M12 7h4.5a2.5 2.5 0 0 0 0-5C13 2 12 7 12 7z"></path>
+          </svg>
+        </div>
+        <span class="gifts-banner__tagline">GIFTS FOR</span>
+        <h3 class="gifts-banner__title">{{ section.settings.title_him | default: 'Him' | escape }}</h3>
+        <span class="gifts-banner__arrow">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="5" y1="12" x2="19" y2="12"></line>
+            <polyline points="12 5 19 12 12 19"></polyline>
+          </svg>
+        </span>
+      </a>
+
+      <!-- Symmetrical Center Divider -->
+      <div class="gifts-banner__divider" aria-hidden="true">
+        <span class="gifts-banner__divider-line"></span>
+        <div class="gifts-banner__emblem-circle">
+          <img src="{{ 'LogoSwastik.png' | asset_url }}" alt="Swastik Logo" width="36" height="36" class="gifts-banner__emblem-img">
+        </div>
+        <span class="gifts-banner__divider-line"></span>
+      </div>
+
+      <!-- Her Block -->
+      <a href="{{ link_her }}" class="gifts-banner__content-box gifts-banner__content-box--her">
+        <div class="gifts-banner__icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="20 12 20 22 4 22 4 12"></polyline>
+            <rect x="2" y="7" width="20" height="5"></rect>
+            <line x1="12" y1="22" x2="12" y2="7"></line>
+            <path d="M12 7H7.5a2.5 2.5 0 0 1 0-5C11 2 12 7 12 7z"></path>
+            <path d="M12 7h4.5a2.5 2.5 0 0 0 0-5C13 2 12 7 12 7z"></path>
+          </svg>
+        </div>
+        <span class="gifts-banner__tagline">GIFTS FOR</span>
+        <h3 class="gifts-banner__title">{{ section.settings.title_her | default: 'Her' | escape }}</h3>
+        <span class="gifts-banner__arrow">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="5" y1="12" x2="19" y2="12"></line>
+            <polyline points="12 5 19 12 12 19"></polyline>
+          </svg>
+        </span>
+      </a>
+    </div>
+
+    <!-- Right Column (Her Image) -->
+    <a href="{{ link_her }}" class="gifts-banner__side gifts-banner__side--her" aria-label="Gifts for {{ section.settings.title_her | default: 'Her' }}">
+      <div class="gifts-banner__image-container">
+        {%- if image_her != blank -%}
+          {{ image_her | image_url: width: 800, height: 600, crop: 'center' | image_tag: loading: 'lazy', alt: 'Gifts for Her', class: 'gifts-banner__img' }}
+        {%- else -%}
+          <img src="{{ 'gifts_her.png' | asset_url }}" alt="Gifts for Her" loading="lazy" width="800" height="600" class="gifts-banner__img">
+        {%- endif -%}
+      </div>
+      <!-- Custom Wave Overlay Left -->
+      <svg class="gifts-banner__wave gifts-banner__wave--left" viewBox="0 0 100 500" preserveAspectRatio="none" aria-hidden="true">
+        <path d="M 0 0 L 0 500 C 40 420 100 330 100 250 C 100 170 40 80 0 0 Z" fill="var(--bg-color)" />
+      </svg>
+      <!-- Mobile Only Overlay Markup -->
+      <div class="gifts-banner__side-mobile-overlay">
+        <span class="gifts-banner__side-mobile-tagline">GIFTS FOR</span>
+        <h3 class="gifts-banner__side-mobile-title">
+          {{ section.settings.title_her | default: 'Her' | escape }}
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="5" y1="12" x2="19" y2="12"></line>
+            <polyline points="12 5 19 12 12 19"></polyline>
+          </svg>
+        </h3>
+      </div>
+    </a>
+  </div>
+</div>
+
+{% stylesheet %}
+.gifts-banner {
+  background-color: var(--bg-color);
+  padding: 0 48px;
+  width: 100%;
+  box-sizing: border-box;
+  margin: 60px 0;
+}
+
+.gifts-banner__wrapper {
+  display: flex;
+  background-color: var(--bg-color);
+  border-radius: 28px;
+  overflow: hidden;
+  height: 380px;
+  position: relative;
+  border: 1px solid rgba(179, 130, 69, 0.08);
+  box-shadow: 0 15px 45px rgba(10, 42, 38, 0.03);
+}
+
+.gifts-banner__side {
+  flex: 1 1 38%;
+  position: relative;
+  overflow: hidden;
+  display: block;
+  height: 100%;
+}
+
+.gifts-banner__image-container {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+.gifts-banner__img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.8s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+.gifts-banner__side:hover .gifts-banner__img {
+  transform: scale(1.04);
+}
+
+/* Wave Overlays */
+.gifts-banner__wave {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 100px;
+  height: 100%;
+  z-index: 2;
+  pointer-events: none;
+}
+
+.gifts-banner__wave--right {
+  right: -1px;
+}
+
+.gifts-banner__wave--left {
+  left: -1px;
+}
+
+/* Center Column */
+.gifts-banner__center {
+  flex: 0 0 320px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  z-index: 3;
+  padding: 0 10px;
+  box-sizing: border-box;
+}
+
+.gifts-banner__content-box {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  text-decoration: none;
+  width: 110px;
+  transition: transform 0.3s ease;
+}
+
+.gifts-banner__content-box:hover {
+  transform: translateY(-3px);
+}
+
+.gifts-banner__icon {
+  width: 32px;
+  height: 32px;
+  color: var(--accent-color);
+  margin-bottom: 12px;
+  transition: transform 0.3s ease;
+}
+
+.gifts-banner__content-box:hover .gifts-banner__icon {
+  transform: scale(1.08);
+}
+
+.gifts-banner__icon svg {
+  width: 100%;
+  height: 100%;
+}
+
+.gifts-banner__tagline {
+  font-family: 'Inter', sans-serif;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.15em;
+  color: var(--accent-color);
+  margin-bottom: 6px;
+}
+
+.gifts-banner__title {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: 38px;
+  font-weight: 500;
+  color: var(--text-color);
+  margin: 0 0 12px 0;
+  line-height: 1.1;
+}
+
+.gifts-banner__arrow {
+  width: 22px;
+  height: 22px;
+  color: var(--accent-color);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.3s ease;
+}
+
+.gifts-banner__arrow svg {
+  width: 100%;
+  height: 100%;
+}
+
+.gifts-banner__content-box:hover .gifts-banner__arrow {
+  transform: translateX(4px);
+}
+
+/* Center Symmetrical Divider */
+.gifts-banner__divider {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 80%;
+  width: 70px;
+  justify-content: space-between;
+  margin: 0 10px;
+}
+
+.gifts-banner__divider-line {
+  width: 1px;
+  flex-grow: 1;
+  background-color: var(--accent-color);
+  opacity: 0.25;
+}
+
+.gifts-banner__emblem-circle {
+  width: 58px;
+  height: 58px;
+  border-radius: 50%;
+  border: 1px solid rgba(179, 130, 69, 0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--accent-color);
+  margin: 15px 0;
+  background-color: var(--bg-color);
+}
+
+.gifts-banner__emblem-img {
+  width: 36px;
+  height: 36px;
+  object-fit: contain;
+}
+
+.gifts-banner__side-mobile-overlay {
+  display: none;
+}
+
+/* Responsiveness */
+@media screen and (max-width: 1024px) {
+  .gifts-banner {
+    padding: 0 24px;
+    margin: 40px 0;
+  }
+  .gifts-banner__wrapper {
+    height: 320px;
+  }
+  .gifts-banner__center {
+    flex: 0 0 280px;
+  }
+  .gifts-banner__title {
+    font-size: 32px;
+  }
+  .gifts-banner__emblem-circle {
+    width: 48px;
+    height: 48px;
+  }
+  .gifts-banner__emblem-circle svg {
+    width: 26px;
+    height: 26px;
+  }
+  .gifts-banner__wave {
+    width: 75px;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .gifts-banner {
+    padding: 0 20px;
+    margin: 30px 0;
+  }
+  
+  .gifts-banner__wrapper {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    height: auto;
+    border-radius: 20px;
+    gap: 16px;
+    background-color: transparent;
+    border: none;
+    box-shadow: none;
+  }
+  
+  .gifts-banner__side {
+    flex: none;
+    width: 100%;
+    aspect-ratio: 1 / 1.15;
+    border-radius: 16px;
+    border: 1px solid rgba(179, 130, 69, 0.08);
+    box-shadow: 0 8px 24px rgba(10, 42, 38, 0.03);
+    position: relative;
+  }
+  
+  /* Hide wave overlays and center column on mobile */
+  .gifts-banner__wave {
+    display: none;
+  }
+  .gifts-banner__center {
+    display: none;
+  }
+  
+  /* Mobile Overlay Card (renders over the image side) */
+  .gifts-banner__side::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(to top, rgba(10, 42, 38, 0.6) 0%, rgba(10, 42, 38, 0.1) 60%, transparent 100%);
+    z-index: 1;
+    pointer-events: none;
+  }
+  
+  /* Instead of complex absolute CSS we dynamically render text inside .gifts-banner__side on mobile, 
+     but since .gifts-banner__side only has image_container and wave inside in Liquid, 
+     we can inject an overlay text block inside the link directly! */
+  .gifts-banner__side-mobile-overlay {
+    position: absolute;
+    left: 16px;
+    right: 16px;
+    bottom: 16px;
+    z-index: 3;
+    display: flex;
+    flex-direction: column;
+    color: #ffffff;
+    pointer-events: none;
+  }
+  
+  .gifts-banner__side-mobile-tagline {
+    font-family: 'Inter', sans-serif;
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    color: var(--accent-color);
+    text-transform: uppercase;
+    margin-bottom: 2px;
+  }
+  
+  .gifts-banner__side-mobile-title {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: 22px;
+    font-weight: 500;
+    margin: 0;
+    color: #ffffff;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  
+  .gifts-banner__side-mobile-title svg {
+    width: 18px;
+    height: 18px;
+    color: var(--accent-color);
+  }
+}
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Gifts for Him & Her",
+  "class": "section",
+  "tag": "section",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Left Block (Him)"
+    },
+    {
+      "type": "image_picker",
+      "id": "image_him",
+      "label": "Image (Him)"
+    },
+    {
+      "type": "text",
+      "id": "title_him",
+      "label": "Title (Him)",
+      "default": "Him"
+    },
+    {
+      "type": "url",
+      "id": "link_him",
+      "label": "Link (Him)"
+    },
+    {
+      "type": "header",
+      "content": "Right Block (Her)"
+    },
+    {
+      "type": "image_picker",
+      "id": "image_her",
+      "label": "Image (Her)"
+    },
+    {
+      "type": "text",
+      "id": "title_her",
+      "label": "Title (Her)",
+      "default": "Her"
+    },
+    {
+      "type": "url",
+      "id": "link_her",
+      "label": "Link (Her)"
+    },
+    {
+      "type": "header",
+      "content": "Design Styling"
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Background Color",
+      "default": "#fdfbf7"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text Color",
+      "default": "#0a2a26"
+    },
+    {
+      "type": "color",
+      "id": "accent_color",
+      "label": "Accent Color",
+      "default": "#b38245"
+    },
+    {
+      "type": "color",
+      "id": "border_color",
+      "label": "Border Color",
+      "default": "#ebe7df"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Gifts for Him & Her"
+    }
+  ]
+}
+{% endschema %}
