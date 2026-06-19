@@ -123,6 +123,30 @@
           }
         }
       }
+    },
+    "testimonials_slider": {
+      "name": "Testimonials Slider",
+      "settings": {
+        "title": "Heading",
+        "subheading": "Subheading",
+        "description": "Description",
+        "bg_color": "Background Color",
+        "text_color": "Text Color",
+        "accent_color": "Accent Color",
+        "autoplay": "Enable Autoplay",
+        "autoplay_speed": "Autoplay Speed (seconds)"
+      },
+      "blocks": {
+        "testimonial": {
+          "name": "Testimonial Card",
+          "settings": {
+            "rating": "Rating (Stars)",
+            "text": "Review Text",
+            "author": "Author Name",
+            "location": "Location"
+          }
+        }
+      }
     }
   }
 }
