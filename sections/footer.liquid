@@ -3,7 +3,7 @@
   Styled on a dark brand green background with gold/accent headings and elegant hover states.
 {% endcomment %}
 
-<footer class="footer-wrapper">
+<footer class="footer-wrapper" style="--footer-bg: {{ section.settings.color_footer_bg }}; --footer-text: {{ section.settings.color_footer_text }}; --footer-accent-setting: {{ section.settings.color_footer_accent }};">
   <div class="footer container">
     <div class="footer__grid">
       <!-- Col 1: Brand Info & Social Links -->
@@ -133,8 +133,9 @@
 
 {% stylesheet %}
   .footer-wrapper {
-    background-color: var(--color-primary, #002E28);
-    color: var(--color-secondary-bg, #FDFBF7);
+    background-color: var(--footer-bg, #013F3E);
+    color: var(--footer-text, var(--color-secondary-bg, #FDFBF7));
+    --footer-accent: var(--footer-accent-setting, var(--color-accent, #D4AF37));
     padding-top: 6.5rem;
     padding-bottom: 3rem;
     border-top: 1px solid rgba(255, 255, 255, 0.05);
@@ -166,7 +167,7 @@
 
   /* Typography */
   .footer__logo {
-    color: var(--color-accent, #D4AF37);
+    color: var(--footer-accent);
     font-family: 'Playfair Display', Georgia, serif;
     font-size: 2.2rem;
     font-weight: 700;
@@ -175,7 +176,7 @@
   }
 
   .footer__heading {
-    color: var(--color-accent, #D4AF37);
+    color: var(--footer-accent);
     font-family: 'Playfair Display', Georgia, serif;
     font-size: 1.8rem;
     font-weight: 600;
@@ -211,7 +212,7 @@
   }
 
   .footer__link:hover {
-    color: var(--color-accent, #D4AF37);
+    color: var(--footer-accent);
     transform: translateX(4px);
   }
 
@@ -238,8 +239,8 @@
 
   .footer__social-link:hover {
     background-color: rgba(212, 175, 55, 0.15);
-    border-color: var(--color-accent, #D4AF37);
-    color: var(--color-accent, #D4AF37);
+    border-color: var(--footer-accent);
+    color: var(--footer-accent);
     transform: translateY(-2px);
   }
 
@@ -264,7 +265,7 @@
   .footer__contact-item svg {
     width: 1.8rem;
     height: 1.8rem;
-    color: var(--color-accent, #D4AF37);
+    color: var(--footer-accent);
     flex-shrink: 0;
     margin-top: 0.2rem;
   }
@@ -284,7 +285,7 @@
   }
 
   .footer__contact-link-text:hover {
-    color: var(--color-accent, #D4AF37);
+    color: var(--footer-accent);
   }
 
   /* Footer Bottom Details */
@@ -309,7 +310,7 @@
   }
 
   .footer__bottom-link:hover {
-    color: var(--color-accent, #D4AF37);
+    color: var(--footer-accent);
   }
 
   /* Responsive Adjustments */
@@ -459,6 +460,28 @@
       "type": "url",
       "id": "sitemap_url",
       "label": "Sitemap URL"
+    },
+    {
+      "type": "header",
+      "content": "Footer Colors"
+    },
+    {
+      "type": "color",
+      "id": "color_footer_bg",
+      "label": "Background Color",
+      "default": "#013F3E"
+    },
+    {
+      "type": "color",
+      "id": "color_footer_text",
+      "label": "Text Color",
+      "default": "#FDFBF7"
+    },
+    {
+      "type": "color",
+      "id": "color_footer_accent",
+      "label": "Accent Color",
+      "default": "#D4AF37"
     }
   ]
 }
