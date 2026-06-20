@@ -30,6 +30,7 @@
           "type": "slide",
           "settings": {
             "image_desktop": "shopify://shop_images/b2_champagne_gold_bg.png",
+            "image_mobile": "shopify://shop_images/B3.png",
             "alignment": "left",
             "subheading": "",
             "title": "",
@@ -323,7 +324,7 @@
         "link_him": "",
         "title_her": "Her",
         "link_her": "",
-        "bg_color": "#F8F5EF",
+        "bg_color": "#f8f5ef",
         "text_color": "#0a2a26",
         "accent_color": "#b38245",
         "border_color": "#ebe7df"
