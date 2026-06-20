@@ -3,7 +3,7 @@
   Styled on a dark brand green background with gold/accent headings and elegant hover states.
 {% endcomment %}
 
-<footer class="footer-wrapper" style="--footer-bg: {{ section.settings.color_footer_bg }}; --footer-text: {{ section.settings.color_footer_text }}; --footer-accent-setting: {{ section.settings.color_footer_accent }};">
+<footer class="footer-wrapper" style="{% if section.settings.color_footer_bg != blank %}--footer-bg: {{ section.settings.color_footer_bg }};{% endif %} {% if section.settings.color_footer_text != blank %}--footer-text: {{ section.settings.color_footer_text }};{% endif %} {% if section.settings.color_footer_accent != blank %}--footer-accent-setting: {{ section.settings.color_footer_accent }};{% endif %}">
   <div class="footer container">
     <div class="footer__grid">
       <!-- Col 1: Brand Info & Social Links -->
