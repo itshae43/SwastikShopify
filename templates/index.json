@@ -323,7 +323,7 @@
         "link_him": "",
         "title_her": "Her",
         "link_her": "",
-        "bg_color": "#fdfbf7",
+        "bg_color": "#F8F5EF",
         "text_color": "#0a2a26",
         "accent_color": "#b38245",
         "border_color": "#ebe7df"
@@ -516,56 +516,6 @@
         "autoplay": true,
         "autoplay_speed": 6
       }
-    },
-    "expert_consultation": {
-      "type": "expert-consultation",
-      "blocks": {
-        "phone_call": {
-          "type": "contact_option",
-          "settings": {
-            "title": "Phone Call",
-            "description": "Speak directly with our experts",
-            "icon": "phone",
-            "link": "tel:+1234567890"
-          }
-        },
-        "whatsapp_chat": {
-          "type": "contact_option",
-          "settings": {
-            "title": "WhatsApp Chat",
-            "description": "Quick assistance on the go",
-            "icon": "whatsapp",
-            "link": "https://wa.me/1234567890"
-          }
-        },
-        "video_call": {
-          "type": "contact_option",
-          "settings": {
-            "title": "Video Call",
-            "description": "Virtual jewelry viewing",
-            "icon": "video",
-            "link": "#"
-          }
-        }
-      },
-      "block_order": [
-        "phone_call",
-        "whatsapp_chat",
-        "video_call"
-      ],
-      "settings": {
-        "subheading": "PERSONALIZED SERVICE",
-        "title": "Not Sure What to Choose?",
-        "description": "Our certified jewelry experts are here to help you find the perfect piece. Get personalized recommendations based on your preferences and budget.",
-        "button_text": "Book Free Consultation",
-        "button_link": "",
-        "sub_text": "Available Mon-Sat, 10 AM - 8 PM | Free Expert Advice",
-        "bg_color": "#ebf5f4",
-        "text_color": "#013f3e",
-        "card_bg_color": "#ffffff",
-        "btn_bg_color": "#013f3e",
-        "btn_text_color": "#ffffff"
-      }
     }
   },
   "order": [
@@ -581,7 +531,6 @@
     "gifts_for_him_her",
     "made_for_every_bond",
     "store_highlights",
-    "testimonials_slider",
-    "expert_consultation"
+    "testimonials_slider"
   ]
 }
