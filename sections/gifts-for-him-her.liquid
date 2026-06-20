@@ -359,11 +359,57 @@
   }
   
   .gifts-banner__side::after {
-    display: none;
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(to top, rgba(10, 42, 38, 0.6) 0%, rgba(10, 42, 38, 0.15) 60%, transparent 100%);
+    z-index: 2;
+    pointer-events: none;
+    display: block;
   }
   
   .gifts-banner__side-mobile-overlay {
-    display: none;
+    position: absolute;
+    left: 20px;
+    right: 20px;
+    bottom: 18px;
+    z-index: 3;
+    display: flex;
+    flex-direction: column;
+    color: #ffffff;
+    pointer-events: none;
+  }
+  
+  .gifts-banner__side-mobile-tagline {
+    font-family: 'Inter', sans-serif;
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 0.2em;
+    color: var(--accent-color);
+    text-transform: uppercase;
+    margin-bottom: 2px;
+  }
+  
+  .gifts-banner__side-mobile-title {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: 24px;
+    font-weight: 400;
+    margin: 0;
+    color: #ffffff;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    text-transform: uppercase;
+  }
+  
+  .gifts-banner__side-mobile-title svg {
+    width: 18px;
+    height: 18px;
+    stroke: var(--accent-color);
+    display: inline-block;
   }
   
   .gifts-banner__side--him .gifts-banner__img,
