@@ -28,10 +28,11 @@
         "slide_AkqDUq": {
           "type": "slide",
           "settings": {
+            "image_desktop": "shopify://shop_images/b1_champagne_gold_bg_with_model.png",
             "alignment": "left",
-            "subheading": "OWN YOUR GLOW",
-            "title": "Diamonds That Speak Your Code",
-            "description": "Ethically crafted, stackable fine jewelry designed for your daily edit. Because you don’t need an excuse to shine.",
+            "subheading": "",
+            "title": "",
+            "description": "",
             "button_1_label": "Shop Daily Ice",
             "button_1_link": "",
             "button_2_label": "Discover the Vibe",
@@ -41,10 +42,11 @@
         "slide_aXRXT9": {
           "type": "slide",
           "settings": {
+            "image_desktop": "shopify://shop_images/b1_green_bg_with_model.png",
             "alignment": "left",
-            "subheading": "OWN YOUR GLOW",
-            "title": "Diamonds That Speak Your Code",
-            "description": "Ethically crafted, stackable fine jewelry designed for your daily edit. Because you don’t need an excuse to shine.",
+            "subheading": "",
+            "title": "",
+            "description": "",
             "button_1_label": "Shop Daily Ice",
             "button_1_link": "",
             "button_2_label": "Discover the Vibe",
@@ -284,54 +286,128 @@
         "description": "Subscribe to receive early access to new collection launches, trunk shows, and private exhibitions."
       }
     },
-    "expert_consultation": {
-      "type": "expert-consultation",
+    "gifts_for_him_her": {
+      "type": "gifts-for-him-her",
+      "settings": {
+        "title_him": "Him",
+        "link_him": "",
+        "title_her": "Her",
+        "link_her": "",
+        "bg_color": "#fdfbf7",
+        "text_color": "#0a2a26",
+        "accent_color": "#b38245",
+        "border_color": "#ebe7df"
+      }
+    },
+    "made_for_every_bond": {
+      "type": "made-for-every-bond",
       "blocks": {
-        "phone_call": {
-          "type": "contact_option",
+        "mother": {
+          "type": "bond",
           "settings": {
-            "title": "Phone Call",
-            "description": "Speak directly with our experts",
-            "icon": "phone",
-            "link": "tel:+1234567890"
+            "title": "For Mothers",
+            "subtitle": "Her love, our forever.",
+            "link": "",
+            "icon": "mother",
+            "custom_icon_svg": ""
           }
         },
-        "whatsapp_chat": {
-          "type": "contact_option",
+        "sister": {
+          "type": "bond",
           "settings": {
-            "title": "WhatsApp Chat",
-            "description": "Quick assistance on the go",
-            "icon": "whatsapp",
-            "link": "https://wa.me/1234567890"
+            "title": "For Sisters",
+            "subtitle": "Partners in all things.",
+            "link": "",
+            "icon": "sister",
+            "custom_icon_svg": ""
           }
         },
-        "video_call": {
-          "type": "contact_option",
+        "bride": {
+          "type": "bond",
           "settings": {
-            "title": "Video Call",
-            "description": "Virtual jewelry viewing",
-            "icon": "video",
-            "link": "#"
+            "title": "For Brides",
+            "subtitle": "For the beginning of forever.",
+            "link": "",
+            "icon": "bride",
+            "custom_icon_svg": ""
           }
         }
       },
       "block_order": [
-        "phone_call",
-        "whatsapp_chat",
-        "video_call"
+        "mother",
+        "sister",
+        "bride"
       ],
       "settings": {
-        "subheading": "PERSONALIZED SERVICE",
-        "title": "Not Sure What to Choose?",
-        "description": "Our certified jewelry experts are here to help you find the perfect piece. Get personalized recommendations based on your preferences and budget.",
-        "button_text": "Book Free Consultation",
+        "heading_main": "Made for",
+        "heading_accent": "Every Bond",
+        "description": "Beautiful jewellery for the people who make every moment special.",
+        "button_label": "Explore Collection",
         "button_link": "",
-        "sub_text": "Available Mon-Sat, 10 AM - 8 PM | Free Expert Advice",
-        "bg_color": "#ebf5f4",
-        "text_color": "#013f3e",
-        "card_bg_color": "#ffffff",
-        "btn_bg_color": "#013f3e",
-        "btn_text_color": "#ffffff"
+        "bg_color": "#fdfbf7",
+        "text_color": "#0a2a26",
+        "accent_color": "#b38245"
+      }
+    },
+    "store_highlights": {
+      "type": "store-highlights",
+      "blocks": {
+        "hallmark": {
+          "type": "highlight",
+          "settings": {
+            "icon": "hallmark",
+            "title": "BIS HALLMARKED",
+            "description": "100% certified gold you can trust."
+          }
+        },
+        "diamond": {
+          "type": "highlight",
+          "settings": {
+            "icon": "diamond",
+            "title": "CERTIFIED DIAMONDS",
+            "description": "Sourced with integrity, crafted to perfection."
+          }
+        },
+        "shipping": {
+          "type": "highlight",
+          "settings": {
+            "icon": "shipping",
+            "title": "WORLDWIDE SHIPPING",
+            "description": "Delivering your moments, wherever you are."
+          }
+        },
+        "exchange": {
+          "type": "highlight",
+          "settings": {
+            "icon": "exchange",
+            "title": "LIFETIME EXCHANGE",
+            "description": "Our promise of trust, forever."
+          }
+        },
+        "support": {
+          "type": "highlight",
+          "settings": {
+            "icon": "support",
+            "title": "EXPERT SUPPORT",
+            "description": "Here for you at every step of the way."
+          }
+        }
+      },
+      "block_order": [
+        "hallmark",
+        "diamond",
+        "shipping",
+        "exchange",
+        "support"
+      ],
+      "settings": {
+        "bg_color": "#fdfbf7",
+        "border_color": "#ebe7df",
+        "icon_color": "#b38245",
+        "text_color": "#0a2a26",
+        "desc_color": "#555555",
+        "autoplay": true,
+        "autoplay_speed": 4
       }
     },
     "testimonials_slider": {
@@ -411,110 +487,54 @@
         "autoplay_speed": 6
       }
     },
-    "gifts_for_him_her": {
-      "type": "gifts-for-him-her",
-      "settings": {
-        "title_him": "Him",
-        "title_her": "Her"
-      }
-    },
-    "made_for_every_bond": {
-      "type": "made-for-every-bond",
+    "expert_consultation": {
+      "type": "expert-consultation",
       "blocks": {
-        "mother": {
-          "type": "bond",
+        "phone_call": {
+          "type": "contact_option",
           "settings": {
-            "title": "For Mothers",
-            "subtitle": "Her love, our forever.",
-            "icon": "mother"
+            "title": "Phone Call",
+            "description": "Speak directly with our experts",
+            "icon": "phone",
+            "link": "tel:+1234567890"
           }
         },
-        "sister": {
-          "type": "bond",
+        "whatsapp_chat": {
+          "type": "contact_option",
           "settings": {
-            "title": "For Sisters",
-            "subtitle": "Partners in all things.",
-            "icon": "sister"
+            "title": "WhatsApp Chat",
+            "description": "Quick assistance on the go",
+            "icon": "whatsapp",
+            "link": "https://wa.me/1234567890"
           }
         },
-        "bride": {
-          "type": "bond",
+        "video_call": {
+          "type": "contact_option",
           "settings": {
-            "title": "For Brides",
-            "subtitle": "For the beginning of forever.",
-            "icon": "bride"
+            "title": "Video Call",
+            "description": "Virtual jewelry viewing",
+            "icon": "video",
+            "link": "#"
           }
         }
       },
       "block_order": [
-        "mother",
-        "sister",
-        "bride"
+        "phone_call",
+        "whatsapp_chat",
+        "video_call"
       ],
       "settings": {
-        "heading_main": "Made for",
-        "heading_accent": "Every Bond",
-        "description": "Beautiful jewellery for the people who make every moment special.",
-        "button_label": "Explore Collection"
-      }
-    },
-    "store_highlights": {
-      "type": "store-highlights",
-      "blocks": {
-        "hallmark": {
-          "type": "highlight",
-          "settings": {
-            "icon": "hallmark",
-            "title": "BIS HALLMARKED",
-            "description": "100% certified gold you can trust."
-          }
-        },
-        "diamond": {
-          "type": "highlight",
-          "settings": {
-            "icon": "diamond",
-            "title": "CERTIFIED DIAMONDS",
-            "description": "Sourced with integrity, crafted to perfection."
-          }
-        },
-        "shipping": {
-          "type": "highlight",
-          "settings": {
-            "icon": "shipping",
-            "title": "WORLDWIDE SHIPPING",
-            "description": "Delivering your moments, wherever you are."
-          }
-        },
-        "exchange": {
-          "type": "highlight",
-          "settings": {
-            "icon": "exchange",
-            "title": "LIFETIME EXCHANGE",
-            "description": "Our promise of trust, forever."
-          }
-        },
-        "support": {
-          "type": "highlight",
-          "settings": {
-            "icon": "support",
-            "title": "EXPERT SUPPORT",
-            "description": "Here for you at every step of the way."
-          }
-        }
-      },
-      "block_order": [
-        "hallmark",
-        "diamond",
-        "shipping",
-        "exchange",
-        "support"
-      ],
-      "settings": {
-        "bg_color": "#fdfbf7",
-        "border_color": "#ebe7df",
-        "icon_color": "#b38245",
-        "text_color": "#0a2a26",
-        "desc_color": "#555555"
+        "subheading": "PERSONALIZED SERVICE",
+        "title": "Not Sure What to Choose?",
+        "description": "Our certified jewelry experts are here to help you find the perfect piece. Get personalized recommendations based on your preferences and budget.",
+        "button_text": "Book Free Consultation",
+        "button_link": "",
+        "sub_text": "Available Mon-Sat, 10 AM - 8 PM | Free Expert Advice",
+        "bg_color": "#ebf5f4",
+        "text_color": "#013f3e",
+        "card_bg_color": "#ffffff",
+        "btn_bg_color": "#013f3e",
+        "btn_text_color": "#ffffff"
       }
     }
   },
