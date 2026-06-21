@@ -15,7 +15,7 @@
         "slide_4nCgnb": {
           "type": "slide",
           "settings": {
-            "image_desktop": "shopify://shop_images/b2_green_bg.png",
+            "image_desktop": "shopify://shop_images/b1_champagne_gold_bg_with_model.png",
             "alignment": "left",
             "subheading": "",
             "title": "",
@@ -104,8 +104,15 @@
           "type": "collection_card",
           "settings": {
             "title": "CLAY WHISPERS",
+            "subtitle": "",
+            "link": "",
             "text_position": "middle-center",
-            "title_style": "white"
+            "title_style": "white",
+            "custom_title_color": "#ffffff",
+            "subtitle_color": "#ffffff",
+            "title_font_size_desktop": 28,
+            "title_font_size_mobile": 20,
+            "title_font_weight": "400"
           }
         },
         "gemphony": {
@@ -113,16 +120,29 @@
           "settings": {
             "title": "GEMPHONY",
             "subtitle": "EVERY COLOR IS AN EMOTION",
+            "link": "",
             "text_position": "bottom-center",
-            "title_style": "gradient"
+            "title_style": "gradient",
+            "custom_title_color": "#ffffff",
+            "subtitle_color": "#ffffff",
+            "title_font_size_desktop": 28,
+            "title_font_size_mobile": 20,
+            "title_font_weight": "400"
           }
         },
         "raw_reverie": {
           "type": "collection_card",
           "settings": {
             "title": "RAW REVERIE",
+            "subtitle": "",
+            "link": "",
             "text_position": "middle-right",
-            "title_style": "gold"
+            "title_style": "gold",
+            "custom_title_color": "#ffffff",
+            "subtitle_color": "#ffffff",
+            "title_font_size_desktop": 28,
+            "title_font_size_mobile": 20,
+            "title_font_weight": "400"
           }
         }
       },
@@ -132,7 +152,16 @@
         "raw_reverie"
       ],
       "settings": {
-        "title": "Browse Latest Jewellery Collections"
+        "title": "Browse Latest Jewellery Collections",
+        "bg_color": "#ffffff",
+        "padding_top": 60,
+        "padding_bottom": 60,
+        "button_label": "Browse Collections",
+        "button_link": "",
+        "btn_bg_color": "#013f3e",
+        "btn_text_color": "#ffffff",
+        "btn_hover_bg_color": "#025654",
+        "btn_hover_text_color": "#ffffff"
       }
     },
     "discover_grid": {
