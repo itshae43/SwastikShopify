@@ -96,6 +96,44 @@
         "overlay_opacity": 10
       }
     },
+    "latest_collections": {
+      "type": "latest-collections",
+      "blocks": {
+        "clay_whispers": {
+          "type": "collection_card",
+          "settings": {
+            "title": "CLAY WHISPERS",
+            "text_position": "middle-center",
+            "title_style": "white"
+          }
+        },
+        "gemphony": {
+          "type": "collection_card",
+          "settings": {
+            "title": "GEMPHONY",
+            "subtitle": "EVERY COLOR IS AN EMOTION",
+            "text_position": "bottom-center",
+            "title_style": "gradient"
+          }
+        },
+        "raw_reverie": {
+          "type": "collection_card",
+          "settings": {
+            "title": "RAW REVERIE",
+            "text_position": "middle-right",
+            "title_style": "gold"
+          }
+        }
+      },
+      "block_order": [
+        "clay_whispers",
+        "gemphony",
+        "raw_reverie"
+      ],
+      "settings": {
+        "title": "Browse Latest Jewellery Collections"
+      }
+    },
     "discover_grid": {
       "type": "discover-grid",
       "blocks": {
@@ -520,6 +558,7 @@
   },
   "order": [
     "hero_banner",
+    "latest_collections",
     "discover_grid",
     "gold_collection_showcase",
     "new_arrivals",

@@ -306,12 +306,12 @@
 
 {% stylesheet %}
   .header-section-wrapper {
-    background-color: var(--color-primary, #002E28);
+    background-color: #FFFFFF;
     position: sticky;
     top: 0;
     z-index: 100;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
-    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+    border-bottom: 1px solid rgba(0, 46, 40, 0.08);
   }
 
   .header-section-wrapper:has(.announcement-bar) {
@@ -320,8 +320,8 @@
 
   /* Announcement Bar */
   .announcement-bar {
-    background-color: #FAF8F2;
-    color: var(--color-primary, #002E28);
+    background-color: #013F3E;
+    color: #FFFFFF;
     height: 3.6rem;
     padding: 0 4.0rem;
     border-bottom: 1px solid rgba(0, 46, 40, 0.06);
@@ -369,7 +369,7 @@
     font-weight: 600;
     letter-spacing: 0.1em;
     text-transform: uppercase;
-    color: var(--color-primary, #002E28);
+    color: #FFFFFF;
     font-variant-numeric: lining-nums;
     -moz-font-feature-settings: "lnum";
     -webkit-font-feature-settings: "lnum";
@@ -474,7 +474,7 @@
     font-weight: 400;
     text-transform: uppercase;
     letter-spacing: 0.1em;
-    color: rgba(255, 255, 255, 0.9);
+    color: var(--color-primary, #002E28);
     text-decoration: none;
     display: flex;
     align-items: center;
@@ -502,8 +502,8 @@
     top: 100%;
     left: 50%;
     transform: translateX(-50%) translateY(10px);
-    background-color: #002520;
-    border: 1px solid rgba(212, 175, 55, 0.2);
+    background-color: #FFFFFF;
+    border: 1px solid rgba(0, 46, 40, 0.1);
     border-radius: 4px;
     padding: 1rem 0;
     min-width: 18rem;
@@ -513,7 +513,7 @@
     visibility: hidden;
     transition: opacity 0.25s ease, transform 0.25s ease, visibility 0.25s;
     z-index: 110;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.45);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
   }
   .header__menu-item:hover .header__dropdown-menu {
     opacity: 1;
@@ -529,7 +529,7 @@
     font-family: 'Montserrat', sans-serif;
     font-size: 1.2rem;
     font-weight: 600;
-    color: rgba(255, 255, 255, 0.8);
+    color: var(--color-primary, #002E28);
     text-decoration: none;
     text-transform: uppercase;
     letter-spacing: 0.08em;
@@ -537,7 +537,7 @@
   }
   .header__dropdown-menu a:hover {
     color: var(--color-accent, #D4AF37);
-    background-color: rgba(255, 255, 255, 0.02);
+    background-color: rgba(0, 46, 40, 0.03);
     padding-left: 2.6rem;
   }
 
@@ -556,20 +556,20 @@
     align-items: center;
     gap: 0.8rem;
     border: 1px solid rgba(212, 175, 55, 0.25);
-    background-color: rgba(255, 255, 255, 0.03);
+    background-color: rgba(0, 46, 40, 0.02);
     padding: 0.6rem 1.4rem;
     border-radius: 2rem;
     font-family: 'Montserrat', sans-serif;
     font-size: 1.2rem;
     font-weight: 500;
-    color: rgba(255, 255, 255, 0.9);
+    color: var(--color-primary, #002E28);
     cursor: default;
     transition: border-color 0.25s ease, background-color 0.25s ease;
     white-space: nowrap;
   }
   .header__gold-price:hover {
     border-color: rgba(212, 175, 55, 0.5);
-    background-color: rgba(255, 255, 255, 0.05);
+    background-color: rgba(0, 46, 40, 0.05);
   }
   .gold-dot {
     width: 0.6rem;
@@ -585,7 +585,7 @@
   /* Icons styling */
   .header__icon-link {
     display: block;
-    color: #FFFFFF;
+    color: var(--color-primary, #002E28);
     position: relative;
     transition: color 0.25s ease, transform 0.25s ease;
     text-decoration: none;
@@ -788,7 +788,7 @@
       justify-content: center;
       background: none;
       border: none;
-      color: #FFFFFF;
+      color: var(--color-primary, #002E28);
       cursor: pointer;
       padding: 0.6rem;
       justify-self: start;
