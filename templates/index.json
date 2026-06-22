@@ -12,6 +12,20 @@
     "hero_banner": {
       "type": "hero-banner",
       "blocks": {
+        "slide_YgGhMt": {
+          "type": "slide",
+          "settings": {
+            "image_desktop": "shopify://shop_images/ChatGPT_Image_Jun_22_2026_02_31_51_PM.png",
+            "alignment": "left",
+            "subheading": "",
+            "title": "",
+            "description": "",
+            "button_1_label": "",
+            "button_1_link": "",
+            "button_2_label": "Discover the Vibe",
+            "button_2_link": ""
+          }
+        },
         "slide_aXRXT9": {
           "type": "slide",
           "settings": {
@@ -84,6 +98,7 @@
         }
       },
       "block_order": [
+        "slide_YgGhMt",
         "slide_aXRXT9",
         "slide_4nCgnb",
         "slide_BHCKKa",
@@ -92,7 +107,7 @@
       ],
       "settings": {
         "autoplay": true,
-        "autoplay_speed": 6,
+        "autoplay_speed": 3,
         "hero_height": 650,
         "overlay_opacity": 10
       }
