@@ -1,0 +1,14 @@
+{
+  "sections": {
+    "main": {
+      "type": "main-page"
+    },
+    "custom_contact": {
+      "type": "custom-contact-page"
+    }
+  },
+  "order": [
+    "main",
+    "custom_contact"
+  ]
+}
