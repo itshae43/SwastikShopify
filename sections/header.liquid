@@ -304,18 +304,31 @@
   </div>
 </div>
 
-{% stylesheet %}
-  .header-section-wrapper {
-    background-color: #FAF8F2;
+{% style %}
+  #shopify-section-{{ section.id }} {
     position: sticky;
     top: 0;
     z-index: 100;
+  }
+  {% if section.settings.show_announcement %}
+  #shopify-section-{{ section.id }} {
+    top: -3.6rem;
+  }
+  @media (max-width: 768px) {
+    #shopify-section-{{ section.id }} {
+      top: -3.0rem;
+    }
+  }
+  {% endif %}
+{% endstyle %}
+
+{% stylesheet %}
+  .header-section-wrapper {
+    background-color: #FAF8F2;
+    position: relative;
+    z-index: 10;
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
     border-bottom: 1px solid rgba(0, 46, 40, 0.08);
-  }
-
-  .header-section-wrapper:has(.announcement-bar) {
-    top: -3.6rem;
   }
 
   /* Announcement Bar */
