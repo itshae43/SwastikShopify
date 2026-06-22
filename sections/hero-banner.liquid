@@ -436,7 +436,7 @@
   /* Layout Breakpoints */
   @media (max-width: 767px) {
     .hero-banner--slideshow {
-      height: 600px !important; /* Mobile height requirement: 600px */
+      height: 694px !important; /* Mobile height requirement: 694px (9:16 aspect ratio) */
     }
 
     .hero-banner__content {
@@ -497,8 +497,8 @@
       "id": "hero_height",
       "min": 500,
       "max": 900,
-      "step": 50,
-      "default": 700,
+      "step": 10,
+      "default": 810,
       "unit": "px",
       "label": "Desktop banner height"
     },
@@ -521,12 +521,12 @@
         {
           "type": "image_picker",
           "id": "image_desktop",
-          "label": "Desktop image (1440 x 700 px suggested)"
+          "label": "Desktop image (1440 x 810 px suggested)"
         },
         {
           "type": "image_picker",
           "id": "image_mobile",
-          "label": "Mobile image (390 x 600 px suggested)"
+          "label": "Mobile image (390 x 694 px suggested)"
         },
         {
           "type": "select",
