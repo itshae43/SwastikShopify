@@ -12,6 +12,21 @@
     "hero_banner": {
       "type": "hero-banner",
       "blocks": {
+        "slide_ijEVRe": {
+          "type": "slide",
+          "settings": {
+            "image_desktop": "shopify://shop_images/ChatGPT_Image_Jun_22_2026_04_54_46_PM.png",
+            "image_mobile": "shopify://shop_images/ChatGPT_Image_Jun_22_2026_04_54_38_PM.png",
+            "alignment": "left",
+            "subheading": "",
+            "title": "",
+            "description": "",
+            "button_1_label": "",
+            "button_1_link": "",
+            "button_2_label": "Discover the Vibe",
+            "button_2_link": ""
+          }
+        },
         "slide_YgGhMt": {
           "type": "slide",
           "settings": {
@@ -30,20 +45,6 @@
           "type": "slide",
           "settings": {
             "image_desktop": "shopify://shop_images/b1_green_bg_with_model.png",
-            "alignment": "left",
-            "subheading": "",
-            "title": "",
-            "description": "",
-            "button_1_label": "Shop Daily Ice",
-            "button_1_link": "",
-            "button_2_label": "Discover the Vibe",
-            "button_2_link": ""
-          }
-        },
-        "slide_4nCgnb": {
-          "type": "slide",
-          "settings": {
-            "image_desktop": "shopify://shop_images/b1_champagne_gold_bg_with_model.png",
             "alignment": "left",
             "subheading": "",
             "title": "",
@@ -98,9 +99,9 @@
         }
       },
       "block_order": [
+        "slide_ijEVRe",
         "slide_YgGhMt",
         "slide_aXRXT9",
-        "slide_4nCgnb",
         "slide_BHCKKa",
         "slide_3mK94L",
         "slide_AkqDUq"
