@@ -120,13 +120,13 @@
           "type": "collection_card",
           "settings": {
             "title": "CLAY WHISPERS",
-            "subtitle": "",
+            "subtitle": "ROOTED IN TRADITION",
             "link": "",
-            "text_position": "middle-center",
-            "title_style": "white",
+            "text_position": "bottom-center",
+            "title_style": "gold",
             "custom_title_color": "#ffffff",
-            "subtitle_color": "#ffffff",
-            "title_font_size_desktop": 28,
+            "subtitle_color": "#e0e0e0",
+            "title_font_size_desktop": 24,
             "title_font_size_mobile": 20,
             "title_font_weight": "400"
           }
@@ -135,28 +135,43 @@
           "type": "collection_card",
           "settings": {
             "title": "GEMPHONY",
-            "subtitle": "EVERY COLOR IS AN EMOTION",
+            "subtitle": "EVERY COLOUR IS AN EMOTION",
             "link": "",
             "text_position": "bottom-center",
-            "title_style": "gradient",
+            "title_style": "gold",
             "custom_title_color": "#ffffff",
-            "subtitle_color": "#ffffff",
-            "title_font_size_desktop": 28,
+            "subtitle_color": "#e0e0e0",
+            "title_font_size_desktop": 24,
             "title_font_size_mobile": 20,
             "title_font_weight": "400"
           }
         },
-        "raw_reverie": {
+        "heritage_eterie": {
           "type": "collection_card",
           "settings": {
-            "title": "RAW REVERIE",
-            "subtitle": "",
+            "title": "HERITAGE ÉTERIE",
+            "subtitle": "TIMELESS GRACE, MODERN SOUL",
             "link": "",
-            "text_position": "middle-right",
+            "text_position": "bottom-center",
             "title_style": "gold",
             "custom_title_color": "#ffffff",
-            "subtitle_color": "#ffffff",
-            "title_font_size_desktop": 28,
+            "subtitle_color": "#e0e0e0",
+            "title_font_size_desktop": 24,
+            "title_font_size_mobile": 20,
+            "title_font_weight": "400"
+          }
+        },
+        "lumiere": {
+          "type": "collection_card",
+          "settings": {
+            "title": "LUMIÈRE",
+            "subtitle": "SHINE IN EVERY MOMENT",
+            "link": "",
+            "text_position": "bottom-center",
+            "title_style": "gold",
+            "custom_title_color": "#ffffff",
+            "subtitle_color": "#e0e0e0",
+            "title_font_size_desktop": 24,
             "title_font_size_mobile": 20,
             "title_font_weight": "400"
           }
@@ -165,7 +180,8 @@
       "block_order": [
         "clay_whispers",
         "gemphony",
-        "raw_reverie"
+        "heritage_eterie",
+        "lumiere"
       ],
       "settings": {
         "title": "A Collection for Every Story",

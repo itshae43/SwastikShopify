@@ -17,7 +17,7 @@
           assign subtitle = block.settings.subtitle
           assign image = block.settings.image
           assign link = block.settings.link | default: '#'
-          assign text_pos = block.settings.text_position | default: 'middle-center'
+          assign text_pos = block.settings.text_position | default: 'bottom-center'
           assign title_style = block.settings.title_style | default: 'white'
           assign custom_color = block.settings.custom_title_color | default: '#ffffff'
           assign subtitle_color = block.settings.subtitle_color | default: '#ffffff'
@@ -31,7 +31,7 @@
             assign fallback_image_name = 'bond_mothers.png'
           elsif title_downcase contains 'gem'
             assign fallback_image_name = 'testimonial_bg_silk.png'
-          elsif title_downcase contains 'raw'
+          elsif title_downcase contains 'raw' or title_downcase contains 'heritage'
             assign fallback_image_name = 'bond_brides.png'
           else
             assign cycle_index = forloop.index | modulo: 3
@@ -43,21 +43,14 @@
               assign fallback_image_name = 'bond_brides.png'
             endif
           endif
-
-          assign is_center = false
-          if section.blocks.size == 3 and forloop.index == 2
-            assign is_center = true
-          elsif section.blocks.size != 3 and forloop.index == 2
-            assign is_center = true
-          endif
         -%}
         
-        <div class="latest-collections__col{% if is_center %} latest-collections__col--center{% else %} latest-collections__col--side{% endif %}">
-          <div class="latest-collections__card{% if is_center %} latest-collections__card--center{% else %} latest-collections__card--side{% endif %}" {{ block.shopify_attributes }}>
+        <div class="latest-collections__col">
+          <div class="latest-collections__card" {{ block.shopify_attributes }}>
             <a href="{{ link }}" class="latest-collections__card-link" aria-label="{{ title | escape }}">
               <div class="latest-collections__image-wrap">
                 {%- if image != blank -%}
-                  {{ image | image_url: width: 1000 | image_tag: loading: 'lazy', alt: title, class: 'latest-collections__img' }}
+                  {{ image | image_url: width: 800 | image_tag: loading: 'lazy', alt: title, class: 'latest-collections__img' }}
                 {%- else -%}
                   <img src="{{ fallback_image_name | asset_url }}" alt="{{ title | escape }}" loading="lazy" class="latest-collections__img" width="800" height="550">
                 {%- endif -%}
@@ -78,19 +71,19 @@
               </div>
             </a>
           </div>
-
-          {%- if is_center and section.settings.button_label != blank -%}
-            <div class="latest-collections__button-container">
-              <a href="{{ section.settings.button_link | default: '#' }}" 
-                 class="latest-collections__btn pill-button"
-                 style="--btn-bg: {{ section.settings.btn_bg_color }}; --btn-text: {{ section.settings.btn_text_color }}; --btn-hover-bg: {{ section.settings.btn_hover_bg_color }}; --btn-hover-text: {{ section.settings.btn_hover_text_color }};">
-                {{ section.settings.button_label | escape }}
-              </a>
-            </div>
-          {%- endif -%}
         </div>
       {%- endfor -%}
     </div>
+
+    {%- if section.settings.button_label != blank -%}
+      <div class="latest-collections__button-container">
+        <a href="{{ section.settings.button_link | default: '#' }}" 
+           class="latest-collections__btn pill-button"
+           style="--btn-bg: {{ section.settings.btn_bg_color }}; --btn-text: {{ section.settings.btn_text_color }}; --btn-hover-bg: {{ section.settings.btn_hover_bg_color }}; --btn-hover-text: {{ section.settings.btn_hover_text_color }};">
+          {{ section.settings.button_label | escape }} &rarr;
+        </a>
+      </div>
+    {%- endif -%}
   </div>
 </div>
 
@@ -122,9 +115,9 @@
 
   .latest-collections__grid {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 4rem;
-    align-items: end;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 2.4rem; /* Refined tighter gap for better grouping */
+    align-items: flex-start;
   }
 
   .latest-collections__col {
@@ -133,46 +126,28 @@
     width: 100%;
   }
 
-  .latest-collections__col--side {
-    justify-content: flex-end;
-  }
-
-  .latest-collections__col--center {
-    align-items: center;
-    justify-content: flex-end;
-  }
-
   .latest-collections__card {
     position: relative;
-    border-radius: 12px;
+    border-radius: 16px; /* Softer, more modern radius */
     overflow: hidden;
-    aspect-ratio: 3 / 4;
     width: 100%;
+    aspect-ratio: 5 / 7; /* Perfectly balanced 5:7 elegant portrait ratio (slightly shorter) */
     background-color: #faf7f2;
-    transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+    transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+    box-shadow: 0 4px 24px rgba(0, 0, 0, 0.06); /* Softer premium shadow */
+    border: 1px solid rgba(1, 63, 62, 0.03);
   }
 
-  .latest-collections__card--center {
-    box-shadow: 0 16px 40px rgba(1, 63, 62, 0.08);
-    border: 1px solid rgba(212, 175, 55, 0.25);
-  }
-
-  .latest-collections__card--side {
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.04);
-    border: 1px solid rgba(1, 63, 62, 0.05);
+  /* Shift outer cards down */
+  .latest-collections__col:nth-child(1),
+  .latest-collections__col:nth-child(4) {
+    margin-top: 5.6rem; /* Adjusted offset for shorter cards */
   }
 
   .latest-collections__card:hover {
     transform: translateY(-8px);
-  }
-
-  .latest-collections__card--center:hover {
-    box-shadow: 0 24px 50px rgba(1, 63, 62, 0.15);
-    border-color: rgba(212, 175, 55, 0.5);
-  }
-
-  .latest-collections__card--side:hover {
-    box-shadow: 0 16px 36px rgba(0, 0, 0, 0.08);
+    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.12);
+    border-color: rgba(212, 175, 55, 0.2);
   }
 
   .latest-collections__card-link {
@@ -186,6 +161,7 @@
     width: 100%;
     height: 100%;
     overflow: hidden;
+    background-color: #f0ebe1;
   }
 
   .latest-collections__img {
@@ -206,10 +182,10 @@
     right: 0;
     bottom: 0;
     display: flex;
-    padding: 3.2rem;
+    padding: 3.2rem 2.4rem;
     box-sizing: border-box;
     z-index: 2;
-    background: linear-gradient(to top, rgba(1, 63, 62, 0.75) 0%, rgba(1, 63, 62, 0.2) 50%, rgba(0, 0, 0, 0) 100%);
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.85) 0%, rgba(0, 0, 0, 0.3) 40%, rgba(0, 0, 0, 0) 100%);
     pointer-events: none;
   }
 
@@ -217,7 +193,7 @@
     display: flex;
     flex-direction: column;
     max-width: 100%;
-    transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+    transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
   }
 
   .latest-collections__card:hover .latest-collections__card-content {
@@ -274,16 +250,16 @@
 
   .latest-collections__card-title--white {
     color: #ffffff;
-    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
+    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
   }
 
   .latest-collections__card-title--gold {
     color: var(--color-accent, #D4AF37);
-    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
   }
 
   .latest-collections__card-title--gradient {
-    background: linear-gradient(90deg, #ffffff 0%, var(--color-accent, #D4AF37) 100%);
+    background: linear-gradient(90deg, #ffffff 0%, #D4AF37 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
@@ -296,20 +272,22 @@
 
   .latest-collections__card-subtitle {
     font-family: 'Inter', sans-serif;
-    font-size: 1.1rem;
+    font-size: 1rem;
     font-weight: 500;
     text-transform: uppercase;
-    letter-spacing: 0.2em;
+    letter-spacing: 0.15em;
     color: var(--subtitle-color);
-    margin: 0.8rem 0 0 0;
-    opacity: 0.95;
+    margin: 1rem 0 0 0;
+    opacity: 0.9;
   }
 
   .latest-collections__button-container {
     display: flex;
     justify-content: center;
     width: 100%;
-    margin-top: 3.2rem;
+    margin-top: -2.4rem; /* Perfectly centers button nicely below the inner cards */
+    position: relative;
+    z-index: 10;
   }
 
   .latest-collections__btn {
@@ -344,7 +322,34 @@
       padding-right: 3rem;
     }
     .latest-collections__grid {
-      gap: 3rem;
+      gap: 2rem;
+    }
+    .latest-collections__card-overlay {
+      padding: 2.4rem;
+    }
+    .latest-collections__col:nth-child(1),
+    .latest-collections__col:nth-child(4) {
+      margin-top: 4.8rem;
+    }
+    .latest-collections__button-container {
+      margin-top: -2rem;
+    }
+  }
+
+  @media screen and (max-width: 900px) {
+    .latest-collections__grid {
+      grid-template-columns: repeat(2, 1fr);
+      align-items: stretch;
+    }
+    .latest-collections__card {
+      aspect-ratio: 3 / 4;
+    }
+    .latest-collections__col:nth-child(1),
+    .latest-collections__col:nth-child(4) {
+      margin-top: 0;
+    }
+    .latest-collections__button-container {
+      margin-top: 4rem;
     }
   }
 
@@ -367,7 +372,7 @@
     .latest-collections__grid {
       display: flex;
       flex-direction: column;
-      gap: 4.8rem;
+      gap: 3rem;
       align-items: center;
     }
 
@@ -375,25 +380,17 @@
       max-width: 450px;
     }
 
-    .latest-collections__card {
-      aspect-ratio: 4 / 5;
-    }
-
     .latest-collections__card-title {
       font-size: var(--font-size-mobile);
     }
 
     .latest-collections__card-subtitle {
-      font-size: 1rem;
-      letter-spacing: 0.15em;
-    }
-
-    .latest-collections__card-overlay {
-      padding: 2.4rem;
+      font-size: 0.9rem;
+      letter-spacing: 0.1em;
     }
 
     .latest-collections__button-container {
-      margin-top: 2.4rem;
+      margin-top: 4rem;
     }
 
     .latest-collections__btn {
@@ -408,7 +405,7 @@
   "name": "Latest Collections",
   "class": "section",
   "tag": "section",
-  "max_blocks": 3,
+  "max_blocks": 4,
   "settings": [
     {
       "type": "text",
@@ -512,7 +509,7 @@
           "type": "select",
           "id": "text_position",
           "label": "Text Position",
-          "default": "middle-center",
+          "default": "bottom-center",
           "options": [
             { "value": "top-left", "label": "Top Left" },
             { "value": "top-center", "label": "Top Center" },
@@ -547,7 +544,7 @@
           "type": "color",
           "id": "subtitle_color",
           "label": "Subtitle Color",
-          "default": "#ffffff"
+          "default": "#e0e0e0"
         },
         {
           "type": "range",
@@ -557,7 +554,7 @@
           "step": 2,
           "unit": "px",
           "label": "Title Font Size (Desktop)",
-          "default": 28
+          "default": 24
         },
         {
           "type": "range",
@@ -593,24 +590,35 @@
           "type": "collection_card",
           "settings": {
             "title": "CLAY WHISPERS",
-            "text_position": "middle-center",
-            "title_style": "white"
+            "subtitle": "ROOTED IN TRADITION",
+            "text_position": "bottom-center",
+            "title_style": "gold"
           }
         },
         {
           "type": "collection_card",
           "settings": {
             "title": "GEMPHONY",
-            "subtitle": "EVERY COLOR IS AN EMOTION",
+            "subtitle": "EVERY COLOUR IS AN EMOTION",
             "text_position": "bottom-center",
-            "title_style": "gradient"
+            "title_style": "gold"
           }
         },
         {
           "type": "collection_card",
           "settings": {
-            "title": "RAW REVERIE",
-            "text_position": "middle-right",
+            "title": "HERITAGE ÉTERIE",
+            "subtitle": "TIMELESS GRACE, MODERN SOUL",
+            "text_position": "bottom-center",
+            "title_style": "gold"
+          }
+        },
+        {
+          "type": "collection_card",
+          "settings": {
+            "title": "LUMIÈRE",
+            "subtitle": "SHINE IN EVERY MOMENT",
+            "text_position": "bottom-center",
             "title_style": "gold"
           }
         }
