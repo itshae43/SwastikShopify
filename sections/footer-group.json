@@ -15,7 +15,7 @@
       "type": "footer",
       "settings": {
         "brand_name": "Swastik Jewels",
-        "brand_description": "<p>\nWelcome to the world of Swastik Jewels, designed to enhance every moment with elegant designs that shine effortlessly.\n</p>\n\n<ul>\n  <li>Lane No. 6, Beadonpura, Karol Bagh, Delhi – 110005</li>\n  <li> +91 96600 96700</li>\n  <li> contact@swastikjewel.in</li>\n</ul>",
+        "brand_description": "<p>\nWelcome to the world of Swastik Jewels, designed to enhance every moment with elegant designs that shine effortlessly.\n</p>\n\n<ul style=\"font-weight:300; margin-top:10px;\">\n  <li style=\"font-weight:300;\">Lane No. 6, Beadonpura, Karol Bagh, Delhi – 110005</li>\n  <li style=\"font-weight:300;\">+91 96600 96700</li>\n  <li style=\"font-weight:300;\">contact@swastikjewel.in</li>\n</ul>",
         "social_facebook_link": "https://www.facebook.com/swastikjewels.bynitingupta/",
         "social_instagram_link": "https://www.instagram.com/swastikjewels_bynitingupta/",
         "social_twitter_link": "",
