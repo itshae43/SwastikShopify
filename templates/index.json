@@ -175,7 +175,7 @@
         "button_label": "Browse Collections",
         "button_link": "",
         "btn_bg_color": "#013f3e",
-        "btn_text_color": "#ffffff",
+        "btn_text_color": "#FDFCFA",
         "btn_hover_bg_color": "#025654",
         "btn_hover_text_color": "#ffffff"
       }
