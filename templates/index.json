@@ -160,28 +160,12 @@
             "title_font_size_mobile": 20,
             "title_font_weight": "400"
           }
-        },
-        "lumiere": {
-          "type": "collection_card",
-          "settings": {
-            "title": "LUMIÈRE",
-            "subtitle": "SHINE IN EVERY MOMENT",
-            "link": "",
-            "text_position": "bottom-center",
-            "title_style": "gold",
-            "custom_title_color": "#ffffff",
-            "subtitle_color": "#e0e0e0",
-            "title_font_size_desktop": 24,
-            "title_font_size_mobile": 20,
-            "title_font_weight": "400"
-          }
         }
       },
       "block_order": [
         "clay_whispers",
         "gemphony",
-        "heritage_eterie",
-        "lumiere"
+        "heritage_eterie"
       ],
       "settings": {
         "title": "A Collection for Every Story",

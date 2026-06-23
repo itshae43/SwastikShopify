@@ -115,9 +115,11 @@
 
   .latest-collections__grid {
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(3, 1fr);
     gap: 2.4rem; /* Refined tighter gap for better grouping */
     align-items: flex-start;
+    max-width: 1240px;
+    margin: 0 auto;
   }
 
   .latest-collections__col {
@@ -131,7 +133,9 @@
     border-radius: 16px; /* Softer, more modern radius */
     overflow: hidden;
     width: 100%;
-    aspect-ratio: 5 / 7; /* Perfectly balanced 5:7 elegant portrait ratio (slightly shorter) */
+    max-width: 396px;
+    margin: 0 auto;
+    aspect-ratio: 396 / 460; /* Explicit 396x460 ratio */
     background-color: #faf7f2;
     transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.6s cubic-bezier(0.16, 1, 0.3, 1);
     box-shadow: 0 4px 24px rgba(0, 0, 0, 0.06); /* Softer premium shadow */
@@ -140,7 +144,7 @@
 
   /* Shift outer cards down */
   .latest-collections__col:nth-child(1),
-  .latest-collections__col:nth-child(4) {
+  .latest-collections__col:nth-child(3) {
     margin-top: 5.6rem; /* Adjusted offset for shorter cards */
   }
 
@@ -342,10 +346,10 @@
       align-items: stretch;
     }
     .latest-collections__card {
-      aspect-ratio: 3 / 4;
+      aspect-ratio: 396 / 460;
     }
     .latest-collections__col:nth-child(1),
-    .latest-collections__col:nth-child(4) {
+    .latest-collections__col:nth-child(3) {
       margin-top: 0;
     }
     .latest-collections__button-container {
@@ -405,7 +409,7 @@
   "name": "Latest Collections",
   "class": "section",
   "tag": "section",
-  "max_blocks": 4,
+  "max_blocks": 3,
   "settings": [
     {
       "type": "text",
@@ -609,15 +613,6 @@
           "settings": {
             "title": "HERITAGE ÉTERIE",
             "subtitle": "TIMELESS GRACE, MODERN SOUL",
-            "text_position": "bottom-center",
-            "title_style": "gold"
-          }
-        },
-        {
-          "type": "collection_card",
-          "settings": {
-            "title": "LUMIÈRE",
-            "subtitle": "SHINE IN EVERY MOMENT",
             "text_position": "bottom-center",
             "title_style": "gold"
           }
