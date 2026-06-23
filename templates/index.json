@@ -12,6 +12,20 @@
     "hero_banner": {
       "type": "hero-banner",
       "blocks": {
+        "slide_rdphqX": {
+          "type": "slide",
+          "settings": {
+            "image_desktop": "shopify://shop_images/swastik_jewel_desktop_banner_1440_x_810_px_5_1.png",
+            "alignment": "left",
+            "subheading": "",
+            "title": "",
+            "description": "",
+            "button_1_label": "",
+            "button_1_link": "",
+            "button_2_label": "Discover the Vibe",
+            "button_2_link": ""
+          }
+        },
         "slide_RiT7rR": {
           "type": "slide",
           "settings": {
@@ -70,6 +84,7 @@
         }
       },
       "block_order": [
+        "slide_rdphqX",
         "slide_RiT7rR",
         "slide_YgGhMt",
         "slide_aXRXT9",
@@ -77,7 +92,7 @@
       ],
       "settings": {
         "autoplay": true,
-        "autoplay_speed": 3,
+        "autoplay_speed": 5,
         "hero_height": 650,
         "overlay_opacity": 10
       }
