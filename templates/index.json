@@ -169,7 +169,7 @@
       ],
       "settings": {
         "title": "A Collection for Every Story",
-        "bg_color": "#FAF8F2",
+        "bg_color": "#FDFCFA",
         "padding_top": 60,
         "padding_bottom": 60,
         "button_label": "Browse Collections",
@@ -234,7 +234,7 @@
         "subheading": "DISCOVER",
         "title": "DIAMONDS, DESIGNED FOR YOU",
         "description": "Explore our finest diamond creations, crafted for every occasion, every emotion, every you.",
-        "bg_color": "#FFFFFF"
+        "bg_color": "#FDFCFA"
       }
     },
     "gold_collection_showcase": {
@@ -600,7 +600,7 @@
         "title": "In Their Own Words",
         "subheading": "OUR REVIEW",
         "description": "More than reviews — stories of love, celebration, and cherished moments.",
-        "bg_color": "#FFFFFF",
+        "bg_color": "#FDFCFA",
         "text_color": "#0a2a26",
         "accent_color": "#b38245",
         "autoplay": true,
