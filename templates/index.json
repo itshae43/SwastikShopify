@@ -12,6 +12,20 @@
     "hero_banner": {
       "type": "hero-banner",
       "blocks": {
+        "slide_J3Ukm4": {
+          "type": "slide",
+          "settings": {
+            "image_desktop": "shopify://shop_images/b1_1440_x_810_px_1.png",
+            "alignment": "left",
+            "subheading": "",
+            "title": "",
+            "description": "",
+            "button_1_label": "",
+            "button_1_link": "",
+            "button_2_label": "",
+            "button_2_link": ""
+          }
+        },
         "slide_Gyd9qb": {
           "type": "slide",
           "settings": {
@@ -23,20 +37,6 @@
             "button_1_label": "",
             "button_1_link": "",
             "button_2_label": "",
-            "button_2_link": ""
-          }
-        },
-        "slide_AAdHtp": {
-          "type": "slide",
-          "settings": {
-            "image_desktop": "shopify://shop_images/WhatsApp_Image_2026-06-22_at_10.04.31_PM_1.jpg",
-            "alignment": "left",
-            "subheading": "",
-            "title": "",
-            "description": "",
-            "button_1_label": "",
-            "button_1_link": "",
-            "button_2_label": "Discover the Vibe",
             "button_2_link": ""
           }
         },
@@ -99,8 +99,8 @@
         }
       },
       "block_order": [
+        "slide_J3Ukm4",
         "slide_Gyd9qb",
-        "slide_AAdHtp",
         "slide_ijEVRe",
         "slide_YgGhMt",
         "slide_aXRXT9",
