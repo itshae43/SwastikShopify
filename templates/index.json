@@ -545,6 +545,9 @@
         "autoplay": true,
         "autoplay_speed": 6
       }
+    },
+    "video_call": {
+      "type": "video-call"
     }
   },
   "order": [
@@ -561,6 +564,7 @@
     "gifts_for_him_her",
     "made_for_every_bond",
     "store_highlights",
+    "video_call",
     "testimonials_slider"
   ]
 }

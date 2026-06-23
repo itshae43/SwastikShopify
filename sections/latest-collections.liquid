@@ -4,7 +4,7 @@
   assign padding_bottom = section.settings.padding_bottom | default: 60
 -%}
 
-<div class="latest-collections" style="--bg-color: {{ bg_color }}; --padding-top: {{ padding_top }}px; --padding-bottom: {{ padding_bottom }}px;">
+<latest-collections-slider class="latest-collections" style="--bg-color: {{ bg_color }}; --padding-top: {{ padding_top }}px; --padding-bottom: {{ padding_bottom }}px;">
   <div class="latest-collections__container">
     {%- if section.settings.title != blank -%}
       <h2 class="latest-collections__heading serif-font">{{ section.settings.title | escape }}</h2>
@@ -75,6 +75,12 @@
       {%- endfor -%}
     </div>
 
+    <div class="latest-collections__dots">
+      {%- for block in section.blocks -%}
+        <button class="latest-collections__dot {% if forloop.first %}is-active{% endif %}" data-index="{{ forloop.index0 }}" aria-label="Go to slide {{ forloop.index }}"></button>
+      {%- endfor -%}
+    </div>
+
     {%- if section.settings.button_label != blank -%}
       <div class="latest-collections__button-container">
         <a href="{{ section.settings.button_link | default: '#' }}" 
@@ -85,7 +91,7 @@
       </div>
     {%- endif -%}
   </div>
-</div>
+</latest-collections-slider>
 
 {% stylesheet %}
   .latest-collections {
@@ -94,6 +100,10 @@
     padding-bottom: var(--padding-bottom);
     width: 100%;
     box-sizing: border-box;
+  }
+
+  .latest-collections__dots {
+    display: none;
   }
 
   .latest-collections__container {
@@ -275,7 +285,7 @@
   }
 
   .latest-collections__card-subtitle {
-    font-family: 'Inter', sans-serif;
+    font-family: 'Montserrat', sans-serif;
     font-size: 1rem;
     font-weight: 500;
     text-transform: uppercase;
@@ -301,7 +311,7 @@
     padding: 1.4rem 4rem;
     background-color: var(--btn-bg, #013F3E);
     color: var(--btn-text, #ffffff);
-    font-family: 'Inter', sans-serif;
+    font-family: 'Montserrat', sans-serif;
     font-size: 1.3rem;
     font-weight: 500;
     text-transform: uppercase;
@@ -375,13 +385,30 @@
 
     .latest-collections__grid {
       display: flex;
-      flex-direction: column;
-      gap: 3rem;
-      align-items: center;
+      flex-direction: row;
+      flex-wrap: nowrap;
+      gap: 1.6rem;
+      align-items: stretch;
+      overflow-x: auto;
+      scroll-snap-type: x mandatory;
+      margin-left: -2rem;
+      margin-right: -2rem;
+      padding-left: 2rem;
+      padding-right: 2rem;
+      padding-bottom: 2rem; /* Add space for box-shadow */
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+    }
+
+    .latest-collections__grid::-webkit-scrollbar {
+      display: none;
     }
 
     .latest-collections__col {
-      max-width: 450px;
+      flex: 0 0 calc(100vw - 4rem - 2rem);
+      max-width: 320px;
+      width: auto;
+      scroll-snap-align: center;
     }
 
     .latest-collections__card-title {
@@ -391,6 +418,31 @@
     .latest-collections__card-subtitle {
       font-size: 0.9rem;
       letter-spacing: 0.1em;
+    }
+
+    .latest-collections__dots {
+      display: flex;
+      justify-content: center;
+      gap: 8px;
+      margin-top: -1rem;
+      margin-bottom: 2rem;
+    }
+    
+    .latest-collections__dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background-color: rgba(1, 63, 62, 0.2);
+      border: none;
+      padding: 0;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+    
+    .latest-collections__dot.is-active {
+      background-color: var(--color-primary, #013F3E);
+      width: 24px;
+      border-radius: 4px;
     }
 
     .latest-collections__button-container {
@@ -403,6 +455,55 @@
     }
   }
 {% endstylesheet %}
+
+{% javascript %}
+  class LatestCollectionsSlider extends HTMLElement {
+    constructor() {
+      super();
+      this.slider = this.querySelector('.latest-collections__grid');
+      this.dots = this.querySelectorAll('.latest-collections__dot');
+      
+      if (!this.slider || this.dots.length === 0) return;
+
+      this.dots.forEach((dot, index) => {
+        dot.addEventListener('click', () => {
+          const card = this.slider.children[index];
+          if (card) {
+            const offset = card.offsetLeft - this.slider.offsetLeft;
+            this.slider.scrollTo({ left: offset, behavior: 'smooth' });
+          }
+        });
+      });
+
+      this.slider.addEventListener('scroll', this.updateDots.bind(this), { passive: true });
+      window.addEventListener('resize', this.updateDots.bind(this));
+    }
+
+    updateDots() {
+      let activeIndex = 0;
+      let minDistance = Infinity;
+      
+      const sliderCenter = this.slider.scrollLeft + this.slider.clientWidth / 2;
+
+      Array.from(this.slider.children).forEach((card, index) => {
+        const cardCenter = card.offsetLeft - this.slider.offsetLeft + card.clientWidth / 2;
+        const distance = Math.abs(sliderCenter - cardCenter);
+        if (distance < minDistance) {
+          minDistance = distance;
+          activeIndex = index;
+        }
+      });
+
+      this.dots.forEach((dot, index) => {
+        dot.classList.toggle('is-active', index === activeIndex);
+      });
+    }
+  }
+
+  if (!customElements.get('latest-collections-slider')) {
+    customElements.define('latest-collections-slider', LatestCollectionsSlider);
+  }
+{% endjavascript %}
 
 {% schema %}
 {

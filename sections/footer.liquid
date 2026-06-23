@@ -6,12 +6,23 @@
 <footer class="footer-wrapper" style="{% if section.settings.color_footer_bg != blank %}--footer-bg: {{ section.settings.color_footer_bg }};{% endif %} {% if section.settings.color_footer_text != blank %}--footer-text: {{ section.settings.color_footer_text }};{% endif %} {% if section.settings.color_footer_accent != blank %}--footer-accent-setting: {{ section.settings.color_footer_accent }};{% endif %}">
   <div class="footer container">
     <div class="footer__grid">
-      <!-- Col 1: Brand Info & Social Links -->
+      <!-- Col 1: Brand Info & Contact Info -->
       <div class="footer__col footer__col--brand">
         <h3 class="footer__logo serif-font">{{ section.settings.brand_name }}</h3>
         <p class="footer__description">
           {{ section.settings.brand_description }}
         </p>
+        <ul class="footer__contact-list-inline">
+          {% if section.settings.contact_address != blank %}
+            <li>{{ section.settings.contact_address | escape }}</li>
+          {% endif %}
+          {% if section.settings.contact_phone != blank %}
+            <li><a href="tel:{{ section.settings.contact_phone | replace: ' ', '' }}">{{ section.settings.contact_phone | escape }}</a></li>
+          {% endif %}
+          {% if section.settings.contact_email != blank %}
+            <li><a href="mailto:{{ section.settings.contact_email }}">{{ section.settings.contact_email | escape }}</a></li>
+          {% endif %}
+        </ul>
         <div class="footer__social-icons">
           {% if section.settings.social_facebook_link != blank %}
             <a href="{{ section.settings.social_facebook_link }}" class="footer__social-link" aria-label="Facebook">
@@ -83,38 +94,7 @@
         </ul>
       </div>
 
-      <!-- Col 4: Contact Info -->
-      <div class="footer__col">
-        <h4 class="footer__heading serif-font">Contact Info</h4>
-        <div class="footer__contact-list">
-          {% if section.settings.contact_address != blank %}
-            <div class="footer__contact-item">
-              <svg class="icon icon-pin" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
-                <circle cx="12" cy="10" r="3"></circle>
-              </svg>
-              <span class="footer__contact-text">{{ section.settings.contact_address | escape }}</span>
-            </div>
-          {% endif %}
-          {% if section.settings.contact_phone != blank %}
-            <div class="footer__contact-item">
-              <svg class="icon icon-phone" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
-              </svg>
-              <a href="tel:{{ section.settings.contact_phone | replace: ' ', '' }}" class="footer__contact-link-text">{{ section.settings.contact_phone | escape }}</a>
-            </div>
-          {% endif %}
-          {% if section.settings.contact_email != blank %}
-            <div class="footer__contact-item">
-              <svg class="icon icon-mail" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
-                <polyline points="22,6 12,13 2,6"></polyline>
-              </svg>
-              <a href="mailto:{{ section.settings.contact_email }}" class="footer__contact-link-text">{{ section.settings.contact_email | escape }}</a>
-            </div>
-          {% endif %}
-        </div>
-      </div>
+
     </div>
 
     <!-- Bottom copyright and policy links -->
@@ -139,7 +119,7 @@
     padding-top: 6.5rem;
     padding-bottom: 3rem;
     border-top: 1px solid rgba(255, 255, 255, 0.05);
-    font-family: 'Inter', sans-serif;
+    font-family: 'Montserrat', sans-serif;
   }
 
   .footer.container {
@@ -153,7 +133,7 @@
 
   .footer__grid {
     display: grid;
-    grid-template-columns: 1.3fr 0.8fr 0.8fr 1.1fr;
+    grid-template-columns: 1.5fr 1fr 1fr;
     gap: 5rem;
     padding-bottom: 4rem;
     border-bottom: 1px solid rgba(255, 255, 255, 0.08);
@@ -168,7 +148,7 @@
   /* Typography */
   .footer__logo {
     color: var(--footer-accent);
-    font-family: 'Playfair Display', Georgia, serif;
+    font-family: 'Montserrat', sans-serif;
     font-size: 2.2rem;
     font-weight: 700;
     letter-spacing: 0.02em;
@@ -177,7 +157,7 @@
 
   .footer__heading {
     color: var(--footer-accent);
-    font-family: 'Playfair Display', Georgia, serif;
+    font-family: 'Montserrat', sans-serif;
     font-size: 1.8rem;
     font-weight: 600;
     letter-spacing: 0.03em;
@@ -249,42 +229,35 @@
     height: 1.6rem;
   }
 
-  /* Contact Column */
-  .footer__contact-list {
+  /* Inline Contact Info */
+  .footer__contact-list-inline {
+    list-style-type: disc;
+    padding-left: 2rem;
+    margin: 0;
     display: flex;
     flex-direction: column;
-    gap: 1.6rem;
-  }
-
-  .footer__contact-item {
-    display: flex;
-    align-items: flex-start;
-    gap: 1.4rem;
-  }
-
-  .footer__contact-item svg {
-    width: 1.8rem;
-    height: 1.8rem;
-    color: var(--footer-accent);
-    flex-shrink: 0;
-    margin-top: 0.2rem;
-  }
-
-  .footer__contact-text {
-    font-size: 1.4rem;
-    line-height: 1.5;
+    gap: 0.8rem;
     color: rgba(253, 251, 247, 0.75);
+    font-size: 1.4rem;
   }
 
-  .footer__contact-link-text {
-    font-size: 1.4rem;
+  .footer__contact-list-inline li {
+    line-height: 1.6;
+    padding-left: 0.5rem;
+  }
+
+  .footer__contact-list-inline li::marker {
     color: rgba(253, 251, 247, 0.75);
+    font-size: 1.2em;
+  }
+
+  .footer__contact-list-inline a {
+    color: inherit;
     text-decoration: none;
     transition: color 0.25s ease;
-    line-height: 1.5;
   }
 
-  .footer__contact-link-text:hover {
+  .footer__contact-list-inline a:hover {
     color: var(--footer-accent);
   }
 
@@ -316,16 +289,11 @@
   /* Responsive Adjustments */
   @media (max-width: 1100px) {
     .footer__grid {
-      grid-template-columns: 1.2fr 1fr 1fr;
+      grid-template-columns: 1fr 1fr;
       gap: 4rem;
     }
-    .footer__col:last-child {
-      grid-column: span 3;
-    }
-    .footer__contact-list {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 2rem;
+    .footer__col:first-child {
+      grid-column: span 2;
     }
   }
 
@@ -333,12 +301,8 @@
     .footer__grid {
       grid-template-columns: 1fr 1fr;
     }
-    .footer__col:last-child {
+    .footer__col:first-child {
       grid-column: span 2;
-    }
-    .footer__contact-list {
-      grid-template-columns: 1fr;
-      gap: 1.5rem;
     }
   }
 
@@ -355,9 +319,6 @@
       grid-template-columns: 1fr;
       gap: 3.5rem;
       padding-bottom: 3.5rem;
-    }
-    .footer__col:last-child {
-      grid-column: span 1;
     }
     .footer__bottom {
       flex-direction: column;
