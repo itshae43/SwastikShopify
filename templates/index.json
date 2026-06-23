@@ -234,7 +234,7 @@
         "subheading": "DISCOVER",
         "title": "DIAMONDS, DESIGNED FOR YOU",
         "description": "Explore our finest diamond creations, crafted for every occasion, every emotion, every you.",
-        "bg_color": "#fdfbf7"
+        "bg_color": "#FFFFFF"
       }
     },
     "gold_collection_showcase": {
@@ -464,7 +464,7 @@
         "description": "Beautiful jewellery for the people who make every moment special.",
         "button_label": "Explore Collection",
         "button_link": "",
-        "bg_color": "#fdfbf7",
+        "bg_color": "#FFFFFF",
         "text_color": "#0a2a26",
         "accent_color": "#b38245"
       }
@@ -521,7 +521,7 @@
         "support"
       ],
       "settings": {
-        "bg_color": "#fdfbf7",
+        "bg_color": "#FFFFFF",
         "border_color": "#ebe7df",
         "icon_color": "#b38245",
         "text_color": "#0a2a26",
@@ -600,7 +600,7 @@
         "title": "In Their Own Words",
         "subheading": "OUR REVIEW",
         "description": "More than reviews — stories of love, celebration, and cherished moments.",
-        "bg_color": "#fdfbf7",
+        "bg_color": "#FFFFFF",
         "text_color": "#0a2a26",
         "accent_color": "#b38245",
         "autoplay": true,
