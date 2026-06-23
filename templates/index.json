@@ -12,24 +12,39 @@
     "hero_banner": {
       "type": "hero-banner",
       "blocks": {
-        "slide_rdphqX": {
+        "slide_J3Ukm4": {
           "type": "slide",
           "settings": {
-            "image_desktop": "shopify://shop_images/swastik_jewel_desktop_banner_1440_x_810_px_5_1.png",
+            "image_desktop": "shopify://shop_images/ChatGPT_Image_Jun_23_2026_01_27_32_PM.png",
             "alignment": "left",
             "subheading": "",
             "title": "",
             "description": "",
             "button_1_label": "",
             "button_1_link": "",
-            "button_2_label": "Discover the Vibe",
+            "button_2_label": "",
             "button_2_link": ""
           }
         },
-        "slide_RiT7rR": {
+        "slide_Gyd9qb": {
           "type": "slide",
           "settings": {
-            "image_desktop": "shopify://shop_images/swastik_jewel_desktop_banner_1440_x_810_px_5.png",
+            "image_desktop": "shopify://shop_images/b1_1440_x_810_px.png",
+            "alignment": "left",
+            "subheading": "",
+            "title": "",
+            "description": "",
+            "button_1_label": "",
+            "button_1_link": "",
+            "button_2_label": "",
+            "button_2_link": ""
+          }
+        },
+        "slide_ijEVRe": {
+          "type": "slide",
+          "settings": {
+            "image_desktop": "shopify://shop_images/ChatGPT_Image_Jun_22_2026_04_54_46_PM.png",
+            "image_mobile": "shopify://shop_images/ChatGPT_Image_Jun_22_2026_04_54_38_PM.png",
             "alignment": "left",
             "subheading": "",
             "title": "",
@@ -84,15 +99,16 @@
         }
       },
       "block_order": [
-        "slide_rdphqX",
-        "slide_RiT7rR",
+        "slide_J3Ukm4",
+        "slide_Gyd9qb",
+        "slide_ijEVRe",
         "slide_YgGhMt",
         "slide_aXRXT9",
         "slide_AkqDUq"
       ],
       "settings": {
         "autoplay": true,
-        "autoplay_speed": 5,
+        "autoplay_speed": 3,
         "hero_height": 650,
         "overlay_opacity": 10
       }
@@ -280,6 +296,7 @@
     },
     "new_arrivals": {
       "type": "new-arrivals",
+      "disabled": true,
       "settings": {
         "subheading": "NEW [emblem] ARRIVALS",
         "title": "Fresh Designs, Just For You",
@@ -293,6 +310,7 @@
     },
     "best_sellers": {
       "type": "best-sellers",
+      "disabled": true,
       "settings": {
         "title": "BEST SELLERS",
         "subheading": "OUR MOST LOVED",
@@ -302,6 +320,7 @@
     },
     "why_choose_us": {
       "type": "why-choose-us",
+      "disabled": true,
       "settings": {
         "title": "Why Choose Us",
         "subheading": "THE SWASTIK DIFFERENCE",
@@ -355,6 +374,7 @@
         "gifts",
         "festive"
       ],
+      "disabled": true,
       "settings": {
         "title": "Find the Perfect Piece for Every Moment",
         "subheading": "SHOP BY OCCASION",
@@ -365,6 +385,7 @@
     },
     "brand_story": {
       "type": "brand-story",
+      "disabled": true,
       "settings": {
         "layout": "left",
         "bg_color": "cream",
@@ -377,6 +398,7 @@
     },
     "newsletter": {
       "type": "newsletter",
+      "disabled": true,
       "settings": {
         "bg_color": "cream",
         "subheading": "Join the Inner Circle",
