@@ -125,41 +125,26 @@
         "rings": {
           "type": "card",
           "settings": {
-            "number": "01",
-            "title": "RINGS",
-            "description": "Explore exquisite ring designs for every moment.",
-            "link": "",
-            "color_scheme": "dark-green"
+            "image": "shopify://shop_images/Untitled_design_6.png",
+            "link": ""
           }
         },
         "earrings": {
           "type": "card",
           "settings": {
-            "number": "02",
-            "title": "EARRINGS",
-            "description": "Adorn yourself with elegant earring collections.",
-            "link": "",
-            "color_scheme": "dark-green"
+            "link": ""
           }
         },
         "pendants": {
           "type": "card",
           "settings": {
-            "number": "03",
-            "title": "PENDANTS",
-            "description": "Discover unique pendant creations.",
-            "link": "",
-            "color_scheme": "dark-green"
+            "link": ""
           }
         },
         "tennis": {
           "type": "card",
           "settings": {
-            "number": "04",
-            "title": "TENNIS COLLECTION",
-            "description": "A timeless selection of flawless tennis pieces.",
-            "link": "",
-            "color_scheme": "dark-green"
+            "link": ""
           }
         }
       },
