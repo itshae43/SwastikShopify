@@ -49,10 +49,7 @@
   <div class="video-call__inner" style="background-color: {{ section.settings.bg_color }};">
     <div class="video-call__image-wrapper">
       {%- if section.settings.image != blank -%}
-        <img src="{{ section.settings.image | image_url: width: 1000 }}" 
-             alt="{{ section.settings.image.alt | escape }}" 
-             loading="lazy" 
-             class="video-call__image">
+        {{ section.settings.image | image_url: width: 1000 | image_tag: class: 'video-call__image', loading: 'lazy' }}
       {%- else -%}
         {{ 'image' | placeholder_svg_tag: 'video-call__image video-call__image--placeholder' }}
       {%- endif -%}
@@ -116,10 +113,9 @@
 
   .video-call__image {
     width: 100%;
-    height: 100%;
+    height: 250px;
     object-fit: cover;
     display: block;
-    min-height: 300px;
   }
 
   .video-call__image--placeholder {
@@ -213,6 +209,11 @@
 
     .video-call__image-wrapper {
       width: 50%;
+    }
+
+    .video-call__image {
+      height: 100%;
+      min-height: 300px;
     }
 
     .video-call__content {
