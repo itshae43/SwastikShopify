@@ -12,14 +12,14 @@
     "custom_contact": {
       "type": "custom-contact-page",
       "settings": {
-        "map_embed": "<iframe src=\"https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3500.9!2d77.19!3d28.65!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMjjCsDM5JzAwLjAiTiA3N8KwMTEnMjQuMCJF!5e0!3m2!1sen!2sin!4v1234567890\" width=\"600\" height=\"450\" style=\"border:0;\" allowfullscreen=\"\" loading=\"lazy\"></iframe>",
+        "map_embed": "<iframe src=\"https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3501.311196001928!2d77.19130161089312!3d28.65039937555346!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x390d03d719622805%3A0x646d4d936b614f0c!2sSwastik%20Jewels!5e0!3m2!1sen!2sin!4v1782280803694!5m2!1sen!2sin\" width=\"600\" height=\"450\" style=\"border:0;\" allowfullscreen=\"\" loading=\"lazy\" referrerpolicy=\"strict-origin-when-cross-origin\"></iframe>",
         "heading": "Get in Touch With Us!",
         "subheading": "Have a question? We're just a message away! \uD83D\uDCAC",
         "description": "<p>Whether you're wondering about our latest jewellery collections, need help with a custom order, or just want to say hello \u2014 we're all ears!</p>",
         "business_hours": "Monday to Saturday, 10 AM to 6 PM (IST)",
-        "legal_entity": "Swastik Jewels Private Limited",
-        "email": "support@swastikjewels.com",
-        "phone": "+91 98765 43210",
+        "legal_entity": "Swastik Jewels",
+        "email": "contact@swastik.in",
+        "phone": "+91 8643056338",
         "address": "123 Mock Address Lane, New Delhi"
       }
     }

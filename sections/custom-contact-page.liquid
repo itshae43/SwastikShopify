@@ -1,28 +1,6 @@
-<style>
-  .contact-page-header {
-    padding: 40px 60px 20px 60px;
-  }
-  .contact-page-header h1 {
-    font-size: 42px;
-    font-weight: 700;
-    color: #1a1a1a;
-    margin: 0;
-    letter-spacing: -0.5px;
-    line-height: 1.2;
-  }
-  @media (max-width: 768px) {
-    .contact-page-header {
-      padding: 24px 20px 12px 20px;
-    }
-    .contact-page-header h1 {
-      font-size: 28px;
-    }
-  }
-</style>
-
-<div class="contact-page-header">
-  <h1>Contact Us</h1>
-</div>
+{% if section.settings.main_heading != blank %}
+  <h1 class="main-contact-title">{{ section.settings.main_heading }}</h1>
+{% endif %}
 
 <div class="custom-contact-container">
     <!-- LEFT SIDE: Google Map -->
@@ -39,45 +17,81 @@
   <!-- RIGHT SIDE: Contact Details -->
   <div class="contact-details-wrapper">
     <h2 class="contact-title">{{ section.settings.heading }}</h2>
-    <p class="contact-subtitle">{{ section.settings.subheading }}</p>
+    <p class="contact-subtitle"><strong>{{ section.settings.subheading }}</strong></p>
     
     <div class="contact-description">
       {{ section.settings.description }}
+      <p style="margin-top: 15px;"><strong>And if we're not available right away, sit back and relax — we'll get back to you within 24 hours. 🕒</strong></p>
     </div>
 
     <div class="contact-section">
       <h3 class="contact-heading">
-        <svg aria-hidden="true" focusable="false" viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: middle; margin-right: 8px; color: #d94182;"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
-        How to Reach Use!
+        <svg aria-hidden="true" focusable="false" viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color: #d94182;"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+        How to Reach Us!
       </h3>
-      <p class="contact-info-text">{{ section.settings.business_hours }}</p>
+      <p class="contact-info-text">We're available from <strong>{{ section.settings.business_hours }}</strong></p>
     </div>
 
     <div class="contact-line-items">
-      <p>
-        <span class="icon-dot">⭕</span>
-        <strong>Legal Entity Name:</strong> {{ section.settings.legal_entity }}
-      </p>
+      <div class="contact-item-row">
+        <span class="contact-icon">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#d94182" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"></circle></svg>
+        </span>
+        <p><strong>Legal Entity Name:</strong> {{ section.settings.legal_entity }}</p>
+      </div>
 
-      <p>
-        <span class="icon-emoji">✉️</span> 
-        <strong>Email:</strong> <a href="mailto:{{ section.settings.email }}">{{ section.settings.email }}</a>
-      </p>
+      <div class="contact-item-row">
+        <span class="contact-icon">✉️</span> 
+        <div class="contact-item-content">
+          <p><strong>Email:</strong> <a href="mailto:{{ section.settings.email }}">{{ section.settings.email }}</a></p>
+          <p class="contact-subtext">(For order updates, exchanges, or general queries)</p>
+        </div>
+      </div>
 
-      <p>
-        <span class="icon-emoji">📱</span> 
-        <strong>Phone / WhatsApp:</strong> <a href="tel:{{ section.settings.phone | replace: ' ', '' }}">{{ section.settings.phone }}</a>
-      </p>
+      <div class="contact-item-row">
+        <span class="contact-icon">📱</span> 
+        <div class="contact-item-content">
+          <p><strong>Phone / WhatsApp:</strong> <a href="tel:{{ section.settings.phone | replace: ' ', '' }}">{{ section.settings.phone }}</a></p>
+          <p class="contact-subtext">(Call or text us during working hours)</p>
+        </div>
+      </div>
 
-      <p>
-        <span class="icon-emoji">🏢</span> 
-        <strong>Office Address:</strong> {{ section.settings.address }}
-      </p>
+      <div class="contact-item-row">
+        <span class="contact-icon">🏢</span> 
+        <div class="contact-item-content">
+          <p><strong>Office Address:</strong> {{ section.settings.address }}</p>
+        </div>
+      </div>
+    </div>
+    
+    <div class="contact-socials">
+      <a href="#" aria-label="Facebook">
+        <svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path></svg>
+      </a>
+      <a href="#" aria-label="Instagram">
+        <svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>
+      </a>
+      <a href="#" aria-label="YouTube">
+        <svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 0 0-1.94 2A29 29 0 0 0 1 11.75a29 29 0 0 0 .46 5.33 2.78 2.78 0 0 0 1.94 2c1.72.46 8.6.46 8.6.46s6.88 0 8.6-.46a2.78 2.78 0 0 0 1.94-2 29 29 0 0 0 .46-5.33 29 29 0 0 0-.46-5.33z"></path><polygon points="9.75 15.02 15.5 11.75 9.75 8.48 9.75 15.02"></polygon></svg>
+      </a>
+      <a href="#" aria-label="Pinterest">
+        <svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2C6.48 2 2 6.48 2 12c0 4.25 2.66 7.9 6.44 9.34-.09-.79-.17-2 .04-2.87.18-.8 1.18-5.02 1.18-5.02s-.3-.6-.3-1.5c0-1.4.82-2.45 1.84-2.45.86 0 1.28.65 1.28 1.42 0 .86-.55 2.16-.84 3.36-.24 1.01.5 1.83 1.5 1.83 1.79 0 3.17-1.89 3.17-4.62 0-2.41-1.74-4.1-4.22-4.1-2.88 0-4.57 2.16-4.57 4.38 0 .86.33 1.79.74 2.29.08.1.09.19.07.28-.08.31-.25 1-.28 1.15-.04.14-.13.17-.28.1C5.66 14.53 5.1 12.56 5.1 10.9c0-3.35 2.43-6.42 7.02-6.42 3.68 0 6.54 2.62 6.54 6.13 0 3.66-2.3 6.6-5.5 6.6-1.07 0-2.08-.56-2.43-1.22l-.66 2.52c-.24.93-.89 2.08-1.33 2.79.91.28 1.87.42 2.87.42 5.52 0 10-4.48 10-10S17.52 2 12 2z"></path></svg>
+      </a>
     </div>
   </div>
 </div>
 
 <style>
+  .main-contact-title {
+    text-align: center;
+    font-size: 3.6rem;
+    font-weight: 500;
+    margin-top: 60px;
+    margin-bottom: 0;
+    color: var(--color-primary, #013F3E);
+    letter-spacing: 0.5px;
+  }
+
   .custom-contact-container {
     display: flex;
     flex-wrap: wrap;
@@ -110,16 +124,92 @@
     justify-content: center;
   }
 
-  .contact-title { font-size: 2.2rem; margin-bottom: 8px; font-weight: 600; }
-  .contact-subtitle { font-size: 1.1rem; font-weight: 500; margin-bottom: 25px; color: #555; }
-  .contact-description { font-size: 0.95rem; line-height: 1.6; margin-bottom: 20px; color: #444; }
-  .contact-section { margin-top: 20px; margin-bottom: 25px; }
-  .contact-heading { font-size: 1.5rem; margin-bottom: 10px; display: flex; align-items: center; }
-  .contact-info-text { font-size: 0.95rem; color: #444; }
-  .contact-line-items p { font-size: 0.95rem; line-height: 1.5; margin-bottom: 15px; }
-  .contact-line-items a { color: #000; text-decoration: underline; }
-  .icon-emoji { display: inline-block; width: 20px; text-align: center; margin-right: 4px; }
-  .icon-dot { display: inline-block; width: 20px; text-align: center; margin-right: 4px; color: #d94182; font-size: 1.2rem; }
+  .contact-title {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    font-size: 2.6rem;
+    font-weight: 500;
+    margin-bottom: 15px;
+    color: #111;
+  }
+
+  .contact-subtitle {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    font-size: 1.4rem;
+    font-weight: 600;
+    margin-bottom: 25px;
+    color: #111;
+  }
+
+  .contact-description {
+    font-size: 1.35rem;
+    line-height: 1.6;
+    margin-bottom: 30px;
+    color: #555;
+  }
+
+  .contact-section { margin-top: 30px; margin-bottom: 25px; }
+
+  .contact-heading {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    font-size: 2.0rem;
+    margin-bottom: 15px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-weight: 500;
+    color: #111;
+  }
+
+  .contact-info-text {
+    font-size: 1.35rem;
+    color: #555;
+  }
+
+  .contact-info-text strong {
+    color: #111;
+    font-weight: 600;
+  }
+
+  .contact-line-items { display: flex; flex-direction: column; gap: 20px; }
+  .contact-item-row { display: flex; align-items: flex-start; gap: 12px; }
+
+  .contact-item-row p {
+    font-size: 1.35rem;
+    margin: 0;
+    line-height: 1.5;
+    color: #555;
+  }
+
+  .contact-item-row strong {
+    color: #111;
+    font-weight: 600;
+  }
+
+  .contact-item-row a {
+    color: #555;
+    text-decoration: underline;
+  }
+
+  .contact-subtext {
+    font-size: 1.2rem !important;
+    color: #777 !important;
+    margin-top: 4px !important;
+    font-weight: 400 !important;
+  }
+
+  .contact-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 24px;
+    height: 24px;
+    font-size: 1.4rem;
+    line-height: 1;
+  }
+
+  .contact-socials { display: flex; gap: 15px; margin-top: 35px; }
+  .contact-socials a { color: #111; transition: opacity 0.2s; display: flex; align-items: center; justify-content: center; }
+  .contact-socials a:hover { opacity: 0.7; }
 
   @media screen and (max-width: 768px) {
     .custom-contact-container { flex-direction: column; padding: 40px 15px; gap: 40px; }
@@ -131,6 +221,12 @@
 {
   "name": "Custom Contact Layout",
   "settings": [
+    {
+      "type": "text",
+      "id": "main_heading",
+      "label": "Main Title",
+      "default": "Contact Us"
+    },
     {
       "type": "html",
       "id": "map_embed",
@@ -165,19 +261,19 @@
       "type": "text",
       "id": "legal_entity",
       "label": "Legal Entity Name",
-      "default": "Swastik Jewels Private Limited"
+      "default": "Swastik Jewels"
     },
     {
       "type": "text",
       "id": "email",
       "label": "Email Address",
-      "default": "support@swastikjewels.com"
+      "default": "contact@swastik.in"
     },
     {
       "type": "text",
       "id": "phone",
       "label": "Phone Number",
-      "default": "+91 98765 43210"
+      "default": "+91 8643056338"
     },
     {
       "type": "textarea",

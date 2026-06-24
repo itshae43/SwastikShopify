@@ -469,6 +469,59 @@
         "autoplay_speed": 4
       }
     },
+    "for_every_you": {
+      "type": "for-every-you",
+      "blocks": {
+        "slide_1": {
+          "type": "slide",
+          "settings": {
+            "title": "THE COLLEGE CORE",
+            "subtitle": "Subtle elegance for your everyday hustle."
+          }
+        },
+        "slide_2": {
+          "type": "slide",
+          "settings": {
+            "title": "THE WEEKEND GLOW",
+            "subtitle": "Effortless charm for your casual outings."
+          }
+        },
+        "slide_3": {
+          "type": "slide",
+          "settings": {
+            "title": "THE PARTY EDIT",
+            "subtitle": "Make heads turn at every celebration."
+          }
+        },
+        "slide_4": {
+          "type": "slide",
+          "settings": {
+            "title": "THE BOARDROOM BOSS",
+            "subtitle": "Sharp, sophisticated, and ready to lead."
+          }
+        },
+        "slide_5": {
+          "type": "slide",
+          "settings": {
+            "title": "THE FESTIVE GRACE",
+            "subtitle": "Embrace traditions with a modern sparkle."
+          }
+        }
+      },
+      "block_order": [
+        "slide_1",
+        "slide_2",
+        "slide_3",
+        "slide_4",
+        "slide_5"
+      ],
+      "settings": {
+        "heading": "FOR EVERY YOU",
+        "subheading": "For every mood, moment, and milestone — there is a piece that speaks your style.",
+        "bg_color": "#ffffff",
+        "text_color": "#0a2a26"
+      }
+    },
     "testimonials_slider": {
       "type": "testimonials-slider",
       "blocks": {
@@ -548,6 +601,48 @@
     },
     "video_call": {
       "type": "video-call"
+    },
+    "instagram_reels": {
+      "type": "instagram-reels",
+      "blocks": {
+        "reel_1": {
+          "type": "reel",
+          "settings": {
+            "view_count": "12.6K"
+          }
+        },
+        "reel_2": {
+          "type": "reel",
+          "settings": {
+            "view_count": "9.8K"
+          }
+        },
+        "reel_3": {
+          "type": "reel",
+          "settings": {
+            "view_count": "15.2K"
+          }
+        },
+        "reel_4": {
+          "type": "reel",
+          "settings": {
+            "view_count": "8.3K"
+          }
+        }
+      },
+      "block_order": [
+        "reel_1",
+        "reel_2",
+        "reel_3",
+        "reel_4"
+      ],
+      "settings": {
+        "subheading": "FROM INSTAGRAM",
+        "heading": "Jewellery Inspo, Just a Reels Away",
+        "description": "Explore trending styles, behind-the-scenes & more on our Instagram.",
+        "button_label": "FOLLOW US ON INSTAGRAM",
+        "bg_color": "#fdfaf7"
+      }
     }
   },
   "order": [
@@ -564,7 +659,9 @@
     "gifts_for_him_her",
     "made_for_every_bond",
     "store_highlights",
+    "for_every_you",
     "video_call",
+    "instagram_reels",
     "testimonials_slider"
   ]
 }
