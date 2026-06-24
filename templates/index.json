@@ -58,7 +58,8 @@
         "clay_whispers": {
           "type": "collection_card",
           "settings": {
-            "title": "CLAY WHISPERS",
+            "image": "shopify://shop_images/sj_collection_desktop_396_x_460_px_13_1.png",
+            "title": "",
             "subtitle": "",
             "link": "",
             "text_position": "middle-center",
@@ -73,8 +74,9 @@
         "gemphony": {
           "type": "collection_card",
           "settings": {
-            "title": "GEMPHONY",
-            "subtitle": "EVERY COLOR IS AN EMOTION",
+            "image": "shopify://shop_images/b5_collection.png",
+            "title": "",
+            "subtitle": "",
             "link": "",
             "text_position": "bottom-center",
             "title_style": "gradient",
@@ -87,6 +89,7 @@
         },
         "raw_reverie": {
           "type": "collection_card",
+          "disabled": true,
           "settings": {
             "title": "RAW REVERIE",
             "subtitle": "",
