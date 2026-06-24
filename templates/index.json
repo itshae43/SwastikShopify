@@ -107,14 +107,14 @@
         "raw_reverie"
       ],
       "settings": {
-        "title": "A Collection for Every Story",
-        "bg_color": "#FDFCFA",
+        "title": "Three Worlds of Beauty",
+        "bg_color": "#fdfcfa",
         "padding_top": 60,
         "padding_bottom": 60,
         "button_label": "Browse Collections",
         "button_link": "",
         "btn_bg_color": "#013f3e",
-        "btn_text_color": "#FDFCFA",
+        "btn_text_color": "#fdfcfa",
         "btn_hover_bg_color": "#025654",
         "btn_hover_text_color": "#ffffff"
       }
@@ -171,9 +171,9 @@
       ],
       "settings": {
         "subheading": "DISCOVER",
-        "title": "DIAMONDS, DESIGNED FOR YOU",
-        "description": "Explore our finest diamond creations, crafted for every occasion, every emotion, every you.",
-        "bg_color": "#FDFCFA"
+        "title": "Diamonds that stay with you",
+        "description": "Explore collections for every celebration, every memory, and every you.",
+        "bg_color": "#fdfcfa"
       }
     },
     "gold_collection_showcase": {
@@ -403,7 +403,7 @@
         "description": "Beautiful jewellery for the people who make every moment special.",
         "button_label": "Explore Collection",
         "button_link": "",
-        "bg_color": "#FDFCFA",
+        "bg_color": "#fdfcfa",
         "text_color": "#0a2a26",
         "accent_color": "#b38245"
       }
@@ -460,7 +460,7 @@
         "support"
       ],
       "settings": {
-        "bg_color": "#FBF6F0",
+        "bg_color": "#fbf6f0",
         "border_color": "#ebe7df",
         "icon_color": "#b38245",
         "text_color": "#0a2a26",
@@ -476,35 +476,40 @@
           "type": "slide",
           "settings": {
             "title": "THE COLLEGE CORE",
-            "subtitle": "Subtle elegance for your everyday hustle."
+            "subtitle": "Subtle elegance for your everyday hustle.",
+            "link": ""
           }
         },
         "slide_2": {
           "type": "slide",
           "settings": {
             "title": "THE WEEKEND GLOW",
-            "subtitle": "Effortless charm for your casual outings."
+            "subtitle": "Effortless charm for your casual outings.",
+            "link": ""
           }
         },
         "slide_3": {
           "type": "slide",
           "settings": {
             "title": "THE PARTY EDIT",
-            "subtitle": "Make heads turn at every celebration."
+            "subtitle": "Make heads turn at every celebration.",
+            "link": ""
           }
         },
         "slide_4": {
           "type": "slide",
           "settings": {
             "title": "THE BOARDROOM BOSS",
-            "subtitle": "Sharp, sophisticated, and ready to lead."
+            "subtitle": "Sharp, sophisticated, and ready to lead.",
+            "link": ""
           }
         },
         "slide_5": {
           "type": "slide",
           "settings": {
             "title": "THE FESTIVE GRACE",
-            "subtitle": "Embrace traditions with a modern sparkle."
+            "subtitle": "Embrace traditions with a modern sparkle.",
+            "link": ""
           }
         }
       },
@@ -520,6 +525,59 @@
         "subheading": "For every mood, moment, and milestone — there is a piece that speaks your style.",
         "bg_color": "#ffffff",
         "text_color": "#0a2a26"
+      }
+    },
+    "video_call": {
+      "type": "video-call",
+      "settings": {
+        "bg_color": "#fdf9f5",
+        "heading": "Shop with Confidence, From Wherever You Are.",
+        "text": "Connect on a video call with our experts and find your perfect jewellery.",
+        "button_label": "SCHEDULE A VIDEO CALL",
+        "button_link": ""
+      }
+    },
+    "instagram_reels": {
+      "type": "instagram-reels",
+      "blocks": {
+        "reel_1": {
+          "type": "reel",
+          "settings": {
+            "view_count": "12.6K"
+          }
+        },
+        "reel_2": {
+          "type": "reel",
+          "settings": {
+            "view_count": "9.8K"
+          }
+        },
+        "reel_3": {
+          "type": "reel",
+          "settings": {
+            "view_count": "15.2K"
+          }
+        },
+        "reel_4": {
+          "type": "reel",
+          "settings": {
+            "view_count": "8.3K"
+          }
+        }
+      },
+      "block_order": [
+        "reel_1",
+        "reel_2",
+        "reel_3",
+        "reel_4"
+      ],
+      "settings": {
+        "subheading": "FROM INSTAGRAM",
+        "heading": "Jewellery Inspo, Just a Reels Away",
+        "description": "Explore trending styles, behind-the-scenes & more on our Instagram.",
+        "button_label": "FOLLOW US ON INSTAGRAM",
+        "button_link": "",
+        "bg_color": "#fdfaf7"
       }
     },
     "testimonials_slider": {
@@ -592,56 +650,11 @@
         "title": "In Their Own Words",
         "subheading": "OUR REVIEW",
         "description": "More than reviews — stories of love, celebration, and cherished moments.",
-        "bg_color": "#FDFCFA",
+        "bg_color": "#fdfcfa",
         "text_color": "#0a2a26",
         "accent_color": "#b38245",
         "autoplay": true,
         "autoplay_speed": 6
-      }
-    },
-    "video_call": {
-      "type": "video-call"
-    },
-    "instagram_reels": {
-      "type": "instagram-reels",
-      "blocks": {
-        "reel_1": {
-          "type": "reel",
-          "settings": {
-            "view_count": "12.6K"
-          }
-        },
-        "reel_2": {
-          "type": "reel",
-          "settings": {
-            "view_count": "9.8K"
-          }
-        },
-        "reel_3": {
-          "type": "reel",
-          "settings": {
-            "view_count": "15.2K"
-          }
-        },
-        "reel_4": {
-          "type": "reel",
-          "settings": {
-            "view_count": "8.3K"
-          }
-        }
-      },
-      "block_order": [
-        "reel_1",
-        "reel_2",
-        "reel_3",
-        "reel_4"
-      ],
-      "settings": {
-        "subheading": "FROM INSTAGRAM",
-        "heading": "Jewellery Inspo, Just a Reels Away",
-        "description": "Explore trending styles, behind-the-scenes & more on our Instagram.",
-        "button_label": "FOLLOW US ON INSTAGRAM",
-        "bg_color": "#fdfaf7"
       }
     }
   },
