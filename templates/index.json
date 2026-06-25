@@ -141,6 +141,7 @@
         "pendants": {
           "type": "card",
           "settings": {
+            "image": "shopify://shop_images/ChatGPT_Image_Jun_26_2026_12_19_34_AM_1_1.png",
             "link": ""
           }
         },
