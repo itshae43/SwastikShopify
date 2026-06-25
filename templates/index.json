@@ -89,9 +89,9 @@
         },
         "raw_reverie": {
           "type": "collection_card",
-          "disabled": true,
           "settings": {
-            "title": "RAW REVERIE",
+            "image": "shopify://shop_images/b7_collection.png",
+            "title": "",
             "subtitle": "",
             "link": "",
             "text_position": "middle-right",
