@@ -114,7 +114,8 @@
         "card": {
           "name": "Category Card",
           "settings": {
-            "image": "Card Image",
+            "image_desktop": "Card Image (Desktop)",
+            "image_mobile": "Card Image (Mobile)",
             "number": "Card Number",
             "title": "Card Title",
             "link": "Card Link",

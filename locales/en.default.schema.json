@@ -115,7 +115,8 @@
           "settings": {
             "number": "Card Number",
             "title": "Category Title",
-            "image": "Card Image",
+            "image_desktop": "Card Image (Desktop)",
+            "image_mobile": "Card Image (Mobile)",
             "link": "Card Link",
             "color_scheme": "Color Scheme",
             "cream": "Cream",

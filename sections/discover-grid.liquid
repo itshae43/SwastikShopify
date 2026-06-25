@@ -19,7 +19,20 @@
       <a href="{{ block.settings.link | default: '#' }}" class="discover-grid-card discover-grid-card--{{ loop_index }}" {{ block.shopify_attributes }}>
         <div class="discover-grid-card-image-wrap">
           {%- if block.settings.image != blank -%}
-            {{ block.settings.image | image_url: width: 1200 | image_tag: loading: 'lazy', class: 'discover-grid-card-image' }}
+            <picture class="discover-grid-card-picture">
+              {%- if block.settings.image_mobile != blank -%}
+                <source media="(max-width: 767px)" srcset="{{ block.settings.image_mobile | image_url: width: 768 }}">
+              {%- else -%}
+                <source media="(max-width: 767px)" srcset="{{ block.settings.image | image_url: width: 768 }}">
+              {%- endif -%}
+              <source media="(min-width: 768px)" srcset="{{ block.settings.image | image_url: width: 1200 }}">
+              <img src="{{ block.settings.image | image_url: width: 1200 }}" 
+                   alt="{{ block.settings.image.alt | default: 'Category Image' | escape }}" 
+                   class="discover-grid-card-image" 
+                   loading="lazy"
+                   width="{{ block.settings.image.width }}"
+                   height="{{ block.settings.image.height }}">
+            </picture>
           {%- endif -%}
         </div>
       </a>
@@ -127,6 +140,12 @@
   overflow: hidden;
 }
 
+.discover-grid-card-picture {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
 .discover-grid-card-image {
   width: 100%;
   height: 100%;
@@ -220,6 +239,15 @@
     background-color: transparent !important;
   }
 
+  .discover-grid-card--1 .discover-grid-card-picture,
+  .discover-grid-card--2 .discover-grid-card-picture,
+  .discover-grid-card--3 .discover-grid-card-picture,
+  .discover-grid-card--4 .discover-grid-card-picture {
+    display: block !important;
+    width: 100% !important;
+    height: 100% !important;
+  }
+
   .discover-grid-card--1 .discover-grid-card-image,
   .discover-grid-card--2 .discover-grid-card-image,
   .discover-grid-card--3 .discover-grid-card-image,
@@ -268,7 +296,12 @@
         {
           "type": "image_picker",
           "id": "image",
-          "label": "t:sections.discover_grid.blocks.card.settings.image"
+          "label": "t:sections.discover_grid.blocks.card.settings.image_desktop"
+        },
+        {
+          "type": "image_picker",
+          "id": "image_mobile",
+          "label": "t:sections.discover_grid.blocks.card.settings.image_mobile"
         },
         {
           "type": "url",
