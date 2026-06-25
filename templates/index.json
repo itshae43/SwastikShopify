@@ -135,6 +135,7 @@
         "earrings": {
           "type": "card",
           "settings": {
+            "image": "shopify://shop_images/Untitled_design_8.png",
             "link": ""
           }
         },
