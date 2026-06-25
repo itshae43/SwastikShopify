@@ -128,7 +128,7 @@
         "rings": {
           "type": "card",
           "settings": {
-            "image": "shopify://shop_images/new_b8.png",
+            "image": "shopify://shop_images/new_b8_1.png",
             "link": ""
           }
         },
@@ -147,6 +147,7 @@
         "tennis": {
           "type": "card",
           "settings": {
+            "image": "shopify://shop_images/new_b8_1.png",
             "link": ""
           }
         }
