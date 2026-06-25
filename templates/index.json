@@ -58,7 +58,7 @@
         "clay_whispers": {
           "type": "collection_card",
           "settings": {
-            "image": "shopify://shop_images/sj_collection_desktop_396_x_460_px_13_1.png",
+            "image": "shopify://shop_images/new_b7_collection.png",
             "title": "",
             "subtitle": "",
             "link": "",
@@ -74,7 +74,7 @@
         "gemphony": {
           "type": "collection_card",
           "settings": {
-            "image": "shopify://shop_images/sj_collection_desktop_396_x_460_px_17.png",
+            "image": "shopify://shop_images/new_b6_collection.png",
             "title": "",
             "subtitle": "",
             "link": "",
@@ -90,7 +90,7 @@
         "raw_reverie": {
           "type": "collection_card",
           "settings": {
-            "image": "shopify://shop_images/b7_collection.png",
+            "image": "shopify://shop_images/new_b8_collection.png",
             "title": "",
             "subtitle": "",
             "link": "",
