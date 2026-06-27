@@ -1,0 +1,13 @@
+{
+  "sections": {
+    "hello": {
+      "type": "hello-text",
+      "settings": {
+        "text": "Hello Page 3"
+      }
+    }
+  },
+  "order": [
+    "hello"
+  ]
+}
