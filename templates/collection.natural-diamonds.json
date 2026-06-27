@@ -4,13 +4,14 @@
       "type": "main-collection-banner",
       "settings": {
         "title": "NATURAL DIAMONDS",
-        "subtitle": "<p>Timeless Beauty. Ethical Origins.</p>",
-        "button_label": "SHOP COLLECTION",
+        "subtitle": "<p>The Ultimate Expression of Forever. Responsibly Sourced. Impeccably Cut.</p>",
+        "button_label": "EXPLORE COLLECTION",
         "button_link": "",
-        "text_color": "#013F3E",
-        "bg_color": "#f5f0e6",
-        "btn_bg_color": "#013F3E",
-        "btn_text_color": "#ffffff"
+        "text_color": "#ffffff",
+        "bg_color": "#0a2a26",
+        "btn_bg_color": "#ffffff",
+        "btn_text_color": "#0a2a26",
+        "image": "shopify:\/\/shop_images\/new_b6_collection.png"
       }
     },
     "product_grid": {
@@ -25,5 +26,3 @@
     "product_grid"
   ]
 }
-
-

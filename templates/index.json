@@ -173,7 +173,7 @@
         "ring": {
           "type": "collection",
           "settings": {
-            "collection": "",
+            "collection": "gold-rings",
             "title": "GOLD RINGS",
             "image": "shopify://shop_images/Gold_Jewellery_8.png"
           }
@@ -181,7 +181,7 @@
         "earring": {
           "type": "collection",
           "settings": {
-            "collection": "",
+            "collection": "gold-earrings",
             "title": "GOLD EARRINGS",
             "image": "shopify://shop_images/Gold_Jewellery_6.png"
           }
@@ -189,7 +189,7 @@
         "necklace": {
           "type": "collection",
           "settings": {
-            "collection": "",
+            "collection": "gold-necklaces",
             "title": "GOLD NECKLACES",
             "image": "shopify://shop_images/Gold_Jewellery_5.png"
           }
@@ -197,14 +197,14 @@
         "bangle": {
           "type": "collection",
           "settings": {
-            "collection": "",
+            "collection": "gold-bangles",
             "title": "GOLD BANGLES"
           }
         },
         "mangalsutra": {
           "type": "collection",
           "settings": {
-            "collection": "",
+            "collection": "mangalsutra",
             "title": "MANGALSUTRA"
           }
         }
@@ -343,9 +343,9 @@
       "type": "gifts-for-him-her",
       "settings": {
         "title_him": "Him",
-        "link_him": "",
+        "link_him": "/collections/for-him",
         "title_her": "Her",
-        "link_her": "",
+        "link_her": "/collections/for-her",
         "bg_color": "#f8f5ef",
         "text_color": "#0a2a26",
         "accent_color": "#b38245",
@@ -360,7 +360,7 @@
           "settings": {
             "title": "For Mothers",
             "subtitle": "Her love, our forever.",
-            "link": "",
+            "link": "/collections/for-mothers",
             "icon": "mother",
             "custom_icon_svg": ""
           }
@@ -370,7 +370,7 @@
           "settings": {
             "title": "For Sisters",
             "subtitle": "Partners in all things.",
-            "link": "",
+            "link": "/collections/for-sisters",
             "icon": "sister",
             "custom_icon_svg": ""
           }
@@ -380,7 +380,7 @@
           "settings": {
             "title": "For Brides",
             "subtitle": "For the beginning of forever.",
-            "link": "",
+            "link": "/collections/for-brides",
             "icon": "bride",
             "custom_icon_svg": ""
           }

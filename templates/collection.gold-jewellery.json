@@ -4,13 +4,14 @@
       "type": "main-collection-banner",
       "settings": {
         "title": "GOLD JEWELLERY",
-        "subtitle": "<p>Classic designs crafted in pure gold.</p>",
-        "button_label": "SHOP COLLECTION",
+        "subtitle": "<p>A legacy in every layer. Discover pure, hallmarked gold crafted for generations.</p>",
+        "button_label": "DISCOVER GOLD",
         "button_link": "",
-        "text_color": "#013F3E",
-        "bg_color": "#f5f0e6",
-        "btn_bg_color": "#013F3E",
-        "btn_text_color": "#ffffff"
+        "text_color": "#ffffff",
+        "bg_color": "#b38245",
+        "btn_bg_color": "#ffffff",
+        "btn_text_color": "#b38245",
+        "image": "shopify:\/\/shop_images\/new_b8_collection.png"
       }
     },
     "product_grid": {
@@ -25,5 +26,3 @@
     "product_grid"
   ]
 }
-
-

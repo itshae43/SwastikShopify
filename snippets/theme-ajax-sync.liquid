@@ -194,18 +194,18 @@
     });
 
     // Helper functions to update Badges
-    function updateWishlistBadge() {
+    window.updateWishlistBadge = function() {
       if (!wishlistBadge) return;
       const count = wishlist.length;
       wishlistBadge.innerText = count;
       wishlistBadge.style.display = count > 0 ? 'inline-flex' : 'none';
-    }
+    };
 
-    function updateCartBadge() {
+    window.updateCartBadge = function() {
       if (!cartBadge) return;
       cartBadge.innerText = cartCount;
       cartBadge.style.display = cartCount > 0 ? 'inline-flex' : 'none';
-    }
+    };
 
     // 2. Global Toast Notification Generator
     window.showSwastikToast = function(title, message, isCart = false) {
@@ -266,7 +266,7 @@
 
     // 4. AJAX Wishlist click interceptor
     document.addEventListener('click', (e) => {
-      const btn = e.target.closest('.best-sellers__wishlist-btn, .new-arrivals__wishlist-btn, .product-single__wishlist-btn');
+      const btn = e.target.closest('.best-sellers__wishlist-btn, .new-arrivals__wishlist-btn, .product-single__wishlist-btn, .product-card-ui__wishlist');
       if (!btn) return;
 
       e.preventDefault();
@@ -276,8 +276,15 @@
       if (!card) return;
 
       const productId = card.getAttribute('data-product-id');
-      const titleElement = card.querySelector('.best-sellers__card-title, .new-arrivals__card-title, .product-single__title, .product-single__heading');
+      const url = card.getAttribute('data-url') || '#';
+      const titleElement = card.querySelector('.best-sellers__card-title, .new-arrivals__card-title, .product-single__title, .product-single__heading, .product-card-ui__title');
       const productTitle = titleElement ? titleElement.innerText.trim() : 'Product';
+      
+      const priceElement = card.querySelector('.price-current, .price-item--regular');
+      const productPrice = priceElement ? priceElement.innerText.trim().replace(/[^0-9.-]+/g,"") * 100 : 0;
+      
+      const imgElement = card.querySelector('img');
+      const productImg = imgElement ? imgElement.src : '';
 
       btn.classList.toggle('active');
 
@@ -285,14 +292,40 @@
         if (!wishlist.includes(productId)) {
           wishlist.push(productId);
           localStorage.setItem('wishlist', JSON.stringify(wishlist));
+          
+          let detailedWishlist = JSON.parse(localStorage.getItem('wishlist_items_data') || '[]');
+          detailedWishlist.push({
+            id: productId,
+            title: productTitle,
+            price: productPrice,
+            image: productImg,
+            url: url
+          });
+          localStorage.setItem('wishlist_items_data', JSON.stringify(detailedWishlist));
         }
-        updateWishlistBadge();
-        showSwastikToast('Added to Wishlist', `${productTitle} has been saved to your likes.`, false);
+        window.updateWishlistBadge();
+        
+        // Open Sidebar Drawer instead of Toast
+        if (window.openSidebarDrawer) {
+          window.openSidebarDrawer('wishlist');
+        } else {
+          showSwastikToast('Added to Wishlist', `${productTitle} has been saved to your likes.`, false);
+        }
       } else {
         wishlist = wishlist.filter(id => id !== productId);
         localStorage.setItem('wishlist', JSON.stringify(wishlist));
-        updateWishlistBadge();
-        showSwastikToast('Removed from Wishlist', `${productTitle} has been removed.`, false);
+        
+        let detailedWishlist = JSON.parse(localStorage.getItem('wishlist_items_data') || '[]');
+        detailedWishlist = detailedWishlist.filter(item => item.id !== productId);
+        localStorage.setItem('wishlist_items_data', JSON.stringify(detailedWishlist));
+
+        window.updateWishlistBadge();
+        
+        if (window.renderDrawerContent && document.getElementById('SidebarDrawer').classList.contains('open')) {
+          window.renderDrawerContent();
+        } else {
+          showSwastikToast('Removed from Wishlist', `${productTitle} has been removed.`, false);
+        }
       }
     });
 
@@ -319,34 +352,75 @@
         if (titleElement) title = titleElement.innerText.trim();
       }
 
-      // Prepare Form Data
-      const formData = new FormData(form);
+      // Form data handling for detailed mock cart
+      const cardId = card ? card.getAttribute('data-product-id') : ('mock-' + Date.now());
+      const url = card ? (card.getAttribute('data-url') || '#') : '#';
+      const priceElement = card ? card.querySelector('.price-current, .price-item--regular') : null;
+      const productPrice = priceElement ? priceElement.innerText.trim().replace(/[^0-9.-]+/g,"") * 100 : 0;
+      const imgElement = card ? card.querySelector('img') : null;
+      const productImg = imgElement ? imgElement.src : '';
+
+      function handleAddToCartSuccess() {
+        cartCount += qtyVal;
+        localStorage.setItem('cart_count', cartCount);
+        
+        // Save detailed data
+        let detailedCart = JSON.parse(localStorage.getItem('cart_items_data') || '[]');
+        const existingItem = detailedCart.find(i => i.id === cardId);
+        if (existingItem) {
+          existingItem.quantity += qtyVal;
+        } else {
+          detailedCart.push({
+            id: cardId,
+            title: title,
+            price: productPrice,
+            image: productImg,
+            url: url,
+            quantity: qtyVal
+          });
+        }
+        localStorage.setItem('cart_items_data', JSON.stringify(detailedCart));
+        window.updateCartBadge();
+
+        if (submitBtn) submitBtn.classList.remove('btn-loading');
+        
+        // Open Sidebar Drawer instead of Toast
+        if (window.openSidebarDrawer) {
+          window.openSidebarDrawer('cart');
+        } else {
+          showSwastikToast('Added to Cart', `${qtyVal} x ${title} added!`, true);
+        }
+      }
 
       // Perform AJAX Post
       fetch('/cart/add.js', {
         method: 'POST',
-        body: formData
+        body: new FormData(form)
       })
       .then(response => {
-        // Increment Mock Cart Local Count anyway for local testing environment support
-        cartCount += qtyVal;
-        localStorage.setItem('cart_count', cartCount);
-        updateCartBadge();
-
-        if (submitBtn) submitBtn.classList.remove('btn-loading');
-        showSwastikToast('Added to Cart', `${qtyVal} x ${title} added successfully!`, true);
+        handleAddToCartSuccess();
       })
       .catch(error => {
         console.warn('Shopify Cart API error, falling back to Mock Cart. ', error);
-        
-        // Fallback Mock increment if not a live Shopify server
-        cartCount += qtyVal;
-        localStorage.setItem('cart_count', cartCount);
-        updateCartBadge();
-
-        if (submitBtn) submitBtn.classList.remove('btn-loading');
-        showSwastikToast('Added to Cart', `${qtyVal} x ${title} added to your cart.`, true);
+        handleAddToCartSuccess();
       });
+    });
+
+    // 6. Header Triggers for Drawer (using event delegation for reliability)
+    document.addEventListener('click', (e) => {
+      const wishlistTrigger = e.target.closest('.header__wishlist-trigger');
+      if (wishlistTrigger) {
+        e.preventDefault();
+        if (window.openSidebarDrawer) window.openSidebarDrawer('wishlist');
+        return;
+      }
+
+      const cartTrigger = e.target.closest('.header__cart-trigger');
+      if (cartTrigger) {
+        e.preventDefault();
+        if (window.openSidebarDrawer) window.openSidebarDrawer('cart');
+        return;
+      }
     });
 
   })();

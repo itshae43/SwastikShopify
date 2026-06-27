@@ -15,7 +15,9 @@
               <details class="filter-group__details" open>
                 <summary class="filter-group__summary">
                   <span class="filter-group__name">{{ filter.label }}</span>
-                  <svg class="icon-caret" viewBox="0 0 10 6" width="10" height="6" fill="none"><path fill-rule="evenodd" clip-rule="evenodd" d="M9.354.646a.5.5 0 00-.708 0L5 4.293 1.354.646a.5.5 0 00-.708.708l4 4a.5.5 0 00.708 0l4-4a.5.5 0 000-.708z" fill="currentColor"></path></svg>
+                  <svg class="icon-caret" width="10" height="6" viewBox="0 0 10 6" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M1 1L5 5L9 1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>
                 </summary>
                 
                 <div class="filter-group__display">
@@ -69,6 +71,40 @@
             </div>
           {%- endfor -%}
           
+          <!-- Hardcoded filters for visual mockup -->
+          {% assign custom_filters = "Diamond Shape, Metal Type, Occasion, Collection" | split: ", " %}
+          {% for custom_filter in custom_filters %}
+            <div class="filter-group">
+              <details class="filter-group__details">
+                <summary class="filter-group__summary">
+                  <span class="filter-group__name">{{ custom_filter }}</span>
+                  <svg class="icon-caret" width="10" height="6" viewBox="0 0 10 6" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M1 1L5 5L9 1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>
+                </summary>
+                <div class="filter-group__display">
+                  <ul class="filter-group__list">
+                    <!-- Dummy items for mockup -->
+                    <li class="filter-group__list-item">
+                      <label class="filter-checkbox">
+                        <input type="checkbox" disabled>
+                        <span class="filter-checkbox__box"></span>
+                        <span class="filter-checkbox__label">Option 1</span>
+                      </label>
+                    </li>
+                    <li class="filter-group__list-item">
+                      <label class="filter-checkbox">
+                        <input type="checkbox" disabled>
+                        <span class="filter-checkbox__box"></span>
+                        <span class="filter-checkbox__label">Option 2</span>
+                      </label>
+                    </li>
+                  </ul>
+                </div>
+              </details>
+            </div>
+          {% endfor %}
+          
           <!-- Hidden inputs for sorting so it's maintained when filtering -->
           {%- if collection.sort_by -%}
             <input type="hidden" name="sort_by" value="{{ collection.sort_by }}">
@@ -85,7 +121,7 @@
         </div>
         
         <div class="collection-toolbar__sort">
-          <label for="SortBy">Sort by:</label>
+          <label for="SortBy" class="collection-toolbar__sort-label">Sort<br>by:</label>
           <select name="sort_by" id="SortBy" form="CollectionFiltersForm" onchange="this.form.submit()">
             {%- for option in collection.sort_options -%}
               <option value="{{ option.value }}" {% if option.value == collection.sort_by %}selected="selected"{% endif %}>
@@ -151,10 +187,12 @@
   }
   
   .collection-filters__title {
-    font-size: 1rem;
-    font-weight: 600;
+    font-size: 1.1rem;
+    font-weight: 700;
+    font-family: 'Merriweather', serif;
     margin: 0;
     letter-spacing: 0.05em;
+    color: #013F3E;
   }
   
   .collection-filters__clear {
@@ -174,13 +212,14 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 1.2rem 0;
+    padding: 1rem 0;
     cursor: pointer;
     list-style: none;
-    font-weight: 600;
-    font-size: 0.9rem;
+    font-weight: 700;
+    font-size: 0.8rem;
     text-transform: uppercase;
     letter-spacing: 0.05em;
+    color: #013F3E;
   }
   .filter-group__summary::-webkit-details-marker {
     display: none;
@@ -289,8 +328,8 @@
   .price-slider__range::-webkit-slider-thumb {
     -webkit-appearance: none;
     appearance: none;
-    width: 16px;
-    height: 16px;
+    width: 20px;
+    height: 20px;
     border-radius: 50%;
     background: #ffffff;
     border: 2px solid #013F3E;
@@ -298,8 +337,8 @@
     pointer-events: auto;
   }
   .price-slider__range::-moz-range-thumb {
-    width: 16px;
-    height: 16px;
+    width: 20px;
+    height: 20px;
     border-radius: 50%;
     background: #ffffff;
     border: 2px solid #013F3E;
@@ -310,7 +349,7 @@
     display: flex;
     justify-content: space-between;
     font-size: 0.85rem;
-    color: #333;
+    color: #013F3E;
     font-weight: 500;
   }
   
@@ -324,27 +363,34 @@
   
   .collection-toolbar__count {
     font-size: 1.2rem;
-    font-weight: 600;
-    color: #333;
+    font-weight: 700;
+    color: #013F3E;
     font-family: 'Merriweather', serif;
   }
   
   .collection-toolbar__sort {
     display: flex;
     align-items: center;
-    gap: 10px;
-    font-size: 0.9rem;
+    gap: 8px;
+  }
+  
+  .collection-toolbar__sort-label {
+    font-size: 0.75rem;
+    line-height: 1.1;
+    text-align: right;
+    color: #555;
   }
   
   .collection-toolbar__sort select {
-    padding: 0.5rem 2rem 0.5rem 1rem;
+    padding: 0;
     border: none;
     background-color: transparent;
-    font-size: 0.9rem;
+    font-size: 0.95rem;
     font-weight: 600;
+    color: #013F3E;
     cursor: pointer;
     appearance: none;
-    /* Optional: custom dropdown arrow */
+    outline: none;
   }
   
   /* Grid */

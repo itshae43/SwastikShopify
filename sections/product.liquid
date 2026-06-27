@@ -11,31 +11,29 @@
 {% assign description = product.description | default: "Indulge in the luxury of timeless elegance. Crafted from pure 18K yellow gold, this gorgeous teardrop pendant features a brilliant center solitaire surrounded by a halo of pave-set diamonds. Designed to be worn every day, it's the perfect statement of grace and beauty." %}
 
 {% comment %} Set up product images, falling back to mock assets if empty {% endcomment %}
-{% assign product_images_count = product.images.size %}
-{% if product_images_count > 0 %}
-  {% assign img_1 = product.images[0] | image_url: width: 800, height: 800 %}
-  {% assign img_2 = product.images[1] | image_url: width: 800, height: 800 | default: img_1 %}
-  {% assign img_3 = product.images[2] | image_url: width: 800, height: 800 | default: img_1 %}
-  {% assign img_4 = product.images[3] | image_url: width: 800, height: 800 | default: img_1 %}
-{% else %}
-  {% assign img_1 = 'best_seller_pendant.png' | asset_url %}
-  {% assign img_2 = 'best_seller_pendant_2.png' | asset_url %}
-  {% assign img_3 = 'best_seller_pendant_3.png' | asset_url %}
-  {% assign img_4 = 'pendant_placeholder.png' | asset_url %}
+{% assign has_images = false %}
+{% if product.images.size > 0 %}
+  {% assign has_images = true %}
 {% endif %}
 
 <div class="product-single" data-product-id="{{ product.id | default: 'mock-pendant-id' }}">
   <div class="product-single__container">
     
+    {% assign breadcrumb_collection = collection | default: product.collections.first %}
+    
     <!-- Breadcrumb Navigation -->
     <nav class="product-single__breadcrumb" aria-label="Breadcrumb">
       <a href="/">Home</a>
-      <span class="breadcrumb-separator">
-        <svg width="6" height="10" viewBox="0 0 6 10" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path d="M1 9L5 5L1 1" stroke="#A8A8A8" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
-        </svg>
-      </span>
-      <a href="/collections/necklaces">Necklaces</a>
+      
+      {% if breadcrumb_collection %}
+        <span class="breadcrumb-separator">
+          <svg width="6" height="10" viewBox="0 0 6 10" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M1 9L5 5L1 1" stroke="#A8A8A8" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </span>
+        <a href="{{ breadcrumb_collection.url }}">{{ breadcrumb_collection.title }}</a>
+      {% endif %}
+
       <span class="breadcrumb-separator">
         <svg width="6" height="10" viewBox="0 0 6 10" fill="none" xmlns="http://www.w3.org/2000/svg">
           <path d="M1 9L5 5L1 1" stroke="#A8A8A8" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
@@ -51,22 +49,6 @@
       <div class="product-single__media">
         <div class="product-single__gallery">
           
-          <!-- Vertical Thumbnails Column -->
-          <div class="product-single__thumbnails">
-            <button class="thumbnail-btn active" data-image-url="{{ img_1 }}" aria-label="View Image 1">
-              <img src="{{ img_1 }}" alt="Thumbnail 1" loading="lazy" width="80" height="80">
-            </button>
-            <button class="thumbnail-btn" data-image-url="{{ img_2 }}" aria-label="View Image 2">
-              <img src="{{ img_2 }}" alt="Thumbnail 2" loading="lazy" width="80" height="80">
-            </button>
-            <button class="thumbnail-btn" data-image-url="{{ img_3 }}" aria-label="View Image 3">
-              <img src="{{ img_3 }}" alt="Thumbnail 3" loading="lazy" width="80" height="80">
-            </button>
-            <button class="thumbnail-btn" data-image-url="{{ img_4 }}" aria-label="View Image 4">
-              <img src="{{ img_4 }}" alt="Thumbnail 4" loading="lazy" width="80" height="80">
-            </button>
-          </div>
-          
           <!-- Center Main Image View -->
           <div class="product-single__main-image-container">
             <!-- Discount Tag badge -->
@@ -74,7 +56,11 @@
             
             <!-- Main Image -->
             <div class="product-single__main-image-wrapper">
-              <img id="main-product-image" src="{{ img_1 }}" alt="{{ title }}" loading="eager" width="600" height="600">
+              {% if has_images %}
+                <img id="main-product-image" src="{{ product.featured_image | image_url: width: 800, height: 800 }}" alt="{{ title }}" loading="eager" width="600" height="600">
+              {% else %}
+                <img id="main-product-image" src="{{ 'best_seller_pendant.png' | asset_url }}" alt="{{ title }}" loading="eager" width="600" height="600">
+              {% endif %}
             </div>
 
             <!-- Navigation Arrows -->
@@ -104,6 +90,30 @@
               </svg>
             </button>
           </div>
+
+          <!-- Horizontal Thumbnails Row -->
+          <div class="product-single__thumbnails">
+            {% if has_images %}
+              {% for image in product.images %}
+                <button class="thumbnail-btn {% if forloop.first %}active{% endif %}" data-image-url="{{ image | image_url: width: 800, height: 800 }}" aria-label="View Image {{ forloop.index }}">
+                  <img src="{{ image | image_url: width: 150, height: 150 }}" alt="{{ image.alt | escape }}" loading="lazy" width="80" height="80">
+                </button>
+              {% endfor %}
+            {% else %}
+              <button class="thumbnail-btn active" data-image-url="{{ 'best_seller_pendant.png' | asset_url }}" aria-label="View Image 1">
+                <img src="{{ 'best_seller_pendant.png' | asset_url }}" alt="Thumbnail 1" loading="lazy" width="80" height="80">
+              </button>
+              <button class="thumbnail-btn" data-image-url="{{ 'best_seller_pendant_2.png' | asset_url }}" aria-label="View Image 2">
+                <img src="{{ 'best_seller_pendant_2.png' | asset_url }}" alt="Thumbnail 2" loading="lazy" width="80" height="80">
+              </button>
+              <button class="thumbnail-btn" data-image-url="{{ 'best_seller_pendant_3.png' | asset_url }}" aria-label="View Image 3">
+                <img src="{{ 'best_seller_pendant_3.png' | asset_url }}" alt="Thumbnail 3" loading="lazy" width="80" height="80">
+              </button>
+              <button class="thumbnail-btn" data-image-url="{{ 'pendant_placeholder.png' | asset_url }}" aria-label="View Image 4">
+                <img src="{{ 'pendant_placeholder.png' | asset_url }}" alt="Thumbnail 4" loading="lazy" width="80" height="80">
+              </button>
+            {% endif %}
+          </div>
         </div>
       </div>
 
@@ -126,10 +136,17 @@
         <h1 class="product-single__heading serif-font">{{ title }}</h1>
 
         <!-- Pricing Row -->
-        <div class="product-single__price-row">
+        <div class="product-single__price-row" id="product-price-display">
           <span class="price-current">₹{{ price | money_without_currency | remove: ".00" }}</span>
-          <span class="price-original">₹{{ original_price | money_without_currency | remove: ".00" }}</span>
-          <span class="price-discount">23% OFF</span>
+          {% if product.compare_at_price > product.price %}
+            <span class="price-original">₹{{ product.compare_at_price | money_without_currency | remove: ".00" }}</span>
+            <span class="price-discount">
+              {{ product.compare_at_price | minus: product.price | times: 100.0 | divided_by: product.compare_at_price | round }}% OFF
+            </span>
+          {% elsif original_price > price and product.compare_at_price == blank %}
+            <span class="price-original">₹{{ original_price | money_without_currency | remove: ".00" }}</span>
+            <span class="price-discount">23% OFF</span>
+          {% endif %}
         </div>
         <p class="product-single__taxes-text">Inclusive of all taxes</p>
 
@@ -138,26 +155,45 @@
 
         <!-- Variant Options Form -->
         {% form 'product', product, class: 'product-single__form' %}
-          <input type="hidden" name="id" value="{{ current_variant.id | default: 998877 }}">
+          <input type="hidden" name="id" id="product-variant-id" value="{{ current_variant.id | default: 998877 }}">
+          
+          <script type="application/json" id="ProductJson-{{ section.id }}">
+            {{ product.variants | json }}
+          </script>
 
-          <!-- METAL Selector Options -->
-          <div class="product-single__option-group" data-option-index="0">
-            <span class="option-label">METAL</span>
-            <div class="option-pills">
-              <button type="button" class="option-pill-btn active" data-value="18K Yellow Gold">18K Yellow Gold</button>
-              <button type="button" class="option-pill-btn" data-value="18K Rose Gold">18K Rose Gold</button>
-              <button type="button" class="option-pill-btn" data-value="18K White Gold">18K White Gold</button>
-            </div>
-          </div>
-
-          <!-- CHAIN LENGTH Selector Options -->
-          <div class="product-single__option-group" data-option-index="1">
-            <span class="option-label">CHAIN LENGTH</span>
-            <div class="option-pills">
-              <button type="button" class="option-pill-btn" data-value="16 Inch">16 Inch</button>
-              <button type="button" class="option-pill-btn active" data-value="18 Inch">18 Inch</button>
-              <button type="button" class="option-pill-btn" data-value="20 Inch">20 Inch</button>
-            </div>
+          <div id="product-option-selectors">
+            {%- unless product.has_only_default_variant -%}
+              {%- for option in product.options_with_values -%}
+                <div class="product-single__option-group" data-option-index="{{ forloop.index0 }}">
+                  <span class="option-label">{{ option.name | upcase }}</span>
+                  <div class="option-pills">
+                    {%- for value in option.values -%}
+                      <button type="button" class="option-pill-btn {% if option.selected_value == value %}active{% endif %}" data-value="{{ value | escape }}">
+                        {{ value | escape }}
+                      </button>
+                    {%- endfor -%}
+                  </div>
+                </div>
+              {%- endfor -%}
+            {%- else -%}
+              <!-- Fallback Mock Options if no real variants exist -->
+              <div class="product-single__option-group" data-option-index="0">
+                <span class="option-label">METAL</span>
+                <div class="option-pills">
+                  <button type="button" class="option-pill-btn active" data-value="18K Yellow Gold">18K Yellow Gold</button>
+                  <button type="button" class="option-pill-btn" data-value="18K Rose Gold">18K Rose Gold</button>
+                  <button type="button" class="option-pill-btn" data-value="18K White Gold">18K White Gold</button>
+                </div>
+              </div>
+              <div class="product-single__option-group" data-option-index="1">
+                <span class="option-label">CHAIN LENGTH</span>
+                <div class="option-pills">
+                  <button type="button" class="option-pill-btn" data-value="16 Inch">16 Inch</button>
+                  <button type="button" class="option-pill-btn active" data-value="18 Inch">18 Inch</button>
+                  <button type="button" class="option-pill-btn" data-value="20 Inch">20 Inch</button>
+                </div>
+              </div>
+            {%- endunless -%}
           </div>
 
           <!-- QUANTITY Selector -->
@@ -413,15 +449,18 @@
   /* Left Column Gallery layout */
   .product-single__gallery {
     display: flex;
-    gap: 2.4rem;
+    flex-direction: column;
+    gap: 1.6rem;
   }
 
   /* Thumbnails Column styles */
   .product-single__thumbnails {
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     gap: 1.6rem;
     flex-shrink: 0;
+    overflow-x: auto;
+    padding-bottom: 0.8rem; /* Space for scrollbar if needed */
   }
   .thumbnail-btn {
     border: 1px solid rgba(1, 63, 62, 0.08);
@@ -977,185 +1016,293 @@
   }
 {% endstylesheet %}
 
-{% javascript %}
+<script>
   function initProductPage() {
-    const section = document.querySelector('.product-single');
-    if (!section) return;
-
-    // 1. Thumbnail Selector & main image change logic
-    const thumbnails = section.querySelectorAll('.thumbnail-btn');
-    const mainImage = section.getElementById('main-product-image');
+    const sections = document.querySelectorAll('.product-single');
     
-    // Extract list of all image URLs for navigation arrows
-    const imageUrls = Array.from(thumbnails).map(btn => btn.getAttribute('data-image-url'));
-    let activeIdx = 0;
+    sections.forEach(section => {
+      // Prevent double initialization
+      if (section.dataset.initialized) return;
+      section.dataset.initialized = 'true';
 
-    function updateActiveImage(idx) {
-      activeIdx = (idx + imageUrls.length) % imageUrls.length;
+      // 1. Thumbnail Selector & main image change logic
+      const thumbnails = section.querySelectorAll('.thumbnail-btn');
+      const mainImage = section.querySelector('#main-product-image') || section.querySelector('.product-single__main-image-wrapper img');
       
-      // Update Main image
-      if (mainImage) {
-        mainImage.style.opacity = 0;
-        setTimeout(() => {
-          mainImage.src = imageUrls[activeIdx];
-          mainImage.style.opacity = 1;
-        }, 150);
-      }
+      const imageUrls = Array.from(thumbnails).map(btn => btn.getAttribute('data-image-url'));
+      let activeIdx = 0;
 
-      // Update Thumbnails selection active class
-      thumbnails.forEach((t, i) => {
-        if (i === activeIdx) {
-          t.classList.add('active');
-          // Scroll thumbnail into view if needed
-          t.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'nearest' });
-        } else {
-          t.classList.remove('active');
+      function updateActiveImage(idx) {
+        if (imageUrls.length === 0) return;
+        activeIdx = (idx + imageUrls.length) % imageUrls.length;
+        
+        if (mainImage) {
+          mainImage.style.opacity = 0;
+          setTimeout(() => {
+            mainImage.src = imageUrls[activeIdx];
+            mainImage.style.opacity = 1;
+          }, 150);
         }
-      });
-    }
 
-    thumbnails.forEach((btn, idx) => {
-      btn.addEventListener('click', (e) => {
-        e.preventDefault();
-        updateActiveImage(idx);
-      });
-    });
-
-    // Gallery Arrows click handlers
-    const prevBtn = section.querySelector('.prev-btn');
-    const nextBtn = section.querySelector('.next-btn');
-
-    if (prevBtn) {
-      prevBtn.addEventListener('click', (e) => {
-        e.preventDefault();
-        updateActiveImage(activeIdx - 1);
-      });
-    }
-
-    if (nextBtn) {
-      nextBtn.addEventListener('click', (e) => {
-        e.preventDefault();
-        updateActiveImage(activeIdx + 1);
-      });
-    }
-
-    // Add CSS transition for opacity to main image
-    if (mainImage) {
-      mainImage.style.transition = 'opacity 0.15s ease-in-out';
-    }
-
-    // 2. Variant Selector Pills active styles toggle
-    const optionGroups = section.querySelectorAll('.product-single__option-group');
-    optionGroups.forEach(group => {
-      const pills = group.querySelectorAll('.option-pill-btn');
-      pills.forEach(pill => {
-        pill.addEventListener('click', (e) => {
-          e.preventDefault();
-          pills.forEach(p => p.classList.remove('active'));
-          pill.classList.add('active');
-
-          // Here a real Shopify theme would map selection combination to variant IDs
-          // For mockup: simulate updating hidden variant ID
-          const selectedValue = pill.getAttribute('data-value');
-          console.log(`Option changed to: ${selectedValue}`);
-        });
-      });
-    });
-
-    // 3. Quantity Increment/Decrement
-    const qtyRow = section.querySelector('.product-single__qty-row');
-    if (qtyRow) {
-      const input = qtyRow.querySelector('input');
-      const decBtn = qtyRow.querySelector('.decrement');
-      const incBtn = qtyRow.querySelector('.increment');
-
-      if (input && decBtn && incBtn) {
-        decBtn.addEventListener('click', (e) => {
-          e.preventDefault();
-          let val = parseInt(input.value) || 1;
-          if (val > 1) {
-            input.value = val - 1;
+        thumbnails.forEach((t, i) => {
+          if (i === activeIdx) {
+            t.classList.add('active');
+            t.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'nearest' });
+          } else {
+            t.classList.remove('active');
           }
         });
+      }
 
-        incBtn.addEventListener('click', (e) => {
+      thumbnails.forEach((btn, idx) => {
+        btn.addEventListener('click', (e) => {
           e.preventDefault();
-          let val = parseInt(input.value) || 1;
-          input.value = val + 1;
+          updateActiveImage(idx);
+        });
+      });
+
+      const prevBtn = section.querySelector('.prev-btn');
+      const nextBtn = section.querySelector('.next-btn');
+
+      if (prevBtn) {
+        prevBtn.addEventListener('click', (e) => {
+          e.preventDefault();
+          updateActiveImage(activeIdx - 1);
         });
       }
-    }
 
-    // 4. Accordion Toggle logic
-    const accordions = section.querySelectorAll('.accordion-item');
-    accordions.forEach(item => {
-      const header = item.querySelector('.accordion-header');
-      const content = item.querySelector('.accordion-content');
-
-      if (header && content) {
-        header.addEventListener('click', (e) => {
+      if (nextBtn) {
+        nextBtn.addEventListener('click', (e) => {
           e.preventDefault();
-          const isOpen = item.classList.contains('open');
+          updateActiveImage(activeIdx + 1);
+        });
+      }
 
-          // Close other accordions first (Optional, but looks cleaner)
-          accordions.forEach(otherItem => {
-            if (otherItem !== item) {
-              otherItem.classList.remove('open');
-              const otherContent = otherItem.querySelector('.accordion-content');
-              if (otherContent) otherContent.style.maxHeight = null;
-              otherItem.querySelector('.accordion-header').setAttribute('aria-expanded', 'false');
+      if (mainImage) {
+        mainImage.style.transition = 'opacity 0.15s ease-in-out';
+      }
+
+      // 2. Variant Selector Logic
+      const variantDataTag = section.querySelector('[id^="ProductJson-"]');
+      let variants = [];
+      if (variantDataTag) {
+        try {
+          variants = JSON.parse(variantDataTag.textContent || variantDataTag.innerHTML);
+        } catch (e) {
+          console.error('Error parsing product variants JSON', e);
+        }
+      }
+
+      const optionSelectorsWrapper = section.querySelector('#product-option-selectors');
+      const optionGroups = optionSelectorsWrapper ? optionSelectorsWrapper.querySelectorAll('.product-single__option-group') : [];
+      
+      function formatMoney(cents) {
+        return '₹' + (cents / 100).toLocaleString('en-IN', { minimumFractionDigits: 0, maximumFractionDigits: 0 });
+      }
+
+      function onVariantChange() {
+        if (variants.length === 0) return;
+
+        const selectedOptions = Array.from(optionGroups).map(group => {
+          const activePill = group.querySelector('.option-pill-btn.active');
+          return activePill ? activePill.getAttribute('data-value') : null;
+        });
+
+        const currentVariant = variants.find(variant => {
+          if (!variant.options) return false;
+          return variant.options.every((opt, index) => opt === selectedOptions[index]);
+        });
+
+        if (currentVariant) {
+          const idInput = section.querySelector('#product-variant-id');
+          if (idInput) idInput.value = currentVariant.id;
+
+          if (history.replaceState) {
+            const newurl = window.location.protocol + '//' + window.location.host + window.location.pathname + '?variant=' + currentVariant.id;
+            window.history.replaceState({ path: newurl }, '', newurl);
+          }
+
+          const priceContainer = section.querySelector('#product-price-display');
+          if (priceContainer) {
+            const currentPriceEl = priceContainer.querySelector('.price-current');
+            const originalPriceEl = priceContainer.querySelector('.price-original');
+            const discountEl = priceContainer.querySelector('.price-discount');
+
+            if (currentPriceEl) currentPriceEl.textContent = formatMoney(currentVariant.price);
+            
+            if (currentVariant.compare_at_price > currentVariant.price) {
+              if (originalPriceEl) {
+                 originalPriceEl.textContent = formatMoney(currentVariant.compare_at_price);
+                 originalPriceEl.style.display = 'inline';
+              }
+              if (discountEl) {
+                 const discount = Math.round(((currentVariant.compare_at_price - currentVariant.price) / currentVariant.compare_at_price) * 100);
+                 discountEl.textContent = discount + '% OFF';
+                 discountEl.style.display = 'inline-block';
+              }
+            } else {
+              if (originalPriceEl) originalPriceEl.style.display = 'none';
+              if (discountEl) discountEl.style.display = 'none';
+            }
+          }
+        }
+      }
+
+      optionGroups.forEach(group => {
+        const pills = group.querySelectorAll('.option-pill-btn');
+        pills.forEach(pill => {
+          pill.addEventListener('click', (e) => {
+            e.preventDefault();
+            if (pill.classList.contains('active')) return;
+            
+            pills.forEach(p => p.classList.remove('active'));
+            pill.classList.add('active');
+
+            onVariantChange();
+          });
+        });
+      });
+
+      // 3. Quantity Increment/Decrement
+      const qtyRow = section.querySelector('.product-single__qty-row');
+      if (qtyRow) {
+        const input = qtyRow.querySelector('input');
+        const decBtn = qtyRow.querySelector('.decrement');
+        const incBtn = qtyRow.querySelector('.increment');
+
+        if (input && decBtn && incBtn) {
+          decBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            let val = parseInt(input.value) || 1;
+            if (val > 1) {
+              input.value = val - 1;
             }
           });
 
-          // Toggle current
-          if (isOpen) {
-            item.classList.remove('open');
-            content.style.maxHeight = null;
-            header.setAttribute('aria-expanded', 'false');
-          } else {
-            item.classList.add('open');
-            content.style.maxHeight = content.scrollHeight + 'px';
-            header.setAttribute('aria-expanded', 'true');
-          }
+          incBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            let val = parseInt(input.value) || 1;
+            input.value = val + 1;
+          });
+        }
+      }
+
+      // 4. Accordion Toggle logic
+      const accordions = section.querySelectorAll('.accordion-item');
+      accordions.forEach(item => {
+        const header = item.querySelector('.accordion-header');
+        const content = item.querySelector('.accordion-content');
+
+        if (header && content) {
+          header.addEventListener('click', (e) => {
+            e.preventDefault();
+            const isOpen = item.classList.contains('open');
+
+            accordions.forEach(otherItem => {
+              if (otherItem !== item) {
+                otherItem.classList.remove('open');
+                const otherContent = otherItem.querySelector('.accordion-content');
+                if (otherContent) otherContent.style.maxHeight = null;
+                otherItem.querySelector('.accordion-header').setAttribute('aria-expanded', 'false');
+              }
+            });
+
+            if (isOpen) {
+              item.classList.remove('open');
+              content.style.maxHeight = null;
+              header.setAttribute('aria-expanded', 'false');
+            } else {
+              item.classList.add('open');
+              content.style.maxHeight = content.scrollHeight + 'px';
+              header.setAttribute('aria-expanded', 'true');
+            }
+          });
+        }
+      });
+
+      // 5. Form Submit (AJAX Add to Cart)
+      const form = section.querySelector('.product-single__form');
+      const addBtn = section.querySelector('.btn-add-to-cart');
+
+      if (form) {
+        form.addEventListener('submit', (e) => {
+          e.preventDefault();
+          if (addBtn) addBtn.classList.add('btn-loading');
+
+          const formData = new FormData(form);
+
+          fetch(window.Shopify.routes.root + 'cart/add.js', {
+            method: 'POST',
+            body: formData
+          })
+          .then(response => {
+            if (!response.ok) throw new Error('Network error');
+            return response.json();
+          })
+          .then(data => {
+            if (addBtn) addBtn.classList.remove('btn-loading');
+            if (window.openCartDrawer) {
+              window.openCartDrawer();
+            } else if (window.showSwastikToast) {
+              window.showSwastikToast('Added to Cart', 'Your item was added successfully!', true);
+            }
+          })
+          .catch(error => {
+            if (addBtn) addBtn.classList.remove('btn-loading');
+            console.error('Error:', error);
+            if (window.showSwastikToast) {
+              window.showSwastikToast('Error', 'Could not add to cart. Please try again.', false);
+            }
+          });
+        });
+      }
+
+      // 6. Buy It Now handler
+      const buyBtn = section.querySelector('.btn-buy-now');
+      if (buyBtn) {
+        buyBtn.addEventListener('click', (e) => {
+          e.preventDefault();
+          if (!form) return;
+          
+          buyBtn.classList.add('btn-loading');
+          
+          const formData = new FormData(form);
+
+          fetch(window.Shopify.routes.root + 'cart/add.js', {
+            method: 'POST',
+            body: formData
+          })
+          .then(response => {
+            if (!response.ok) throw new Error('Network error');
+            return response.json();
+          })
+          .then(() => {
+            window.location.href = '/checkout';
+          })
+          .catch(error => {
+            buyBtn.classList.remove('btn-loading');
+            console.error('Error in Buy It Now:', error);
+            if (window.showSwastikToast) {
+              window.showSwastikToast('Error', 'Could not process Buy It Now. Please try again.', false);
+            }
+          });
         });
       }
     });
-
-    // 5. Buy It Now handler
-    const buyBtn = section.querySelector('.btn-buy-now');
-    if (buyBtn) {
-      buyBtn.addEventListener('click', (e) => {
-        e.preventDefault();
-        buyBtn.classList.add('btn-loading');
-        
-        // Show success and redirect to checkout
-        setTimeout(() => {
-          buyBtn.classList.remove('btn-loading');
-          if (window.showSwastikToast) {
-            window.showSwastikToast('Proceeding to Checkout', 'Redirecting to checkout...', true);
-          }
-          setTimeout(() => {
-            window.location.href = '/checkout';
-          }, 1000);
-        }, 1200);
-      });
-    }
   }
 
-  // Load handler
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', initProductPage);
   } else {
     initProductPage();
   }
 
-  // Support customizer reloading
   document.addEventListener('shopify:section:load', (e) => {
     if (e.target.querySelector('.product-single')) {
       initProductPage();
     }
   });
-{% endjavascript %}
+</script>
 
 {% schema %}
 {

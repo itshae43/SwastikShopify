@@ -1,0 +1,111 @@
+.product-card-ui {
+  background: #faf7f2;
+  border-radius: 8px;
+  border: 1px solid rgba(0, 0, 0, 0.05);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  position: relative;
+}
+
+.product-card-ui:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.06);
+}
+
+.product-card-ui .best-sellers__image-wrapper,
+.product-card-ui .new-arrivals__image-wrapper,
+.product-card-ui .collection-grid__image-wrapper {
+  background: transparent !important;
+  border-radius: 8px 8px 0 0;
+  padding-bottom: 100%;
+}
+
+.product-card-ui__wishlist {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  background: transparent;
+  border: none;
+  color: #a0734a; /* Copper/Gold */
+  z-index: 5;
+  cursor: pointer;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.2s ease;
+}
+
+.product-card-ui__wishlist:hover {
+  transform: scale(1.1);
+}
+
+.product-card-ui__content {
+  padding: 1.2rem;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+}
+
+.product-card-ui__title {
+  font-family: 'Inter', sans-serif;
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: #013F3E;
+  margin: 0 0 0.8rem 0;
+  line-height: 1.3;
+}
+
+.product-card-ui__title a {
+  text-decoration: none;
+  color: inherit;
+}
+
+.product-card-ui__price-row {
+  margin-bottom: 1.2rem;
+  display: flex;
+  align-items: center;
+}
+
+.product-card-ui__price-row .price-current {
+  font-family: 'Inter', sans-serif;
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: #013F3E;
+}
+
+.product-card-ui__form {
+  margin-top: auto;
+}
+
+.product-card-ui__button-group {
+  width: 100%;
+}
+
+.product-card-ui__btn {
+  width: 100%;
+  background-color: transparent;
+  color: #013F3E;
+  border: 1px solid #013F3E;
+  border-radius: 4px;
+  font-family: 'Inter', sans-serif;
+  font-size: 0.8rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  padding: 0.8rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  transition: all 0.3s ease;
+}
+
+.product-card-ui__btn:hover {
+  background-color: #013F3E;
+  color: #ffffff;
+}
