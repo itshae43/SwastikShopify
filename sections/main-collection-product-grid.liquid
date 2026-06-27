@@ -1,0 +1,389 @@
+<div class="collection-page" style="background-color: {{ section.settings.bg_color }};">
+  <div class="collection-page__container">
+    
+    <!-- Sidebar Filters -->
+    <aside class="collection-page__sidebar">
+      <div class="collection-filters">
+        <div class="collection-filters__header">
+          <h3 class="collection-filters__title">FILTERS</h3>
+          <a href="{{ collection.url }}" class="collection-filters__clear">Clear All</a>
+        </div>
+        
+        <form id="CollectionFiltersForm" class="collection-filters__form">
+          {%- for filter in collection.filters -%}
+            <div class="filter-group" open>
+              <details class="filter-group__details" open>
+                <summary class="filter-group__summary">
+                  <span class="filter-group__name">{{ filter.label }}</span>
+                  <svg class="icon-caret" viewBox="0 0 10 6" width="10" height="6" fill="none"><path fill-rule="evenodd" clip-rule="evenodd" d="M9.354.646a.5.5 0 00-.708 0L5 4.293 1.354.646a.5.5 0 00-.708.708l4 4a.5.5 0 00.708 0l4-4a.5.5 0 000-.708z" fill="currentColor"></path></svg>
+                </summary>
+                
+                <div class="filter-group__display">
+                  {%- case filter.type -%}
+                    {%- when 'boolean' or 'list' -%}
+                      <ul class="filter-group__list">
+                        {%- for filter_value in filter.values -%}
+                          <li class="filter-group__list-item">
+                            <label for="Filter-{{ filter.param_name }}-{{ forloop.index }}" class="filter-checkbox">
+                              <input type="checkbox" 
+                                name="{{ filter_value.param_name }}"
+                                value="{{ filter_value.value }}"
+                                id="Filter-{{ filter.param_name }}-{{ forloop.index }}"
+                                {% if filter_value.active -%}checked{%- endif %}
+                                onchange="this.form.submit()">
+                              <span class="filter-checkbox__box"></span>
+                              <span class="filter-checkbox__label">{{ filter_value.label }}</span>
+                            </label>
+                          </li>
+                        {%- endfor -%}
+                      </ul>
+                      
+                    {%- when 'price_range' -%}
+                      <div class="filter-group__price-range">
+                        <div class="price-input">
+                          <span class="price-currency">{{ cart.currency.symbol }}</span>
+                          <input name="{{ filter.min_value.param_name }}"
+                            id="Filter-{{ filter.min_value.param_name }}"
+                            {%- if filter.min_value.value -%}
+                              value="{{ filter.min_value.value | money_without_currency | replace: ',', '' }}"
+                            {%- endif -%}
+                            type="number"
+                            placeholder="0"
+                            min="0"
+                            max="{{ filter.range_max | money_without_currency | replace: ',', '' }}"
+                            onchange="this.form.submit()"
+                          >
+                        </div>
+                        <span class="price-divider">to</span>
+                        <div class="price-input">
+                          <span class="price-currency">{{ cart.currency.symbol }}</span>
+                          <input name="{{ filter.max_value.param_name }}"
+                            id="Filter-{{ filter.max_value.param_name }}"
+                            {%- if filter.max_value.value -%}
+                              value="{{ filter.max_value.value | money_without_currency | replace: ',', '' }}"
+                            {%- endif -%}
+                            type="number"
+                            placeholder="{{ filter.range_max | money_without_currency | replace: ',', '' }}"
+                            min="0"
+                            max="{{ filter.range_max | money_without_currency | replace: ',', '' }}"
+                            onchange="this.form.submit()"
+                          >
+                        </div>
+                      </div>
+                  {%- endcase -%}
+                </div>
+              </details>
+            </div>
+          {%- endfor -%}
+          
+          <!-- Hidden inputs for sorting so it's maintained when filtering -->
+          {%- if collection.sort_by -%}
+            <input type="hidden" name="sort_by" value="{{ collection.sort_by }}">
+          {%- endif -%}
+        </form>
+      </div>
+    </aside>
+    
+    <!-- Main Content -->
+    <main class="collection-page__main">
+      <div class="collection-toolbar">
+        <div class="collection-toolbar__count">
+          All Products ({{ collection.products_count }})
+        </div>
+        
+        <div class="collection-toolbar__sort">
+          <label for="SortBy">Sort by:</label>
+          <select name="sort_by" id="SortBy" form="CollectionFiltersForm" onchange="this.form.submit()">
+            {%- for option in collection.sort_options -%}
+              <option value="{{ option.value }}" {% if option.value == collection.sort_by %}selected="selected"{% endif %}>
+                {{ option.name }}
+              </option>
+            {%- endfor -%}
+          </select>
+        </div>
+      </div>
+      
+      {% paginate collection.products by 24 %}
+        <div class="collection-grid">
+          {%- for product in collection.products -%}
+            {% render 'product-card', product: product, class_prefix: 'best-sellers' %}
+          {%- else -%}
+            <div class="collection-grid__empty">
+              <p>No products found matching your filters.</p>
+              <a href="{{ collection.url }}" class="btn">Clear Filters</a>
+            </div>
+          {%- endfor -%}
+        </div>
+        
+        {%- if paginate.pages > 1 -%}
+          <div class="collection-pagination">
+            {{ paginate | default_pagination: next: 'Next', previous: 'Prev' }}
+          </div>
+        {%- endif -%}
+      {% endpaginate %}
+    </main>
+  </div>
+</div>
+
+{% stylesheet %}
+  .collection-page {
+    padding: 3rem 0 5rem;
+    font-family: 'Inter', sans-serif;
+  }
+  
+  .collection-page__container {
+    max-width: 1600px;
+    margin: 0 auto;
+    padding: 0 4rem;
+    display: grid;
+    grid-template-columns: 280px 1fr;
+    gap: 4rem;
+    align-items: start;
+  }
+  
+  /* Sidebar Styles */
+  .collection-filters {
+    background-color: #faf7f2;
+    border-radius: 8px;
+    padding: 1.5rem;
+  }
+  
+  .collection-filters__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid rgba(0,0,0,0.05);
+  }
+  
+  .collection-filters__title {
+    font-size: 1rem;
+    font-weight: 600;
+    margin: 0;
+    letter-spacing: 0.05em;
+  }
+  
+  .collection-filters__clear {
+    font-size: 0.85rem;
+    color: #555;
+    text-decoration: none;
+  }
+  
+  .filter-group {
+    border-bottom: 1px solid rgba(0,0,0,0.05);
+  }
+  .filter-group:last-child {
+    border-bottom: none;
+  }
+  
+  .filter-group__summary {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.2rem 0;
+    cursor: pointer;
+    list-style: none;
+    font-weight: 600;
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+  .filter-group__summary::-webkit-details-marker {
+    display: none;
+  }
+  
+  .icon-caret {
+    transition: transform 0.3s ease;
+  }
+  details[open] .icon-caret {
+    transform: rotate(180deg);
+  }
+  
+  .filter-group__display {
+    padding-bottom: 1.5rem;
+  }
+  
+  .filter-group__list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  
+  .filter-group__list-item {
+    margin-bottom: 0.8rem;
+  }
+  
+  .filter-checkbox {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+  }
+  
+  .filter-checkbox input {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+  }
+  
+  .filter-checkbox__box {
+    width: 16px;
+    height: 16px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    margin-right: 10px;
+    position: relative;
+    background-color: #fff;
+  }
+  
+  .filter-checkbox input:checked ~ .filter-checkbox__box {
+    background-color: #013F3E;
+    border-color: #013F3E;
+  }
+  
+  .filter-checkbox input:checked ~ .filter-checkbox__box::after {
+    content: '';
+    position: absolute;
+    left: 4px;
+    top: 1px;
+    width: 4px;
+    height: 8px;
+    border: solid white;
+    border-width: 0 2px 2px 0;
+    transform: rotate(45deg);
+  }
+  
+  .filter-checkbox__label {
+    font-size: 0.95rem;
+    color: #333;
+  }
+  
+  /* Price Range */
+  .filter-group__price-range {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .price-input {
+    display: flex;
+    align-items: center;
+    border: 1px solid #ddd;
+    background: #fff;
+    border-radius: 4px;
+    padding: 0.4rem;
+  }
+  .price-input input {
+    width: 60px;
+    border: none;
+    outline: none;
+    padding: 0 5px;
+    background: transparent;
+  }
+  .price-divider {
+    font-size: 0.9rem;
+    color: #666;
+  }
+  
+  /* Toolbar */
+  .collection-toolbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+  }
+  
+  .collection-toolbar__count {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: #333;
+    font-family: 'Merriweather', serif;
+  }
+  
+  .collection-toolbar__sort {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 0.9rem;
+  }
+  
+  .collection-toolbar__sort select {
+    padding: 0.5rem 2rem 0.5rem 1rem;
+    border: none;
+    background-color: transparent;
+    font-size: 0.9rem;
+    font-weight: 600;
+    cursor: pointer;
+    appearance: none;
+    /* Optional: custom dropdown arrow */
+  }
+  
+  /* Grid */
+  .collection-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 2rem;
+  }
+  
+  .collection-grid__empty {
+    grid-column: 1 / -1;
+    text-align: center;
+    padding: 4rem 0;
+    background: #faf7f2;
+    border-radius: 8px;
+  }
+  
+  .collection-pagination {
+    margin-top: 4rem;
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+  }
+  .collection-pagination span,
+  .collection-pagination a {
+    padding: 0.5rem 1rem;
+    background: #faf7f2;
+    color: #333;
+    text-decoration: none;
+    border-radius: 4px;
+  }
+  .collection-pagination .current {
+    background: #013F3E;
+    color: #fff;
+  }
+
+  @media screen and (max-width: 1200px) {
+    .collection-grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+  
+  @media screen and (max-width: 900px) {
+    .collection-page__container {
+      grid-template-columns: 1fr;
+      padding: 0 2rem;
+    }
+    .collection-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+  
+  @media screen and (max-width: 500px) {
+    .collection-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Collection Product Grid",
+  "settings": [
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Background Color",
+      "default": "#ffffff"
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,180 @@
+<div class="collection-banner" style="background-color: {{ section.settings.bg_color }};">
+  {%- if section.settings.image != blank -%}
+    <div class="collection-banner__image-wrapper">
+      {{ section.settings.image | image_url: width: 2000 | image_tag: loading: 'eager', class: 'collection-banner__image' }}
+    </div>
+  {%- endif -%}
+  
+  <div class="collection-banner__content">
+    <h1 class="collection-banner__title serif-font" style="color: {{ section.settings.text_color }};">
+      {%- if section.settings.title != blank -%}
+        {{ section.settings.title | escape }}
+      {%- else -%}
+        {{ collection.title | escape }}
+      {%- endif -%}
+    </h1>
+    {%- if section.settings.subtitle != blank -%}
+      <div class="collection-banner__subtitle" style="color: {{ section.settings.text_color }};">
+        {{ section.settings.subtitle }}
+      </div>
+    {%- elsif collection.description != blank -%}
+      <div class="collection-banner__subtitle" style="color: {{ section.settings.text_color }};">
+        {{ collection.description }}
+      </div>
+    {%- endif -%}
+
+    {%- if section.settings.button_label != blank -%}
+      <a href="{{ section.settings.button_link | default: '#' }}" class="collection-banner__btn pill-button" style="background-color: {{ section.settings.btn_bg_color }}; color: {{ section.settings.btn_text_color }};">
+        {{ section.settings.button_label | escape }} &rarr;
+      </a>
+    {%- endif -%}
+  </div>
+</div>
+
+{% stylesheet %}
+  .collection-banner {
+    position: relative;
+    width: 100%;
+    min-height: 400px;
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+  }
+  
+  .collection-banner__image-wrapper {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+  }
+  
+  .collection-banner__image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+  }
+  
+  .collection-banner__content {
+    position: relative;
+    z-index: 2;
+    max-width: 600px;
+    padding: 4rem 6rem;
+  }
+  
+  .collection-banner__title {
+    font-size: 4rem;
+    font-weight: 500;
+    margin: 0 0 1rem 0;
+    line-height: 1.1;
+    text-transform: uppercase;
+  }
+  
+  .collection-banner__subtitle {
+    font-size: 1.2rem;
+    line-height: 1.5;
+    margin-bottom: 2rem;
+    opacity: 0.9;
+  }
+  
+  .collection-banner__btn {
+    display: inline-flex;
+    align-items: center;
+    padding: 1rem 2rem;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 1rem;
+    font-weight: 500;
+    text-decoration: none;
+    text-transform: uppercase;
+    border-radius: 5rem;
+    letter-spacing: 0.1em;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+  
+  .collection-banner__btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 15px rgba(0,0,0,0.1);
+  }
+
+  @media screen and (max-width: 768px) {
+    .collection-banner {
+      min-height: 300px;
+      align-items: flex-end;
+    }
+    .collection-banner__content {
+      padding: 2rem;
+      background: linear-gradient(to top, rgba(255,255,255,0.9), transparent);
+      width: 100%;
+    }
+    .collection-banner__title {
+      font-size: 2.5rem;
+    }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Collection Banner",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Custom Title (Overrides Collection Title)",
+      "default": "LAB GROWN DIAMONDS"
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Background Image"
+    },
+    {
+      "type": "richtext",
+      "id": "subtitle",
+      "label": "Subtitle / Description",
+      "default": "<p>Modern Elegance. Crafted for Today.</p>"
+    },
+    {
+      "type": "text",
+      "id": "button_label",
+      "label": "Button Label",
+      "default": "SHOP COLLECTION"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "Button Link"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text Color",
+      "default": "#013F3E"
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Background Color (Fallback)",
+      "default": "#f5f0e6"
+    },
+    {
+      "type": "color",
+      "id": "btn_bg_color",
+      "label": "Button Background",
+      "default": "#013F3E"
+    },
+    {
+      "type": "color",
+      "id": "btn_text_color",
+      "label": "Button Text",
+      "default": "#ffffff"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Collection Banner"
+    }
+  ]
+}
+{% endschema %}

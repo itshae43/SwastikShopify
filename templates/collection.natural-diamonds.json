@@ -3,7 +3,8 @@
     "banner": {
       "type": "main-collection-banner",
       "settings": {
-        "subtitle": "<p>Modern Elegance. Crafted for Today.</p>",
+        "title": "NATURAL DIAMONDS",
+        "subtitle": "<p>Timeless Beauty. Ethical Origins.</p>",
         "button_label": "SHOP COLLECTION",
         "button_link": "",
         "text_color": "#013F3E",
