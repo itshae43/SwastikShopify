@@ -135,14 +135,14 @@
         "earrings": {
           "type": "card",
           "settings": {
-            "image": "shopify://shop_images/b_10_sj_narrow_category_1.png",
+            "image": "shopify://shop_images/b_11_sj_narrow_category.png",
             "link": ""
           }
         },
         "pendants": {
           "type": "card",
           "settings": {
-            "image": "shopify://shop_images/b_11_sj_narrow_category.png",
+            "image": "shopify://shop_images/b_10_sj_narrow_category_1.png",
             "link": ""
           }
         },
