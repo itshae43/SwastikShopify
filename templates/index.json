@@ -128,28 +128,28 @@
         "rings": {
           "type": "card",
           "settings": {
-            "image": "shopify://shop_images/new_b9_sj_category_1.png",
+            "image": "shopify://shop_images/latest_b9_1.png",
             "link": ""
           }
         },
         "earrings": {
           "type": "card",
           "settings": {
-            "image": "shopify://shop_images/b_11_sj_narrow_category.png",
+            "image": "shopify://shop_images/latest_b11.png",
             "link": ""
           }
         },
         "pendants": {
           "type": "card",
           "settings": {
-            "image": "shopify://shop_images/new_b10_narrow_category.png",
+            "image": "shopify://shop_images/latest_b10_1.png",
             "link": ""
           }
         },
         "tennis": {
           "type": "card",
           "settings": {
-            "image": "shopify://shop_images/new_b8_sj_category_1.png",
+            "image": "shopify://shop_images/latest_b8_1.png",
             "link": ""
           }
         }
