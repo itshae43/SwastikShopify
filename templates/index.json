@@ -182,14 +182,16 @@
           "type": "collection",
           "settings": {
             "collection": "",
-            "title": "GOLD EARRINGS"
+            "title": "GOLD EARRINGS",
+            "image": "shopify://shop_images/b_12_1.png"
           }
         },
         "necklace": {
           "type": "collection",
           "settings": {
             "collection": "",
-            "title": "GOLD NECKLACES"
+            "title": "GOLD NECKLACES",
+            "image": "shopify://shop_images/b_13_1.png"
           }
         },
         "bangle": {
