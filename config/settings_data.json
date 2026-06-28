@@ -16,6 +16,7 @@
     "color_secondary_bg": "#FDFBF7",
     "foreground_color": "#1A1A1A",
     "input_corner_radius": 4,
+    "checkout_logo_image": "logo.png",
     "content_for_index": []
   },
   "platform_customizations": {

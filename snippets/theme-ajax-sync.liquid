@@ -316,8 +316,10 @@
     // 5. AJAX Add to Cart interceptor
     document.addEventListener('submit', (e) => {
       const form = e.target;
-      // Match forms submitting to shopify add-to-cart
-      if (!form.action.includes('/cart/add')) return;
+      
+      // Match forms submitting to shopify add-to-cart or forms with product IDs
+      const isCartForm = form.action.includes('/cart/add') || form.querySelector('[name="id"]') !== null;
+      if (!isCartForm) return;
 
       e.preventDefault();
 
@@ -404,6 +406,23 @@
         e.preventDefault();
         if (window.openSidebarDrawer) window.openSidebarDrawer('cart');
         return;
+      }
+    });
+
+    // 7. Buy It Now button behavior
+    document.addEventListener('click', (e) => {
+      const buyNowBtn = e.target.closest('.btn-buy-now');
+      if (buyNowBtn) {
+        e.preventDefault();
+        const form = buyNowBtn.closest('form');
+        if (form) {
+          const returnInput = document.createElement('input');
+          returnInput.type = 'hidden';
+          returnInput.name = 'return_to';
+          returnInput.value = '/checkout';
+          form.appendChild(returnInput);
+          form.submit();
+        }
       }
     });
 
