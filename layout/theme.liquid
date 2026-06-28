@@ -28,6 +28,25 @@
     {% # Social, title, etc. %}
     {% render 'meta-tags' %}
 
+    <style>
+      /* Hide Shopify hCaptcha / reCAPTCHA badges to prevent overlapping with widgets */
+      .grecaptcha-badge,
+      .hcaptcha-badge {
+        display: none !important;
+        visibility: hidden !important;
+      }
+      /* Specifically hide the hCaptcha badge iframe without breaking the challenge popup */
+      iframe[src*="hcaptcha.com"][title*="badge"] {
+        display: none !important;
+        visibility: hidden !important;
+        opacity: 0 !important;
+      }
+      /* Hide the wrapper div that Shopify sometimes uses for the badge */
+      body > div[style*="bottom: 14px"][style*="right: 14px"] {
+        display: none !important;
+      }
+    </style>
+
     {{ content_for_header }}
   </head>
 
@@ -41,5 +60,6 @@
     {% render 'theme-ajax-sync' %}
     {% section 'cart-drawer' %}
     {% section 'wishlist-drawer' %}
+    {% section 'whatsapp-widget' %}
   </body>
 </html>

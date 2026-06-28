@@ -76,13 +76,155 @@
       </div>
       <p class="video-call__text">{{ section.settings.text }}</p>
       {%- if section.settings.button_label != blank -%}
-        <a href="{{ section.settings.button_link | default: '#' }}" class="video-call__button">
+        <button type="button" class="video-call__button js-open-video-call-modal">
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="video-call__button-icon">
             <path d="M15 10L19.5 7V17L15 14V17H4V7H15V10Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
           </svg>
           {{ section.settings.button_label }}
-        </a>
+        </button>
       {%- endif -%}
+    </div>
+  </div>
+</div>
+
+<!-- Video Call Modal -->
+<div class="video-call-modal js-video-call-modal">
+  <div class="video-call-modal__overlay js-close-video-call-modal"></div>
+  <div class="video-call-modal__content">
+    <button class="video-call-modal__close js-close-video-call-modal" aria-label="Close">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M18 6L6 18M6 6L18 18" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </button>
+    <div class="video-call-modal__header">
+      <h3 class="video-call-modal__title">Schedule a Video Call</h3>
+      <p class="video-call-modal__subtitle">Choose your preferred time and platform, and our experts will connect with you.</p>
+    </div>
+    <div class="video-call-modal__body">
+      {% form 'contact', class: 'video-call-form' %}
+        {%- if form.posted_successfully? -%}
+          <div class="video-call-form__success">
+            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <circle cx="12" cy="12" r="10" stroke="#4CAF50" stroke-width="1.5" fill="#e8f5e9" />
+              <path d="M16 9L10.5 14.5L8 12" stroke="#4CAF50" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            <h4>Thank you!</h4>
+            <p>Your video call request has been sent successfully. We will get in touch with you shortly to confirm.</p>
+          </div>
+        {%- endif -%}
+        {%- if form.errors -%}
+          <div class="video-call-form__errors">
+            {{ form.errors | default_errors }}
+          </div>
+        {%- endif -%}
+
+        <div class="video-call-form__fields {% if form.posted_successfully? %}hidden{% endif %}">
+          <div class="video-call-form__group">
+            <label class="video-call-form__label">Preferred Platform</label>
+            <div class="video-call-form__platform-options">
+              <label class="video-call-form__platform-option">
+                <input type="radio" name="contact[Platform]" value="Google Meet" checked class="visually-hidden">
+                <span class="video-call-form__platform-card">
+                  <div class="platform-icon google-meet">
+                    <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M16 16.5V20C16 20.6 15.6 21 15 21H4C3.4 21 3 20.6 3 20V5C3 4.4 3.4 4 4 4H15C15.6 4 16 4.4 16 5V8.5L20 5.5V19.5L16 16.5Z" fill="currentColor"/></svg>
+                  </div>
+                  <span>Google Meet</span>
+                </span>
+              </label>
+              <label class="video-call-form__platform-option">
+                <input type="radio" name="contact[Platform]" value="WhatsApp" class="visually-hidden">
+                <span class="video-call-form__platform-card">
+                  <div class="platform-icon whatsapp">
+                    <svg viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M12.01 2C6.48 2 2 6.48 2 12C2 13.76 2.46 15.42 3.25 16.87L2 22L7.32 20.82C8.74 21.56 10.35 22 12.01 22C17.54 22 22.02 17.52 22.02 11.99C22.02 6.46 17.54 2 12.01 2ZM17.36 16.5C17.13 17.13 16.06 17.69 15.56 17.75C15.06 17.81 14.41 17.92 12.24 17.02C9.63 15.94 7.93 13.26 7.8 13.08C7.66 12.91 6.73 11.66 6.73 10.38C6.73 9.1 7.39 8.46 7.62 8.2C7.85 7.94 8.12 7.88 8.28 7.88C8.45 7.88 8.62 7.89 8.77 7.9C8.93 7.91 9.15 7.84 9.37 8.38C9.6 8.93 10.14 10.26 10.21 10.41C10.28 10.55 10.33 10.72 10.23 10.91C10.13 11.11 10.08 11.23 9.93 11.39C9.78 11.55 9.61 11.74 9.48 11.88C9.33 12.03 9.18 12.2 9.35 12.48C9.52 12.77 10.09 13.7 10.95 14.46C12.05 15.44 12.97 15.74 13.26 15.88C13.55 16.02 13.72 16 13.89 15.81C14.06 15.61 14.62 14.96 14.81 14.67C15.01 14.38 15.2 14.43 15.47 14.53C15.73 14.63 17.13 15.31 17.42 15.46C17.7 15.61 17.89 15.68 17.96 15.8C18.03 15.92 18.03 16.52 17.8 17.15L17.36 16.5Z"/></svg>
+                  </div>
+                  <span>WhatsApp</span>
+                </span>
+              </label>
+            </div>
+          </div>
+
+          <div class="video-call-form__group" style="margin-bottom: 5px;">
+            <label class="video-call-form__label">When would you like to connect?</label>
+            <div class="video-call-form__timing-options">
+              <label class="video-call-form__timing-option">
+                <input type="radio" name="contact[Timing]" value="Now" checked class="visually-hidden">
+                <div class="video-call-form__timing-card">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 8V12L15 15M21 12C21 16.9706 16.9706 21 12 21C7.02944 21 3 16.9706 3 12C3 7.02944 7.02944 3 12 3C16.9706 3 21 7.02944 21 12Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                  <span>As soon as possible</span>
+                </div>
+              </label>
+              <label class="video-call-form__timing-option">
+                <input type="radio" name="contact[Timing]" value="Later" class="visually-hidden">
+                <div class="video-call-form__timing-card">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M8 7V3M16 7V3M7 11H17M5 21H19C20.1046 21 21 20.1046 21 19V7C21 5.89543 20.1046 5 19 5H5C3.89543 5 3 5.89543 3 7V19C3 20.1046 3.89543 21 5 21Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                  <span>Schedule for later</span>
+                </div>
+              </label>
+            </div>
+          </div>
+
+          <div class="js-datetime-wrapper" style="display: none;">
+            <div class="video-call-form__row">
+              <div class="video-call-form__group" style="width: 100%; flex: 1;">
+                <label class="video-call-form__label">Select Date</label>
+                <input type="hidden" id="VideoCallDate" name="contact[Date]" value="Now">
+                <div class="video-call-form__pills-container js-date-options">
+                  <!-- JS will populate dates here -->
+                </div>
+              </div>
+            </div>
+            
+            <div class="video-call-form__row">
+              <div class="video-call-form__group" style="width: 100%; flex: 1;">
+                <label class="video-call-form__label">Select Time</label>
+                <input type="hidden" id="VideoCallTime" name="contact[Time]" value="Now">
+                <div class="video-call-form__pills-container js-time-options">
+                  <button type="button" class="video-call-form__pill js-time-pill" data-value="10:00 AM">10:00 AM</button>
+                  <button type="button" class="video-call-form__pill js-time-pill" data-value="12:00 PM">12:00 PM</button>
+                  <button type="button" class="video-call-form__pill js-time-pill" data-value="02:00 PM">02:00 PM</button>
+                  <button type="button" class="video-call-form__pill js-time-pill" data-value="04:00 PM">04:00 PM</button>
+                  <button type="button" class="video-call-form__pill js-time-pill" data-value="06:00 PM">06:00 PM</button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="video-call-form__group">
+            <label for="VideoCallName" class="video-call-form__label">Full Name</label>
+            <input type="text" id="VideoCallName" name="contact[Name]" required class="video-call-form__input" placeholder="Your Name">
+          </div>
+
+          <div class="video-call-form__row">
+            <div class="video-call-form__group js-email-group">
+              <label for="VideoCallEmail" class="video-call-form__label">Email Address</label>
+              <input type="email" id="VideoCallEmail" name="contact[email]" required class="video-call-form__input" placeholder="your@email.com">
+            </div>
+            
+            <div class="video-call-form__group">
+              <label for="VideoCallPhone" class="video-call-form__label">Phone Number</label>
+              <input type="tel" id="VideoCallPhone" name="contact[Phone]" required class="video-call-form__input" placeholder="+1 (555) 000-0000">
+            </div>
+          </div>
+          
+          <div class="video-call-form__group js-whatsapp-group" style="display: none; margin-top: -10px;">
+            <label class="video-call-form__checkbox-label" style="display: flex; align-items: center; gap: 8px; cursor: pointer;">
+              <input type="checkbox" id="SameAsPhone" checked class="video-call-form__checkbox">
+              <span style="font-family: 'Inter', sans-serif; font-size: 14px; color: #555;">WhatsApp number is same as phone number</span>
+            </label>
+            
+            <div class="js-whatsapp-number-input" style="display: none; margin-top: 15px;">
+              <label for="VideoCallWhatsApp" class="video-call-form__label">WhatsApp Number</label>
+              <input type="tel" id="VideoCallWhatsApp" name="contact[WhatsApp]" class="video-call-form__input" placeholder="+1 (555) 000-0000">
+            </div>
+          </div>
+          
+          <input type="hidden" name="contact[Subject]" value="New Video Call Request">
+
+          <button type="submit" class="video-call-form__submit">
+            Confirm & Schedule
+          </button>
+        </div>
+      {% endform %}
     </div>
   </div>
 </div>
@@ -225,4 +367,575 @@
       font-size: 36px;
     }
   }
+
+  /* Modal Styles */
+  .video-call-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: 9999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+  }
+
+  .video-call-modal.is-open {
+    opacity: 1;
+    visibility: visible;
+  }
+
+  .video-call-modal__overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(10, 42, 38, 0.6);
+    backdrop-filter: blur(8px);
+  }
+
+  .video-call-modal__content {
+    position: relative;
+    width: 100%;
+    max-width: 600px;
+    background: #ffffff;
+    border-radius: 24px;
+    padding: 40px;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+    transform: translateY(20px);
+    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    max-height: 90vh;
+    overflow-y: auto;
+    margin: 20px;
+  }
+
+  .video-call-modal.is-open .video-call-modal__content {
+    transform: translateY(0);
+  }
+
+  .video-call-modal__close {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    background: #f5f5f5;
+    border: none;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    color: #555;
+    transition: background-color 0.2s, color 0.2s;
+  }
+
+  .video-call-modal__close:hover {
+    background: #e0e0e0;
+    color: #1a1a1a;
+  }
+
+  .video-call-modal__header {
+    text-align: center;
+    margin-bottom: 30px;
+  }
+
+  .video-call-modal__title {
+    font-family: "Georgia", serif;
+    font-size: 28px;
+    color: #0a2a26;
+    margin: 0 0 10px 0;
+  }
+
+  .video-call-modal__subtitle {
+    font-family: "Inter", sans-serif;
+    font-size: 15px;
+    color: #666;
+    margin: 0;
+  }
+
+  .video-call-form__fields {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .video-call-form__fields.hidden {
+    display: none;
+  }
+
+  .video-call-form__row {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  @media screen and (min-width: 600px) {
+    .video-call-form__row {
+      flex-direction: row;
+    }
+    .video-call-form__row .video-call-form__group {
+      flex: 1;
+    }
+  }
+
+  .video-call-form__group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .video-call-form__label {
+    font-family: "Inter", sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+    color: #333;
+  }
+
+  .video-call-form__input {
+    width: 100%;
+    padding: 14px 16px;
+    border: 1px solid #e0e0e0;
+    border-radius: 10px;
+    font-family: "Inter", sans-serif;
+    font-size: 15px;
+    color: #333;
+    transition: border-color 0.2s, box-shadow 0.2s;
+    background-color: #fafafa;
+  }
+
+  .video-call-form__input:focus {
+    outline: none;
+    border-color: #0a2a26;
+    box-shadow: 0 0 0 3px rgba(10, 42, 38, 0.1);
+    background-color: #ffffff;
+  }
+
+  .video-call-form__platform-options {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+  }
+
+  .video-call-form__platform-option {
+    cursor: pointer;
+  }
+
+  .visually-hidden {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    margin: -1px;
+    padding: 0;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    border: 0;
+  }
+
+  .video-call-form__platform-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    border: 2px solid #e0e0e0;
+    border-radius: 12px;
+    gap: 12px;
+    transition: all 0.2s ease;
+    background-color: #fafafa;
+  }
+
+  .video-call-form__platform-card span {
+    font-family: "Inter", sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    color: #555;
+  }
+
+  .platform-icon {
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 12px;
+  }
+
+  .platform-icon svg {
+    width: 24px;
+    height: 24px;
+  }
+
+  .platform-icon.google-meet {
+    background-color: #e8f0fe;
+    color: #1a73e8;
+  }
+
+  .platform-icon.whatsapp {
+    background-color: #e8f5e9;
+    color: #25d366;
+  }
+
+  .video-call-form__platform-option input:checked + .video-call-form__platform-card {
+    border-color: #0a2a26;
+    background-color: #f6f8f8;
+  }
+
+  .video-call-form__platform-option input:checked + .video-call-form__platform-card span {
+    color: #0a2a26;
+  }
+
+  .video-call-form__submit {
+    width: 100%;
+    padding: 16px;
+    background-color: #1a1a1a;
+    color: #ffffff;
+    font-family: "Inter", sans-serif;
+    font-size: 16px;
+    font-weight: 600;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: background-color 0.2s, transform 0.1s;
+    margin-top: 10px;
+  }
+
+  .video-call-form__submit:hover {
+    background-color: #333;
+  }
+
+  .video-call-form__submit:active {
+    transform: scale(0.98);
+  }
+
+  .video-call-form__success {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: 40px 20px;
+    background: #f8fcf8;
+    border: 1px solid #c8e6c9;
+    border-radius: 16px;
+  }
+
+  .video-call-form__success h4 {
+    margin: 20px 0 10px;
+    font-family: "Georgia", serif;
+    font-size: 24px;
+    color: #2e7d32;
+  }
+
+  .video-call-form__success p {
+    margin: 0;
+    font-family: "Inter", sans-serif;
+    color: #4caf50;
+    line-height: 1.5;
+  }
+
+  .video-call-form__errors {
+    background-color: #fff0f0;
+    color: #d32f2f;
+    padding: 15px 20px;
+    border-radius: 10px;
+    margin-bottom: 20px;
+    font-family: "Inter", sans-serif;
+    font-size: 14px;
+    border: 1px solid #ffcdd2;
+  }
+
+  .video-call-form__errors ul {
+    margin: 0;
+    padding-left: 20px;
+  }
+
+  .video-call-form__timing-options {
+    display: flex;
+    gap: 15px;
+    margin-top: 8px;
+    margin-bottom: 15px;
+  }
+
+  .video-call-form__timing-option {
+    flex: 1;
+    cursor: pointer;
+  }
+
+  .video-call-form__timing-card {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 14px;
+    border: 2px solid #e0e0e0;
+    border-radius: 12px;
+    gap: 8px;
+    transition: all 0.2s ease;
+    background-color: #fafafa;
+    color: #555;
+    font-family: "Inter", sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+  }
+
+  .video-call-form__timing-option input:checked + .video-call-form__timing-card {
+    border-color: #0a2a26;
+    background-color: #f6f8f8;
+    color: #0a2a26;
+  }
+
+
+  .video-call-form__pills-container {
+    display: flex;
+    gap: 10px;
+    overflow-x: auto;
+    padding-bottom: 5px; /* for scrollbar if any */
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */
+    width: 100%;
+  }
+
+  .video-call-form__pills-container::-webkit-scrollbar {
+    display: none;
+  }
+
+  .video-call-form__pill {
+    flex: 0 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 10px 20px;
+    background-color: #fafafa;
+    border: 1px solid #e0e0e0;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    font-family: "Inter", sans-serif;
+    color: #555;
+  }
+
+  .video-call-form__pill:hover {
+    border-color: #b38245;
+    background-color: #fdfaf7;
+  }
+
+  .video-call-form__pill.is-active {
+    background-color: #0a2a26;
+    border-color: #0a2a26;
+    color: #ffffff;
+  }
+
+  .video-call-form__pill .day {
+    font-size: 11px;
+    text-transform: uppercase;
+    font-weight: 700;
+    opacity: 0.8;
+    letter-spacing: 0.5px;
+  }
+
+  .video-call-form__pill .date {
+    font-size: 15px;
+    font-weight: 600;
+    margin-top: 4px;
+  }
+  
+  .video-call-form__pill.js-time-pill {
+    padding: 12px 18px;
+    font-size: 14px;
+    font-weight: 500;
+  }
 {% endstylesheet %}
+
+{% javascript %}
+  document.addEventListener('DOMContentLoaded', function() {
+    const modals = document.querySelectorAll('.js-video-call-modal');
+    const openBtns = document.querySelectorAll('.js-open-video-call-modal');
+    const closeBtns = document.querySelectorAll('.js-close-video-call-modal');
+    
+    // Check if form was submitted successfully or with errors to keep modal open
+    const hasSuccess = document.querySelector('.video-call-form__success');
+    const hasErrors = document.querySelector('.video-call-form__errors');
+    
+    if (hasSuccess || hasErrors) {
+      modals.forEach(modal => modal.classList.add('is-open'));
+      // Optional: Add history push to remove anchor tags from URL if using anchor-based fallback
+    }
+
+    openBtns.forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        e.preventDefault();
+        modals.forEach(modal => modal.classList.add('is-open'));
+        document.body.style.overflow = 'hidden'; // Prevent scrolling underneath
+      });
+    });
+
+    closeBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        modals.forEach(modal => modal.classList.remove('is-open'));
+        document.body.style.overflow = '';
+      });
+    });
+    
+    // Date & Time Picker Logic
+    const dateContainer = document.querySelector('.js-date-options');
+    const dateInput = document.getElementById('VideoCallDate');
+    const timeInput = document.getElementById('VideoCallTime');
+    
+    // Generate next 7 days
+    if (dateContainer) {
+      const today = new Date();
+      const days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+      const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+      
+      let datesHTML = '';
+      for (let i = 0; i < 7; i++) {
+        const d = new Date(today);
+        d.setDate(today.getDate() + i);
+        
+        const dayName = i === 0 ? 'Today' : (i === 1 ? 'Tmrw' : days[d.getDay()]);
+        const dateStr = `${d.getDate()} ${months[d.getMonth()]}`;
+        
+        // Format for input value: YYYY-MM-DD
+        const year = d.getFullYear();
+        const month = String(d.getMonth() + 1).padStart(2, '0');
+        const day = String(d.getDate()).padStart(2, '0');
+        const valueStr = `${year}-${month}-${day}`;
+        
+        datesHTML += `
+          <button type="button" class="video-call-form__pill js-date-pill" data-value="${valueStr}">
+            <span class="day">${dayName}</span>
+            <span class="date">${dateStr}</span>
+          </button>
+        `;
+      }
+      dateContainer.innerHTML = datesHTML;
+    }
+    
+    // Handle pill selection
+    const handlePillSelection = (pills, hiddenInput) => {
+      pills.forEach(pill => {
+        pill.addEventListener('click', () => {
+          // Remove active class from all
+          pills.forEach(p => p.classList.remove('is-active'));
+          // Add active class to clicked
+          pill.classList.add('is-active');
+          // Update hidden input
+          hiddenInput.value = pill.getAttribute('data-value');
+        });
+      });
+    };
+    
+    // Initialize pills after a short delay to ensure DOM is fully ready if generated dynamically
+    setTimeout(() => {
+      const datePills = document.querySelectorAll('.js-date-pill');
+      const timePills = document.querySelectorAll('.js-time-pill');
+      
+      if (datePills.length > 0 && dateInput) handlePillSelection(datePills, dateInput);
+      if (timePills.length > 0 && timeInput) handlePillSelection(timePills, timeInput);
+    }, 50);
+
+    // Timing Logic (Now vs Later)
+    const timingRadios = document.querySelectorAll('input[name="contact[Timing]"]');
+    const datetimeWrapper = document.querySelector('.js-datetime-wrapper');
+    const updateTiming = () => {
+      const selectedTiming = document.querySelector('input[name="contact[Timing]"]:checked');
+      if (selectedTiming && datetimeWrapper) {
+        if (selectedTiming.value === 'Later') {
+          datetimeWrapper.style.display = 'block';
+          // Ensure a date/time is selected if they choose later, but let them interact first.
+          // Fallback if none selected:
+          if (dateInput.value === 'Now') dateInput.value = '';
+          if (timeInput.value === 'Now') timeInput.value = '';
+        } else {
+          datetimeWrapper.style.display = 'none';
+          if (dateInput) dateInput.value = 'Now (Urgent)';
+          if (timeInput) timeInput.value = 'Now (Urgent)';
+        }
+      }
+    };
+    
+    if (timingRadios) {
+      timingRadios.forEach(radio => {
+        radio.addEventListener('change', updateTiming);
+      });
+    }
+    updateTiming();
+
+    // Platform Fields Logic
+    const platformRadios = document.querySelectorAll('input[name="contact[Platform]"]');
+    const emailGroup = document.querySelector('.js-email-group');
+    const emailInput = document.getElementById('VideoCallEmail');
+    const whatsappGroup = document.querySelector('.js-whatsapp-group');
+    const whatsappNumberInputGroup = document.querySelector('.js-whatsapp-number-input');
+    const whatsappInput = document.getElementById('VideoCallWhatsApp');
+    const sameAsPhoneCheckbox = document.getElementById('SameAsPhone');
+    const phoneInput = document.getElementById('VideoCallPhone');
+    const form = document.querySelector('.video-call-form');
+
+    const updateFields = () => {
+      const selectedPlatform = document.querySelector('input[name="contact[Platform]"]:checked');
+      if (!selectedPlatform) return;
+      
+      if (selectedPlatform.value === 'Google Meet') {
+        if (emailGroup) emailGroup.style.display = 'flex';
+        if (emailInput) emailInput.required = true;
+        
+        if (whatsappGroup) whatsappGroup.style.display = 'none';
+        if (whatsappInput) whatsappInput.required = false;
+      } else if (selectedPlatform.value === 'WhatsApp') {
+        if (emailGroup) emailGroup.style.display = 'none';
+        if (emailInput) emailInput.required = false;
+        
+        if (whatsappGroup) whatsappGroup.style.display = 'flex';
+        if (whatsappGroup) whatsappGroup.style.flexDirection = 'column';
+        
+        if (sameAsPhoneCheckbox && sameAsPhoneCheckbox.checked) {
+          if (whatsappNumberInputGroup) whatsappNumberInputGroup.style.display = 'none';
+          if (whatsappInput) whatsappInput.required = false;
+        } else {
+          if (whatsappNumberInputGroup) {
+            whatsappNumberInputGroup.style.display = 'flex';
+            whatsappNumberInputGroup.style.flexDirection = 'column';
+            whatsappNumberInputGroup.style.gap = '8px';
+          }
+          if (whatsappInput) whatsappInput.required = true;
+        }
+      }
+    };
+
+    if (platformRadios) {
+      platformRadios.forEach(radio => {
+        radio.addEventListener('change', updateFields);
+      });
+    }
+
+    if (sameAsPhoneCheckbox) {
+      sameAsPhoneCheckbox.addEventListener('change', updateFields);
+    }
+    
+    // Initial call
+    updateFields();
+
+    if (form) {
+      form.addEventListener('submit', (e) => {
+        const selectedPlatform = document.querySelector('input[name="contact[Platform]"]:checked');
+        if (selectedPlatform && selectedPlatform.value === 'WhatsApp') {
+           // Copy phone to whatsapp if checkbox checked
+           if (sameAsPhoneCheckbox && sameAsPhoneCheckbox.checked && whatsappInput && phoneInput) {
+             whatsappInput.value = phoneInput.value;
+           }
+           // Fallback dummy email to prevent Shopify form validation errors
+           if (emailInput && !emailInput.value) {
+             emailInput.value = "whatsapp-request@placeholder.com";
+           }
+        }
+      });
+    }
+
+  });
+{% endjavascript %}

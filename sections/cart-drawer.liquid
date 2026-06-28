@@ -448,12 +448,14 @@
   window.openCartDrawer = function() {
     document.getElementById('CartDrawer').classList.add('is-open');
     document.body.style.overflow = 'hidden'; // Prevent background scrolling
+    document.body.classList.add('drawer-open');
     fetchCart();
   };
 
   window.closeCartDrawer = function() {
     document.getElementById('CartDrawer').classList.remove('is-open');
     document.body.style.overflow = '';
+    document.body.classList.remove('drawer-open');
   };
 </script>
 

@@ -305,12 +305,14 @@
   window.openWishlistDrawer = function() {
     document.getElementById('WishlistDrawer').classList.add('is-open');
     document.body.style.overflow = 'hidden';
+    document.body.classList.add('drawer-open');
     renderWishlistDrawer();
   };
 
   window.closeWishlistDrawer = function() {
     document.getElementById('WishlistDrawer').classList.remove('is-open');
     document.body.style.overflow = '';
+    document.body.classList.remove('drawer-open');
   };
 </script>
 
