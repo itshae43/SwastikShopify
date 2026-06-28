@@ -12,6 +12,20 @@
     "hero_banner": {
       "type": "hero-banner",
       "blocks": {
+        "slide_rBHpab": {
+          "type": "slide",
+          "settings": {
+            "image_desktop": "shopify://shop_images/hero_banner_2880_x_1620_px_1_1.png",
+            "alignment": "left",
+            "subheading": "",
+            "title": "",
+            "description": "",
+            "button_1_label": "",
+            "button_1_link": "",
+            "button_2_label": "Discover the Vibe",
+            "button_2_link": ""
+          }
+        },
         "slide_J3Ukm4": {
           "type": "slide",
           "settings": {
@@ -42,6 +56,7 @@
         }
       },
       "block_order": [
+        "slide_rBHpab",
         "slide_J3Ukm4",
         "slide_Gyd9qb"
       ],
