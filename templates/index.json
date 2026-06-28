@@ -541,6 +541,7 @@
     "video_call": {
       "type": "video-call",
       "settings": {
+        "image": "shopify://shop_images/video_call.png",
         "bg_color": "#fdf9f5",
         "heading": "Shop with Confidence, From Wherever You Are.",
         "text": "Connect on a video call with our experts and find your perfect jewellery.",
