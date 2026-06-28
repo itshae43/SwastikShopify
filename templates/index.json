@@ -175,7 +175,7 @@
           "settings": {
             "collection": "gold-rings",
             "title": "GOLD RINGS",
-            "image": "shopify://shop_images/Gold_Jewellery_8.png"
+            "image": "shopify://shop_images/Gold_Jewellery_7.png"
           }
         },
         "earring": {
@@ -183,7 +183,7 @@
           "settings": {
             "collection": "gold-earrings",
             "title": "GOLD EARRINGS",
-            "image": "shopify://shop_images/Gold_Jewellery_6.png"
+            "image": "shopify://shop_images/Gold_Jewellery_6_1.png"
           }
         },
         "necklace": {
@@ -191,21 +191,23 @@
           "settings": {
             "collection": "gold-necklaces",
             "title": "GOLD NECKLACES",
-            "image": "shopify://shop_images/Gold_Jewellery_5.png"
+            "image": "shopify://shop_images/Gold_Jewellery_5_1.png"
           }
         },
         "bangle": {
           "type": "collection",
           "settings": {
             "collection": "gold-bangles",
-            "title": "GOLD BANGLES"
+            "title": "GOLD BANGLES",
+            "image": "shopify://shop_images/Gold_Jewellery_8_1.png"
           }
         },
         "mangalsutra": {
           "type": "collection",
           "settings": {
             "collection": "mangalsutra",
-            "title": "MANGALSUTRA"
+            "title": "MANGALSUTRA",
+            "image": "shopify://shop_images/Gold_Jewellery_9.png"
           }
         }
       },
