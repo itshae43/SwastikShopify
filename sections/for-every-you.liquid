@@ -163,9 +163,15 @@
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  z-index: 10;
+  z-index: 100;
   color: #000;
   transition: background 0.3s ease, transform 0.3s ease;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.for-every-you__nav svg {
+  pointer-events: none;
 }
 
 .for-every-you__nav:hover {
@@ -287,12 +293,16 @@ class ForEveryYouCarousel {
 
   init() {
     if (this.prevBtn) {
-      this.prevBtn.addEventListener('click', () => {
+      this.prevBtn.addEventListener('click', (e) => {
+        e.preventDefault();
+        e.stopPropagation();
         this.targetProgress -= 1;
       });
     }
     if (this.nextBtn) {
-      this.nextBtn.addEventListener('click', () => {
+      this.nextBtn.addEventListener('click', (e) => {
+        e.preventDefault();
+        e.stopPropagation();
         this.targetProgress += 1;
       });
     }

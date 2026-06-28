@@ -229,6 +229,11 @@
             <button type="button" class="btn-buy-now">
               BUY IT NOW
             </button>
+            <button type="button" class="product-single__wishlist-btn" aria-label="Add to Wishlist">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+              </svg>
+            </button>
           </div>
         {% endform %}
 
@@ -774,7 +779,7 @@
   /* CTA buttons layout */
   .product-single__buttons-group {
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 1fr 1fr auto;
     gap: 1.6rem;
     margin-top: 3.2rem;
     margin-bottom: 3.2rem;
@@ -814,6 +819,39 @@
     background-color: var(--color-secondary-bg, #FDFBF7);
     transform: translateY(-2px);
     box-shadow: 0 8px 20px rgba(1, 63, 62, 0.08);
+  }
+  
+  .product-single__wishlist-btn {
+    width: 5.6rem;
+    height: 5.4rem;
+    background-color: #FFFFFF;
+    color: #888888;
+    border-radius: 4px;
+    border: 1.5px solid var(--color-primary, #013F3E);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+  .product-single__wishlist-btn:hover {
+    color: var(--color-accent, #D4AF37);
+    border-color: var(--color-accent, #D4AF37);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(212, 175, 55, 0.15);
+  }
+  .product-single__wishlist-btn.active {
+    background-color: var(--color-primary, #013F3E);
+    color: #FFFFFF;
+    border-color: var(--color-primary, #013F3E);
+  }
+  .product-single__wishlist-btn svg {
+    transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  }
+  .product-single__wishlist-btn.active svg {
+    fill: #E25C5C;
+    stroke: #E25C5C;
+    transform: scale(1.1);
   }
 
   /* Core trust bullet items */
@@ -987,7 +1025,7 @@
     }
   }
 
-  @media screen and (max-width: 600px) {
+    @media screen and (max-width: 600px) {
     .product-single {
       padding-top: 1.5rem;
     }
@@ -995,8 +1033,21 @@
       font-size: 2.8rem;
     }
     .product-single__buttons-group {
-      grid-template-columns: 1fr;
+      grid-template-columns: 1fr 1fr;
+      grid-template-areas: 
+        "add wishlist"
+        "buy buy";
       gap: 1.2rem;
+    }
+    .btn-add-to-cart {
+      grid-area: add;
+    }
+    .btn-buy-now {
+      grid-area: buy;
+    }
+    .product-single__wishlist-btn {
+      grid-area: wishlist;
+      width: 100%;
     }
     .product-single__trust-icons {
       grid-template-columns: repeat(2, 1fr);
@@ -1231,7 +1282,7 @@
 
           const formData = new FormData(form);
 
-          fetch(window.Shopify.routes.root + 'cart/add.js', {
+          fetch((window.Shopify?.routes?.root || '/') + 'cart/add.js', {
             method: 'POST',
             body: formData
           })
@@ -1268,7 +1319,7 @@
           
           const formData = new FormData(form);
 
-          fetch(window.Shopify.routes.root + 'cart/add.js', {
+          fetch((window.Shopify?.routes?.root || '/') + 'cart/add.js', {
             method: 'POST',
             body: formData
           })

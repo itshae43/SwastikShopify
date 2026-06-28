@@ -411,7 +411,7 @@
     const body = document.getElementById('CartDrawerBody');
     body.classList.add('cart-drawer-overlay-loading');
     
-    fetch(window.Shopify.routes.root + 'cart.js')
+    fetch((window.Shopify?.routes?.root || '/') + 'cart.js')
       .then(res => res.json())
       .then(cart => {
         body.classList.remove('cart-drawer-overlay-loading');
@@ -427,7 +427,7 @@
     const body = document.getElementById('CartDrawerBody');
     body.classList.add('cart-drawer-overlay-loading');
     
-    fetch(window.Shopify.routes.root + 'cart/change.js', {
+    fetch((window.Shopify?.routes?.root || '/') + 'cart/change.js', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
