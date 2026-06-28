@@ -29,23 +29,54 @@
     {% render 'meta-tags' %}
 
     <style>
-      /* Hide Shopify hCaptcha / reCAPTCHA badges to prevent overlapping with widgets */
+      /* Hide Shopify hCaptcha / reCAPTCHA badges */
       .grecaptcha-badge,
-      .hcaptcha-badge {
+      .hcaptcha-badge,
+      .h-captcha {
         display: none !important;
         visibility: hidden !important;
       }
-      /* Specifically hide the hCaptcha badge iframe without breaking the challenge popup */
-      iframe[src*="hcaptcha.com"][title*="badge"] {
+      /* Fallback CSS for badge iframe */
+      iframe[src*="hcaptcha.com"]:not([title*="content"]) {
         display: none !important;
         visibility: hidden !important;
         opacity: 0 !important;
+        pointer-events: none !important;
       }
-      /* Hide the wrapper div that Shopify sometimes uses for the badge */
       body > div[style*="bottom: 14px"][style*="right: 14px"] {
         display: none !important;
       }
     </style>
+
+    <script>
+      // Aggressively hide the hCaptcha badge wrapper when injected by Shopify
+      document.addEventListener("DOMContentLoaded", () => {
+        const hideBadge = (node) => {
+          if (node.tagName === 'DIV') {
+            const iframe = node.querySelector('iframe[src*="hcaptcha"]');
+            if (iframe && iframe.title && !iframe.title.includes('content')) {
+              node.style.setProperty('display', 'none', 'important');
+              node.style.setProperty('visibility', 'hidden', 'important');
+              node.style.setProperty('opacity', '0', 'important');
+              node.style.setProperty('pointer-events', 'none', 'important');
+            }
+          }
+        };
+
+        // Check already existing nodes
+        document.body.querySelectorAll('body > div').forEach(hideBadge);
+
+        // Watch for dynamically injected nodes
+        const observer = new MutationObserver((mutations) => {
+          mutations.forEach(mutation => {
+            mutation.addedNodes.forEach(node => {
+              if (node.nodeType === 1) hideBadge(node);
+            });
+          });
+        });
+        observer.observe(document.body, { childList: true, subtree: false });
+      });
+    </script>
 
     {{ content_for_header }}
   </head>

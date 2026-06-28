@@ -1278,6 +1278,7 @@
       if (form) {
         form.addEventListener('submit', (e) => {
           e.preventDefault();
+          e.stopPropagation();
           if (addBtn) addBtn.classList.add('btn-loading');
 
           const formData = new FormData(form);
@@ -1313,6 +1314,7 @@
       if (buyBtn) {
         buyBtn.addEventListener('click', (e) => {
           e.preventDefault();
+          e.stopPropagation();
           if (!form) return;
           
           buyBtn.classList.add('btn-loading');

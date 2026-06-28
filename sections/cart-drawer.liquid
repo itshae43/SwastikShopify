@@ -349,14 +349,42 @@
     const footer = document.getElementById('CartDrawerFooter');
     const countBadge = document.getElementById('CartDrawerCount');
     
-    countBadge.textContent = cart.item_count;
+    // Check for mock cart items
+    let mockItems = [];
+    try {
+      mockItems = JSON.parse(localStorage.getItem('cart_items_data') || '[]');
+    } catch(e) {}
+    
+    let totalItems = cart.item_count;
+    let totalPrice = cart.total_price;
+    let itemsToRender = [...cart.items];
+
+    // If Shopify cart is empty but we have mock items, use them
+    if (totalItems === 0 && mockItems.length > 0) {
+      totalItems = mockItems.reduce((acc, item) => acc + item.quantity, 0);
+      totalPrice = mockItems.reduce((acc, item) => acc + (item.price * item.quantity), 0) * 100; // Mock prices are usually in full units, but formatMoney expects cents. Let's assume price is in cents or adjust later.
+      
+      itemsToRender = mockItems.map(item => ({
+        key: item.id,
+        image: item.image,
+        url: item.url,
+        product_title: item.title,
+        final_line_price: (item.price * 100) * item.quantity,
+        quantity: item.quantity,
+        is_mock: true
+      }));
+    }
+
+    countBadge.textContent = totalItems;
 
     // Update global navbar badges if function exists
     if (window.updateGlobalCartCount) {
-      window.updateGlobalCartCount(cart.item_count);
+      window.updateGlobalCartCount(totalItems);
     }
+    // Also update localStorage so it stays in sync
+    localStorage.setItem('cart_count', totalItems);
 
-    if (cart.item_count === 0) {
+    if (totalItems === 0) {
       body.innerHTML = `
         <div class="cart-drawer__empty">
           <svg class="empty-cart-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1">
@@ -371,7 +399,7 @@
     }
 
     let html = '';
-    cart.items.forEach(item => {
+    itemsToRender.forEach(item => {
       const optionsText = item.options_with_values 
         ? item.options_with_values.filter(opt => opt.value !== 'Default Title').map(opt => opt.value).join(' | ') 
         : '';
@@ -403,7 +431,7 @@
 
     body.innerHTML = html;
     
-    document.getElementById('CartDrawerSubtotal').textContent = formatMoney(cart.total_price);
+    document.getElementById('CartDrawerSubtotal').textContent = formatMoney(totalPrice);
     footer.style.display = 'block';
   }
 
@@ -424,6 +452,24 @@
   }
 
   function updateCartItem(key, quantity) {
+    // Check if it's a mock item first
+    let mockItems = [];
+    try {
+      mockItems = JSON.parse(localStorage.getItem('cart_items_data') || '[]');
+    } catch(e) {}
+    
+    const mockIndex = mockItems.findIndex(i => i.id === key);
+    if (mockIndex !== -1) {
+      if (quantity === 0) {
+        mockItems.splice(mockIndex, 1);
+      } else {
+        mockItems[mockIndex].quantity = quantity;
+      }
+      localStorage.setItem('cart_items_data', JSON.stringify(mockItems));
+      fetchCart();
+      return;
+    }
+
     const body = document.getElementById('CartDrawerBody');
     body.classList.add('cart-drawer-overlay-loading');
     

@@ -148,6 +148,20 @@
     const wishlistBadge = document.getElementById('wishlist-count-badge');
     const cartBadge = document.getElementById('cart-count-badge');
 
+    // Helper functions to update Badges
+    window.updateWishlistBadge = function() {
+      if (!wishlistBadge) return;
+      const count = wishlist.length;
+      wishlistBadge.innerText = count;
+      wishlistBadge.style.display = count > 0 ? 'inline-flex' : 'none';
+    };
+
+    window.updateCartBadge = function() {
+      if (!cartBadge) return;
+      cartBadge.innerText = cartCount;
+      cartBadge.style.display = cartCount > 0 ? 'inline-flex' : 'none';
+    };
+
     // Wishlist Initialization
     let wishlist = [];
     try {
@@ -165,7 +179,7 @@
     } catch(e) {
       console.error('Local storage error: ', e);
     }
-    updateWishlistBadge();
+    window.updateWishlistBadge();
 
     // Cart Initialization
     let cartCount = 0;
@@ -180,7 +194,7 @@
     } catch(e) {
       console.error(e);
     }
-    updateCartBadge();
+    window.updateCartBadge();
 
     // Set initial active state of wishlist heart buttons on load
     document.addEventListener('DOMContentLoaded', () => {
