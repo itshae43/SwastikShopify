@@ -28,7 +28,7 @@
       </svg>
     </button>
     
-    <a href="{{ product_url }}" class="{{ class_prefix_default }}__image-link" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 1;">
+    <div class="{{ class_prefix_default }}__image-link" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 1;">
       <div class="{{ class_prefix_default }}__img-slides" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;">
         {% if product.images.size > 0 %}
           {% for image in product.images limit: 3 %}
@@ -45,7 +45,7 @@
           {{ 'product-1' | placeholder_svg_tag: placeholder_class }}
         {% endif %}
       </div>
-    </a>
+    </div>
 
     <!-- Carousel Dots Indicator -->
     {% if product.images.size > 1 %}
@@ -65,9 +65,9 @@
     
     <!-- Pricing Row -->
     <div class="{{ class_prefix_default }}__price-row product-card-ui__price-row">
-      <span class="price-current">{{ price | default: 24999 | money }}</span>
+      <span class="price-current">{{ price | default: 24999 | money | replace: '$', '₹' | replace: ' Rs.', '₹' }}</span>
       {% if original_price > price %}
-        <span class="price-original">{{ original_price | default: 31999 | money }}</span>
+        <span class="price-original">{{ original_price | default: 31999 | money | replace: '$', '₹' | replace: ' Rs.', '₹' }}</span>
         {% assign discount = original_price | minus: price | times: 100.0 | divided_by: original_price | round %}
         <span class="price-discount">{{ discount }}% OFF</span>
       {% endif %}

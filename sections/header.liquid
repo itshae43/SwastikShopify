@@ -67,15 +67,15 @@
       </svg>
     </button>
 
-    <!-- Left: Brand Logo (Image + Stacked Text) -->
+    <!-- Left: Brand Logo -->
     <div class="header__logo">
       <a href="{{ routes.root_url }}" class="header__logo-link">
-        <img src="{{ 'LogoSwastik.png' | asset_url }}" 
+        <img src="{{ 'logo.png' | asset_url }}" 
              alt="Swastik Jewels" 
              class="header__logo-img" 
              width="65"
              height="65"
-             style="max-width: {{ section.settings.logo_width }}px; height: auto;">
+             style="max-width: {{ section.settings.logo_width }}px; height: auto; object-fit: contain;">
         <div class="header__logo-text-wrapper">
           <span class="header__logo-title">Swastik</span>
           <span class="header__logo-subtitle">JEWELS</span>
@@ -200,15 +200,15 @@
     <div class="mobile-menu-drawer__content">
       <div class="mobile-menu-drawer__header">
         <div class="mobile-menu-drawer__logo">
-          <img src="{{ 'LogoSwastik.png' | asset_url }}" 
+          <img src="{{ 'logo.png' | asset_url }}" 
                alt="Swastik Jewels" 
                class="mobile-menu-drawer__logo-img" 
                width="38"
                height="38"
-               style="max-width: 38px; height: auto;">
+               style="max-width: 38px; height: auto; object-fit: contain;">
           <div class="header__logo-text-wrapper">
-            <span class="header__logo-title" style="font-size: 1.8rem; line-height: 1; color: var(--color-accent, #D4AF37);">Swastik</span>
-            <span class="header__logo-subtitle" style="font-size: 0.6rem; line-height: 1; letter-spacing: 0.45em; margin-top: 0.15rem; color: var(--color-accent, #D4AF37);">JEWELS</span>
+            <span class="header__logo-title">Swastik</span>
+            <span class="header__logo-subtitle">JEWELS</span>
           </div>
         </div>
         <button type="button" class="mobile-menu-drawer__close" id="MobileNavClose" aria-label="Close menu">
@@ -423,7 +423,7 @@
   .header__logo-link {
     display: flex;
     align-items: center;
-    gap: 1.0rem;
+    gap: 0.5rem;
     text-decoration: none;
   }
   .header__logo-img {
@@ -436,29 +436,36 @@
     display: flex;
     flex-direction: column;
     justify-content: center;
+    align-items: center;
     line-height: 1;
+    filter: drop-shadow(2px 3px 4px rgba(0, 0, 0, 0.12));
   }
-  .header__logo-title {
-    font-family: 'Montserrat', sans-serif;
-    font-size: 2.6rem;
-    font-weight: 700;
-    letter-spacing: 0.02em;
-    color: var(--color-accent, #D4AF37);
-    text-transform: none;
+  .header__logo-title, .header__logo-subtitle {
+    font-family: 'Cormorant Garamond', serif;
+    background: linear-gradient(to bottom, #B58E2E 0%, #D7B453 35%, #D7B453 60%, #9A6A1A 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
     white-space: nowrap;
     line-height: 1;
     margin: 0;
   }
+  .header__logo-title {
+    font-size: 3.8rem;
+    font-weight: 800;
+    letter-spacing: 0.02em;
+    text-transform: none;
+    -webkit-text-stroke: 0.5px rgba(107, 76, 10, 0.5);
+  }
   .header__logo-subtitle {
-    font-family: 'Montserrat', sans-serif;
-    font-size: 0.85rem;
-    font-weight: 600;
-    letter-spacing: 0.5em;
-    color: var(--color-accent, #D4AF37);
+    font-size: 1.3rem;
+    font-weight: 700;
+    letter-spacing: 0.8em;
     text-transform: uppercase;
-    white-space: nowrap;
-    margin-top: 0.15rem;
-    line-height: 1;
+    margin-top: -0.1rem;
+    text-align: center;
+    -webkit-text-stroke: 0.2px rgba(107, 76, 10, 0.5);
+    padding-left: 0.8em;
   }
 
   /* Nav menu - Centered */
@@ -689,12 +696,13 @@
       max-height: 4.2rem;
     }
     .header__logo-title {
-      font-size: 2.2rem;
+      font-size: 3.0rem;
     }
     .header__logo-subtitle {
-      font-size: 0.75rem;
-      letter-spacing: 0.45em;
-      margin-top: 0.15rem;
+      font-size: 1.0rem;
+      letter-spacing: 0.7em;
+      margin-top: 0.2rem;
+      padding-left: 0.7em;
     }
   }
 
@@ -844,13 +852,14 @@
       max-height: 3.4rem;
     }
     .header__logo-title {
-      font-size: 1.8rem;
-      font-weight: 700;
+      font-size: 2.5rem;
+      font-weight: 500;
     }
     .header__logo-subtitle {
-      font-size: 0.6rem;
-      letter-spacing: 0.45em;
+      font-size: 0.85rem;
+      letter-spacing: 0.6em;
       margin-top: 0.15rem;
+      padding-left: 0.6em;
     }
     .header__nav {
       display: none;
@@ -1226,10 +1235,10 @@
     {
       "type": "range",
       "id": "logo_width",
-      "min": 30,
-      "max": 150,
+      "min": 50,
+      "max": 350,
       "step": 5,
-      "default": 65,
+      "default": 200,
       "unit": "px",
       "label": "Custom logo width"
     },

@@ -246,23 +246,7 @@
       }, 4000);
     };
 
-    // 3. Card-wide clicks mapping
-    document.addEventListener('click', (e) => {
-      // Find closest card
-      const card = e.target.closest('[data-url]');
-      if (!card) return;
-
-      // Ignore interactive clicks inside the card
-      const interactiveSelector = 'a, button, input, select, textarea, .dot, .best-sellers__wishlist-btn, .new-arrivals__wishlist-btn, .btn-add-cart, .btn-quick-view';
-      if (e.target.closest(interactiveSelector)) {
-        return;
-      }
-
-      const url = card.getAttribute('data-url');
-      if (url && url !== '#' && url !== '') {
-        window.location.href = url;
-      }
-    });
+    // 3. (Removed JS card-wide click interceptor in favor of native title link pseudo-element for better performance)
 
     // 4. AJAX Wishlist click interceptor
     document.addEventListener('click', (e) => {

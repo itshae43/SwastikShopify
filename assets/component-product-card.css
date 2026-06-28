@@ -87,8 +87,8 @@
 
 .product-card-ui__btn {
   width: 100%;
-  background-color: transparent;
-  color: #013F3E;
+  background-color: #013F3E;
+  color: #ffffff;
   border: 1px solid #013F3E;
   border-radius: 4px;
   font-family: 'Inter', sans-serif;
@@ -103,9 +103,21 @@
   justify-content: center;
   gap: 0.5rem;
   transition: all 0.3s ease;
+  position: relative;
+  z-index: 2;
 }
 
 .product-card-ui__btn:hover {
-  background-color: #013F3E;
+  background-color: #025553;
   color: #ffffff;
+}
+
+.product-card-ui__title a::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 1;
 }
