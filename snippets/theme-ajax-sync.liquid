@@ -290,8 +290,8 @@
         window.updateWishlistBadge();
         
         // Open Sidebar Drawer instead of Toast
-        if (window.openSidebarDrawer) {
-          window.openSidebarDrawer('wishlist');
+        if (window.openWishlistDrawer) {
+          window.openWishlistDrawer();
         } else {
           showSwastikToast('Added to Wishlist', `${productTitle} has been saved to your likes.`, false);
         }
@@ -371,8 +371,8 @@
         if (submitBtn) submitBtn.classList.remove('btn-loading');
         
         // Open Sidebar Drawer instead of Toast
-        if (window.openSidebarDrawer) {
-          window.openSidebarDrawer('cart');
+        if (window.openCartDrawer) {
+          window.openCartDrawer();
         } else {
           showSwastikToast('Added to Cart', `${qtyVal} x ${title} added!`, true);
         }
@@ -397,14 +397,14 @@
       const wishlistTrigger = e.target.closest('.header__wishlist-trigger');
       if (wishlistTrigger) {
         e.preventDefault();
-        if (window.openSidebarDrawer) window.openSidebarDrawer('wishlist');
+        if (window.openWishlistDrawer) window.openWishlistDrawer();
         return;
       }
 
       const cartTrigger = e.target.closest('.header__cart-trigger');
       if (cartTrigger) {
         e.preventDefault();
-        if (window.openSidebarDrawer) window.openSidebarDrawer('cart');
+        if (window.openCartDrawer) window.openCartDrawer();
         return;
       }
     });
