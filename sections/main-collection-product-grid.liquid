@@ -71,39 +71,7 @@
             </div>
           {%- endfor -%}
           
-          <!-- Hardcoded filters for visual mockup -->
-          {% assign custom_filters = "Diamond Shape, Metal Type, Occasion, Collection" | split: ", " %}
-          {% for custom_filter in custom_filters %}
-            <div class="filter-group">
-              <details class="filter-group__details">
-                <summary class="filter-group__summary">
-                  <span class="filter-group__name">{{ custom_filter }}</span>
-                  <svg class="icon-caret" width="10" height="6" viewBox="0 0 10 6" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M1 1L5 5L9 1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                  </svg>
-                </summary>
-                <div class="filter-group__display">
-                  <ul class="filter-group__list">
-                    <!-- Dummy items for mockup -->
-                    <li class="filter-group__list-item">
-                      <label class="filter-checkbox">
-                        <input type="checkbox" disabled>
-                        <span class="filter-checkbox__box"></span>
-                        <span class="filter-checkbox__label">Option 1</span>
-                      </label>
-                    </li>
-                    <li class="filter-group__list-item">
-                      <label class="filter-checkbox">
-                        <input type="checkbox" disabled>
-                        <span class="filter-checkbox__box"></span>
-                        <span class="filter-checkbox__label">Option 2</span>
-                      </label>
-                    </li>
-                  </ul>
-                </div>
-              </details>
-            </div>
-          {% endfor %}
+
           
           <!-- Hidden inputs for sorting so it's maintained when filtering -->
           {%- if collection.sort_by -%}
