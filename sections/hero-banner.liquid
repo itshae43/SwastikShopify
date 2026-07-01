@@ -8,7 +8,23 @@
      data-autoplay="{{ section.settings.autoplay }}"
      data-autoplay-speed="{{ section.settings.autoplay_speed }}"
      style="
-       --hero-height: {{ section.settings.hero_height }}px;
+       {%- if section.settings.adapt_height_first_image and section.blocks.first.settings.image_desktop != blank -%}
+         {%- assign desktop_ratio = section.blocks.first.settings.image_desktop.aspect_ratio | default: 1.777 -%}
+         --hero-padding-desktop: {{ 1.0 | divided_by: desktop_ratio | times: 100 }}%;
+         {%- if section.blocks.first.settings.image_mobile != blank -%}
+           {%- assign mobile_ratio = section.blocks.first.settings.image_mobile.aspect_ratio -%}
+         {%- else -%}
+           {%- assign mobile_ratio = desktop_ratio -%}
+         {%- endif -%}
+         --hero-padding-mobile: {{ 1.0 | divided_by: mobile_ratio | times: 100 }}%;
+         --hero-height-desktop: 0px;
+         --hero-height-mobile: 0px;
+       {%- else -%}
+         --hero-padding-desktop: 0%;
+         --hero-padding-mobile: 0%;
+         --hero-height-desktop: {{ section.settings.hero_height }}px;
+         --hero-height-mobile: 694px;
+       {%- endif -%}
        --overlay-opacity: {{ section.settings.overlay_opacity | divided_by: 100.0 }};
      ">
   
@@ -223,7 +239,8 @@
 {% stylesheet %}
   .hero-banner--slideshow {
     position: relative;
-    height: var(--hero-height, 700px);
+    height: var(--hero-height-desktop, 700px);
+    padding-bottom: var(--hero-padding-desktop, 0%);
     width: 100%;
     overflow: hidden;
     background-color: #000000;
@@ -436,7 +453,8 @@
   /* Layout Breakpoints */
   @media (max-width: 767px) {
     .hero-banner--slideshow {
-      height: 694px !important; /* Mobile height requirement: 694px (9:16 aspect ratio) */
+      height: var(--hero-height-mobile, 694px) !important;
+      padding-bottom: var(--hero-padding-mobile, 0%) !important;
     }
 
     .hero-banner__content {
@@ -491,6 +509,13 @@
       "default": 6,
       "unit": "s",
       "label": "Change slides every"
+    },
+    {
+      "type": "checkbox",
+      "id": "adapt_height_first_image",
+      "default": true,
+      "label": "Adapt section height to first image size",
+      "info": "Overrides the desktop banner height setting to perfectly fit the first slide's image without cropping."
     },
     {
       "type": "range",
