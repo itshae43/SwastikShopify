@@ -17,6 +17,22 @@
     "foreground_color": "#1A1A1A",
     "input_corner_radius": 4,
     "checkout_logo_image": "logo.png",
+    "sections": {
+      "cart-drawer": {
+        "type": "cart-drawer",
+        "settings": {}
+      },
+      "wishlist-drawer": {
+        "type": "wishlist-drawer",
+        "settings": {}
+      },
+      "whatsapp-widget": {
+        "type": "whatsapp-widget",
+        "settings": {
+          "whatsapp_number": "8920905268"
+        }
+      }
+    },
     "content_for_index": []
   },
   "platform_customizations": {
