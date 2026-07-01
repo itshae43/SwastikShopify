@@ -144,28 +144,28 @@
           "type": "card",
           "settings": {
             "image": "shopify://shop_images/latest_b9_1.png",
-            "link": ""
+            "link": "shopify://collections/diamond-bangles"
           }
         },
         "earrings": {
           "type": "card",
           "settings": {
             "image": "shopify://shop_images/latest_b11.png",
-            "link": ""
+            "link": "shopify://collections/diamond-earrings-1"
           }
         },
         "pendants": {
           "type": "card",
           "settings": {
             "image": "shopify://shop_images/latest_b10_2.png",
-            "link": ""
+            "link": "shopify://collections/diamond-pendants"
           }
         },
         "tennis": {
           "type": "card",
           "settings": {
             "image": "shopify://shop_images/latest_b8_1.png",
-            "link": ""
+            "link": "shopify://collections/diamond-earrings"
           }
         }
       },
