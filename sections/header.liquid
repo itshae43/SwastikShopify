@@ -160,24 +160,22 @@
     <!-- Right: Gold Rate Pill, Wishlist, Cart, Profile Actions -->
     <div class="header__icons">
       <!-- Currency Selector -->
-      {%- if localization.available_countries.size > 1 -%}
-        <div class="header__localization">
-          {%- form 'localization', id: 'HeaderLanguageForm', class: 'localization-form' -%}
-            <div class="localization-form__select">
-              <select class="localization-selector" name="country_code" onchange="this.form.submit()">
-                {%- for country in localization.available_countries -%}
-                  <option value="{{ country.iso_code }}" {%- if country.iso_code == localization.country.iso_code %} selected{% endif %}>
-                    {{ country.currency.iso_code }} {{ country.currency.symbol }}
-                  </option>
-                {%- endfor -%}
-              </select>
-              <svg class="icon icon-chevron-down" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="m19.5 8.25-7.5 7.5-7.5-7.5" />
-              </svg>
-            </div>
-          {%- endform -%}
-        </div>
-      {%- endif -%}
+      <div class="header__localization">
+        {%- form 'localization', id: 'HeaderLanguageForm', class: 'localization-form' -%}
+          <div class="localization-form__select">
+            <select class="localization-selector" name="country_code" onchange="this.form.submit()">
+              {%- for country in localization.available_countries -%}
+                <option value="{{ country.iso_code }}" {%- if country.iso_code == localization.country.iso_code %} selected{% endif %}>
+                  {{ country.currency.iso_code }} {{ country.currency.symbol }}
+                </option>
+              {%- endfor -%}
+            </select>
+            <svg class="icon icon-chevron-down" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="m19.5 8.25-7.5 7.5-7.5-7.5" />
+            </svg>
+          </div>
+        {%- endform -%}
+      </div>
 
       <!-- Gold price pill -->
       <div class="header__gold-price">
