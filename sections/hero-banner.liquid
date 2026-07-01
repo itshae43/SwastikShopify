@@ -2,13 +2,49 @@
   Renders a customizable, premium hero banner slideshow with desktop/mobile picture support,
   Gen Z-oriented copy, custom fade transitions, Ken Burns zoom effects, and modern dots navigation.
 {% endcomment %}
+{%- assign first_slide = section.blocks | where: "type", "slide" | first -%}
+{%- assign desktop_aspect_ratio = 1.7778 -%} 
+{%- assign mobile_aspect_ratio = 0.5625 -%} 
+
+{%- if first_slide and first_slide.settings.image_desktop != blank -%}
+  {%- assign desktop_aspect_ratio = first_slide.settings.image_desktop.aspect_ratio -%}
+{%- endif -%}
+
+{%- if first_slide and first_slide.settings.image_mobile != blank -%}
+  {%- assign mobile_aspect_ratio = first_slide.settings.image_mobile.aspect_ratio -%}
+{%- elsif first_slide and first_slide.settings.image_desktop != blank -%}
+  {%- assign mobile_aspect_ratio = first_slide.settings.image_desktop.aspect_ratio -%}
+{%- endif -%}
+
+{%- style -%}
+  {% if section.settings.hero_size == 'adapt' %}
+    #Slideshow-{{ section.id }} {
+      height: auto;
+      aspect-ratio: {{ desktop_aspect_ratio }};
+    }
+    @media screen and (max-width: 767px) {
+      #Slideshow-{{ section.id }} {
+        height: auto !important;
+        aspect-ratio: {{ mobile_aspect_ratio }} !important;
+      }
+    }
+  {% else %}
+    #Slideshow-{{ section.id }} {
+      height: {{ section.settings.hero_height }}px;
+    }
+    @media screen and (max-width: 767px) {
+      #Slideshow-{{ section.id }} {
+        height: 694px !important;
+      }
+    }
+  {% endif %}
+{%- endstyle -%}
 
 <div class="hero-banner hero-banner--slideshow" 
      id="Slideshow-{{ section.id }}" 
      data-autoplay="{{ section.settings.autoplay }}"
      data-autoplay-speed="{{ section.settings.autoplay_speed }}"
      style="
-       --hero-height: {{ section.settings.hero_height }}px;
        --overlay-opacity: {{ section.settings.overlay_opacity | divided_by: 100.0 }};
      ">
   
@@ -491,6 +527,16 @@
       "default": 6,
       "unit": "s",
       "label": "Change slides every"
+    },
+    {
+      "type": "select",
+      "id": "hero_size",
+      "label": "Banner size",
+      "options": [
+        { "value": "adapt", "label": "Adapt to first image" },
+        { "value": "fixed", "label": "Fixed height" }
+      ],
+      "default": "adapt"
     },
     {
       "type": "range",
