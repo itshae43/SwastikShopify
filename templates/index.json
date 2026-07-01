@@ -63,6 +63,7 @@
       "settings": {
         "autoplay": true,
         "autoplay_speed": 3,
+        "hero_size": "adapt",
         "hero_height": 650,
         "overlay_opacity": 10
       }
@@ -190,7 +191,7 @@
           "settings": {
             "collection": "gold-rings",
             "title": "GOLD RINGS",
-            "image": "shopify://shop_images/Gold_Jewellery_7.png"
+            "image": "shopify://shop_images/new_2.png"
           }
         },
         "earring": {
@@ -198,7 +199,7 @@
           "settings": {
             "collection": "gold-earrings",
             "title": "GOLD EARRINGS",
-            "image": "shopify://shop_images/Gold_Jewellery_6_1.png"
+            "image": "shopify://shop_images/new_b76c60c6-d429-4130-b09a-eb3de8cd8e02.png"
           }
         },
         "necklace": {
@@ -206,7 +207,7 @@
           "settings": {
             "collection": "gold-necklaces",
             "title": "GOLD NECKLACES",
-            "image": "shopify://shop_images/Gold_Jewellery_5_1.png"
+            "image": "shopify://shop_images/new_3.png"
           }
         },
         "bangle": {
@@ -214,7 +215,7 @@
           "settings": {
             "collection": "gold-bangles",
             "title": "GOLD BANGLES",
-            "image": "shopify://shop_images/Gold_Jewellery_8_1.png"
+            "image": "shopify://shop_images/new.png"
           }
         },
         "mangalsutra": {
@@ -222,7 +223,7 @@
           "settings": {
             "collection": "mangalsutra",
             "title": "MANGALSUTRA",
-            "image": "shopify://shop_images/Gold_Jewellery_9.png"
+            "image": "shopify://shop_images/new_1.png"
           }
         }
       },
@@ -359,8 +360,10 @@
     "gifts_for_him_her": {
       "type": "gifts-for-him-her",
       "settings": {
+        "image_him": "shopify://shop_images/him.png",
         "title_him": "Him",
         "link_him": "/collections/for-him",
+        "image_her": "shopify://shop_images/her.png",
         "title_her": "Her",
         "link_her": "/collections/for-her",
         "bg_color": "#f8f5ef",
@@ -541,7 +544,7 @@
     "video_call": {
       "type": "video-call",
       "settings": {
-        "image": "shopify://shop_images/video_call.png",
+        "image": "shopify://shop_images/new_b12.png",
         "bg_color": "#fdf9f5",
         "heading": "Shop with Confidence, From Wherever You Are.",
         "text": "Connect on a video call with our experts and find your perfect jewellery.",
