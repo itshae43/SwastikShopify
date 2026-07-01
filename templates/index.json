@@ -40,19 +40,6 @@
             "button_2_link": ""
           }
         },
-        "slide_VwYJjR": {
-          "type": "slide",
-          "settings": {
-            "alignment": "left",
-            "subheading": "OWN YOUR GLOW",
-            "title": "Diamonds That Speak Your Code",
-            "description": "Ethically crafted, stackable fine jewelry designed for your daily edit. Because you don’t need an excuse to shine.",
-            "button_1_label": "Shop Daily Ice",
-            "button_1_link": "",
-            "button_2_label": "Discover the Vibe",
-            "button_2_link": ""
-          }
-        },
         "slide_rBHpab": {
           "type": "slide",
           "settings": {
@@ -99,7 +86,6 @@
       "block_order": [
         "slide_NpHh4X",
         "slide_KweVnL",
-        "slide_VwYJjR",
         "slide_rBHpab",
         "slide_J3Ukm4",
         "slide_Gyd9qb"
