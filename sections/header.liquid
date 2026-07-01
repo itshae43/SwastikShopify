@@ -159,6 +159,26 @@
 
     <!-- Right: Gold Rate Pill, Wishlist, Cart, Profile Actions -->
     <div class="header__icons">
+      <!-- Currency Selector -->
+      {%- if localization.available_countries.size > 1 -%}
+        <div class="header__localization">
+          {%- form 'localization', id: 'HeaderLanguageForm', class: 'localization-form' -%}
+            <div class="localization-form__select">
+              <select class="localization-selector" name="country_code" onchange="this.form.submit()">
+                {%- for country in localization.available_countries -%}
+                  <option value="{{ country.iso_code }}" {%- if country.iso_code == localization.country.iso_code %} selected{% endif %}>
+                    {{ country.currency.iso_code }} {{ country.currency.symbol }}
+                  </option>
+                {%- endfor -%}
+              </select>
+              <svg class="icon icon-chevron-down" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="m19.5 8.25-7.5 7.5-7.5-7.5" />
+              </svg>
+            </div>
+          {%- endform -%}
+        </div>
+      {%- endif -%}
+
       <!-- Gold price pill -->
       <div class="header__gold-price">
         <span class="gold-text">{{ section.settings.gold_price | default: 'Gold 15,620/g' }}</span>
@@ -563,6 +583,41 @@
     align-items: center;
     justify-content: flex-end;
     gap: 2.4rem;
+  }
+
+  /* Localization Form */
+  .header__localization {
+    display: flex;
+    align-items: center;
+  }
+  .localization-form__select {
+    position: relative;
+    display: flex;
+    align-items: center;
+  }
+  .localization-selector {
+    appearance: none;
+    -webkit-appearance: none;
+    background: transparent;
+    border: none;
+    color: var(--color-primary, #002E28);
+    font-family: 'Montserrat', sans-serif;
+    font-size: 1.25rem;
+    font-weight: 600;
+    cursor: pointer;
+    padding-right: 2rem;
+    text-transform: uppercase;
+  }
+  .localization-selector:focus {
+    outline: none;
+  }
+  .localization-form__select .icon-chevron-down {
+    position: absolute;
+    right: 0.2rem;
+    width: 1.2rem;
+    height: 1.2rem;
+    pointer-events: none;
+    color: var(--color-accent, #D4AF37);
   }
 
   /* Gold Price Badge */
