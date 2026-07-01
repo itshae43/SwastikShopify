@@ -12,10 +12,10 @@
     "hero_banner": {
       "type": "hero-banner",
       "blocks": {
-        "slide_68FNXM": {
+        "slide_Bp8BaM": {
           "type": "slide",
           "settings": {
-            "image_desktop": "shopify://shop_images/ChatGPT_Image_Jul_1_2026_04_46_49_PM_1_3.png",
+            "image_desktop": "shopify://shop_images/ChatGPT_Image_Jul_1_2026_04_46_49_PM_2_1.png",
             "alignment": "left",
             "subheading": "",
             "title": "",
@@ -56,7 +56,7 @@
         }
       },
       "block_order": [
-        "slide_68FNXM",
+        "slide_Bp8BaM",
         "slide_NpHh4X",
         "slide_J3Ukm4"
       ],
