@@ -168,13 +168,6 @@
       const storedWishlist = localStorage.getItem('wishlist');
       if (storedWishlist) {
         wishlist = JSON.parse(storedWishlist);
-      } else {
-        // Pre-fill with dummy ids if initial badge is positive
-        const initialCount = wishlistBadge ? parseInt(wishlistBadge.innerText) || 0 : 0;
-        for (let i = 0; i < initialCount; i++) {
-          wishlist.push('mock-id-' + i);
-        }
-        localStorage.setItem('wishlist', JSON.stringify(wishlist));
       }
     } catch(e) {
       console.error('Local storage error: ', e);
@@ -207,19 +200,7 @@
       });
     });
 
-    // Helper functions to update Badges
-    window.updateWishlistBadge = function() {
-      if (!wishlistBadge) return;
-      const count = wishlist.length;
-      wishlistBadge.innerText = count;
-      wishlistBadge.style.display = count > 0 ? 'inline-flex' : 'none';
-    };
 
-    window.updateCartBadge = function() {
-      if (!cartBadge) return;
-      cartBadge.innerText = cartCount;
-      cartBadge.style.display = cartCount > 0 ? 'inline-flex' : 'none';
-    };
 
     // 2. Global Toast Notification Generator
     window.showSwastikToast = function(title, message, isCart = false) {
