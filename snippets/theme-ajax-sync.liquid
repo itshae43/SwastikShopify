@@ -167,7 +167,12 @@
     try {
       const storedWishlist = localStorage.getItem('wishlist');
       if (storedWishlist) {
-        wishlist = JSON.parse(storedWishlist);
+        let parsed = JSON.parse(storedWishlist);
+        // Clean up any mock data from previous bug
+        wishlist = parsed.filter(id => !id.toString().startsWith('mock-id-'));
+        if (wishlist.length !== parsed.length) {
+          localStorage.setItem('wishlist', JSON.stringify(wishlist));
+        }
       }
     } catch(e) {
       console.error('Local storage error: ', e);

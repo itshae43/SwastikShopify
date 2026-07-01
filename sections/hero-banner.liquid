@@ -21,11 +21,13 @@
     #Slideshow-{{ section.id }} {
       height: auto;
       aspect-ratio: {{ desktop_aspect_ratio }};
+      max-height: 75vh;
     }
     @media screen and (max-width: 767px) {
       #Slideshow-{{ section.id }} {
         height: auto !important;
         aspect-ratio: {{ mobile_aspect_ratio }} !important;
+        max-height: 65vh !important;
       }
     }
   {% else %}
