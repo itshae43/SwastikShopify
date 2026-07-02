@@ -389,7 +389,7 @@
         "sister": {
           "type": "bond",
           "settings": {
-            "image": "shopify://shop_images/sisters.png",
+            "image": "shopify://shop_images/sisters_1.png",
             "title": "For Sisters",
             "subtitle": "Partners in all things.",
             "link": "/collections/for-sisters",
