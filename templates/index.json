@@ -378,7 +378,7 @@
         "mother": {
           "type": "bond",
           "settings": {
-            "image": "shopify://shop_images/mother.png",
+            "image": "shopify://shop_images/mother_1.png",
             "title": "For Mothers",
             "subtitle": "Her love, our forever.",
             "link": "/collections/for-mothers",
@@ -400,7 +400,7 @@
         "bride": {
           "type": "bond",
           "settings": {
-            "image": "shopify://shop_images/bride.png",
+            "image": "shopify://shop_images/bride_1.png",
             "title": "For Brides",
             "subtitle": "For the beginning of forever.",
             "link": "/collections/for-brides",
