@@ -492,6 +492,7 @@
         "slide_1": {
           "type": "slide",
           "settings": {
+            "image": "shopify://shop_images/date_night.png",
             "title": "THE COLLEGE CORE",
             "subtitle": "Subtle elegance for your everyday hustle.",
             "link": ""
@@ -500,6 +501,7 @@
         "slide_2": {
           "type": "slide",
           "settings": {
+            "image": "shopify://shop_images/office_wear.png",
             "title": "THE WEEKEND GLOW",
             "subtitle": "Effortless charm for your casual outings.",
             "link": ""
@@ -508,6 +510,7 @@
         "slide_3": {
           "type": "slide",
           "settings": {
+            "image": "shopify://shop_images/date_night.png",
             "title": "THE PARTY EDIT",
             "subtitle": "Make heads turn at every celebration.",
             "link": ""
@@ -516,6 +519,7 @@
         "slide_4": {
           "type": "slide",
           "settings": {
+            "image": "shopify://shop_images/date_night.png",
             "title": "THE BOARDROOM BOSS",
             "subtitle": "Sharp, sophisticated, and ready to lead.",
             "link": ""
@@ -524,6 +528,7 @@
         "slide_5": {
           "type": "slide",
           "settings": {
+            "image": "shopify://shop_images/date_night.png",
             "title": "THE FESTIVE GRACE",
             "subtitle": "Embrace traditions with a modern sparkle.",
             "link": ""
@@ -561,28 +566,24 @@
         "reel_1": {
           "type": "reel",
           "settings": {
-            "video": "",
             "view_count": "2M"
           }
         },
         "reel_2": {
           "type": "reel",
           "settings": {
-            "video": "",
             "view_count": "773K"
           }
         },
         "reel_3": {
           "type": "reel",
           "settings": {
-            "video": "",
             "view_count": "63.6K"
           }
         },
         "reel_4": {
           "type": "reel",
           "settings": {
-            "video": "",
             "view_count": "9410"
           }
         }
