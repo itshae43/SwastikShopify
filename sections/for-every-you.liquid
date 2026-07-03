@@ -312,6 +312,7 @@
 class ForEveryYouCarousel {
   constructor(element) {
     this.section = element;
+    this.section.carousel = this;
     this.track = element.querySelector('.for-every-you__track');
     this.slides = Array.from(element.querySelectorAll('.for-every-you__slide'));
     this.prevBtn = element.querySelector('.for-every-you__nav--prev');
@@ -478,6 +479,27 @@ document.addEventListener('shopify:section:load', (event) => {
   const section = event.target.querySelector('.for-every-you');
   if (section) {
     new ForEveryYouCarousel(section);
+  }
+});
+
+document.addEventListener('shopify:block:select', (event) => {
+  const slide = event.target;
+  if (!slide.classList.contains('for-every-you__slide')) return;
+  
+  const section = slide.closest('.for-every-you');
+  if (!section || !section.carousel) return;
+  
+  const targetIndex = parseInt(slide.getAttribute('data-index'), 10);
+  if (!isNaN(targetIndex)) {
+    const N = section.carousel.N;
+    let currentMod = section.carousel.targetProgress % N;
+    if (currentMod < 0) currentMod += N;
+    
+    let diff = targetIndex - currentMod;
+    if (diff > N / 2) diff -= N;
+    if (diff < -N / 2) diff += N;
+    
+    section.carousel.targetProgress += diff;
   }
 });
 {% endjavascript %}
