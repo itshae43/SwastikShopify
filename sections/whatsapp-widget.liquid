@@ -14,7 +14,11 @@
 {% endschema %}
 
 <div class="whatsapp-widget js-whatsapp-widget">
+  <div class="whatsapp-widget__overlay js-whatsapp-close"></div>
   <div class="whatsapp-widget__menu js-whatsapp-menu">
+    <button class="whatsapp-widget__close-mobile js-whatsapp-close" aria-label="Close">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M18 6L6 18M6 6L18 18" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </button>
     <div class="whatsapp-widget__menu-header">
       <h4>How can we help you?</h4>
       <button class="whatsapp-widget__close js-whatsapp-close" aria-label="Close">
@@ -27,8 +31,8 @@
         <span style="font-size: 22px; font-weight: 400; font-family: 'Inter', sans-serif;">₹</span>
       </div>
       <div class="whatsapp-widget__option-text">
-        <strong>Request Best Price</strong>
-        <span>Unlock exclusive offers & more</span>
+        <strong>Chat for Best Price</strong>
+        <span>Unlock exclusive offers & much more</span>
       </div>
     </a>
 
@@ -37,7 +41,7 @@
         <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M8 10h.01M12 10h.01M16 10h.01M21 12c0 4.418-4.03 8-9 8a9.8 9.8 0 0 1-3.25-.56L3 21l1.5-3.5A8.92 8.92 0 0 1 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
       </div>
       <div class="whatsapp-widget__option-text">
-        <strong>Talk to a Stylist</strong>
+        <strong>Connect a Personal Stylist</strong>
         <span>Style advice tailored just for you</span>
       </div>
     </a>
@@ -48,7 +52,7 @@
       </div>
       <div class="whatsapp-widget__option-text">
         <strong>Shop via Video Call</strong>
-        <span>Explore jewellery live with an expert</span>
+        <span>Explore jewellery live with expert assistance</span>
       </div>
     </a>
   </div>
@@ -72,17 +76,30 @@
     transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.4s;
   }
 
-  body.drawer-open .whatsapp-widget {
-    transform: translateX(-450px);
+  .whatsapp-widget__close-mobile {
+    display: none;
+  }
+  .whatsapp-widget__overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(255, 255, 255, 0.4);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    z-index: 9998;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s;
+  }
+  .whatsapp-widget__overlay.is-active {
+    opacity: 1;
+    visibility: visible;
   }
 
-  @media screen and (max-width: 480px) {
-    body.drawer-open .whatsapp-widget {
-      transform: translateX(calc(-100vw + 24px));
-      opacity: 0;
-      pointer-events: none;
-    }
-  }
+
 
   .whatsapp-widget__button {
     background-color: #25D366;
@@ -229,30 +246,98 @@
       width: calc(100vw - 48px);
     }
   }
+
+  @media screen and (max-width: 768px) {
+    .whatsapp-widget__button {
+      display: none !important;
+    }
+    .whatsapp-widget__menu-header {
+      display: none !important;
+    }
+    .whatsapp-widget__close-mobile {
+      display: flex;
+      position: absolute;
+      top: -48px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 36px;
+      height: 36px;
+      background: #ffffff;
+      border: none;
+      border-radius: 50%;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      cursor: pointer;
+      color: #333;
+    }
+    .whatsapp-widget__overlay {
+      display: block;
+    }
+    .whatsapp-widget {
+      bottom: 0;
+      right: 0;
+      width: 100%;
+      height: 100vh;
+      pointer-events: none;
+    }
+    .whatsapp-widget__menu {
+      position: absolute;
+      bottom: 24px;
+      left: 50%;
+      transform: translateX(-50%) translateY(150%);
+      width: calc(100vw - 32px);
+      padding: 16px;
+      border-radius: 20px;
+      pointer-events: auto;
+      z-index: 9999;
+      transform-origin: bottom center;
+      margin-bottom: 0 !important;
+      overflow-y: visible !important;
+    }
+    .whatsapp-widget__menu.is-active {
+      transform: translateX(-50%) translateY(0) !important;
+    }
+    .whatsapp-widget__option {
+      margin-bottom: 16px;
+      padding: 14px 16px;
+      border-color: #f0f0f0;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.02);
+    }
+  }
 {% endstylesheet %}
 
 {% javascript %}
   document.addEventListener('DOMContentLoaded', () => {
-    const toggleBtn = document.querySelector('.js-whatsapp-toggle');
-    const closeBtn = document.querySelector('.js-whatsapp-close');
+    const toggleBtns = document.querySelectorAll('.js-whatsapp-toggle');
+    const closeBtns = document.querySelectorAll('.js-whatsapp-close');
     const menu = document.querySelector('.js-whatsapp-menu');
+    const overlay = document.querySelector('.whatsapp-widget__overlay');
     const videoCallTriggers = document.querySelectorAll('.js-video-call-trigger');
 
-    if (toggleBtn && menu) {
-      toggleBtn.addEventListener('click', () => {
-        menu.classList.toggle('is-active');
+    if (toggleBtns.length > 0 && menu) {
+      toggleBtns.forEach(btn => {
+        btn.addEventListener('click', (e) => {
+          e.preventDefault();
+          menu.classList.toggle('is-active');
+          if (overlay) overlay.classList.toggle('is-active');
+        });
       });
 
-      if (closeBtn) {
-        closeBtn.addEventListener('click', () => {
-          menu.classList.remove('is-active');
+      if (closeBtns.length > 0) {
+        closeBtns.forEach(btn => {
+          btn.addEventListener('click', () => {
+            menu.classList.remove('is-active');
+            if (overlay) overlay.classList.remove('is-active');
+          });
         });
       }
 
       // Close when clicking outside
       document.addEventListener('click', (e) => {
-        if (!e.target.closest('.js-whatsapp-widget')) {
+        if (!e.target.closest('.js-whatsapp-widget') && !e.target.closest('.js-whatsapp-toggle')) {
           menu.classList.remove('is-active');
+          if (overlay) overlay.classList.remove('is-active');
         }
       });
     }

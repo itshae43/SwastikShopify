@@ -46,6 +46,19 @@
       body > div[style*="bottom: 14px"][style*="right: 14px"] {
         display: none !important;
       }
+      
+      /* Hide Shopify Inbox and other third-party chat widgets to prevent conflict with custom WhatsApp */
+      #shopify-chat,
+      #dummy-chat-button-iframe,
+      #ShopifyChat,
+      iframe[title*="chat widget" i],
+      iframe[title*="Shopify chat" i],
+      iframe[name="dummy-chat-button-iframe"] {
+        display: none !important;
+        visibility: hidden !important;
+        opacity: 0 !important;
+        pointer-events: none !important;
+      }
     </style>
 
     <script>
