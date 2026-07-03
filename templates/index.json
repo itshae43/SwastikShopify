@@ -510,6 +510,7 @@
         "slide_3": {
           "type": "slide",
           "settings": {
+            "image": "shopify://shop_images/date_night.png",
             "title": "THE PARTY EDIT",
             "subtitle": "Make heads turn at every celebration.",
             "link": ""
@@ -518,6 +519,7 @@
         "slide_4": {
           "type": "slide",
           "settings": {
+            "image": "shopify://shop_images/date_night.png",
             "title": "THE BOARDROOM BOSS",
             "subtitle": "Sharp, sophisticated, and ready to lead.",
             "link": ""
@@ -526,6 +528,7 @@
         "slide_5": {
           "type": "slide",
           "settings": {
+            "image": "shopify://shop_images/date_night.png",
             "title": "THE FESTIVE GRACE",
             "subtitle": "Embrace traditions with a modern sparkle.",
             "link": ""
