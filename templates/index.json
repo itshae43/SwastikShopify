@@ -489,6 +489,15 @@
     "for_every_you": {
       "type": "for-every-you",
       "blocks": {
+        "slide_5": {
+          "type": "slide",
+          "settings": {
+            "image": "shopify://shop_images/date_night.png",
+            "title": "Festive Wear",
+            "subtitle": "",
+            "link": ""
+          }
+        },
         "slide_1": {
           "type": "slide",
           "settings": {
@@ -524,33 +533,14 @@
             "subtitle": "",
             "link": ""
           }
-        },
-        "slide_5": {
-          "type": "slide",
-          "settings": {
-            "image": "shopify://shop_images/date_night.png",
-            "title": "Festive Wear",
-            "subtitle": "",
-            "link": ""
-          }
-        },
-        "slide_6": {
-          "type": "slide",
-          "settings": {
-            "image": "shopify://shop_images/date_night.png",
-            "title": "Casual Wear",
-            "subtitle": "",
-            "link": ""
-          }
         }
       },
       "block_order": [
+        "slide_5",
         "slide_1",
         "slide_2",
         "slide_3",
-        "slide_4",
-        "slide_5",
-        "slide_6"
+        "slide_4"
       ],
       "settings": {
         "heading": "FOR EVERY YOU",
