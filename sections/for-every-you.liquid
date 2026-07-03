@@ -121,9 +121,10 @@
 
 .for-every-you__slide {
   position: absolute;
-  left: 50%;
-  top: 50%;
+  inset: 0;
+  margin: auto;
   width: 400px;
+  height: 480px;
   will-change: transform, opacity, z-index;
   pointer-events: none;
 }
@@ -255,6 +256,7 @@
 @media screen and (max-width: 991px) {
   .for-every-you__slide {
     width: 320px;
+    height: 384px;
   }
   .for-every-you__track {
     height: 420px;
@@ -279,6 +281,7 @@
   }
   .for-every-you__slide {
     width: 260px;
+    height: 312px;
   }
   .for-every-you__track {
     height: 350px;
@@ -452,7 +455,7 @@ class ForEveryYouCarousel {
       
       let zIndex = Math.round(100 - absDiff * 10);
       
-      slide.style.transform = `translate(-50%, -50%) translateX(${translateX}px) scale(${scale}) rotateY(${rotateY}deg)`;
+      slide.style.transform = `translateX(${translateX}px) scale(${scale}) rotateY(${rotateY}deg)`;
       slide.style.zIndex = zIndex;
       slide.style.opacity = opacity;
       
