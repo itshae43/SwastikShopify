@@ -74,6 +74,7 @@
     flex-direction: column;
     align-items: flex-end;
     transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.4s;
+    pointer-events: none;
   }
 
   .whatsapp-widget__close-mobile {
@@ -93,6 +94,7 @@
     opacity: 0;
     visibility: hidden;
     transition: opacity 0.3s ease, visibility 0.3s;
+    pointer-events: auto;
   }
   .whatsapp-widget__overlay.is-active {
     opacity: 1;
@@ -114,6 +116,7 @@
     justify-content: center;
     transition: transform 0.2s ease, box-shadow 0.2s ease;
     box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    pointer-events: auto;
   }
 
   .whatsapp-widget__button:hover {
@@ -143,6 +146,7 @@
     transform: translateY(20px);
     transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
     transform-origin: bottom right;
+    pointer-events: auto;
   }
 
   .whatsapp-widget__menu::-webkit-scrollbar {
