@@ -48,6 +48,12 @@
                   <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5M5 12l7-7 7 7"/></svg>
                 </a>
               {%- endif -%}
+
+              {%- if block.settings.title != blank -%}
+                <div class="for-every-you__card-text">
+                  <h3 class="for-every-you__card-title">{{ block.settings.title | escape }}</h3>
+                </div>
+              {%- endif -%}
             </div>
 
           </div>
@@ -147,7 +153,38 @@
   transition: transform 0.5s ease;
 }
 
+.for-every-you__card-text {
+  position: absolute;
+  bottom: 40px;
+  left: 0;
+  width: 100%;
+  text-align: center;
+  z-index: 10;
+  padding: 0 20px;
+}
 
+.for-every-you__card-title {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 1.6rem;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  color: #1A1A1A;
+  margin: 0;
+  text-transform: uppercase;
+  display: inline-block;
+  padding-bottom: 8px;
+  position: relative;
+}
+
+.for-every-you__card-title::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 1px;
+  background-color: #1A1A1A;
+}
 
 .for-every-you__nav {
   position: absolute;

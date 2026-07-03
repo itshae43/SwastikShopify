@@ -492,18 +492,18 @@
         "slide_1": {
           "type": "slide",
           "settings": {
-            "image": "shopify://shop_images/date_night.png",
-            "title": "THE COLLEGE CORE",
-            "subtitle": "Subtle elegance for your everyday hustle.",
+            "image": "shopify://shop_images/office_wear.png",
+            "title": "Office Wear",
+            "subtitle": "",
             "link": ""
           }
         },
         "slide_2": {
           "type": "slide",
           "settings": {
-            "image": "shopify://shop_images/office_wear.png",
-            "title": "THE WEEKEND GLOW",
-            "subtitle": "Effortless charm for your casual outings.",
+            "image": "shopify://shop_images/date_night.png",
+            "title": "Daily Wear",
+            "subtitle": "",
             "link": ""
           }
         },
@@ -511,8 +511,8 @@
           "type": "slide",
           "settings": {
             "image": "shopify://shop_images/date_night.png",
-            "title": "THE PARTY EDIT",
-            "subtitle": "Make heads turn at every celebration.",
+            "title": "Party Wear",
+            "subtitle": "",
             "link": ""
           }
         },
@@ -520,8 +520,8 @@
           "type": "slide",
           "settings": {
             "image": "shopify://shop_images/date_night.png",
-            "title": "THE BOARDROOM BOSS",
-            "subtitle": "Sharp, sophisticated, and ready to lead.",
+            "title": "Wedding Wear",
+            "subtitle": "",
             "link": ""
           }
         },
@@ -529,8 +529,17 @@
           "type": "slide",
           "settings": {
             "image": "shopify://shop_images/date_night.png",
-            "title": "THE FESTIVE GRACE",
-            "subtitle": "Embrace traditions with a modern sparkle.",
+            "title": "Festive Wear",
+            "subtitle": "",
+            "link": ""
+          }
+        },
+        "slide_6": {
+          "type": "slide",
+          "settings": {
+            "image": "shopify://shop_images/date_night.png",
+            "title": "Casual Wear",
+            "subtitle": "",
             "link": ""
           }
         }
@@ -540,7 +549,8 @@
         "slide_2",
         "slide_3",
         "slide_4",
-        "slide_5"
+        "slide_5",
+        "slide_6"
       ],
       "settings": {
         "heading": "FOR EVERY YOU",
