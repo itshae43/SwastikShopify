@@ -15,7 +15,7 @@
         "slide_WxzxDN": {
           "type": "slide",
           "settings": {
-            "image_desktop": "shopify://shop_images/ChatGPT_Image_Jul_1_2026_06_10_18_PM_1.png",
+            "image_desktop": "shopify://shop_images/Bannerimage_2880_1100.png",
             "alignment": "left",
             "subheading": "",
             "title": "",
@@ -29,21 +29,7 @@
         "slide_Bp8BaM": {
           "type": "slide",
           "settings": {
-            "image_desktop": "shopify://shop_images/ChatGPT_Image_Jul_1_2026_04_46_49_PM_2_1.png",
-            "alignment": "left",
-            "subheading": "",
-            "title": "",
-            "description": "",
-            "button_1_label": "",
-            "button_1_link": "",
-            "button_2_label": "Discover the Vibe",
-            "button_2_link": ""
-          }
-        },
-        "slide_NpHh4X": {
-          "type": "slide",
-          "settings": {
-            "image_desktop": "shopify://shop_images/ChatGPT_Image_Jul_1_2026_04_46_49_PM_1_2.png",
+            "image_desktop": "shopify://shop_images/Bannerimage_2880_1100_1.png",
             "alignment": "left",
             "subheading": "",
             "title": "",
@@ -57,8 +43,7 @@
       },
       "block_order": [
         "slide_WxzxDN",
-        "slide_Bp8BaM",
-        "slide_NpHh4X"
+        "slide_Bp8BaM"
       ],
       "settings": {
         "autoplay": true,
@@ -74,7 +59,7 @@
         "clay_whispers": {
           "type": "collection_card",
           "settings": {
-            "image": "shopify://shop_images/sj_collection_desktop_396_x_460_px_25_2.png",
+            "image": "shopify://shop_images/b5.png",
             "title": "",
             "subtitle": "",
             "link": "shopify://collections/lab-grown-diamonds",
@@ -90,7 +75,7 @@
         "gemphony": {
           "type": "collection_card",
           "settings": {
-            "image": "shopify://shop_images/new_b6_collection.png",
+            "image": "shopify://shop_images/b6.png",
             "title": "",
             "subtitle": "",
             "link": "shopify://collections/natural-diamonds",
@@ -106,7 +91,7 @@
         "raw_reverie": {
           "type": "collection_card",
           "settings": {
-            "image": "shopify://shop_images/new_b8_collection.png",
+            "image": "shopify://shop_images/b7.png",
             "title": "",
             "subtitle": "",
             "link": "shopify://collections/22k-gold-jewellery",
@@ -144,28 +129,28 @@
         "rings": {
           "type": "card",
           "settings": {
-            "image": "shopify://shop_images/latest_b9_1.png",
+            "image": "shopify://shop_images/b9.png",
             "link": "shopify://collections/diamond-bangles"
           }
         },
         "earrings": {
           "type": "card",
           "settings": {
-            "image": "shopify://shop_images/latest_b11.png",
+            "image": "shopify://shop_images/b11_1.png",
             "link": "shopify://collections/diamond-earrings-1"
           }
         },
         "pendants": {
           "type": "card",
           "settings": {
-            "image": "shopify://shop_images/latest_b10_2.png",
+            "image": "shopify://shop_images/b10_1.png",
             "link": "shopify://collections/diamond-pendants"
           }
         },
         "tennis": {
           "type": "card",
           "settings": {
-            "image": "shopify://shop_images/latest_b8_1.png",
+            "image": "shopify://shop_images/b8.png",
             "link": "shopify://collections/diamond-earrings"
           }
         }
@@ -191,7 +176,7 @@
           "settings": {
             "collection": "gold-rings",
             "title": "GOLD RINGS",
-            "image": "shopify://shop_images/new_2.png"
+            "image": "shopify://shop_images/new_6.png"
           }
         },
         "earring": {
@@ -199,7 +184,7 @@
           "settings": {
             "collection": "gold-earrings",
             "title": "GOLD EARRINGS",
-            "image": "shopify://shop_images/new_b76c60c6-d429-4130-b09a-eb3de8cd8e02.png"
+            "image": "shopify://shop_images/new_4.png"
           }
         },
         "necklace": {
@@ -207,7 +192,7 @@
           "settings": {
             "collection": "gold-necklaces",
             "title": "GOLD NECKLACES",
-            "image": "shopify://shop_images/new_3.png"
+            "image": "shopify://shop_images/new_7.png"
           }
         },
         "bangle": {
@@ -215,7 +200,7 @@
           "settings": {
             "collection": "gold-bangles",
             "title": "GOLD BANGLES",
-            "image": "shopify://shop_images/new.png"
+            "image": "shopify://shop_images/new_1.png"
           }
         },
         "mangalsutra": {
@@ -223,7 +208,7 @@
           "settings": {
             "collection": "mangalsutra",
             "title": "MANGALSUTRA",
-            "image": "shopify://shop_images/new_1.png"
+            "image": "shopify://shop_images/new_5.png"
           }
         }
       },
@@ -360,10 +345,10 @@
     "gifts_for_him_her": {
       "type": "gifts-for-him-her",
       "settings": {
-        "image_him": "shopify://shop_images/new_b14.png",
+        "image_him": "shopify://shop_images/new_b14_1.png",
         "title_him": "Him",
         "link_him": "/collections/for-him",
-        "image_her": "shopify://shop_images/her.png",
+        "image_her": "shopify://shop_images/b13.png",
         "title_her": "Her",
         "link_her": "/collections/for-her",
         "bg_color": "#f8f5ef",
@@ -378,7 +363,6 @@
         "mother": {
           "type": "bond",
           "settings": {
-            "image": "shopify://shop_images/mother_1.png",
             "title": "For Mothers",
             "subtitle": "Her love, our forever.",
             "link": "/collections/for-mothers",
@@ -389,7 +373,6 @@
         "sister": {
           "type": "bond",
           "settings": {
-            "image": "shopify://shop_images/sisters_2.png",
             "title": "For Sisters",
             "subtitle": "Partners in all things.",
             "link": "/collections/for-sisters",
@@ -400,7 +383,6 @@
         "bride": {
           "type": "bond",
           "settings": {
-            "image": "shopify://shop_images/bride_1.png",
             "title": "For Brides",
             "subtitle": "For the beginning of forever.",
             "link": "/collections/for-brides",
@@ -492,7 +474,6 @@
         "slide_5": {
           "type": "slide",
           "settings": {
-            "image": "shopify://shop_images/date_night.png",
             "title": "Festive Wear",
             "subtitle": "",
             "link": ""
@@ -501,7 +482,6 @@
         "slide_1": {
           "type": "slide",
           "settings": {
-            "image": "shopify://shop_images/office_wear.png",
             "title": "Office Wear",
             "subtitle": "",
             "link": ""
@@ -510,7 +490,6 @@
         "slide_3": {
           "type": "slide",
           "settings": {
-            "image": "shopify://shop_images/party_wear.png",
             "title": "Party Wear",
             "subtitle": "",
             "link": ""
@@ -519,7 +498,6 @@
         "slide_2": {
           "type": "slide",
           "settings": {
-            "image": "shopify://shop_images/date_night.png",
             "title": "Daily Wear",
             "subtitle": "",
             "link": ""
@@ -528,7 +506,6 @@
         "slide_4": {
           "type": "slide",
           "settings": {
-            "image": "shopify://shop_images/date_night_2_1.png",
             "title": "Wedding Wear",
             "subtitle": "",
             "link": ""
@@ -552,7 +529,6 @@
     "video_call": {
       "type": "video-call",
       "settings": {
-        "image": "shopify://shop_images/new_b12.png",
         "bg_color": "#fdf9f5",
         "heading": "Shop with Confidence, From Wherever You Are.",
         "text": "Connect on a video call with our experts and find your perfect jewellery.",
