@@ -477,6 +477,7 @@
         "slide_5": {
           "type": "slide",
           "settings": {
+            "image": "shopify://shop_images/date_night_2_2.png",
             "title": "Festive Wear",
             "subtitle": "",
             "link": ""
@@ -485,6 +486,7 @@
         "slide_1": {
           "type": "slide",
           "settings": {
+            "image": "shopify://shop_images/office_wear_1.png",
             "title": "Office Wear",
             "subtitle": "",
             "link": ""
@@ -493,6 +495,7 @@
         "slide_3": {
           "type": "slide",
           "settings": {
+            "image": "shopify://shop_images/party_wear_1.png",
             "title": "Party Wear",
             "subtitle": "",
             "link": ""
@@ -501,6 +504,7 @@
         "slide_2": {
           "type": "slide",
           "settings": {
+            "image": "shopify://shop_images/date_night_1.png",
             "title": "Daily Wear",
             "subtitle": "",
             "link": ""
