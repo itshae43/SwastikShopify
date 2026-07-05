@@ -179,7 +179,7 @@
 
       <!-- Gold price pill -->
       <div class="header__gold-price">
-        <span class="gold-text">{{ section.settings.gold_price | default: 'Gold 15,620/g' }}</span>
+        <span class="gold-text">Gold {{ shop.metafields.custom.daily_gold_rate.value | default: '15,620' }}/g</span>
       </div>
 
       <!-- Wishlist Link & Count -->
@@ -308,7 +308,6 @@
       </nav>
 
       <!-- Footer of the drawer with Gold Rate -->
-      </div>
     </div>
   </div>
 
