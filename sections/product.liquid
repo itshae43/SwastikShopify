@@ -5,10 +5,10 @@
 {% endcomment %}
 
 {% assign current_variant = product.selected_or_first_available_variant %}
-{% assign original_price = product.compare_at_price | default: 32499 %}
-{% assign price = product.price | default: 24999 %}
-{% assign title = product.title | default: "Golden Teardrop Pendant" %}
-{% assign description = product.description | default: "Indulge in the luxury of timeless elegance. Crafted from pure 18K yellow gold, this gorgeous teardrop pendant features a brilliant center solitaire surrounded by a halo of pave-set diamonds. Designed to be worn every day, it's the perfect statement of grace and beauty." %}
+{% assign original_price = product.compare_at_price %}
+{% assign price = product.price %}
+{% assign title = product.title %}
+{% assign description = product.description %}
 
 {% comment %} Set up product images, falling back to mock assets if empty {% endcomment %}
 {% assign has_images = false %}
@@ -16,7 +16,7 @@
   {% assign has_images = true %}
 {% endif %}
 
-<div class="product-single" data-product-id="{{ product.id | default: 'mock-pendant-id' }}">
+<div class="product-single" data-product-id="{{ product.id }}" data-url="{{ product.url }}">
   <div class="product-single__container">
     
     {% assign breadcrumb_collection = collection | default: product.collections.first %}
@@ -51,15 +51,17 @@
           
           <!-- Center Main Image View -->
           <div class="product-single__main-image-container">
-            <!-- Discount Tag badge -->
-            <div class="product-single__discount-badge">23% OFF</div>
-            
+            <!-- Discount Tag badge (only shown for a real markdown) -->
+            {% if product.compare_at_price > product.price %}
+              <div class="product-single__discount-badge">{{ product.compare_at_price | minus: product.price | times: 100.0 | divided_by: product.compare_at_price | round }}% OFF</div>
+            {% endif %}
+
             <!-- Main Image -->
             <div class="product-single__main-image-wrapper">
               {% if has_images %}
-                <img id="main-product-image" src="{{ product.featured_image | image_url: width: 800, height: 800 }}" alt="{{ title }}" loading="eager" width="600" height="600">
+                <img id="main-product-image" src="{{ product.featured_image | image_url: width: 800, height: 800 }}" alt="{{ title | escape }}" loading="eager" width="600" height="600">
               {% else %}
-                <img id="main-product-image" src="{{ 'best_seller_pendant.png' | asset_url }}" alt="{{ title }}" loading="eager" width="600" height="600">
+                {{ 'product-1' | placeholder_svg_tag: 'product-single__placeholder-svg' }}
               {% endif %}
             </div>
 
@@ -91,46 +93,27 @@
             </button>
           </div>
 
-          <!-- Horizontal Thumbnails Row -->
-          <div class="product-single__thumbnails">
-            {% if has_images %}
+          <!-- Horizontal Thumbnails Row (only when the product has real images) -->
+          {% if has_images and product.images.size > 1 %}
+            <div class="product-single__thumbnails">
               {% for image in product.images %}
                 <button class="thumbnail-btn {% if forloop.first %}active{% endif %}" data-image-url="{{ image | image_url: width: 800, height: 800 }}" aria-label="View Image {{ forloop.index }}">
                   <img src="{{ image | image_url: width: 150, height: 150 }}" alt="{{ image.alt | escape }}" loading="lazy" width="80" height="80">
                 </button>
               {% endfor %}
-            {% else %}
-              <button class="thumbnail-btn active" data-image-url="{{ 'best_seller_pendant.png' | asset_url }}" aria-label="View Image 1">
-                <img src="{{ 'best_seller_pendant.png' | asset_url }}" alt="Thumbnail 1" loading="lazy" width="80" height="80">
-              </button>
-              <button class="thumbnail-btn" data-image-url="{{ 'best_seller_pendant_2.png' | asset_url }}" aria-label="View Image 2">
-                <img src="{{ 'best_seller_pendant_2.png' | asset_url }}" alt="Thumbnail 2" loading="lazy" width="80" height="80">
-              </button>
-              <button class="thumbnail-btn" data-image-url="{{ 'best_seller_pendant_3.png' | asset_url }}" aria-label="View Image 3">
-                <img src="{{ 'best_seller_pendant_3.png' | asset_url }}" alt="Thumbnail 3" loading="lazy" width="80" height="80">
-              </button>
-              <button class="thumbnail-btn" data-image-url="{{ 'pendant_placeholder.png' | asset_url }}" aria-label="View Image 4">
-                <img src="{{ 'pendant_placeholder.png' | asset_url }}" alt="Thumbnail 4" loading="lazy" width="80" height="80">
-              </button>
-            {% endif %}
-          </div>
+            </div>
+          {% endif %}
         </div>
       </div>
 
       <!-- Right Column: Product Details & Options Selector -->
       <div class="product-single__info">
         
-        <!-- Star Rating -->
-        <div class="product-single__rating">
-          <div class="stars">
-            {% for i in (1..5) %}
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="#D4AF37" stroke="#D4AF37">
-                <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/>
-              </svg>
-            {% endfor %}
-          </div>
-          <span class="reviews-count">(128 reviews)</span>
-        </div>
+        {% comment %}
+          Ratings/reviews intentionally removed. To show real reviews, install a
+          reviews app (e.g. Shopify Product Reviews, Judge.me, Loox) and render its
+          block/snippet here, or drive stars from a `product.metafields.reviews.rating`.
+        {% endcomment %}
 
         <!-- Title -->
         <h1 class="product-single__heading serif-font">{{ title }}</h1>
@@ -143,9 +126,6 @@
             <span class="price-discount">
               {{ product.compare_at_price | minus: product.price | times: 100.0 | divided_by: product.compare_at_price | round }}% OFF
             </span>
-          {% elsif original_price > price and product.compare_at_price == blank %}
-            <span class="price-original">₹{{ original_price | money_without_currency | remove: ".00" }}</span>
-            <span class="price-discount">23% OFF</span>
           {% endif %}
         </div>
         <p class="product-single__taxes-text">Inclusive of all taxes</p>
@@ -155,7 +135,7 @@
 
         <!-- Variant Options Form -->
         {% form 'product', product, class: 'product-single__form' %}
-          <input type="hidden" name="id" id="product-variant-id" value="{{ current_variant.id | default: 998877 }}">
+          <input type="hidden" name="id" id="product-variant-id" value="{{ current_variant.id }}">
           
           <script type="application/json" id="ProductJson-{{ section.id }}">
             {{ product.variants | json }}
@@ -175,24 +155,6 @@
                   </div>
                 </div>
               {%- endfor -%}
-            {%- else -%}
-              <!-- Fallback Mock Options if no real variants exist -->
-              <div class="product-single__option-group" data-option-index="0">
-                <span class="option-label">METAL</span>
-                <div class="option-pills">
-                  <button type="button" class="option-pill-btn active" data-value="18K Yellow Gold">18K Yellow Gold</button>
-                  <button type="button" class="option-pill-btn" data-value="18K Rose Gold">18K Rose Gold</button>
-                  <button type="button" class="option-pill-btn" data-value="18K White Gold">18K White Gold</button>
-                </div>
-              </div>
-              <div class="product-single__option-group" data-option-index="1">
-                <span class="option-label">CHAIN LENGTH</span>
-                <div class="option-pills">
-                  <button type="button" class="option-pill-btn" data-value="16 Inch">16 Inch</button>
-                  <button type="button" class="option-pill-btn active" data-value="18 Inch">18 Inch</button>
-                  <button type="button" class="option-pill-btn" data-value="20 Inch">20 Inch</button>
-                </div>
-              </div>
             {%- endunless -%}
           </div>
 
@@ -210,23 +172,27 @@
                 </button>
               </div>
               <div class="stock-status">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
-                  <path stroke-linecap="round" stroke-linejoin="round" d="m4.5 12.75 6 6 9-13.5" />
-                </svg>
-                <span>IN STOCK</span>
+                {% if product.available %}
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="m4.5 12.75 6 6 9-13.5" />
+                  </svg>
+                  <span>IN STOCK</span>
+                {% else %}
+                  <span style="color:#B00020;">OUT OF STOCK</span>
+                {% endif %}
               </div>
             </div>
           </div>
 
           <!-- Call To Action Button Group -->
           <div class="product-single__buttons-group">
-            <button type="submit" class="btn-add-to-cart btn-add-cart">
+            <button type="submit" class="btn-add-to-cart btn-add-cart" {% unless product.available %}disabled{% endunless %}>
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                 <path d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"/>
               </svg>
-              ADD TO CART
+              {% if product.available %}ADD TO CART{% else %}SOLD OUT{% endif %}
             </button>
-            <button type="button" class="btn-buy-now">
+            <button type="button" class="btn-buy-now" {% unless product.available %}disabled{% endunless %}>
               BUY IT NOW
             </button>
             <button type="button" class="product-single__wishlist-btn" aria-label="Add to Wishlist">
@@ -280,24 +246,15 @@
             <div class="accordion-content">
               <div class="accordion-inner">
                 <p>{{ description }}</p>
-                <table class="specs-table">
-                  <tr>
-                    <td>Gold Purity</td>
-                    <td>18K Yellow Gold (BIS Certified)</td>
-                  </tr>
-                  <tr>
-                    <td>Approx Gold Weight</td>
-                    <td>3.45 grams</td>
-                  </tr>
-                  <tr>
-                    <td>Diamond Color & Clarity</td>
-                    <td>SI - IJ Color</td>
-                  </tr>
-                  <tr>
-                    <td>Hallmarking Center</td>
-                    <td>Government Approved Center</td>
-                  </tr>
-                </table>
+                {%- assign m = product.metafields.custom -%}
+                {%- if m.gold_purity != blank or m.gold_weight != blank or m.diamond_clarity != blank or m.hallmarking_center != blank -%}
+                  <table class="specs-table">
+                    {% if m.gold_purity != blank %}<tr><td>Gold Purity</td><td>{{ m.gold_purity }}</td></tr>{% endif %}
+                    {% if m.gold_weight != blank %}<tr><td>Approx Gold Weight</td><td>{{ m.gold_weight }}</td></tr>{% endif %}
+                    {% if m.diamond_clarity != blank %}<tr><td>Diamond Color &amp; Clarity</td><td>{{ m.diamond_clarity }}</td></tr>{% endif %}
+                    {% if m.hallmarking_center != blank %}<tr><td>Hallmarking Center</td><td>{{ m.hallmarking_center }}</td></tr>{% endif %}
+                  </table>
+                {%- endif -%}
               </div>
             </div>
           </div>

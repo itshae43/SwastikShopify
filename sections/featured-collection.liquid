@@ -55,24 +55,10 @@
             </a>
           </div>
         {% endfor %}
-      {% else %}
-        <!-- Placeholder / Fallback cards for empty configurations -->
-        {% for i in (1..section.settings.products_to_show) %}
-          <div class="product-card hover-lift fade-in">
-            <div class="product-card__link">
-              <div class="product-card__image-wrapper">
-                {% capture current_placeholder %}{% cycle 'product-1', 'product-2', 'product-3', 'product-4' %}{% endcapture %}
-                {{ current_placeholder | placeholder_svg_tag: 'product-card__placeholder' }}
-              </div>
-              <div class="product-card__details">
-                <h3 class="product-card__title">Exquisite Masterpiece #{{ i }}</h3>
-                <div class="product-card__price-wrapper">
-                  <span class="product-card__price">{{ 125000 | money }}</span>
-                </div>
-              </div>
-            </div>
-          </div>
-        {% endfor %}
+      {% elsif request.design_mode %}
+        <p style="grid-column:1/-1;padding:3rem 2rem;text-align:center;color:#888;font-family:'Montserrat',sans-serif;font-size:1.4rem;">
+          Choose a collection in this section's settings to display products.
+        </p>
       {% endif %}
     </div>
 

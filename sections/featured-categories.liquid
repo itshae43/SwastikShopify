@@ -43,50 +43,11 @@
           <span class="featured-categories__title">{{ block.settings.title | escape }}</span>
         </a>
       {% else %}
-        <!-- Default Fallback blocks matching the user image exactly if no blocks are defined -->
-        {% for i in (1..5) %}
-          {% capture fallback_title %}
-            {% case i %}
-              {% when 1 %}Rings
-              {% when 2 %}Earrings
-              {% when 3 %}Pendants
-              {% when 4 %}Bangles
-              {% when 5 %}Necklace
-            {% endcase %}
-          {% endcapture %}
-          {% capture fallback_count %}
-            {% case i %}
-              {% when 1 %}12 + ITEMS
-              {% when 2 %}10 + ITEMS
-              {% when 3 %}12 + ITEMS
-              {% when 4 %}12 + ITEMS
-              {% when 5 %}8 + ITEMS
-            {% endcase %}
-          {% endcapture %}
-          {% capture fallback_image_name %}
-            {% case i %}
-              {% when 1 %}ring_placeholder.png
-              {% when 2 %}earring_placeholder.png
-              {% when 3 %}pendant_placeholder.png
-              {% when 4 %}bangle_placeholder.png
-              {% when 5 %}necklace_placeholder.png
-            {% endcase %}
-          {% endcapture %}
-          <div class="featured-categories__card">
-            <div class="featured-categories__card-box">
-              <span class="featured-categories__badge">{{ fallback_count | strip }}</span>
-              <div class="featured-categories__circle">
-                <img src="{{ fallback_image_name | asset_url }}" 
-                     alt="{{ fallback_title | strip }}" 
-                     class="featured-categories__img"
-                     width="300"
-                     height="300"
-                     onerror="this.src='{{ 'logo.png' | asset_url }}'; this.style.opacity='0.15';">
-              </div>
-            </div>
-            <span class="featured-categories__title">{{ fallback_title | strip }}</span>
-          </div>
-        {% endfor %}
+        {% if request.design_mode %}
+          <p style="grid-column:1/-1;padding:2rem;text-align:center;color:#888;font-family:'Montserrat',sans-serif;">
+            Add “Category” blocks in this section's settings, each with an image and a link to a collection.
+          </p>
+        {% endif %}
       {% endfor %}
     </div>
   </div>

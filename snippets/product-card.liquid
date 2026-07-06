@@ -4,17 +4,20 @@
   @param {product} product - The product object to render.
 {% enddoc %}
 
+{% if product == blank %}
+  {% comment %} No product supplied — render nothing rather than a placeholder. {% endcomment %}
+{% else %}
 {% assign current_variant = product.selected_or_first_available_variant %}
 {% assign original_price = current_variant.compare_at_price %}
 {% assign price = current_variant.price %}
 
 {% assign class_prefix_default = class_prefix | default: 'best-sellers' %}
-{% assign product_url = product.url | default: '/products/golden-teardrop-pendant' %}
-{% assign product_title = product.title | default: 'Golden Teardrop Pendant' %}
+{% assign product_url = product.url %}
+{% assign product_title = product.title %}
 
 {{ 'component-product-card.css' | asset_url | stylesheet_tag }}
 
-<div class="{{ class_prefix_default }}__card product-card-ui" data-product-id="{{ product.id | default: 'mock-pendant-id' }}" data-url="{{ product_url }}">
+<div class="{{ class_prefix_default }}__card product-card-ui" data-product-id="{{ product.id }}" data-url="{{ product_url }}">
   <!-- Image Area -->
   <div class="{{ class_prefix_default }}__image-wrapper">
     {% if badge_text != blank %}
@@ -65,9 +68,9 @@
     
     <!-- Pricing Row -->
     <div class="{{ class_prefix_default }}__price-row product-card-ui__price-row">
-      <span class="price-current">{{ price | default: 24999 | money | replace: '$', '₹' | replace: ' Rs.', '₹' }}</span>
+      <span class="price-current">{{ price | money | replace: '$', '₹' | replace: ' Rs.', '₹' }}</span>
       {% if original_price > price %}
-        <span class="price-original">{{ original_price | default: 31999 | money | replace: '$', '₹' | replace: ' Rs.', '₹' }}</span>
+        <span class="price-original">{{ original_price | money | replace: '$', '₹' | replace: ' Rs.', '₹' }}</span>
         {% assign discount = original_price | minus: price | times: 100.0 | divided_by: original_price | round %}
         <span class="price-discount">{{ discount }}% OFF</span>
       {% endif %}
@@ -75,7 +78,7 @@
 
     <!-- Button Group -->
     {% form 'product', product, class: 'product-card-ui__form' %}
-      <input type="hidden" name="id" value="{{ current_variant.id | default: 998877 }}">
+      <input type="hidden" name="id" value="{{ current_variant.id }}">
       <div class="{{ class_prefix_default }}__button-group product-card-ui__button-group">
         <button type="submit" class="btn-add-cart product-card-ui__btn">
           ADD TO CART
@@ -87,3 +90,4 @@
     {% endform %}
   </div>
 </div>
+{% endif %}

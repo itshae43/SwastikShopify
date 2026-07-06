@@ -60,18 +60,9 @@
             <span class="tab-btn-indicator"></span>
           </button>
         {% endfor %}
-      {% else %}
-        <!-- Default Fallback Tabs (3 Screens) -->
-        <button class="best-sellers__tab-btn active" data-tab-target="tab-pendants">
-          <span class="tab-btn-text">Pendants</span>
-          <span class="tab-btn-indicator"></span>
-        </button>
-        <button class="best-sellers__tab-btn" data-tab-target="tab-earrings">
-          <span class="tab-btn-text">Earrings</span>
-          <span class="tab-btn-indicator"></span>
-        </button>
-        <button class="best-sellers__tab-btn" data-tab-target="tab-rings-bracelets">
-          <span class="tab-btn-text">Rings & Bracelets</span>
+      {% elsif request.design_mode %}
+        <button class="best-sellers__tab-btn active" data-tab-target="tab-placeholder">
+          <span class="tab-btn-text">Add a tab</span>
           <span class="tab-btn-indicator"></span>
         </button>
       {% endif %}
@@ -88,9 +79,8 @@
                 {% for product in tab_collection.products limit: 4 %}
                   {% render 'product-card', product: product, badge_text: 'BEST SELLER' %}
                 {% endfor %}
-              {% else %}
-                {% assign tab_type = block.settings.title | downcase %}
-                {% render 'best-sellers-fallback-grid', type: tab_type %}
+              {% elsif request.design_mode %}
+                <p style="padding:2rem;color:#888;font-family:'Montserrat',sans-serif;">Assign a collection to this tab to show products.</p>
               {% endif %}
             </div>
             
@@ -104,51 +94,11 @@
             </div>
           </div>
         {% endfor %}
-      {% else %}
-        <!-- Default Fallback Panels -->
-        <!-- Panel 1: Pendants -->
-        <div class="best-sellers__tab-panel active show-active" id="tab-pendants">
-          <div class="best-sellers__grid">
-            {% render 'best-sellers-fallback-grid', type: 'pendants' %}
-          </div>
-          <div class="best-sellers__footer">
-            <a href="#" class="btn-view-all">
-              VIEW ALL PENDANTS
-              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <path d="M9 5l7 7-7 7"/>
-              </svg>
-            </a>
-          </div>
-        </div>
-
-        <!-- Panel 2: Earrings -->
-        <div class="best-sellers__tab-panel" id="tab-earrings">
-          <div class="best-sellers__grid">
-            {% render 'best-sellers-fallback-grid', type: 'earrings' %}
-          </div>
-          <div class="best-sellers__footer">
-            <a href="#" class="btn-view-all">
-              VIEW ALL EARRINGS
-              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <path d="M9 5l7 7-7 7"/>
-              </svg>
-            </a>
-          </div>
-        </div>
-
-        <!-- Panel 3: Rings & Bracelets -->
-        <div class="best-sellers__tab-panel" id="tab-rings-bracelets">
-          <div class="best-sellers__grid">
-            {% render 'best-sellers-fallback-grid', type: 'rings-bracelets' %}
-          </div>
-          <div class="best-sellers__footer">
-            <a href="#" class="btn-view-all">
-              VIEW ALL RINGS & BRACELETS
-              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <path d="M9 5l7 7-7 7"/>
-              </svg>
-            </a>
-          </div>
+      {% elsif request.design_mode %}
+        <div class="best-sellers__tab-panel active show-active" id="tab-placeholder">
+          <p style="padding:3rem 2rem;text-align:center;color:#888;font-family:'Montserrat',sans-serif;font-size:1.4rem;">
+            Add a “Tab” block in this section's settings and assign a collection to each tab to display your best sellers.
+          </p>
         </div>
       {% endif %}
     </div>

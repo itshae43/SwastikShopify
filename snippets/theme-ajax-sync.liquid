@@ -157,9 +157,10 @@
     };
 
     window.updateCartBadge = function() {
-      if (!cartBadge) return;
-      cartBadge.innerText = cartCount;
-      cartBadge.style.display = cartCount > 0 ? 'inline-flex' : 'none';
+      // The cart badge is owned by the real Shopify cart.
+      // Header renders cart.item_count server-side and window.updateGlobalCartCount
+      // updates it after every real cart operation. Kept as a no-op for
+      // backwards compatibility with any older inline handlers.
     };
 
     // Wishlist Initialization
@@ -179,20 +180,9 @@
     }
     window.updateWishlistBadge();
 
-    // Cart Initialization
-    let cartCount = 0;
-    try {
-      const storedCart = localStorage.getItem('cart_count');
-      if (storedCart) {
-        cartCount = parseInt(storedCart) || 0;
-      } else {
-        cartCount = cartBadge ? parseInt(cartBadge.innerText) || 0 : 0;
-        localStorage.setItem('cart_count', cartCount);
-      }
-    } catch(e) {
-      console.error(e);
-    }
-    window.updateCartBadge();
+    // Cart count is rendered server-side from cart.item_count in the header and
+    // kept in sync via window.updateGlobalCartCount after every real cart action.
+    // No localStorage "mock" cart is used anymore.
 
     // Set initial active state of wishlist heart buttons on load
     document.addEventListener('DOMContentLoaded', () => {
@@ -313,11 +303,11 @@
       }
     });
 
-    // 5. AJAX Add to Cart interceptor
+    // 5. AJAX Add to Cart interceptor — uses the REAL Shopify cart.
     document.addEventListener('submit', (e) => {
       const form = e.target;
-      
-      // Match forms submitting to shopify add-to-cart or forms with product IDs
+
+      // Only intercept product add-to-cart forms.
       const isCartForm = form.action.includes('/cart/add') || form.querySelector('[name="id"]') !== null;
       if (!isCartForm) return;
 
@@ -326,69 +316,34 @@
       const submitBtn = form.querySelector('[type="submit"], .btn-add-cart');
       if (submitBtn) submitBtn.classList.add('btn-loading');
 
-      // Get quantity
-      const qtyInput = form.querySelector('[name="quantity"]');
-      const qtyVal = qtyInput ? parseInt(qtyInput.value) || 1 : 1;
+      const rootUrl = (window.Shopify && window.Shopify.routes && window.Shopify.routes.root) || '/';
 
-      // Get Product title for Toast
-      let title = 'Product';
-      const card = form.closest('[data-product-id]') || document.querySelector('.product-single');
-      if (card) {
-        const titleElement = card.querySelector('.best-sellers__card-title, .new-arrivals__card-title, .product-single__title, .product-single__heading, h1');
-        if (titleElement) title = titleElement.innerText.trim();
-      }
-
-      // Form data handling for detailed mock cart
-      const cardId = card ? card.getAttribute('data-product-id') : ('mock-' + Date.now());
-      const url = card ? (card.getAttribute('data-url') || '#') : '#';
-      const priceElement = card ? card.querySelector('.price-current, .price-item--regular') : null;
-      const productPrice = priceElement ? priceElement.innerText.trim().replace(/[^0-9.-]+/g,"") * 100 : 0;
-      const imgElement = card ? card.querySelector('img') : null;
-      const productImg = imgElement ? imgElement.src : '';
-
-      function handleAddToCartSuccess() {
-        cartCount += qtyVal;
-        localStorage.setItem('cart_count', cartCount);
-        
-        // Save detailed data
-        let detailedCart = JSON.parse(localStorage.getItem('cart_items_data') || '[]');
-        const existingItem = detailedCart.find(i => i.id === cardId);
-        if (existingItem) {
-          existingItem.quantity += qtyVal;
-        } else {
-          detailedCart.push({
-            id: cardId,
-            title: title,
-            price: productPrice,
-            image: productImg,
-            url: url,
-            quantity: qtyVal
-          });
-        }
-        localStorage.setItem('cart_items_data', JSON.stringify(detailedCart));
-        window.updateCartBadge();
-
+      fetch(rootUrl + 'cart/add.js', {
+        method: 'POST',
+        headers: { 'Accept': 'application/json' },
+        body: new FormData(form)
+      })
+      .then(response => response.json().then(data => ({ ok: response.ok, data: data })))
+      .then(result => {
+        // If Shopify rejected the add (e.g. sold out, no variant selected),
+        // surface the real reason. Do NOT fabricate a success.
+        if (!result.ok) throw result.data;
+        // Re-read the real cart so the badge and drawer always match checkout.
+        return fetch(rootUrl + 'cart.js').then(r => r.json());
+      })
+      .then(cart => {
         if (submitBtn) submitBtn.classList.remove('btn-loading');
-        
-        // Open Sidebar Drawer instead of Toast
+        if (window.updateGlobalCartCount) window.updateGlobalCartCount(cart.item_count);
         if (window.openCartDrawer) {
           window.openCartDrawer();
         } else {
-          showSwastikToast('Added to Cart', `${qtyVal} x ${title} added!`, true);
+          showSwastikToast('Added to Cart', 'Item added to your cart.', true);
         }
-      }
-
-      // Perform AJAX Post
-      fetch('/cart/add.js', {
-        method: 'POST',
-        body: new FormData(form)
       })
-      .then(response => {
-        handleAddToCartSuccess();
-      })
-      .catch(error => {
-        console.warn('Shopify Cart API error, falling back to Mock Cart. ', error);
-        handleAddToCartSuccess();
+      .catch(err => {
+        if (submitBtn) submitBtn.classList.remove('btn-loading');
+        const message = (err && err.description) ? err.description : 'Sorry, this item could not be added. Please try again.';
+        showSwastikToast('Unable to add', message, false);
       });
     });
 
