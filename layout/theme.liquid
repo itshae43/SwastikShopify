@@ -29,19 +29,28 @@
     {% render 'meta-tags' %}
 
     <style>
-      /* Hide Shopify hCaptcha / reCAPTCHA badges */
+      /* Hide Shopify's persistent hCaptcha / reCAPTCHA badge. The invisible spam
+         challenge still runs on submit — only the floating badge is suppressed so it
+         cannot overlap the floating WhatsApp CTA (both sit bottom-right). */
       .grecaptcha-badge,
       .hcaptcha-badge,
       .h-captcha {
         display: none !important;
         visibility: hidden !important;
       }
-      /* Fallback CSS for badge iframe */
+      /* The badge iframe. The challenge popup (its title contains "content") is left
+         visible so verification still works. */
       iframe[src*="hcaptcha.com"]:not([title*="content"]) {
         display: none !important;
         visibility: hidden !important;
         opacity: 0 !important;
         pointer-events: none !important;
+      }
+      /* Hide the badge's positioned wrapper regardless of its inline offset, so an
+         empty box can never sit on top of the WhatsApp button. :has() covers modern
+         browsers; the MutationObserver below covers any that lack it. */
+      div:has(> iframe[src*="hcaptcha.com"]:not([title*="content"])) {
+        display: none !important;
       }
       body > div[style*="bottom: 14px"][style*="right: 14px"] {
         display: none !important;
@@ -62,33 +71,65 @@
     </style>
 
     <script>
-      // Aggressively hide the hCaptcha badge wrapper when injected by Shopify
-      document.addEventListener("DOMContentLoaded", () => {
-        const hideBadge = (node) => {
-          if (node.tagName === 'DIV') {
-            const iframe = node.querySelector('iframe[src*="hcaptcha"]');
-            if (iframe && iframe.title && !iframe.title.includes('content')) {
-              node.style.setProperty('display', 'none', 'important');
-              node.style.setProperty('visibility', 'hidden', 'important');
-              node.style.setProperty('opacity', '0', 'important');
-              node.style.setProperty('pointer-events', 'none', 'important');
-            }
+      // Reliably hide Shopify's floating hCaptcha badge — including when it is
+      // injected/populated AFTER a form interaction (e.g. selecting "WhatsApp" in
+      // the video-call modal, which triggers Shopify's lazy captcha loader). Only
+      // the persistent badge is hidden, never the challenge popup, so the store's
+      // spam protection stays fully intact.
+      (function () {
+        // The badge iframe lives on *.hcaptcha.com and is NOT the challenge popup
+        // (whose title contains "content"). This matches both the badge and the
+        // invisible widget while leaving a real challenge solvable.
+        const isBadgeIframe = (el) =>
+          el && el.tagName === 'IFRAME' &&
+          /hcaptcha\.com/.test(el.getAttribute('src') || '') &&
+          !/content/i.test(el.getAttribute('title') || '');
+
+        const hide = (el) => {
+          if (!el) return;
+          el.style.setProperty('display', 'none', 'important');
+          el.style.setProperty('visibility', 'hidden', 'important');
+          el.style.setProperty('opacity', '0', 'important');
+          el.style.setProperty('pointer-events', 'none', 'important');
+        };
+
+        // Hide the badge iframe AND its positioned wrapper so no empty box remains
+        // over the WhatsApp button.
+        const hideBadge = (iframe) => {
+          hide(iframe);
+          hide(iframe.closest('div') || iframe.parentElement);
+        };
+
+        // Inspect an added node and its subtree (the iframe is often injected into
+        // an already-present wrapper a tick later).
+        const scan = (root) => {
+          if (!root || root.nodeType !== 1) return;
+          if (isBadgeIframe(root)) { hideBadge(root); return; }
+          if (root.querySelectorAll) {
+            root.querySelectorAll('iframe[src*="hcaptcha.com"]').forEach((f) => {
+              if (isBadgeIframe(f)) hideBadge(f);
+            });
           }
         };
 
-        // Check already existing nodes
-        document.body.querySelectorAll('body > div').forEach(hideBadge);
-
-        // Watch for dynamically injected nodes
-        const observer = new MutationObserver((mutations) => {
-          mutations.forEach(mutation => {
-            mutation.addedNodes.forEach(node => {
-              if (node.nodeType === 1) hideBadge(node);
-            });
+        const start = () => {
+          document.querySelectorAll('iframe[src*="hcaptcha.com"]').forEach((f) => {
+            if (isBadgeIframe(f)) hideBadge(f);
           });
-        });
-        observer.observe(document.body, { childList: true, subtree: false });
-      });
+          // subtree: true is essential — the badge iframe is injected nested and
+          // late, so watching only body's direct children would miss it.
+          const observer = new MutationObserver((mutations) => {
+            mutations.forEach((m) => m.addedNodes.forEach(scan));
+          });
+          observer.observe(document.documentElement, { childList: true, subtree: true });
+        };
+
+        if (document.readyState === 'loading') {
+          document.addEventListener('DOMContentLoaded', start);
+        } else {
+          start();
+        }
+      })();
     </script>
 
     {{ content_for_header }}
