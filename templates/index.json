@@ -207,8 +207,7 @@
           "type": "collection",
           "settings": {
             "collection": "pendant-sets",
-            "title": "PENDANT SET",
-            "image": "shopify://shop_images/pendant_set.png"
+            "title": "PENDANT SET"
           }
         }
       },
@@ -477,7 +476,7 @@
         "slide_5": {
           "type": "slide",
           "settings": {
-            "image": "shopify://shop_images/WhatsApp_Image_2026-07-05_at_3.48.24_PM.jpg",
+            "image": "shopify://shop_images/b15_office_1.png",
             "title": "",
             "subtitle": "",
             "link": ""
@@ -486,7 +485,7 @@
         "slide_1": {
           "type": "slide",
           "settings": {
-            "image": "shopify://shop_images/WhatsApp_Image_2026-07-05_at_3.48.24_PM.jpg",
+            "image": "shopify://shop_images/b16_wedding_1.png",
             "title": "",
             "subtitle": "",
             "link": ""
@@ -495,7 +494,7 @@
         "slide_3": {
           "type": "slide",
           "settings": {
-            "image": "shopify://shop_images/WhatsApp_Image_2026-07-05_at_3.48.24_PM.jpg",
+            "image": "shopify://shop_images/b_20_festive.png",
             "title": "",
             "subtitle": "",
             "link": ""
@@ -504,7 +503,7 @@
         "slide_2": {
           "type": "slide",
           "settings": {
-            "image": "shopify://shop_images/WhatsApp_Image_2026-07-05_at_3.48.24_PM.jpg",
+            "image": "shopify://shop_images/b19_daily_1.png",
             "title": "",
             "subtitle": "",
             "link": ""
@@ -513,7 +512,8 @@
         "slide_4": {
           "type": "slide",
           "settings": {
-            "title": "Wedding Wear",
+            "image": "shopify://shop_images/b17_party_1.png",
+            "title": "",
             "subtitle": "",
             "link": ""
           }
