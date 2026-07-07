@@ -203,12 +203,12 @@
             "image": "shopify://shop_images/new_1.png"
           }
         },
-        "mangalsutra": {
+        "pendant_set": {
           "type": "collection",
           "settings": {
-            "collection": "mangalsutra",
-            "title": "MANGALSUTRA",
-            "image": "shopify://shop_images/new_5.png"
+            "collection": "pendant-sets",
+            "title": "PENDANT SET",
+            "image": "shopify://shop_images/pendant_set.png"
           }
         }
       },
@@ -217,7 +217,7 @@
         "earring",
         "necklace",
         "bangle",
-        "mangalsutra"
+        "pendant_set"
       ],
       "settings": {
         "subheading": "TIMELESS. TRADITIONAL. YOU.",
