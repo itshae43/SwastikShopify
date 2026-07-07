@@ -775,7 +775,7 @@
 {% javascript %}
   document.addEventListener('DOMContentLoaded', function () {
     // ---- Your CRM scheduling endpoint ----
-    const CRM_ENDPOINT = 'https://backend-api.swastikjewel.in/api/auth/lead/shopify-scheduling';
+    const CRM_ENDPOINT = 'https://staging-api.swastikjewel.in/api/auth/lead/shopify-scheduling';
 
     const modals = document.querySelectorAll('.js-video-call-modal');
     const openBtns = document.querySelectorAll('.js-open-video-call-modal');
@@ -905,7 +905,7 @@
           meeting_platform: platformEl ? platformEl.value : 'Google Meet',
           // reCAPTCHA is disabled for now (endpoint is public). When you turn on
           // Google reCAPTCHA v3, generate a token and assign it here before sending.
-          recaptcha_token: ''
+          recaptcha_token: 'test_token_no_recaptcha_yet'
         };
 
         const submitBtn = form.querySelector('.video-call-form__submit');
