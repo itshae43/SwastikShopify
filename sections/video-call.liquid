@@ -918,8 +918,17 @@
           body: JSON.stringify(payload)
         })
         .then((res) => {
-          if (!res.ok) throw new Error('Request failed (' + res.status + ')');
-          return res.json().catch(() => ({}));
+          // Always read the body so we can show the server's real message on error.
+          return res.text().then((text) => {
+            if (!res.ok) {
+              let serverMsg = text;
+              try { const j = JSON.parse(text); serverMsg = j.message || j.error || j.detail || text; } catch (e) {}
+              const httpErr = new Error('HTTP ' + res.status + (serverMsg ? ': ' + serverMsg : ''));
+              httpErr.isHttp = true;
+              throw httpErr;
+            }
+            return text;
+          });
         })
         .then(() => {
           if (fieldsWrap) fieldsWrap.classList.add('hidden');
@@ -927,8 +936,18 @@
         })
         .catch((err) => {
           if (submitBtn) { submitBtn.disabled = false; submitBtn.textContent = originalText; }
-          showError('Sorry, we could not schedule your call right now. Please try again, or reach us on WhatsApp.');
-          console.error('Video call scheduling error:', err);
+          // A TypeError from fetch() almost always means the browser blocked the
+          // request/response for CORS reasons (or the endpoint was unreachable) —
+          // the request never got a readable response.
+          if (err && err.name === 'TypeError') {
+            showError('We could not reach the scheduling service (network/CORS). Please try again, or reach us on WhatsApp.');
+          } else if (err && err.isHttp) {
+            showError('We could not schedule your call: ' + err.message.replace(/^HTTP \d+:\s*/, '') + '. Please try again, or reach us on WhatsApp.');
+          } else {
+            showError('Sorry, we could not schedule your call right now. Please try again, or reach us on WhatsApp.');
+          }
+          // Full detail for debugging — open the browser Console (F12) to read this.
+          console.error('[Video call scheduling] FAILED\n  Endpoint:', CRM_ENDPOINT, '\n  Error:', err, '\n  Payload sent:', payload);
         });
       });
     }
