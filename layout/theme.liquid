@@ -132,6 +132,26 @@
       })();
     </script>
 
+    <script>
+      // Global money formatting helper that honors current active currency and locale
+      window.formatMoney = function(cents) {
+        if (cents === null || cents === undefined) cents = 0;
+        const currencyCode = {{ cart.currency.iso_code | json }};
+        const currencySymbol = {{ cart.currency.symbol | json }};
+        const locale = currencyCode === 'INR' ? 'en-IN' : 'en-US';
+        
+        const value = cents / 100;
+        const hasDecimals = value % 1 !== 0;
+        const formatter = new Intl.NumberFormat(locale, {
+          style: 'currency',
+          currency: currencyCode,
+          minimumFractionDigits: hasDecimals ? 2 : 0,
+          maximumFractionDigits: 2
+        });
+        return formatter.format(value);
+      };
+    </script>
+
     {{ content_for_header }}
   </head>
 

@@ -250,6 +250,9 @@
 
     // Format Money
     function formatMoney(cents) {
+      if (window.formatMoney) {
+        return window.formatMoney(cents);
+      }
       if (!cents) return '₹0';
       const formatted = (cents / 100).toLocaleString('en-IN', {
         style: 'currency',

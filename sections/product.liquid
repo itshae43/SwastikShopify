@@ -21,7 +21,7 @@
           
           <div class="main-image-wrapper">
              {% if has_images %}
-               <img id="main-product-image" src="{{ product.featured_image | image_url: width: 800 }}" alt="{{ title | escape }}">
+               <img id="main-product-image" src="{{ product.featured_image | image_url: width: 800 }}" alt="{{ title | escape }}" width="{{ product.featured_image.width }}" height="{{ product.featured_image.height }}">
              {% else %}
                {{ 'product-1' | placeholder_svg_tag: 'placeholder-svg' }}
              {% endif %}
@@ -36,7 +36,7 @@
         <div class="product-page__thumbnails">
           {% for image in product.images %}
             <button class="thumbnail-btn {% if forloop.first %}active{% endif %}" data-image-url="{{ image | image_url: width: 800 }}" aria-label="View image {{ forloop.index }}">
-              <img src="{{ image | image_url: width: 150 }}" alt="{{ image.alt | escape }}">
+              <img src="{{ image | image_url: width: 150 }}" alt="{{ image.alt | escape }}" width="{{ image.width }}" height="{{ image.height }}">
             </button>
           {% endfor %}
         </div>
@@ -647,6 +647,9 @@ document.addEventListener('DOMContentLoaded', () => {
   const optionGroups = productPage.querySelectorAll('.product-page__option-group');
   
   function formatMoney(cents) {
+    if (window.formatMoney) {
+      return window.formatMoney(cents);
+    }
     return '₹' + (cents / 100).toLocaleString('en-IN', { minimumFractionDigits: 0, maximumFractionDigits: 0 });
   }
 

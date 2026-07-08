@@ -210,6 +210,9 @@
 
 <script>
   function formatMoneyWishlist(cents) {
+    if (window.formatMoney) {
+      return window.formatMoney(cents);
+    }
     if (!cents) return '₹0';
     return '₹' + (cents / 100).toLocaleString('en-IN', { minimumFractionDigits: 0, maximumFractionDigits: 0 });
   }

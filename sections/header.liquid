@@ -162,20 +162,110 @@
       <!-- Currency Selector -->
       <div class="header__localization">
         {%- form 'localization', id: 'HeaderLanguageForm', class: 'localization-form' -%}
-          <div class="localization-form__select">
-            <select class="localization-selector" name="country_code" onchange="this.form.submit()">
-              {%- for country in localization.available_countries -%}
-                <option value="{{ country.iso_code }}" {%- if country.iso_code == localization.country.iso_code %} selected{% endif %}>
-                  {{ country.currency.iso_code }} {{ country.currency.symbol }}
-                </option>
+          <!-- Hidden input that holds the selected country code -->
+          <input type="hidden" name="country_code" id="HeaderCountryCode" value="{{ localization.country.iso_code }}">
+          
+          <div class="custom-currency-selector" id="CustomCurrencySelector">
+            <button type="button" class="custom-currency-selector__trigger" id="CurrencySelectorTrigger" aria-expanded="false" aria-haspopup="listbox">
+              <span class="custom-currency-selector__trigger-text">{{ localization.country.currency.iso_code }}</span>
+              <svg class="icon icon-chevron-down" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="m19.5 8.25-7.5 7.5-7.5-7.5" />
+              </svg>
+            </button>
+            
+            <ul class="custom-currency-selector__list" id="CurrencySelectorList" role="listbox" aria-label="Currency select" tabindex="-1">
+              {%- assign custom_currencies = "INR:IN,USD:US,EUR:FR,GBP:GB,CAD:CA,AUD:AU" | split: "," -%}
+              {%- for item in custom_currencies -%}
+                {%- assign parts = item | split: ":" -%}
+                {%- assign curr_code = parts[0] -%}
+                {%- assign country_iso = parts[1] -%}
+                
+                {%- assign is_active = false -%}
+                {%- if localization.country.iso_code == country_iso -%}
+                  {%- assign is_active = true -%}
+                {%- elsif localization.country.currency.iso_code == 'EUR' and curr_code == 'EUR' -%}
+                  {%- assign is_active = true -%}
+                {%- elsif localization.country.currency.iso_code == 'USD' and curr_code == 'USD' -%}
+                  {%- assign is_active = true -%}
+                {%- elsif localization.country.currency.iso_code == 'GBP' and curr_code == 'GBP' -%}
+                  {%- assign is_active = true -%}
+                {%- elsif localization.country.currency.iso_code == 'CAD' and curr_code == 'CAD' -%}
+                  {%- assign is_active = true -%}
+                {%- elsif localization.country.currency.iso_code == 'AUD' and curr_code == 'AUD' -%}
+                  {%- assign is_active = true -%}
+                {%- endif -%}
+
+                {%- assign submit_iso = country_iso -%}
+                {%- for av_country in localization.available_countries -%}
+                  {%- if av_country.currency.iso_code == curr_code -%}
+                    {%- assign submit_iso = av_country.iso_code -%}
+                    {%- break -%}
+                  {%- endif -%}
+                {%- endfor -%}
+
+                <li class="custom-currency-selector__item{% if is_active %} custom-currency-selector__item--active{% endif %}" 
+                    role="option" 
+                    data-value="{{ submit_iso }}"
+                    aria-selected="{% if is_active %}true{% else %}false{% endif %}">
+                  {%- if curr_code == 'EUR' -%}
+                    <img src="https://flagcdn.com/w40/eu.png" 
+                         alt="EUR flag" 
+                         class="custom-currency-selector__flag"
+                         loading="lazy"
+                         width="20"
+                         height="15">
+                  {%- else -%}
+                    <img src="https://flagcdn.com/w40/{{ country_iso | downcase }}.png" 
+                         alt="{{ curr_code }} flag" 
+                         class="custom-currency-selector__flag"
+                         loading="lazy"
+                         width="20"
+                         height="15">
+                  {%- endif -%}
+                  <span class="custom-currency-selector__code">{{ curr_code }}</span>
+                </li>
               {%- endfor -%}
-            </select>
-            <svg class="icon icon-chevron-down" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="m19.5 8.25-7.5 7.5-7.5-7.5" />
-            </svg>
+            </ul>
           </div>
         {%- endform -%}
       </div>
+
+      <script>
+        document.addEventListener('DOMContentLoaded', () => {
+          const selector = document.getElementById('CustomCurrencySelector');
+          if (!selector) return;
+          
+          const trigger = selector.querySelector('#CurrencySelectorTrigger');
+          const hiddenInput = document.getElementById('HeaderCountryCode');
+          const form = document.getElementById('HeaderLanguageForm');
+          
+          // Toggle dropdown
+          trigger.addEventListener('click', (e) => {
+            e.stopPropagation();
+            const isOpen = selector.classList.toggle('open');
+            trigger.setAttribute('aria-expanded', isOpen);
+          });
+          
+          // Close dropdown on click outside
+          document.addEventListener('click', (e) => {
+            if (!selector.contains(e.target)) {
+              selector.classList.remove('open');
+              trigger.setAttribute('aria-expanded', 'false');
+            }
+          });
+          
+          // Select option
+          selector.querySelectorAll('.custom-currency-selector__item').forEach(item => {
+            item.addEventListener('click', () => {
+              const countryCode = item.getAttribute('data-value');
+              if (hiddenInput && form) {
+                hiddenInput.value = countryCode;
+                form.submit();
+              }
+            });
+          });
+        });
+      </script>
 
       <!-- Gold price pill -->
       <div class="header__gold-price">
@@ -608,19 +698,21 @@
     gap: 2.4rem;
   }
 
-  /* Localization Form */
+  /* Custom Currency Selector */
   .header__localization {
-    display: flex;
-    align-items: center;
-  }
-  .localization-form__select {
     position: relative;
     display: flex;
     align-items: center;
+    z-index: 100;
   }
-  .localization-selector {
-    appearance: none;
-    -webkit-appearance: none;
+  .custom-currency-selector {
+    position: relative;
+    display: inline-block;
+  }
+  .custom-currency-selector__trigger {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
     background: transparent;
     border: none;
     color: var(--color-primary, #002E28);
@@ -628,19 +720,71 @@
     font-size: 1.25rem;
     font-weight: 600;
     cursor: pointer;
-    padding-right: 2rem;
+    padding: 0.4rem 0.8rem;
     text-transform: uppercase;
+    transition: color 0.2s ease;
   }
-  .localization-selector:focus {
-    outline: none;
-  }
-  .localization-form__select .icon-chevron-down {
-    position: absolute;
-    right: 0.2rem;
-    width: 1.2rem;
-    height: 1.2rem;
-    pointer-events: none;
+  .custom-currency-selector__trigger:hover {
     color: var(--color-accent, #D4AF37);
+  }
+  .custom-currency-selector__trigger .icon-chevron-down {
+    width: 1rem;
+    height: 1rem;
+    color: #8C8C8C; /* Clean grey chevron as in Image 2 */
+    transition: transform 0.3s ease;
+    position: static; /* Reset positioning from default chevron */
+  }
+  .custom-currency-selector.open .custom-currency-selector__trigger .icon-chevron-down {
+    transform: rotate(180deg);
+  }
+  .custom-currency-selector__list {
+    position: absolute;
+    top: 100%;
+    right: 0;
+    margin-top: 0.5rem;
+    background: #FFFFFF;
+    border: 1px solid rgba(0, 0, 0, 0.08);
+    border-radius: 8px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+    padding: 0.5rem 0;
+    list-style: none;
+    min-width: 100px;
+    display: none;
+    z-index: 1000;
+  }
+  .custom-currency-selector.open .custom-currency-selector__list {
+    display: block;
+  }
+  .custom-currency-selector__item {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 0.8rem 1.6rem;
+    cursor: pointer;
+    transition: background 0.2s ease;
+  }
+  .custom-currency-selector__item:hover {
+    background-color: #F8F6F2; /* Soft premium background on hover */
+  }
+  .custom-currency-selector__item--active {
+    background-color: #F4EFE6;
+  }
+  .custom-currency-selector__flag {
+    width: 2rem;
+    height: 1.4rem;
+    object-fit: cover;
+    border-radius: 2px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+  }
+  .custom-currency-selector__code {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 1.25rem;
+    font-weight: 500;
+    color: #333333;
+  }
+  .custom-currency-selector__item--active .custom-currency-selector__code {
+    font-weight: 600;
+    color: var(--color-primary, #002E28);
   }
 
   /* Gold Price Badge */

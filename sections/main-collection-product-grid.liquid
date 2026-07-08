@@ -56,8 +56,8 @@
                           
                           <!-- Labels -->
                           <div class="price-slider__labels">
-                            <span class="price-slider__label">₹ <span id="label-min-{{ filter.label | handleize }}">{{ filter.min_value.value | default: 0 | divided_by: 100.0 | floor }}</span></span>
-                            <span class="price-slider__label">₹ <span id="label-max-{{ filter.label | handleize }}">{{ filter.max_value.value | default: filter.range_max | divided_by: 100.0 | ceil }}</span>+</span>
+                            <span class="price-slider__label">{{ cart.currency.symbol }} <span id="label-min-{{ filter.label | handleize }}">{{ filter.min_value.value | default: 0 | divided_by: 100.0 | floor }}</span></span>
+                            <span class="price-slider__label">{{ cart.currency.symbol }} <span id="label-max-{{ filter.label | handleize }}">{{ filter.max_value.value | default: filter.range_max | divided_by: 100.0 | ceil }}</span>+</span>
                           </div>
 
                           <!-- Hidden actual inputs that submit the form -->
@@ -466,8 +466,10 @@
           }
         }
 
-        minLabel.textContent = minVal.toLocaleString('en-IN');
-        maxLabel.textContent = maxVal.toLocaleString('en-IN');
+        const parentText = minLabel.parentElement ? minLabel.parentElement.textContent : '';
+        const activeLocale = parentText.includes('₹') ? 'en-IN' : 'en-US';
+        minLabel.textContent = minVal.toLocaleString(activeLocale);
+        maxLabel.textContent = maxVal.toLocaleString(activeLocale);
         
         hiddenMin.value = minVal;
         hiddenMax.value = maxVal;

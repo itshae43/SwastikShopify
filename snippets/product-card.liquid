@@ -68,9 +68,9 @@
     
     <!-- Pricing Row -->
     <div class="{{ class_prefix_default }}__price-row product-card-ui__price-row">
-      <span class="price-current">{{ price | money | replace: '$', '₹' | replace: ' Rs.', '₹' }}</span>
+      <span class="price-current">{{ price | money }}</span>
       {% if original_price > price %}
-        <span class="price-original">{{ original_price | money | replace: '$', '₹' | replace: ' Rs.', '₹' }}</span>
+        <span class="price-original">{{ original_price | money }}</span>
         {% assign discount = original_price | minus: price | times: 100.0 | divided_by: original_price | round %}
         <span class="price-discount">{{ discount }}% OFF</span>
       {% endif %}

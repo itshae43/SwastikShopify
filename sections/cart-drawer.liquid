@@ -341,6 +341,9 @@
 
 <script>
   function formatMoney(cents) {
+    if (window.formatMoney) {
+      return window.formatMoney(cents);
+    }
     return '₹' + (cents / 100).toLocaleString('en-IN', { minimumFractionDigits: 0, maximumFractionDigits: 0 });
   }
 
