@@ -16,6 +16,7 @@
           "type": "slide",
           "settings": {
             "image_desktop": "shopify://shop_images/Bannerimage_2880_1100.png",
+            "image_mobile": "shopify://shop_images/gold.png",
             "alignment": "left",
             "subheading": "",
             "title": "",
@@ -30,6 +31,7 @@
           "type": "slide",
           "settings": {
             "image_desktop": "shopify://shop_images/Bannerimage_2880_1100_1.png",
+            "image_mobile": "shopify://shop_images/diamond.png",
             "alignment": "left",
             "subheading": "",
             "title": "",
