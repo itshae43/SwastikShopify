@@ -16,7 +16,6 @@
           "type": "slide",
           "settings": {
             "image_desktop": "shopify://shop_images/Bannerimage_2880_1100.png",
-            "image_mobile": "shopify://shop_images/gold.png",
             "alignment": "left",
             "subheading": "",
             "title": "",
@@ -31,7 +30,6 @@
           "type": "slide",
           "settings": {
             "image_desktop": "shopify://shop_images/Bannerimage_2880_1100_1.png",
-            "image_mobile": "shopify://shop_images/diamond.png",
             "alignment": "left",
             "subheading": "",
             "title": "",
@@ -41,27 +39,11 @@
             "button_2_label": "Discover the Vibe",
             "button_2_link": ""
           }
-        },
-        "slide_VNUAYL": {
-          "type": "slide",
-          "settings": {
-            "image_desktop": "shopify://shop_images/diamond_with_back_sparkle.png",
-            "image_mobile": "shopify://shop_images/diamond_with_back_sparkle.png",
-            "alignment": "left",
-            "subheading": "",
-            "title": "",
-            "description": "",
-            "button_1_label": "Shop Daily Ice",
-            "button_1_link": "",
-            "button_2_label": "Discover the Vibe",
-            "button_2_link": ""
-          }
         }
       },
       "block_order": [
         "slide_WxzxDN",
-        "slide_Bp8BaM",
-        "slide_VNUAYL"
+        "slide_Bp8BaM"
       ],
       "settings": {
         "autoplay": true,
@@ -554,7 +536,7 @@
     "video_call": {
       "type": "video-call",
       "settings": {
-        "image": "shopify://shop_images/new_b12_1.png",
+        "image": "shopify://shop_images/video_call_tab_version.png",
         "bg_color": "#fdf9f5",
         "heading": "Shop with Confidence, From Wherever You Are.",
         "text": "Connect on a video call with our experts and find your perfect jewellery.",
@@ -568,29 +550,25 @@
         "reel_1": {
           "type": "reel",
           "settings": {
-            "video": "shopify://files/videos/💍✨ Say “YES” with a Ring that Sparkles Forever! ✨💍Looking for the perfect engagement diamond r (2).mp4",
-            "view_count": "105K"
+            "view_count": "2M"
           }
         },
         "reel_2": {
           "type": "reel",
           "settings": {
-            "video": "shopify://files/videos/Turn heads with statement pieces that redefine elegance 💫These luxury cocktail rings are crafte (1).mp4",
-            "view_count": "943K"
+            "view_count": "773K"
           }
         },
         "reel_3": {
           "type": "reel",
           "settings": {
-            "video": "shopify://files/videos/1st person in your share list has to buy you one of these 💎👀✨Tag, share, and drop your favorit (1).mp4",
-            "view_count": "1.5M"
+            "view_count": "63.6K"
           }
         },
         "reel_4": {
           "type": "reel",
           "settings": {
-            "video": "shopify://files/videos/✨ 5 Diamond Bali Designs Under 3 Grams – Lightweight Luxury for Everyday Elegance! ✨Looking for  (1).mp4",
-            "view_count": "11K"
+            "view_count": "9410"
           }
         }
       },
