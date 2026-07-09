@@ -41,11 +41,26 @@
             "button_2_label": "Discover the Vibe",
             "button_2_link": ""
           }
+        },
+        "slide_VNUAYL": {
+          "type": "slide",
+          "settings": {
+            "image_mobile": "shopify://shop_images/diamond_with_back_sparkle.png",
+            "alignment": "left",
+            "subheading": "",
+            "title": "",
+            "description": "",
+            "button_1_label": "Shop Daily Ice",
+            "button_1_link": "",
+            "button_2_label": "Discover the Vibe",
+            "button_2_link": ""
+          }
         }
       },
       "block_order": [
         "slide_WxzxDN",
-        "slide_Bp8BaM"
+        "slide_Bp8BaM",
+        "slide_VNUAYL"
       ],
       "settings": {
         "autoplay": true,
