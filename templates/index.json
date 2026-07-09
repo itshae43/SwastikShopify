@@ -45,6 +45,7 @@
         "slide_VNUAYL": {
           "type": "slide",
           "settings": {
+            "image_desktop": "shopify://shop_images/diamond_with_back_sparkle.png",
             "image_mobile": "shopify://shop_images/diamond_with_back_sparkle.png",
             "alignment": "left",
             "subheading": "",
