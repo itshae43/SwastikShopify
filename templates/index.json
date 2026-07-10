@@ -46,7 +46,7 @@
         "slide_Bp8BaM"
       ],
       "settings": {
-        "autoplay": true,
+        "autoplay": false,
         "autoplay_speed": 3,
         "hero_size": "adapt",
         "hero_height": 650,
@@ -558,14 +558,14 @@
           "type": "reel",
           "settings": {
             "video": "shopify://files/videos/Turn heads with statement pieces that redefine elegance 💫These luxury cocktail rings are crafte (1).mp4",
-            "view_count": "945K"
+            "view_count": "773K"
           }
         },
         "reel_3": {
           "type": "reel",
           "settings": {
             "video": "shopify://files/videos/1st person in your share list has to buy you one of these 💎👀✨Tag, share, and drop your favorit (1).mp4",
-            "view_count": "1.5M"
+            "view_count": "63.6K"
           }
         },
         "reel_4": {
