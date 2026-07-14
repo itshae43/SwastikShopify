@@ -143,7 +143,7 @@
         "pendants": {
           "type": "card",
           "settings": {
-            "image": "shopify://shop_images/b10_pendent.png",
+            "image": "shopify://shop_images/new_b10_pendent.png",
             "link": "shopify://collections/diamond-pendants"
           }
         },
