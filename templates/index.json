@@ -362,7 +362,7 @@
         "mother": {
           "type": "bond",
           "settings": {
-            "image": "shopify://shop_images/b21_new_mother.png",
+            "image": "shopify://shop_images/mother.png",
             "title": "For Mothers",
             "subtitle": "Her love, our forever.",
             "link": "/collections/for-mothers",
