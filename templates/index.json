@@ -59,7 +59,7 @@
         "clay_whispers": {
           "type": "collection_card",
           "settings": {
-            "image": "shopify://shop_images/b5.png",
+            "image": "shopify://shop_images/b5_NEW_LAB_GROWN.png",
             "title": "",
             "subtitle": "",
             "link": "shopify://collections/lab-grown-diamonds",
@@ -91,7 +91,7 @@
         "raw_reverie": {
           "type": "collection_card",
           "settings": {
-            "image": "shopify://shop_images/b7.png",
+            "image": "shopify://shop_images/b7_new_gold.png",
             "title": "",
             "subtitle": "",
             "link": "shopify://collections/gold-jewellery",
