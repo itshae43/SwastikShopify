@@ -207,7 +207,8 @@
           "type": "collection",
           "settings": {
             "collection": "pendant-sets",
-            "title": "PENDANT SET"
+            "title": "PENDANT SET",
+            "image": "shopify://shop_images/b4_pendent_set.png"
           }
         }
       },
