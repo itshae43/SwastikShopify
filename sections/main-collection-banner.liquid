@@ -5,30 +5,32 @@
     </div>
   {%- endif -%}
   
-  <div class="collection-banner__content">
-    <h1 class="collection-banner__title serif-font" style="color: {{ section.settings.text_color }};">
-      {%- if section.settings.title != blank -%}
-        {{ section.settings.title | escape }}
-      {%- else -%}
-        {{ collection.title | escape }}
+  {%- if section.settings.show_text -%}
+    <div class="collection-banner__content">
+      <h1 class="collection-banner__title serif-font" style="color: {{ section.settings.text_color }};">
+        {%- if section.settings.title != blank -%}
+          {{ section.settings.title | escape }}
+        {%- else -%}
+          {{ collection.title | escape }}
+        {%- endif -%}
+      </h1>
+      {%- if section.settings.subtitle != blank -%}
+        <div class="collection-banner__subtitle" style="color: {{ section.settings.text_color }};">
+          {{ section.settings.subtitle }}
+        </div>
+      {%- elsif collection.description != blank -%}
+        <div class="collection-banner__subtitle" style="color: {{ section.settings.text_color }};">
+          {{ collection.description }}
+        </div>
       {%- endif -%}
-    </h1>
-    {%- if section.settings.subtitle != blank -%}
-      <div class="collection-banner__subtitle" style="color: {{ section.settings.text_color }};">
-        {{ section.settings.subtitle }}
-      </div>
-    {%- elsif collection.description != blank -%}
-      <div class="collection-banner__subtitle" style="color: {{ section.settings.text_color }};">
-        {{ collection.description }}
-      </div>
-    {%- endif -%}
 
-    {%- if section.settings.button_label != blank -%}
-      <a href="{{ section.settings.button_link | default: '#' }}" class="collection-banner__btn pill-button" style="background-color: {{ section.settings.btn_bg_color }}; color: {{ section.settings.btn_text_color }};">
-        {{ section.settings.button_label | escape }} &rarr;
-      </a>
-    {%- endif -%}
-  </div>
+      {%- if section.settings.button_label != blank -%}
+        <a href="{{ section.settings.button_link | default: '#' }}" class="collection-banner__btn pill-button" style="background-color: {{ section.settings.btn_bg_color }}; color: {{ section.settings.btn_text_color }};">
+          {{ section.settings.button_label | escape }} &rarr;
+        </a>
+      {%- endif -%}
+    </div>
+  {%- endif -%}
 </div>
 
 {% stylesheet %}
@@ -118,6 +120,12 @@
 {
   "name": "Collection Banner",
   "settings": [
+    {
+      "type": "checkbox",
+      "id": "show_text",
+      "label": "Show Text Overlay",
+      "default": true
+    },
     {
       "type": "text",
       "id": "title",
