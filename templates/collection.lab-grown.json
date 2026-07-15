@@ -3,9 +3,6 @@
     "banner": {
       "type": "main-collection-banner",
       "settings": {
-        "title": "LAB GROWN DIAMONDS",
-        "subtitle": "<p>Modern Elegance. Crafted for Today.</p>",
-        "button_label": "SHOP COLLECTION",
         "button_link": "",
         "text_color": "#013F3E",
         "bg_color": "#f5f0e6",
@@ -20,10 +17,5 @@
       }
     }
   },
-  "order": [
-    "banner",
-    "product_grid"
-  ]
+  "order": ["banner", "product_grid"]
 }
-
-
