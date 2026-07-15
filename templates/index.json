@@ -448,7 +448,7 @@
             "image": "shopify://shop_images/b21_bride.png",
             "title": "For Brides",
             "subtitle": "For the beginning of forever.",
-            "link": "/collections/for-brides",
+            "link": "shopify://collections/for-brides",
             "icon": "bride",
             "custom_icon_svg": ""
           }
