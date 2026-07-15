@@ -390,10 +390,10 @@
     "gifts_for_him_her": {
       "type": "gifts-for-him-her",
       "settings": {
-        "image_him": "shopify://shop_images/new_b14_1.png",
-        "title_him": "Him",
+        "image_him": "shopify://shop_images/new_4_00d7b5e9-3e6a-4c45-ac9a-99af73b077ec.png",
+        "title_him": "",
         "link_him": "/collections/for-him",
-        "image_her": "shopify://shop_images/b13.png",
+        "image_her": "shopify://shop_images/new_5_00e2d1b4-383d-4445-90f5-763bb4bc775a.png",
         "title_her": "Her",
         "link_her": "/collections/for-her",
         "bg_color": "#f8f5ef",
