@@ -26,10 +26,52 @@
             "button_2_link": ""
           }
         },
+        "slide_RYj8jh": {
+          "type": "slide",
+          "settings": {
+            "image_desktop": "shopify://shop_images/1.png",
+            "alignment": "left",
+            "subheading": "",
+            "title": "",
+            "description": "",
+            "button_1_label": "",
+            "button_1_link": "",
+            "button_2_label": "",
+            "button_2_link": ""
+          }
+        },
+        "slide_UCYBVQ": {
+          "type": "slide",
+          "settings": {
+            "image_desktop": "shopify://shop_images/3.png",
+            "alignment": "left",
+            "subheading": "",
+            "title": "",
+            "description": "",
+            "button_1_label": "",
+            "button_1_link": "",
+            "button_2_label": "",
+            "button_2_link": ""
+          }
+        },
+        "slide_gMjH6r": {
+          "type": "slide",
+          "settings": {
+            "image_desktop": "shopify://shop_images/4.png",
+            "alignment": "left",
+            "subheading": "",
+            "title": "",
+            "description": "",
+            "button_1_label": "",
+            "button_1_link": "",
+            "button_2_label": "",
+            "button_2_link": ""
+          }
+        },
         "slide_Bp8BaM": {
           "type": "slide",
           "settings": {
-            "image_desktop": "shopify://shop_images/Bannerimage_2880_1100_1.png",
+            "image_desktop": "shopify://shop_images/2.png",
             "alignment": "left",
             "subheading": "",
             "title": "",
@@ -39,14 +81,32 @@
             "button_2_label": "Discover the Vibe",
             "button_2_link": ""
           }
+        },
+        "slide_eWdRCr": {
+          "type": "slide",
+          "settings": {
+            "image_desktop": "shopify://shop_images/Untitled_design_12.png",
+            "alignment": "left",
+            "subheading": "",
+            "title": "",
+            "description": "",
+            "button_1_label": "",
+            "button_1_link": "",
+            "button_2_label": "",
+            "button_2_link": ""
+          }
         }
       },
       "block_order": [
         "slide_WxzxDN",
-        "slide_Bp8BaM"
+        "slide_RYj8jh",
+        "slide_UCYBVQ",
+        "slide_gMjH6r",
+        "slide_Bp8BaM",
+        "slide_eWdRCr"
       ],
       "settings": {
-        "autoplay": true,
+        "autoplay": false,
         "autoplay_speed": 3,
         "hero_size": "adapt",
         "hero_height": 650,
@@ -59,7 +119,7 @@
         "clay_whispers": {
           "type": "collection_card",
           "settings": {
-            "image": "shopify://shop_images/b5.png",
+            "image": "shopify://shop_images/b5_NEW_LAB_GROWN.png",
             "title": "",
             "subtitle": "",
             "link": "shopify://collections/lab-grown-diamonds",
@@ -91,7 +151,7 @@
         "raw_reverie": {
           "type": "collection_card",
           "settings": {
-            "image": "shopify://shop_images/b7.png",
+            "image": "shopify://shop_images/b7_new_gold.png",
             "title": "",
             "subtitle": "",
             "link": "shopify://collections/gold-jewellery",
@@ -129,29 +189,29 @@
         "rings": {
           "type": "card",
           "settings": {
-            "image": "shopify://shop_images/b9.png",
-            "link": "shopify://collections/diamond-bangles"
+            "image": "shopify://shop_images/b9_bracelet.png",
+            "link": "shopify://collections/forever-classics"
           }
         },
         "earrings": {
           "type": "card",
           "settings": {
-            "image": "shopify://shop_images/b11_1.png",
-            "link": "shopify://collections/diamond-earrings-1"
+            "image": "shopify://shop_images/b11_earrings.png",
+            "link": "shopify://collections/everyday-sparkle"
           }
         },
         "pendants": {
           "type": "card",
           "settings": {
-            "image": "shopify://shop_images/b10_1.png",
-            "link": "shopify://collections/diamond-pendants"
+            "image": "shopify://shop_images/new_b10_pendent.png",
+            "link": "shopify://collections/close-to-heart"
           }
         },
         "tennis": {
           "type": "card",
           "settings": {
-            "image": "shopify://shop_images/b8.png",
-            "link": "shopify://collections/diamond-earrings"
+            "image": "shopify://shop_images/b8_ring.png",
+            "link": "shopify://collections/eternal-promises"
           }
         }
       },
@@ -207,7 +267,8 @@
           "type": "collection",
           "settings": {
             "collection": "pendant-sets",
-            "title": "PENDANT SET"
+            "title": "PENDANT SET",
+            "image": "shopify://shop_images/b4_pendent_set.png"
           }
         }
       },
@@ -362,10 +423,10 @@
         "mother": {
           "type": "bond",
           "settings": {
-            "image": "shopify://shop_images/mother_2.png",
+            "image": "shopify://shop_images/ChatGPT_Image_Jul_14_2026_04_44_45_PM.png",
             "title": "For Mothers",
             "subtitle": "Her love, our forever.",
-            "link": "/collections/for-mothers",
+            "link": "shopify://collections/for-mothers",
             "icon": "mother",
             "custom_icon_svg": ""
           }
@@ -376,7 +437,7 @@
             "image": "shopify://shop_images/sisters_3.png",
             "title": "For Sisters",
             "subtitle": "Partners in all things.",
-            "link": "/collections/for-sisters",
+            "link": "shopify://collections/for-sisters",
             "icon": "sister",
             "custom_icon_svg": ""
           }
@@ -384,10 +445,10 @@
         "bride": {
           "type": "bond",
           "settings": {
-            "image": "shopify://shop_images/bride_2.png",
+            "image": "shopify://shop_images/b21_bride.png",
             "title": "For Brides",
             "subtitle": "For the beginning of forever.",
-            "link": "/collections/for-brides",
+            "link": "shopify://collections/for-brides",
             "icon": "bride",
             "custom_icon_svg": ""
           }
@@ -476,10 +537,10 @@
         "slide_5": {
           "type": "slide",
           "settings": {
-            "image": "shopify://shop_images/b15_office_1.png",
+            "image": "shopify://shop_images/new_b15_office_wear_1.png",
             "title": "",
             "subtitle": "",
-            "link": ""
+            "link": "shopify://collections/office-wear"
           }
         },
         "slide_1": {
@@ -488,7 +549,7 @@
             "image": "shopify://shop_images/b16_wedding_1.png",
             "title": "",
             "subtitle": "",
-            "link": ""
+            "link": "shopify://collections/wedding-wear"
           }
         },
         "slide_3": {
@@ -497,7 +558,7 @@
             "image": "shopify://shop_images/b_20_festive.png",
             "title": "",
             "subtitle": "",
-            "link": ""
+            "link": "shopify://collections/festive-wear"
           }
         },
         "slide_2": {
@@ -506,16 +567,16 @@
             "image": "shopify://shop_images/b19_daily_1.png",
             "title": "",
             "subtitle": "",
-            "link": ""
+            "link": "shopify://collections/daily-wear"
           }
         },
         "slide_4": {
           "type": "slide",
           "settings": {
-            "image": "shopify://shop_images/b17_party_1.png",
+            "image": "shopify://shop_images/new_party_wear.png",
             "title": "",
             "subtitle": "",
-            "link": ""
+            "link": "shopify://collections/party-wear"
           }
         }
       },
@@ -557,15 +618,15 @@
         "reel_2": {
           "type": "reel",
           "settings": {
-            "video": "",
-            "view_count": "945K"
+            "video": "shopify://files/videos/Turn heads with statement pieces that redefine elegance 💫These luxury cocktail rings are crafte (1).mp4",
+            "view_count": "773K"
           }
         },
         "reel_3": {
           "type": "reel",
           "settings": {
-            "video": "",
-            "view_count": "1.5M"
+            "video": "shopify://files/videos/1st person in your share list has to buy you one of these 💎👀✨Tag, share, and drop your favorit (1).mp4",
+            "view_count": "63.6K"
           }
         },
         "reel_4": {
