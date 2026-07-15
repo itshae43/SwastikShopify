@@ -377,7 +377,8 @@
   .pp-thumbnails {
     display: flex;
     gap: 16px;
-    justify-content: space-between; /* Space out the 5 thumbnails nicely */
+    justify-content: flex-start;
+    width: max-content;
   }
   .pp-thumb-item {
     display: flex;
@@ -385,8 +386,7 @@
     align-items: center;
     gap: 8px;
     cursor: pointer;
-    flex: 1; /* Allow them to stretch evenly */
-    min-width: 70px;
+    flex: 0 0 84px; /* Fixed size */
   }
   .pp-thumb-img {
     width: 100%;
@@ -394,7 +394,8 @@
     border-radius: var(--pp-radius-box);
     background: var(--pp-beige);
     border: 2px solid transparent;
-    padding: 8px;
+    padding: 0; /* Remove padding */
+    overflow: hidden; /* Ensure image respects rounded corners */
     transition: all 0.2s;
     display: flex;
     align-items: center;
@@ -403,7 +404,7 @@
   .pp-thumb-img img, .pp-thumb-img svg {
     width: 100%;
     height: 100%;
-    object-fit: contain;
+    object-fit: cover; /* Fill the thumbnail */
   }
   .pp-thumb-label {
     font-size: 11px;
