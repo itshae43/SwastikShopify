@@ -1,0 +1,791 @@
+{% comment %}
+  Mobile Categories Full-Screen Overlay & Bottom Sheet
+{% endcomment %}
+
+<!-- Full Screen Categories Overlay -->
+<div class="mobile-categories-overlay" id="MobileCategoriesOverlay" aria-hidden="true">
+  <div class="mobile-categories-overlay__header">
+    <button type="button" class="mobile-categories-overlay__back" id="MobileCategoriesClose" aria-label="Close categories">
+      <svg viewBox="0 0 24 24" fill="none" stroke="#00352A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width: 28px; height: 28px;">
+        <line x1="19" y1="12" x2="5" y2="12"></line>
+        <polyline points="12 19 5 12 12 5"></polyline>
+      </svg>
+    </button>
+    <div class="mobile-categories-overlay__title">
+      <h2>Categories</h2>
+      <div class="ornament">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <line x1="0" y1="12" x2="8" y2="12" stroke="#D4AF37" stroke-width="1"></line>
+          <path d="M12 9l1.5 2.5L16 12l-2.5 1.5L12 16l-1.5-2.5L8 12l2.5-1.5L12 9z" fill="#D4AF37"></path>
+          <line x1="16" y1="12" x2="24" y2="12" stroke="#D4AF37" stroke-width="1"></line>
+        </svg>
+      </div>
+    </div>
+  </div>
+
+  <div class="mobile-categories-overlay__search">
+    <form action="{{ routes.search_url }}" method="get" role="search">
+      <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="11" cy="11" r="8"></circle>
+        <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+      </svg>
+      <input type="search" name="q" placeholder="Search for jewellery" value="{{ search.terms | escape }}">
+      <input type="hidden" name="options[prefix]" value="last">
+    </form>
+  </div>
+
+  <div class="mobile-categories-overlay__grid">
+    <!-- Category: Rings -->
+    <button class="mobile-category-card js-open-category-sheet" data-category="rings" style="background-color: #E8F0E9;">
+      <div class="mobile-category-card__image">
+        <img src="https://cdn.shopify.com/s/files/1/0805/0121/1413/files/engagement_ring_icon.png" alt="Rings" loading="lazy">
+      </div>
+      <div class="mobile-category-card__footer">
+        <span class="mobile-category-card__title">Rings</span>
+        <div class="mobile-category-card__arrow">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#D4AF37" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="9 18 15 12 9 6"></polyline>
+          </svg>
+        </div>
+      </div>
+    </button>
+
+    <!-- Category: Earrings -->
+    <button class="mobile-category-card js-open-category-sheet" data-category="earrings" style="background-color: #F8EFE6;">
+      <div class="mobile-category-card__image">
+        <img src="https://cdn.shopify.com/s/files/1/0805/0121/1413/files/engagement_ring_icon.png" alt="Earrings" loading="lazy" style="filter: hue-rotate(45deg);">
+      </div>
+      <div class="mobile-category-card__footer">
+        <span class="mobile-category-card__title">Earrings</span>
+        <div class="mobile-category-card__arrow">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#D4AF37" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="9 18 15 12 9 6"></polyline>
+          </svg>
+        </div>
+      </div>
+    </button>
+
+    <!-- Category: Bracelets & Bangles -->
+    <button class="mobile-category-card js-open-category-sheet" data-category="bracelets" style="background-color: #FCE8E9;">
+      <div class="mobile-category-card__image">
+        <img src="https://cdn.shopify.com/s/files/1/0805/0121/1413/files/engagement_ring_icon.png" alt="Bracelets & Bangles" loading="lazy" style="filter: hue-rotate(90deg);">
+      </div>
+      <div class="mobile-category-card__footer">
+        <span class="mobile-category-card__title">Bracelets & Bangles</span>
+        <div class="mobile-category-card__arrow">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#D4AF37" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="9 18 15 12 9 6"></polyline>
+          </svg>
+        </div>
+      </div>
+    </button>
+
+    <!-- Category: Necklaces -->
+    <button class="mobile-category-card js-open-category-sheet" data-category="necklaces" style="background-color: #EEF3ED;">
+      <div class="mobile-category-card__image">
+        <img src="https://cdn.shopify.com/s/files/1/0805/0121/1413/files/engagement_ring_icon.png" alt="Necklaces" loading="lazy" style="filter: hue-rotate(135deg);">
+      </div>
+      <div class="mobile-category-card__footer">
+        <span class="mobile-category-card__title">Necklaces</span>
+        <div class="mobile-category-card__arrow">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#D4AF37" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="9 18 15 12 9 6"></polyline>
+          </svg>
+        </div>
+      </div>
+    </button>
+
+    <!-- Category: Pendants -->
+    <button class="mobile-category-card js-open-category-sheet" data-category="pendants" style="background-color: #FAF4F0;">
+      <div class="mobile-category-card__image">
+        <img src="https://cdn.shopify.com/s/files/1/0805/0121/1413/files/engagement_ring_icon.png" alt="Pendants" loading="lazy" style="filter: hue-rotate(180deg);">
+      </div>
+      <div class="mobile-category-card__footer">
+        <span class="mobile-category-card__title">Pendants</span>
+        <div class="mobile-category-card__arrow">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#D4AF37" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="9 18 15 12 9 6"></polyline>
+          </svg>
+        </div>
+      </div>
+    </button>
+
+    <!-- Category: Solitaires -->
+    <button class="mobile-category-card js-open-category-sheet" data-category="solitaires" style="background-color: #F8ECE0;">
+      <div class="mobile-category-card__image">
+        <img src="https://cdn.shopify.com/s/files/1/0805/0121/1413/files/engagement_ring_icon.png" alt="Solitaires" loading="lazy" style="filter: hue-rotate(225deg);">
+      </div>
+      <div class="mobile-category-card__footer">
+        <span class="mobile-category-card__title">Solitaires</span>
+        <div class="mobile-category-card__arrow">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#D4AF37" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="9 18 15 12 9 6"></polyline>
+          </svg>
+        </div>
+      </div>
+    </button>
+
+    <!-- Category: Diamonds -->
+    <button class="mobile-category-card js-open-category-sheet" data-category="diamonds" style="background-color: #E2EFE7;">
+      <div class="mobile-category-card__image">
+        <img src="https://cdn.shopify.com/s/files/1/0805/0121/1413/files/engagement_ring_icon.png" alt="Diamonds" loading="lazy" style="filter: hue-rotate(270deg);">
+      </div>
+      <div class="mobile-category-card__footer">
+        <span class="mobile-category-card__title">Diamonds</span>
+        <div class="mobile-category-card__arrow">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#D4AF37" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="9 18 15 12 9 6"></polyline>
+          </svg>
+        </div>
+      </div>
+    </button>
+
+    <!-- Category: More Jewellery -->
+    <a href="{{ routes.collections_url }}" class="mobile-category-card" style="background-color: #F9F5F1;">
+      <div class="mobile-category-card__image mobile-category-card__image--more">
+        <div class="more-dots">
+          <span></span><span></span><span></span>
+        </div>
+      </div>
+      <div class="mobile-category-card__footer">
+        <span class="mobile-category-card__title">More Jewellery</span>
+      </div>
+    </a>
+  </div>
+</div>
+
+<!-- Category Bottom Sheet -->
+<div class="category-bottom-sheet-overlay" id="CategoryBottomSheetOverlay" aria-hidden="true"></div>
+<div class="category-bottom-sheet" id="CategoryBottomSheet" aria-hidden="true">
+  <div class="category-bottom-sheet__drag-handle"></div>
+  
+  <div class="category-bottom-sheet__header">
+    <div class="category-bottom-sheet__title-wrap">
+      <h3 id="CategorySheetTitle">Shop Rings By</h3>
+      <div class="ornament">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <line x1="0" y1="12" x2="8" y2="12" stroke="#D4AF37" stroke-width="1"></line>
+          <circle cx="12" cy="12" r="3" stroke="#D4AF37" stroke-width="1.5"></circle>
+          <line x1="16" y1="12" x2="24" y2="12" stroke="#D4AF37" stroke-width="1"></line>
+        </svg>
+      </div>
+    </div>
+    <button type="button" class="category-bottom-sheet__close" id="CategorySheetClose" aria-label="Close sheet">
+      <svg viewBox="0 0 24 24" fill="none" stroke="#00352A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width: 24px; height: 24px;">
+        <line x1="18" y1="6" x2="6" y2="18"></line>
+        <line x1="6" y1="6" x2="18" y2="18"></line>
+      </svg>
+    </button>
+  </div>
+
+  <div class="category-bottom-sheet__filters">
+    <div class="gender-toggle">
+      <button class="gender-tab active" data-gender="all">All</button>
+      <button class="gender-tab" data-gender="women">Women's</button>
+      <button class="gender-tab" data-gender="men">Men's</button>
+    </div>
+  </div>
+
+  <div class="category-bottom-sheet__tabs">
+    <button class="sheet-tab active" data-tab="style">STYLE</button>
+    <button class="sheet-tab" data-tab="price">PRICE</button>
+    <button class="sheet-tab" data-tab="metal">METAL</button>
+  </div>
+
+  <!-- Dynamic Content Container -->
+  <div class="category-bottom-sheet__content" id="CategorySheetContent">
+    <!-- Populated by JS -->
+  </div>
+</div>
+
+<style>
+/* Full Screen Overlay */
+.mobile-categories-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: #FAFAFA;
+  z-index: 105;
+  transform: translateX(-100%);
+  transition: transform 0.3s ease-in-out;
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+  padding-bottom: 80px; /* Space for bottom nav */
+}
+
+.mobile-categories-overlay.open {
+  transform: translateX(0);
+}
+
+.mobile-categories-overlay__header {
+  display: flex;
+  align-items: center;
+  padding: 1rem 1.5rem;
+  position: relative;
+  background-color: #FAFAFA;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.mobile-categories-overlay__back {
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  position: absolute;
+  left: 1.5rem;
+}
+
+.mobile-categories-overlay__title {
+  flex: 1;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.mobile-categories-overlay__title h2 {
+  font-family: var(--font-heading-family), serif;
+  font-size: 1.8rem;
+  color: #00352A;
+  margin: 0 0 0.2rem 0;
+  font-weight: 500;
+}
+
+.mobile-categories-overlay__title .ornament {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 60px;
+}
+
+.mobile-categories-overlay__search {
+  padding: 1.5rem;
+}
+
+.mobile-categories-overlay__search form {
+  position: relative;
+  width: 100%;
+}
+
+.mobile-categories-overlay__search input {
+  width: 100%;
+  padding: 1rem 1rem 1rem 3rem;
+  border: 1px solid #E0E0E0;
+  border-radius: 8px;
+  background-color: #FFFFFF;
+  font-size: 1rem;
+  color: #333;
+}
+
+.mobile-categories-overlay__search .search-icon {
+  position: absolute;
+  left: 1rem;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 20px;
+  height: 20px;
+  color: #888;
+}
+
+.mobile-categories-overlay__grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+  padding: 0 1.5rem 2rem 1.5rem;
+}
+
+.mobile-category-card {
+  background: none;
+  border: none;
+  border-radius: 12px;
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  cursor: pointer;
+  text-decoration: none;
+  min-height: 140px;
+  transition: transform 0.2s ease;
+}
+
+.mobile-category-card:active {
+  transform: scale(0.97);
+}
+
+.mobile-category-card__image {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  padding: 1rem 0;
+}
+
+.mobile-category-card__image img {
+  max-width: 70px;
+  max-height: 70px;
+  object-fit: contain;
+}
+
+.mobile-category-card__image--more {
+  flex-direction: row;
+  gap: 6px;
+}
+
+.more-dots {
+  display: flex;
+  gap: 6px;
+}
+
+.more-dots span {
+  width: 8px;
+  height: 8px;
+  background-color: #D4AF37;
+  border-radius: 50%;
+}
+
+.mobile-category-card__footer {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 0.5rem;
+}
+
+.mobile-category-card__title {
+  font-size: 0.95rem;
+  color: #00352A;
+  font-weight: 500;
+  text-align: left;
+  line-height: 1.2;
+}
+
+.mobile-category-card__arrow {
+  background-color: #FFFFFF;
+  border-radius: 50%;
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+}
+
+.mobile-category-card__arrow svg {
+  width: 14px;
+  height: 14px;
+}
+
+/* Bottom Sheet */
+.category-bottom-sheet-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.4);
+  z-index: 106;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease;
+}
+
+.category-bottom-sheet-overlay.open {
+  opacity: 1;
+  visibility: visible;
+}
+
+.category-bottom-sheet {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100vw;
+  max-height: 90vh;
+  background-color: #FFFFFF;
+  border-radius: 20px 20px 0 0;
+  z-index: 107;
+  transform: translateY(100%);
+  transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1);
+  display: flex;
+  flex-direction: column;
+}
+
+.category-bottom-sheet.open {
+  transform: translateY(0);
+}
+
+.category-bottom-sheet__drag-handle {
+  width: 40px;
+  height: 4px;
+  background-color: #E0E0E0;
+  border-radius: 2px;
+  margin: 12px auto;
+}
+
+.category-bottom-sheet__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding: 0 1.5rem 1rem 1.5rem;
+  position: relative;
+}
+
+.category-bottom-sheet__title-wrap {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: -10px;
+}
+
+.category-bottom-sheet__title-wrap h3 {
+  font-family: var(--font-heading-family), serif;
+  font-size: 1.6rem;
+  color: #00352A;
+  margin: 0 0 0.3rem 0;
+  font-weight: 500;
+}
+
+.category-bottom-sheet__title-wrap .ornament {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 50px;
+}
+
+.category-bottom-sheet__close {
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  position: absolute;
+  right: 1.5rem;
+  top: 0;
+}
+
+.category-bottom-sheet__filters {
+  padding: 0 1.5rem 1rem 1.5rem;
+  display: flex;
+  justify-content: center;
+}
+
+.gender-toggle {
+  display: flex;
+  background-color: #F5F5F5;
+  border-radius: 30px;
+  padding: 4px;
+}
+
+.gender-tab {
+  background: none;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 20px;
+  font-size: 0.85rem;
+  color: #666;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.gender-tab.active {
+  background-color: #FFFFFF;
+  color: #00352A;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+}
+
+.category-bottom-sheet__tabs {
+  display: flex;
+  background-color: #FAF4F0; /* Soft beige from design */
+  margin: 0 1.5rem;
+  border-radius: 30px;
+  overflow: hidden;
+  position: relative;
+}
+
+.sheet-tab {
+  flex: 1;
+  background: none;
+  border: none;
+  padding: 12px 0;
+  font-size: 0.8rem;
+  letter-spacing: 0.1em;
+  color: #888;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  z-index: 1;
+}
+
+.sheet-tab.active {
+  background-color: #00352A; /* Dark green */
+  color: #FFFFFF;
+  border-radius: 30px;
+}
+
+.category-bottom-sheet__content {
+  padding: 1rem 1.5rem 2rem 1.5rem;
+  overflow-y: auto;
+  max-height: 50vh;
+}
+
+/* List Items in Sheet */
+.sheet-list-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem;
+  background-color: #FFFFFF;
+  border: 1px solid #F0F0F0;
+  border-radius: 12px;
+  margin-bottom: 0.8rem;
+  text-decoration: none;
+  color: #00352A;
+  transition: background-color 0.2s ease;
+}
+
+.sheet-list-item:active {
+  background-color: #F9F9F9;
+}
+
+.sheet-list-item__left {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.sheet-list-item__icon {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: #FAF4F0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.sheet-list-item__icon svg {
+  width: 20px;
+  height: 20px;
+  color: #D4AF37;
+}
+
+.sheet-list-item__icon img {
+  width: 24px;
+  height: 24px;
+  object-fit: contain;
+}
+
+.sheet-list-item__title {
+  font-weight: 500;
+  font-size: 0.95rem;
+}
+
+.sheet-list-item__arrow {
+  color: #999;
+}
+</style>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  // 1. Full Screen Overlay Toggle
+  const categoriesToggle = document.querySelector('.js-mobile-categories-toggle');
+  const categoriesOverlay = document.getElementById('MobileCategoriesOverlay');
+  const categoriesClose = document.getElementById('MobileCategoriesClose');
+
+  if (categoriesToggle && categoriesOverlay) {
+    categoriesToggle.addEventListener('click', (e) => {
+      e.preventDefault();
+      categoriesOverlay.classList.add('open');
+      categoriesOverlay.setAttribute('aria-hidden', 'false');
+      document.body.style.overflow = 'hidden'; // Prevent background scrolling
+    });
+  }
+
+  if (categoriesClose && categoriesOverlay) {
+    categoriesClose.addEventListener('click', () => {
+      categoriesOverlay.classList.remove('open');
+      categoriesOverlay.setAttribute('aria-hidden', 'true');
+      document.body.style.overflow = '';
+    });
+  }
+
+  // 2. Bottom Sheet Logic
+  const openSheetBtns = document.querySelectorAll('.js-open-category-sheet');
+  const sheet = document.getElementById('CategoryBottomSheet');
+  const sheetOverlay = document.getElementById('CategoryBottomSheetOverlay');
+  const sheetClose = document.getElementById('CategorySheetClose');
+  const sheetTitle = document.getElementById('CategorySheetTitle');
+  const sheetContent = document.getElementById('CategorySheetContent');
+  
+  const sheetTabs = document.querySelectorAll('.sheet-tab');
+  const genderTabs = document.querySelectorAll('.gender-tab');
+
+  let currentCategory = 'rings';
+  let currentTab = 'style';
+  let currentGender = 'all';
+
+  // Dummy data representing the categories
+  // In a real scenario, this could be generated from Liquid or fetched via API
+  const categoryData = {
+    rings: {
+      title: "Shop Rings By",
+      style: [
+        { name: "Engagement Rings", iconUrl: "https://cdn.shopify.com/s/files/1/0805/0121/1413/files/engagement_ring_icon.png" },
+        { name: "Couple Bands", iconUrl: "https://cdn.shopify.com/s/files/1/0805/0121/1413/files/couple_bands_icon.png" },
+        { name: "Casual Rings", iconUrl: "https://cdn.shopify.com/s/files/1/0805/0121/1413/files/casual_rings_icon.png" },
+        { name: "Eternity Rings", iconUrl: "https://cdn.shopify.com/s/files/1/0805/0121/1413/files/eternity_rings_icon.png" }
+      ],
+      price: [
+        { name: "Under ₹10,000" },
+        { name: "₹10,000 - ₹20,000" },
+        { name: "₹20,000 - ₹30,000" },
+        { name: "₹30,000 - ₹50,000" },
+        { name: "Above ₹50,000" }
+      ],
+      metal: [
+        { name: "Yellow Gold", color: "#F3E5AB" },
+        { name: "White Gold", color: "#E5E4E2" },
+        { name: "Rose Gold", color: "#B76E79" },
+        { name: "Platinum", color: "#E5E4E2" }
+      ]
+    },
+    earrings: {
+      title: "Shop Earrings By",
+      style: [
+        { name: "Studs", iconUrl: "https://cdn.shopify.com/s/files/1/0805/0121/1413/files/engagement_ring_icon.png" },
+        { name: "Drops", iconUrl: "https://cdn.shopify.com/s/files/1/0805/0121/1413/files/engagement_ring_icon.png" },
+        { name: "Hoops", iconUrl: "https://cdn.shopify.com/s/files/1/0805/0121/1413/files/engagement_ring_icon.png" },
+        { name: "Jhumkas", iconUrl: "https://cdn.shopify.com/s/files/1/0805/0121/1413/files/engagement_ring_icon.png" }
+      ],
+      price: [
+        { name: "Under ₹10,000" },
+        { name: "₹10,000 - ₹20,000" },
+        { name: "Above ₹20,000" }
+      ],
+      metal: [
+        { name: "Yellow Gold", color: "#F3E5AB" },
+        { name: "White Gold", color: "#E5E4E2" }
+      ]
+    }
+  };
+
+  // Default fallback for other categories
+  const defaultCategoryData = {
+    title: "Shop Category By",
+    style: [
+      { name: "Trending", iconUrl: "https://cdn.shopify.com/s/files/1/0805/0121/1413/files/engagement_ring_icon.png" },
+      { name: "New Arrivals", iconUrl: "https://cdn.shopify.com/s/files/1/0805/0121/1413/files/engagement_ring_icon.png" }
+    ],
+    price: [ { name: "Under ₹20,000" }, { name: "Above ₹20,000" } ],
+    metal: [ { name: "Gold", color: "#F3E5AB" } ]
+  };
+
+  function renderSheetContent() {
+    const data = categoryData[currentCategory] || defaultCategoryData;
+    const items = data[currentTab] || [];
+    
+    let html = '';
+    items.forEach(item => {
+      // Create appropriate icon based on tab type
+      let iconHtml = '';
+      if (currentTab === 'style') {
+        iconHtml = `<div class="sheet-list-item__icon"><img src="${item.iconUrl}" alt="${item.name}" onerror="this.style.display='none'"></div>`;
+      } else if (currentTab === 'metal') {
+        iconHtml = `<div class="sheet-list-item__icon" style="background-color: ${item.color || '#F3E5AB'}; border: 2px solid #FFF; box-shadow: 0 0 0 1px #E0E0E0;"></div>`;
+      } else if (currentTab === 'price') {
+         // No icon for price
+         iconHtml = '';
+      }
+
+      html += `
+        <a href="{{ routes.collections_url }}/${currentCategory}" class="sheet-list-item">
+          <div class="sheet-list-item__left">
+            ${iconHtml}
+            <span class="sheet-list-item__title">${item.name}</span>
+          </div>
+          <div class="sheet-list-item__arrow">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width: 16px; height: 16px;">
+              <polyline points="9 18 15 12 9 6"></polyline>
+            </svg>
+          </div>
+        </a>
+      `;
+    });
+    
+    sheetContent.innerHTML = html;
+  }
+
+  function openSheet(category) {
+    currentCategory = category;
+    const data = categoryData[currentCategory] || defaultCategoryData;
+    
+    // Update Title (capitalize first letter if fallback)
+    if(categoryData[currentCategory]){
+       sheetTitle.textContent = data.title;
+    } else {
+       sheetTitle.textContent = `Shop ${category.charAt(0).toUpperCase() + category.slice(1)} By`;
+    }
+
+    // Reset tabs to Style and All
+    currentTab = 'style';
+    currentGender = 'all';
+    
+    sheetTabs.forEach(t => t.classList.remove('active'));
+    sheetTabs[0].classList.add('active'); // Style is first
+    
+    genderTabs.forEach(t => t.classList.remove('active'));
+    genderTabs[0].classList.add('active'); // All is first
+
+    renderSheetContent();
+
+    sheet.classList.add('open');
+    sheetOverlay.classList.add('open');
+    sheet.setAttribute('aria-hidden', 'false');
+  }
+
+  function closeSheet() {
+    sheet.classList.remove('open');
+    sheetOverlay.classList.remove('open');
+    sheet.setAttribute('aria-hidden', 'true');
+  }
+
+  // Bind Open Buttons
+  openSheetBtns.forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      e.preventDefault();
+      const cat = btn.getAttribute('data-category');
+      openSheet(cat);
+    });
+  });
+
+  // Bind Close Buttons
+  if(sheetClose) sheetClose.addEventListener('click', closeSheet);
+  if(sheetOverlay) sheetOverlay.addEventListener('click', closeSheet);
+
+  // Bind Tabs (Style, Price, Metal)
+  sheetTabs.forEach(tab => {
+    tab.addEventListener('click', () => {
+      sheetTabs.forEach(t => t.classList.remove('active'));
+      tab.classList.add('active');
+      currentTab = tab.getAttribute('data-tab');
+      renderSheetContent();
+    });
+  });
+
+  // Bind Gender Tabs (All, Women, Men)
+  genderTabs.forEach(tab => {
+    tab.addEventListener('click', () => {
+      genderTabs.forEach(t => t.classList.remove('active'));
+      tab.classList.add('active');
+      currentGender = tab.getAttribute('data-gender');
+      // In a real app, this would filter the renderSheetContent data.
+      renderSheetContent(); 
+    });
+  });
+});
+</script>

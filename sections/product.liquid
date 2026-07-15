@@ -1,816 +1,1033 @@
-{% assign current_variant = product.selected_or_first_available_variant %}
-{% assign price = current_variant.price %}
-{% assign compare_at_price = current_variant.compare_at_price %}
-{% assign title = product.title %}
-{% assign description = product.description %}
-{% assign has_images = false %}
-{% if product.images.size > 0 %}
-  {% assign has_images = true %}
-{% endif %}
+{%- assign current_variant = product.selected_or_first_available_variant -%}
 
-<div class="product-page" data-product-id="{{ product.id }}" data-url="{{ product.url }}">
-  <div class="product-page__container">
+<div class="premium-product" data-product-id="{{ product.id }}" data-url="{{ product.url }}">
+  <div class="pp-container">
     
-    <div class="product-page__layout">
-      <!-- Left Column: Gallery -->
-      <div class="product-page__gallery">
-        <div class="product-page__main-image">
-          <button class="gallery-nav prev-btn" aria-label="Previous image">
+    <!-- LEFT COLUMN -->
+    <div class="pp-left">
+      <!-- Gallery -->
+      <div class="pp-gallery">
+        <div class="pp-main-image-wrap">
+          {% if product.tags contains 'Best Seller' or true %}
+            <div class="pp-badge pp-badge--best-seller">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="#F4B840"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+              BEST SELLER
+            </div>
+          {% endif %}
+          
+          <button class="pp-nav-btn pp-nav-prev" aria-label="Previous">
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 19l-7-7 7-7"/></svg>
           </button>
           
-          <div class="main-image-wrapper">
-             {% if has_images %}
-               <img id="main-product-image" src="{{ product.featured_image | image_url: width: 800 }}" alt="{{ title | escape }}" width="{{ product.featured_image.width }}" height="{{ product.featured_image.height }}">
-             {% else %}
-               {{ 'product-1' | placeholder_svg_tag: 'placeholder-svg' }}
-             {% endif %}
+          <div class="pp-main-img-container">
+            {% if product.featured_image %}
+              <img id="pp-main-image" src="{{ product.featured_image | image_url: width: 800 }}" alt="{{ product.title | escape }}">
+            {% else %}
+              {{ 'product-1' | placeholder_svg_tag: 'placeholder-svg' }}
+            {% endif %}
           </div>
           
-          <button class="gallery-nav next-btn" aria-label="Next image">
+          <button class="pp-nav-btn pp-nav-next" aria-label="Next">
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 5l7 7-7 7"/></svg>
           </button>
+          
+          <button class="pp-fullscreen-btn" aria-label="Fullscreen">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#333" stroke-width="2"><path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"/></svg>
+          </button>
         </div>
-
-        {% if has_images and product.images.size > 1 %}
-        <div class="product-page__thumbnails">
-          {% for image in product.images %}
-            <button class="thumbnail-btn {% if forloop.first %}active{% endif %}" data-image-url="{{ image | image_url: width: 800 }}" aria-label="View image {{ forloop.index }}">
-              <img src="{{ image | image_url: width: 150 }}" alt="{{ image.alt | escape }}" width="{{ image.width }}" height="{{ image.height }}">
-            </button>
-          {% endfor %}
-        </div>
+        
+        {% if product.images.size > 0 %}
+          <div class="pp-thumbnails-wrapper">
+            <div class="pp-thumbnails">
+              {% for image in product.images %}
+                <div class="pp-thumb-item {% if forloop.first %}is-active{% endif %}" data-image="{{ image | image_url: width: 800 }}">
+                  <div class="pp-thumb-img">
+                    <img src="{{ image | image_url: width: 150 }}" alt="{{ image.alt | escape }}">
+                  </div>
+                  <div class="pp-thumb-label">{{ image.alt | default: 'View' }}</div>
+                </div>
+              {% endfor %}
+            </div>
+          </div>
+        {% else %}
+          <div class="pp-thumbnails-wrapper">
+            <div class="pp-thumbnails">
+              {% assign fallback_labels = "Front View,Left Angle,Right Angle,Side View,Back View" | split: "," %}
+              {% for label in fallback_labels %}
+                <div class="pp-thumb-item {% if forloop.first %}is-active{% endif %}" data-image="">
+                  <div class="pp-thumb-img">
+                    {{ 'product-' | append: forloop.index | placeholder_svg_tag: 'placeholder-svg' }}
+                  </div>
+                  <div class="pp-thumb-label">{{ label }}</div>
+                </div>
+              {% endfor %}
+            </div>
+          </div>
         {% endif %}
       </div>
 
-      <!-- Right Column: Info -->
-      <div class="product-page__info">
-        {% assign breadcrumb_collection = collection | default: product.collections.first %}
-        {% if breadcrumb_collection %}
-          <div class="product-page__category">{{ breadcrumb_collection.title }}</div>
-        {% else %}
-          <div class="product-page__category">{{ product.type | default: 'Product' }}</div>
-        {% endif %}
 
-        <div class="product-page__title-row">
-          <h1 class="product-page__title">{{ title }}</h1>
-          {% if current_variant.available %}
-            <span class="stock-badge">In Stock</span>
-          {% else %}
-            <span class="stock-badge out-of-stock">Out of Stock</span>
-          {% endif %}
+    </div>
+
+    <!-- RIGHT COLUMN -->
+    <div class="pp-right">
+      <div class="pp-top-actions">
+        <div class="pp-tag-certified">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="M9 12l2 2 4-4"/></svg>
+          Certified Jewellery
         </div>
-
-        <div class="product-page__reviews">
-          <div class="stars">
-            <svg viewBox="0 0 24 24" width="16" height="16" fill="#F5C518"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
-            <svg viewBox="0 0 24 24" width="16" height="16" fill="#F5C518"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
-            <svg viewBox="0 0 24 24" width="16" height="16" fill="#F5C518"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
-            <svg viewBox="0 0 24 24" width="16" height="16" fill="#F5C518"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
-            <svg viewBox="0 0 24 24" width="16" height="16" fill="#F5C518"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
-          </div>
-          <span class="reviews-text">4.9 (245 Review)</span>
+        <div class="pp-action-icons">
+          <button class="pp-icon-btn" aria-label="Share">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
+          </button>
+          <button class="pp-icon-btn" aria-label="Wishlist">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+          </button>
         </div>
+      </div>
 
-        <div class="product-page__pricing" id="product-price-display">
-          <span class="price-current">{{ price | money }}</span>
-          {% if compare_at_price > price %}
-            <span class="price-original">{{ compare_at_price | money }}</span>
-          {% endif %}
-        </div>
+      {%- for block in section.blocks -%}
+        {%- case block.type -%}
+          {%- when 'title' -%}
+            <h1 class="pp-title">{{ product.title }}</h1>
+            <div class="pp-reviews">
+              <div class="pp-stars">
+                {% for i in (1..5) %}
+                  <svg viewBox="0 0 24 24" width="16" height="16" fill="#F5C518"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                {% endfor %}
+              </div>
+              <span class="pp-review-text">4.6 (128 reviews)</span>
+              <a href="#" class="pp-review-link">Write a review</a>
+            </div>
 
-        <div class="product-page__description">
-          {% if description != blank %}
-            {{ description | strip_html | truncatewords: 25 }}
-          {% else %}
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna.
-          {% endif %}
-        </div>
+          {%- when 'price' -%}
+            <div class="pp-pricing">
+              <div class="pp-price-row">
+                <span class="pp-price-current" id="pp-price">{{ current_variant.price | money }}</span>
+                {% if current_variant.compare_at_price > current_variant.price %}
+                  <span class="pp-price-compare" id="pp-compare-price">{{ current_variant.compare_at_price | money }}</span>
+                  <span class="pp-price-discount">
+                    {% assign discount = current_variant.compare_at_price | minus: current_variant.price | times: 100.0 | divided_by: current_variant.compare_at_price | round %}
+                    {{ discount }}% OFF
+                  </span>
+                {% endif %}
+              </div>
+              <div class="pp-price-tax">Inclusive of all taxes</div>
+            </div>
 
-        {% form 'product', product, class: 'product-page__form' %}
-          <input type="hidden" name="id" id="product-variant-id" value="{{ current_variant.id }}">
-          <script type="application/json" id="ProductJson-{{ section.id }}">
-            {{ product.variants | json }}
-          </script>
+          {%- when 'discount_code' -%}
+            <div class="pp-discount-block">
+              <div class="pp-discount-content">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"/><line x1="7" y1="7" x2="7.01" y2="7"/></svg>
+                <span>Use code <strong>{{ block.settings.code }}</strong> & get extra {{ block.settings.discount_percent }}% off</span>
+              </div>
+              <button class="pp-copy-btn" onclick="navigator.clipboard.writeText('{{ block.settings.code }}')">Copy Code</button>
+            </div>
 
-          <div id="product-option-selectors">
-            {%- unless product.has_only_default_variant -%}
-              {%- for option in product.options_with_values -%}
-                <div class="product-page__option-group" data-option-index="{{ forloop.index0 }}">
-                  <span class="option-name">{{ option.name }} : <span class="selected-value">{{ option.selected_value }}</span></span>
-                  <div class="option-values">
-                    {%- for value in option.values -%}
-                      {%- assign option_name_down = option.name | downcase -%}
-                      {%- if option_name_down == 'color' or option_name_down == 'colour' -%}
-                        <button type="button" class="color-swatch {% if option.selected_value == value %}active{% endif %}" data-value="{{ value | escape }}" style="background-color: {{ value | downcase | replace: ' ', '' }}" aria-label="{{ value }}"></button>
-                      {%- else -%}
-                        <button type="button" class="text-swatch {% if option.selected_value == value %}active{% endif %}" data-value="{{ value | escape }}">{{ value }}</button>
-                      {%- endif -%}
-                    {%- endfor -%}
-                  </div>
+          {%- when 'variant_picker' -%}
+            {% form 'product', product, id: 'pp-product-form' %}
+              <input type="hidden" name="id" id="pp-variant-id" value="{{ current_variant.id }}">
+              
+              {%- unless product.has_only_default_variant -%}
+                <div class="pp-variants">
+                  {%- for option in product.options_with_values -%}
+                    <div class="pp-option-group" data-option-index="{{ forloop.index0 }}">
+                      <div class="pp-option-header">
+                        <span class="pp-option-name">{{ option.name | upcase }}</span>
+                        <svg class="pp-info-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
+                      </div>
+                      <div class="pp-option-values">
+                        {%- assign option_name_down = option.name | downcase -%}
+                        {%- if option_name_down contains 'metal' or option_name_down contains 'color' -%}
+                          {%- for value in option.values -%}
+                            <button type="button" class="pp-opt-btn pp-opt-metal {% if option.selected_value == value %}is-active{% endif %}" data-value="{{ value | escape }}">
+                              <span class="pp-metal-color" style="background: {% if value contains 'Yellow' %}#E8C37B{% elsif value contains 'Rose' %}#D8A59C{% else %}#E2E2E2{% endif %};"></span>
+                              {{ value }}
+                            </button>
+                          {%- endfor -%}
+                        {%- else -%}
+                          {%- for value in option.values -%}
+                            <div class="pp-opt-wrapper">
+                              <button type="button" class="pp-opt-btn pp-opt-text {% if option.selected_value == value %}is-active{% endif %}" data-value="{{ value | escape }}">
+                                {{ value }}
+                              </button>
+                              {% if value == '18"' %}
+                                <div class="pp-opt-popular">Most Popular</div>
+                              {% endif %}
+                            </div>
+                          {%- endfor -%}
+                        {%- endif -%}
+                      </div>
+                    </div>
+                  {%- endfor -%}
                 </div>
-              {%- endfor -%}
-            {%- endunless -%}
-          </div>
+              {%- endunless -%}
+            {% endform %}
 
-          <div class="product-page__actions-row">
-            <div class="qty-box">
-              <button type="button" class="qty-btn dec" aria-label="Decrease quantity">-</button>
-              <input type="number" name="quantity" class="qty-input" value="1" min="1" readonly>
-              <button type="button" class="qty-btn inc" aria-label="Increase quantity">+</button>
+          {%- when 'buy_buttons' -%}
+            <div class="pp-actions">
+              <div class="pp-qty">
+                <button type="button" class="pp-qty-btn dec">-</button>
+                <input type="number" name="quantity" class="pp-qty-val" value="1" min="1" form="pp-product-form">
+                <button type="button" class="pp-qty-btn inc">+</button>
+              </div>
+              <button type="submit" form="pp-product-form" class="pp-btn-add">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 20a1 1 0 100-2 1 1 0 000 2zM20 20a1 1 0 100-2 1 1 0 000 2z"/><path d="M1 1h4l2.68 13.39a2 2 0 002 1.61h9.72a2 2 0 002-1.61L23 6H6"/></svg>
+                Add To Cart
+              </button>
+              <button type="button" class="pp-btn-buy" id="pp-buy-now">Buy Now</button>
+              <button type="button" class="pp-icon-btn pp-btn-wishlist-big" aria-label="Wishlist">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+              </button>
             </div>
-            
-            <button type="submit" class="btn-add-cart" {% unless current_variant.available %}disabled{% endunless %}>
-              {% if current_variant.available %}Add To Cart{% else %}Sold Out{% endif %}
-            </button>
-            
-            <button type="button" class="btn-buy-now" {% unless current_variant.available %}disabled{% endunless %}>
-              Buy Now
-            </button>
 
-            <button type="button" class="btn-wishlist" aria-label="Wishlist">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/></svg>
-            </button>
-          </div>
-        {% endform %}
+        {%- endcase -%}
+      {%- endfor -%}
 
-        <div class="product-page__meta">
-          <div class="meta-item">
-            <span class="meta-label">SKU :</span>
-            <span class="meta-val" id="product-sku">{{ current_variant.sku | default: 'FTNC8768-1AEC' }}</span>
-          </div>
-          <div class="meta-item">
-            <span class="meta-label">Tags :</span>
-            <span class="meta-val">
-              {% if product.tags.size > 0 %}
-                {{ product.tags | join: ', ' }}
-              {% else %}
-                Furniture, Office, Gaming Chair, Chair
-              {% endif %}
-            </span>
-          </div>
-          <div class="meta-item share-row">
-            <span class="meta-label">Share :</span>
-            <div class="share-icons">
-              <a href="https://www.facebook.com/sharer.php?u={{ shop.url | append: product.url }}" target="_blank" class="share-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z"/></svg></a>
-              <a href="https://twitter.com/share?url={{ shop.url | append: product.url }}" target="_blank" class="share-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M23 3a10.9 10.9 0 01-3.14 1.53 4.48 4.48 0 00-7.86 3v1A10.66 10.66 0 013 4s-4 9 5 13a11.64 11.64 0 01-7 2c9 5 20 0 20-11.5a4.5 4.5 0 00-.08-.83A7.72 7.72 0 0023 3z"/></svg></a>
-              <a href="https://pinterest.com/pin/create/button/?url={{ shop.url | append: product.url }}" target="_blank" class="share-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.373 0 0 5.373 0 12c0 5.084 3.163 9.426 7.627 11.174-.105-.949-.2-2.405.042-3.441.218-.937 1.407-5.965 1.407-5.965s-.359-.72-.359-1.782c0-1.668.967-2.914 2.171-2.914 1.023 0 1.518.769 1.518 1.69 0 1.029-.655 2.568-.994 3.995-.283 1.194.599 2.169 1.777 2.169 2.133 0 3.772-2.249 3.772-5.495 0-2.873-2.064-4.882-5.012-4.882-3.414 0-5.418 2.561-5.418 5.207 0 1.031.397 2.138.893 2.738.098.119.112.224.083.345l-.279 1.14c-.038.154-.127.189-.286.115-1.068-.498-1.736-2.056-1.736-3.313 0-2.695 1.96-5.174 5.656-5.174 3.013 0 5.353 2.146 5.353 5.014 0 2.996-1.888 5.411-4.512 5.411-.88 0-1.708-.458-1.992-.998l-.544 2.072c-.197.751-.73 1.688-1.088 2.261C9.645 23.834 10.8 24 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0z"/></svg></a>
-              <a href="#" class="share-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="16"></line><line x1="8" y1="12" x2="16" y2="12"></line></svg></a>
-            </div>
-          </div>
-        </div>
+    </div>
+  </div>
+
+  <div class="pp-full-accordions">
+    <div class="pp-full-accordion-item is-open">
+      <button class="pp-full-accordion-header">
+        PRODUCT DETAILS
+        <span class="pp-full-accordion-icon">
+          <svg class="icon-plus" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg>
+          <svg class="icon-minus" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14"/></svg>
+        </span>
+      </button>
+      <div class="pp-full-accordion-content">
+        <p>{{ product.description | strip_html | truncatewords: 30 }}</p>
+        <table class="pp-details-table">
+          <tr><td>Gold Purity</td><td>:</td><td>18K Hallmarked Gold</td></tr>
+          <tr><td>Diamond</td><td>:</td><td>IGI Certified Natural Diamond</td></tr>
+          <tr><td>Pendant Size</td><td>:</td><td>14.2 mm x 9.5 mm</td></tr>
+          <tr><td>Average Weight</td><td>:</td><td>1.85 gm (Approx.)</td></tr>
+        </table>
+      </div>
+    </div>
+
+    <div class="pp-full-accordion-item">
+      <button class="pp-full-accordion-header">
+        DIAMOND DETAILS
+        <span class="pp-full-accordion-icon">
+          <svg class="icon-plus" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg>
+          <svg class="icon-minus" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14"/></svg>
+        </span>
+      </button>
+      <div class="pp-full-accordion-content">
+        <p>Diamond specific details go here.</p>
+      </div>
+    </div>
+
+    <div class="pp-full-accordion-item">
+      <button class="pp-full-accordion-header">
+        SHIPPING & RETURNS
+        <span class="pp-full-accordion-icon">
+          <svg class="icon-plus" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg>
+          <svg class="icon-minus" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14"/></svg>
+        </span>
+      </button>
+      <div class="pp-full-accordion-content">
+        <p>Shipping and returns policy details go here.</p>
       </div>
     </div>
   </div>
 </div>
 
+<script id="pp-variants-json" type="application/json">
+  {{ product.variants | json }}
+</script>
+
 {% stylesheet %}
-  .product-page {
-    background-color: #FFFFFF;
-    padding: 6rem 2.4rem;
-    font-family: 'Inter', 'Montserrat', sans-serif;
+  :root {
+    --pp-green: #0A3C35;
+    --pp-gold: #DDA541;
+    --pp-beige: #F9F7F1;
+    --pp-border: #E8E8E8;
+    --pp-text: #333333;
+    --pp-text-light: #666666;
+    --pp-bg: #FFFFFF;
+    --pp-radius-img: 16px;
+    --pp-radius-box: 8px;
+    --pp-radius-btn: 8px;
   }
-  .product-page__container {
+  .premium-product {
+    background-color: var(--pp-bg);
+    padding: 60px 24px;
+    font-family: 'Inter', sans-serif;
+  }
+  .pp-container {
     max-width: 1200px;
     margin: 0 auto;
-  }
-  .product-page__layout {
     display: grid;
-    grid-template-columns: 1.1fr 0.9fr;
-    gap: 6rem;
-    align-items: start;
+    grid-template-columns: 520px 1fr;
+    gap: 80px;
   }
-  
-  /* Left Column */
-  .product-page__gallery {
+  @media(max-width: 900px) {
+    .pp-container {
+      grid-template-columns: 1fr;
+      gap: 40px;
+    }
+  }
+
+  /* LEFT COLUMN */
+  .pp-left {
     display: flex;
     flex-direction: column;
-    gap: 2rem;
+    gap: 24px;
+    width: 100%;
   }
-  .product-page__main-image {
+  .pp-main-image-wrap {
+    background-color: var(--pp-beige);
+    border-radius: var(--pp-radius-img);
     position: relative;
-    background-color: #F8F8F8;
-    border-radius: 12px;
+    aspect-ratio: 1/1; /* Keeps it square */
+    max-height: 520px; /* Reduced to make the card less massive */
+    width: 100%;
+    max-width: 520px; /* Cap width to match max-height for perfect square */
+    margin: 0 auto; /* Center in the column */
     display: flex;
-    justify-content: center;
     align-items: center;
-    aspect-ratio: 1/1;
+    justify-content: center;
     overflow: hidden;
   }
-  .main-image-wrapper {
-    width: 80%;
-    height: 80%;
+  .pp-badge {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    background: var(--pp-green);
+    color: #fff;
+    padding: 6px 12px;
+    border-radius: 4px;
+    font-size: 12px;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    z-index: 2;
+  }
+  .pp-nav-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 2;
+  }
+  .pp-nav-prev {
+    left: 20px;
+    background: var(--pp-green);
+    color: white;
+  }
+  .pp-nav-next {
+    right: 20px;
+    background: var(--pp-gold);
+    color: white;
+  }
+  .pp-fullscreen-btn {
+    position: absolute;
+    bottom: 20px;
+    right: 20px;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: white;
+    border: none;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    z-index: 2;
+  }
+  .pp-main-img-container {
+    width: 65%; /* Reduced to give jewelry more breathing room inside the card */
+    height: 65%;
     display: flex;
     justify-content: center;
     align-items: center;
   }
-  .main-image-wrapper img {
+  .pp-main-img-container img, .pp-main-img-container svg {
     max-width: 100%;
     max-height: 100%;
     object-fit: contain;
   }
-  .gallery-nav {
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    background: #013F3E;
-    color: white;
-    border: none;
-    width: 4rem;
-    height: 4rem;
-    border-radius: 8px;
+  
+  /* Thumbnails */
+  .pp-thumbnails-wrapper {
+    overflow-x: auto;
+    padding-top: 4px;
+    padding-bottom: 8px;
+    margin-top: 16px;
+  }
+  .pp-thumbnails-wrapper::-webkit-scrollbar {
+    height: 4px;
+  }
+  .pp-thumbnails-wrapper::-webkit-scrollbar-thumb {
+    background: var(--pp-border);
+    border-radius: 4px;
+  }
+  .pp-thumbnails {
+    display: flex;
+    gap: 16px;
+    justify-content: space-between; /* Space out the 5 thumbnails nicely */
+  }
+  .pp-thumb-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+    flex: 1; /* Allow them to stretch evenly */
+    min-width: 70px;
+  }
+  .pp-thumb-img {
+    width: 100%;
+    aspect-ratio: 1/1;
+    border-radius: var(--pp-radius-box);
+    background: var(--pp-beige);
+    border: 2px solid transparent;
+    padding: 8px;
+    transition: all 0.2s;
     display: flex;
     align-items: center;
     justify-content: center;
-    cursor: pointer;
-    z-index: 10;
-    transition: background 0.2s;
   }
-  .gallery-nav:hover {
-    background: #012b2a;
-  }
-  .prev-btn { left: 1.5rem; }
-  .next-btn { right: 1.5rem; }
-  
-  .product-page__thumbnails {
-    display: flex;
-    gap: 1.6rem;
-    overflow-x: auto;
-    padding-bottom: 0.5rem;
-  }
-  .product-page__thumbnails::-webkit-scrollbar {
-    height: 6px;
-  }
-  .product-page__thumbnails::-webkit-scrollbar-thumb {
-    background: #E0E0E0;
-    border-radius: 4px;
-  }
-  .thumbnail-btn {
-    border: 2px solid transparent;
-    background: #F8F8F8;
-    border-radius: 8px;
-    padding: 0.8rem;
-    width: 9rem;
-    height: 9rem;
-    flex-shrink: 0;
-    cursor: pointer;
-    transition: border-color 0.2s;
-  }
-  .thumbnail-btn.active {
-    border-color: #013F3E;
-  }
-  .thumbnail-btn img {
+  .pp-thumb-img img, .pp-thumb-img svg {
     width: 100%;
     height: 100%;
     object-fit: contain;
   }
-
-  /* Right Column */
-  .product-page__info {
-    display: flex;
-    flex-direction: column;
-    gap: 1.6rem;
-  }
-  .product-page__category {
-    color: #888;
-    font-size: 1.4rem;
-    text-transform: capitalize;
-  }
-  .product-page__title-row {
-    display: flex;
-    align-items: center;
-    gap: 1.6rem;
-    flex-wrap: wrap;
-  }
-  .product-page__title {
-    font-size: 3rem;
+  .pp-thumb-label {
+    font-size: 11px;
     font-weight: 600;
-    color: #333;
-    margin: 0;
-    line-height: 1.2;
-  }
-  .stock-badge {
-    background: #E8F5E9;
-    color: #2E7D32;
-    border: 1px solid #C8E6C9;
-    padding: 0.4rem 1.2rem;
-    border-radius: 50px;
-    font-size: 1.2rem;
-    font-weight: 500;
+    color: var(--pp-text);
+    padding-bottom: 4px;
+    border-bottom: 2px solid transparent;
+    transition: all 0.2s;
     white-space: nowrap;
   }
-  .stock-badge.out-of-stock {
-    background: #FFEBEE;
-    color: #C62828;
-    border-color: #FFCDD2;
+  .pp-thumb-item.is-active .pp-thumb-img {
+    border-color: var(--pp-green);
   }
-  
-  .product-page__reviews {
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-  }
-  .stars {
-    display: flex;
-    gap: 0.2rem;
-  }
-  .reviews-text {
-    color: #666;
-    font-size: 1.3rem;
+  .pp-thumb-item.is-active .pp-thumb-label {
+    border-color: var(--pp-gold); /* Updated to gold underline based on mockup */
   }
 
-  .product-page__pricing {
+  /* Accordions */
+  .pp-accordions {
+    border: 1px solid var(--pp-border);
+    border-radius: var(--pp-radius-box);
+    background: #FAFAFA;
+    overflow: hidden;
+  }
+  .pp-accordion-item {
+    border-bottom: 1px solid var(--pp-border);
+  }
+  .pp-accordion-item:last-child {
+    border-bottom: none;
+  }
+  .pp-accordion-header {
+    width: 100%;
+    text-align: left;
+    background: none;
+    border: none;
+    padding: 20px;
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--pp-text);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+  }
+  .pp-accordion-content {
+    padding: 0 20px 20px 20px;
+    font-size: 13px;
+    color: var(--pp-text-light);
+    line-height: 1.6;
+    display: none;
+  }
+  .pp-accordion-item.is-open .pp-accordion-content {
+    display: block;
+  }
+  .icon-minus { display: none; }
+  .pp-accordion-item.is-open .icon-minus { display: block; }
+  .pp-accordion-item.is-open .icon-plus { display: none; }
+
+  .pp-details-table {
+    width: 100%;
+    margin-top: 16px;
+    border-collapse: collapse;
+  }
+  .pp-details-table td {
+    padding: 4px 0;
+  }
+  .pp-details-table td:first-child {
+    width: 130px;
+    font-weight: 500;
+  }
+  .pp-details-table td:nth-child(2) {
+    width: 20px;
+  }
+
+  /* RIGHT COLUMN */
+  .pp-right {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    max-width: 480px;
+    padding-top: 12px;
+  }
+  .pp-top-actions {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .pp-tag-certified {
     display: flex;
     align-items: center;
-    gap: 1.2rem;
-    margin-top: 0.8rem;
+    gap: 6px;
+    border: 1px solid var(--pp-green);
+    color: var(--pp-green);
+    border-radius: 20px;
+    padding: 4px 12px;
+    font-size: 13px;
+    font-weight: 500;
   }
-  .price-current {
-    font-size: 2.4rem;
+  .pp-action-icons {
+    display: flex;
+    gap: 12px;
+  }
+  .pp-icon-btn {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background: var(--pp-beige);
+    border: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    color: var(--pp-text);
+    transition: background 0.2s;
+  }
+  .pp-icon-btn:hover {
+    background: #f0eadb;
+  }
+
+  .pp-title {
+    font-family: 'Playfair Display', serif; /* or similar serif */
+    font-size: 32px;
     font-weight: 700;
-    color: #333;
+    color: var(--pp-green);
+    margin: 0;
   }
-  .price-original {
-    font-size: 1.8rem;
+  .pp-reviews {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-top: 8px;
+    font-size: 14px;
+  }
+  .pp-stars { display: flex; gap: 2px; }
+  .pp-review-text { font-weight: 600; }
+  .pp-review-link {
+    color: var(--pp-green);
+    text-decoration: underline;
+    font-weight: 500;
+  }
+
+  .pp-pricing { margin-top: 8px; }
+  .pp-price-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .pp-price-current {
+    font-size: 32px;
+    font-weight: 700;
+    color: var(--pp-text);
+  }
+  .pp-price-compare {
+    font-size: 20px;
     color: #999;
     text-decoration: line-through;
   }
-
-  .product-page__description {
-    color: #666;
-    font-size: 1.4rem;
-    line-height: 1.6;
-    margin-top: 0.8rem;
-  }
-
-  /* Variants */
-  .product-page__form {
-    margin-top: 1.6rem;
-  }
-  .product-page__option-group {
-    margin-bottom: 2.4rem;
-  }
-  .option-name {
-    display: block;
-    font-size: 1.4rem;
-    font-weight: 600;
-    margin-bottom: 1.2rem;
-    color: #333;
-  }
-  .selected-value {
-    font-weight: 400;
-    color: #666;
-  }
-  .option-values {
-    display: flex;
-    gap: 1.2rem;
-    flex-wrap: wrap;
-  }
-  .color-swatch {
-    width: 3.2rem;
-    height: 3.2rem;
-    border-radius: 50%;
-    border: 3px solid white;
-    box-shadow: 0 0 0 1px #DDD;
-    cursor: pointer;
-    transition: box-shadow 0.2s;
-  }
-  .color-swatch.active {
-    box-shadow: 0 0 0 2px #013F3E;
-  }
-  .text-swatch {
-    padding: 0.8rem 1.6rem;
-    border: 1px solid #DDD;
+  .pp-price-discount {
+    background: var(--pp-gold);
+    color: #fff;
+    padding: 4px 8px;
     border-radius: 4px;
-    background: #FFF;
-    font-size: 1.4rem;
+    font-size: 12px;
+    font-weight: 600;
+  }
+  .pp-price-tax {
+    font-size: 14px;
+    color: var(--pp-text-light);
+    margin-top: 4px;
+  }
+
+  .pp-discount-block {
+    background: var(--pp-beige);
+    border-radius: var(--pp-radius-box);
+    padding: 16px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .pp-discount-content {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 14px;
+    color: var(--pp-text);
+  }
+  .pp-copy-btn {
+    background: #fff;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 4px;
+    font-size: 13px;
+    font-weight: 600;
     cursor: pointer;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+  }
+
+  .pp-variants {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+  .pp-option-group {
+    display: flex;
+    flex-direction: column;
+  }
+  .pp-option-header {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 12px;
+  }
+  .pp-option-name {
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--pp-text);
+  }
+  .pp-info-icon {
+    color: #999;
+    cursor: pointer;
+  }
+  .pp-option-values {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+  .pp-opt-btn {
+    background: #fff;
+    border: 1px solid var(--pp-border);
+    border-radius: var(--pp-radius-btn);
+    padding: 12px 16px;
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--pp-text);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px;
     transition: all 0.2s;
   }
-  .text-swatch:hover {
-    border-color: #013F3E;
+  .pp-opt-btn:hover { border-color: var(--pp-green); }
+  .pp-opt-btn.is-active {
+    border-color: var(--pp-green);
   }
-  .text-swatch.active {
-    border-color: #013F3E;
-    background: #013F3E;
-    color: #FFF;
+  .pp-opt-metal.is-active {
+    border-width: 2px;
+  }
+  .pp-opt-text.is-active {
+    background: var(--pp-green);
+    color: #fff;
+    border-color: var(--pp-green);
+  }
+  .pp-metal-color {
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    display: inline-block;
+    box-shadow: inset 0 0 2px rgba(0,0,0,0.2);
+  }
+  .pp-opt-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+  }
+  .pp-opt-popular {
+    font-size: 11px;
+    color: var(--pp-green);
+    font-weight: 600;
   }
 
-  /* Actions */
-  .product-page__actions-row {
+  .pp-actions {
     display: flex;
     align-items: center;
-    gap: 1.6rem;
-    margin-top: 1rem;
-    flex-wrap: wrap;
+    gap: 12px;
+    flex-wrap: nowrap;
+    margin-top: 8px;
+    width: 100%;
   }
-  .qty-box {
+  .pp-qty {
     display: flex;
     align-items: center;
-    border: 1px solid #E0E0E0;
-    border-radius: 24px;
-    height: 4.8rem;
-    background: #FFF;
+    border: 1px solid var(--pp-border);
+    border-radius: var(--pp-radius-btn);
+    height: 48px;
+    background: #fff;
   }
-  .qty-btn {
+  .pp-qty-btn {
+    width: 40px;
+    height: 100%;
     background: none;
     border: none;
-    width: 4rem;
-    height: 100%;
-    font-size: 1.8rem;
+    font-size: 20px;
     cursor: pointer;
-    color: #666;
+    color: var(--pp-text);
   }
-  .qty-btn:hover {
-    color: #333;
-  }
-  .qty-input {
-    width: 3.2rem;
-    border: none;
+  .pp-qty-val {
+    width: 40px;
     text-align: center;
-    font-size: 1.4rem;
+    border: none;
+    font-size: 16px;
     font-weight: 600;
     -moz-appearance: textfield;
   }
-  .qty-input::-webkit-outer-spin-button,
-  .qty-input::-webkit-inner-spin-button {
+  .pp-qty-val::-webkit-outer-spin-button,
+  .pp-qty-val::-webkit-inner-spin-button {
     -webkit-appearance: none;
-    margin: 0;
   }
-  .btn-add-cart {
-    background: #013F3E;
-    color: white;
-    border: none;
-    height: 4.8rem;
-    padding: 0 3.2rem;
-    border-radius: 24px;
-    font-size: 1.4rem;
-    font-weight: 500;
-    cursor: pointer;
-    transition: background 0.2s;
-  }
-  .btn-add-cart:hover {
-    background: #012b2a;
-  }
-  .btn-buy-now {
-    background: #F4B840; /* Yellow matching mockup */
-    color: #333;
-    border: none;
-    height: 4.8rem;
-    padding: 0 3.2rem;
-    border-radius: 24px;
-    font-size: 1.4rem;
-    font-weight: 500;
-    cursor: pointer;
-    transition: background 0.2s;
-  }
-  .btn-buy-now:hover {
-    background: #dfa32b;
-  }
-  .btn-wishlist {
-    background: #FFF;
-    border: 1px solid #E0E0E0;
-    width: 4.8rem;
-    height: 4.8rem;
-    border-radius: 50%;
+  .pp-btn-add {
+    height: 48px;
+    padding: 0 16px;
+    border: 2px solid var(--pp-green);
+    background: #fff;
+    color: var(--pp-green);
+    border-radius: var(--pp-radius-btn);
+    font-size: 14px;
+    font-weight: 600;
     display: flex;
     align-items: center;
     justify-content: center;
+    gap: 8px;
     cursor: pointer;
-    color: #666;
+    flex: 1;
     transition: all 0.2s;
   }
-  .btn-wishlist:hover, .btn-wishlist.active {
-    border-color: #013F3E;
-    color: #013F3E;
-  }
-  .btn-wishlist.active svg {
-    fill: #013F3E;
-  }
-
-  /* Meta info (SKU, Tags, Share) */
-  .product-page__meta {
-    margin-top: 3.2rem;
-    display: flex;
-    flex-direction: column;
-    gap: 1.2rem;
-    border-top: 1px solid #EEE;
-    padding-top: 2.4rem;
-  }
-  .meta-item {
-    font-size: 1.4rem;
-    color: #666;
-    display: flex;
-    align-items: center;
-    gap: 0.8rem;
-  }
-  .meta-label {
+  .pp-btn-add:hover { background: #f0f7f6; }
+  .pp-btn-buy {
+    height: 48px;
+    padding: 0 16px;
+    background: var(--pp-gold);
+    color: var(--pp-text);
+    border: none;
+    border-radius: var(--pp-radius-btn);
+    font-size: 14px;
     font-weight: 600;
-    color: #333;
-    min-width: 60px;
-  }
-  .share-icons {
-    display: flex;
-    gap: 1.2rem;
-  }
-  .share-icon {
-    background: #E8F5E9;
-    color: #013F3E;
-    width: 2.8rem;
-    height: 2.8rem;
-    border-radius: 50%;
+    cursor: pointer;
     display: flex;
     align-items: center;
     justify-content: center;
-    text-decoration: none;
+    flex: 1;
     transition: background 0.2s;
   }
-  .share-icon:hover {
-    background: #C8E6C9;
+  .pp-btn-buy:hover { background: #cf9839; }
+  .pp-btn-wishlist-big {
+    height: 48px;
+    width: 48px;
+    border: 1px solid var(--pp-border);
+    background: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: var(--pp-radius-btn);
+    cursor: pointer;
+  }
+  .pp-btn-wishlist-big:hover { border-color: var(--pp-green); color: var(--pp-green); }
+
+  .pp-trust {
+    display: flex;
+    justify-content: space-between;
+    gap: 8px;
+    background: var(--pp-beige);
+    padding: 20px;
+    border-radius: var(--pp-radius-box);
+    margin-top: 8px;
+  }
+  .pp-trust-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 8px;
+    font-size: 11px;
+    color: var(--pp-text-light);
+    line-height: 1.3;
+    flex: 1;
+  }
+  
+  .pp-delivery {
+    background: var(--pp-beige);
+    padding: 16px 20px;
+    border-radius: var(--pp-radius-box);
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+  .pp-delivery-text {
+    display: flex;
+    flex-direction: column;
+  }
+  .pp-delivery-text .label {
+    font-size: 13px;
+    color: var(--pp-text-light);
+  }
+  .pp-delivery-text .value {
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--pp-text);
+  }
+  .pp-delivery-link {
+    margin-left: auto;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--pp-green);
+    text-decoration: underline;
   }
 
-  /* Mobile */
-  @media screen and (max-width: 990px) {
-    .product-page__layout {
-      grid-template-columns: 1fr;
-      gap: 4.8rem;
-    }
-  }
-
-  @media screen and (max-width: 600px) {
-    .product-page {
-      padding: 2.4rem 1.6rem;
-    }
-    .product-page__title {
-      font-size: 2.4rem;
-    }
-    .product-page__gallery {
-      gap: 1.2rem;
-    }
-    .product-page__thumbnails {
-      justify-content: center;
-    }
-    .thumbnail-btn {
-      width: 7rem;
-      height: 7rem;
-    }
-    .product-page__actions-row {
+  @media(max-width: 600px) {
+    .pp-actions {
       display: grid;
-      grid-template-columns: 1fr 1fr auto;
-      gap: 1.2rem;
+      grid-template-columns: 1fr auto;
+      gap: 12px;
     }
-    .qty-box {
-      grid-column: 1 / span 3;
-      width: 100%;
-      justify-content: space-between;
-    }
-    .btn-add-cart, .btn-buy-now {
-      width: 100%;
-      padding: 0;
-    }
-    .btn-wishlist {
-      grid-column: 3;
-      grid-row: 2;
-    }
-    .btn-add-cart {
-      grid-column: 1 / span 2;
-      grid-row: 2;
-    }
-    .btn-buy-now {
-      grid-column: 1 / span 3;
-      grid-row: 3;
-    }
+    .pp-qty { grid-column: 1 / -1; justify-content: space-between; }
+    .pp-btn-add, .pp-btn-buy { width: 100%; justify-content: center; }
+    .pp-btn-wishlist-big { display: none; }
+    .pp-trust { flex-wrap: wrap; }
+    .pp-trust-item { min-width: 30%; margin-bottom: 12px; }
   }
+
+  /* Full Width Accordions */
+  .pp-full-accordions {
+    max-width: 1200px;
+    margin: 60px auto 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+  .pp-full-accordion-item {
+    background: #F5F5F5;
+  }
+  .pp-full-accordion-header {
+    width: 100%;
+    text-align: left;
+    background: none;
+    border: none;
+    padding: 20px 24px;
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--pp-text);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+  }
+  .pp-full-accordion-content {
+    padding: 0 24px 24px 24px;
+    font-size: 14px;
+    color: var(--pp-text-light);
+    line-height: 1.6;
+    display: none;
+  }
+  .pp-full-accordion-item.is-open .pp-full-accordion-content {
+    display: block;
+  }
+  .pp-full-accordion-item .icon-minus { display: none; }
+  .pp-full-accordion-item.is-open .icon-minus { display: block; }
+  .pp-full-accordion-item.is-open .icon-plus { display: none; }
 {% endstylesheet %}
 
 <script>
 document.addEventListener('DOMContentLoaded', () => {
-  const productPage = document.querySelector('.product-page');
-  if (!productPage) return;
-
   // Gallery
-  const mainImg = productPage.querySelector('#main-product-image');
-  const thumbs = productPage.querySelectorAll('.thumbnail-btn');
-  const prevBtn = productPage.querySelector('.prev-btn');
-  const nextBtn = productPage.querySelector('.next-btn');
+  const thumbs = document.querySelectorAll('.pp-thumb-item');
+  const mainImg = document.getElementById('pp-main-image');
+  const prevBtn = document.querySelector('.pp-nav-prev');
+  const nextBtn = document.querySelector('.pp-nav-next');
   let activeIndex = 0;
 
-  function updateImage(idx) {
-    if (!thumbs.length) return;
-    activeIndex = (idx + thumbs.length) % thumbs.length;
-    thumbs.forEach(t => t.classList.remove('active'));
-    thumbs[activeIndex].classList.add('active');
+  function setMainImage(index) {
+    if(!thumbs.length) return;
+    activeIndex = (index + thumbs.length) % thumbs.length;
+    thumbs.forEach(t => t.classList.remove('is-active'));
+    thumbs[activeIndex].classList.add('is-active');
     
-    if (mainImg) {
+    if(mainImg) {
       mainImg.style.opacity = 0;
       setTimeout(() => {
-        mainImg.src = thumbs[activeIndex].getAttribute('data-image-url');
+        mainImg.src = thumbs[activeIndex].getAttribute('data-image');
         mainImg.style.opacity = 1;
       }, 150);
     }
   }
 
-  thumbs.forEach((btn, idx) => {
-    btn.addEventListener('click', (e) => {
-      e.preventDefault();
-      updateImage(idx);
+  thumbs.forEach((t, i) => {
+    t.addEventListener('click', () => setMainImage(i));
+  });
+
+  if(prevBtn) prevBtn.addEventListener('click', () => setMainImage(activeIndex - 1));
+  if(nextBtn) nextBtn.addEventListener('click', () => setMainImage(activeIndex + 1));
+  if(mainImg) mainImg.style.transition = 'opacity 0.2s ease-in-out';
+
+  // Accordions
+  const accHeaders = document.querySelectorAll('.pp-full-accordion-header');
+  accHeaders.forEach(h => {
+    h.addEventListener('click', () => {
+      const item = h.parentElement;
+      const isOpen = item.classList.contains('is-open');
+      
+      document.querySelectorAll('.pp-full-accordion-item').forEach(i => i.classList.remove('is-open'));
+      
+      if (!isOpen) {
+        item.classList.add('is-open');
+      }
     });
   });
-  
-  if (prevBtn) {
-    prevBtn.addEventListener('click', (e) => {
-      e.preventDefault();
-      updateImage(activeIndex - 1);
-    });
-  }
-  
-  if (nextBtn) {
-    nextBtn.addEventListener('click', (e) => {
-      e.preventDefault();
-      updateImage(activeIndex + 1);
-    });
-  }
-  
-  if (mainImg) {
-    mainImg.style.transition = 'opacity 0.15s ease-in-out';
-  }
 
-  // Variants
-  const variantJson = document.querySelector('#ProductJson-' + {{ section.id | json }});
+  // Variant Picking
+  const variantsJsonEl = document.getElementById('pp-variants-json');
   let variants = [];
   try {
-    if (variantJson) variants = JSON.parse(variantJson.innerHTML || variantJson.textContent);
-  } catch (e) {
-    console.error('Error parsing product variants');
-  }
+    if(variantsJsonEl) variants = JSON.parse(variantsJsonEl.textContent);
+  } catch(e){}
 
-  const optionGroups = productPage.querySelectorAll('.product-page__option-group');
-  
-  function formatMoney(cents) {
-    if (window.formatMoney) {
-      return window.formatMoney(cents);
-    }
-    return '₹' + (cents / 100).toLocaleString('en-IN', { minimumFractionDigits: 0, maximumFractionDigits: 0 });
-  }
+  const formatMoney = (cents) => '₹' + (cents/100).toLocaleString('en-IN', {minimumFractionDigits: 0, maximumFractionDigits: 0});
 
-  function handleVariantChange() {
-    if (!variants.length) return;
-    
-    const selectedOptions = Array.from(optionGroups).map(g => {
-      const activeBtn = g.querySelector('.active');
-      return activeBtn ? activeBtn.getAttribute('data-value') : null;
-    });
-
-    const currentVariant = variants.find(v => {
-      if (!v.options) return false;
-      return v.options.every((opt, i) => opt === selectedOptions[i]);
-    });
-    
-    if (currentVariant) {
-      const idInput = productPage.querySelector('#product-variant-id');
-      if (idInput) idInput.value = currentVariant.id;
-
-      if (history.replaceState) {
-        const url = window.location.protocol + '//' + window.location.host + window.location.pathname + '?variant=' + currentVariant.id;
-        window.history.replaceState({ path: url }, '', url);
-      }
-
-      const priceCur = productPage.querySelector('.price-current');
-      const priceOrig = productPage.querySelector('.price-original');
-      if (priceCur) priceCur.textContent = formatMoney(currentVariant.price);
-      
-      if (priceOrig) {
-        if (currentVariant.compare_at_price > currentVariant.price) {
-          priceOrig.textContent = formatMoney(currentVariant.compare_at_price);
-          priceOrig.style.display = 'inline';
-        } else {
-          priceOrig.style.display = 'none';
-        }
-      }
-
-      const skuEl = productPage.querySelector('#product-sku');
-      if (skuEl) skuEl.textContent = currentVariant.sku || 'N/A';
-      
-      const btnAdd = productPage.querySelector('.btn-add-cart');
-      const btnBuy = productPage.querySelector('.btn-buy-now');
-      const stockBadge = productPage.querySelector('.stock-badge');
-      
-      if (currentVariant.available) {
-        if (btnAdd) {
-          btnAdd.disabled = false;
-          btnAdd.textContent = 'Add To Cart';
-        }
-        if (btnBuy) btnBuy.disabled = false;
-        if (stockBadge) {
-          stockBadge.textContent = 'In Stock';
-          stockBadge.classList.remove('out-of-stock');
-        }
-      } else {
-        if (btnAdd) {
-          btnAdd.disabled = true;
-          btnAdd.textContent = 'Sold Out';
-        }
-        if (btnBuy) btnBuy.disabled = true;
-        if (stockBadge) {
-          stockBadge.textContent = 'Out of Stock';
-          stockBadge.classList.add('out-of-stock');
-        }
-      }
-    }
-  }
-
-  optionGroups.forEach(group => {
-    const btns = group.querySelectorAll('button');
-    const selectedText = group.querySelector('.selected-value');
+  const optGroups = document.querySelectorAll('.pp-option-group');
+  optGroups.forEach(group => {
+    const btns = group.querySelectorAll('.pp-opt-btn');
     btns.forEach(btn => {
-      btn.addEventListener('click', (e) => {
-        e.preventDefault();
-        btns.forEach(b => b.classList.remove('active'));
-        btn.classList.add('active');
-        if (selectedText) selectedText.textContent = btn.getAttribute('data-value');
-        handleVariantChange();
+      btn.addEventListener('click', () => {
+        btns.forEach(b => b.classList.remove('is-active'));
+        btn.classList.add('is-active');
+        
+        // Find matching variant
+        const selectedOptions = Array.from(optGroups).map(g => {
+          const activeBtn = g.querySelector('.is-active');
+          return activeBtn ? activeBtn.getAttribute('data-value') : null;
+        });
+
+        const currentVariant = variants.find(v => {
+          return v.options && v.options.every((opt, i) => opt === selectedOptions[i]);
+        });
+
+        if(currentVariant) {
+          const idInput = document.getElementById('pp-variant-id');
+          if(idInput) idInput.value = currentVariant.id;
+
+          const priceEl = document.getElementById('pp-price');
+          if(priceEl) priceEl.textContent = formatMoney(currentVariant.price);
+
+          const compPriceEl = document.getElementById('pp-compare-price');
+          const discountEl = document.querySelector('.pp-price-discount');
+          if(compPriceEl) {
+             if(currentVariant.compare_at_price > currentVariant.price) {
+               compPriceEl.textContent = formatMoney(currentVariant.compare_at_price);
+               compPriceEl.style.display = 'inline';
+               if(discountEl) {
+                 const diff = currentVariant.compare_at_price - currentVariant.price;
+                 const pct = Math.round((diff / currentVariant.compare_at_price) * 100);
+                 discountEl.textContent = pct + '% OFF';
+                 discountEl.style.display = 'inline';
+               }
+             } else {
+               compPriceEl.style.display = 'none';
+               if(discountEl) discountEl.style.display = 'none';
+             }
+          }
+          
+          if(history.replaceState) {
+            const url = window.location.protocol + '//' + window.location.host + window.location.pathname + '?variant=' + currentVariant.id;
+            window.history.replaceState({path: url}, '', url);
+          }
+        }
       });
     });
   });
 
-  // Quantity
-  const qtyInput = productPage.querySelector('.qty-input');
-  const btnDec = productPage.querySelector('.qty-btn.dec');
-  const btnInc = productPage.querySelector('.qty-btn.inc');
-  
-  if (qtyInput && btnDec && btnInc) {
-    btnDec.addEventListener('click', (e) => {
-      e.preventDefault();
+  // Qty
+  const qtyInput = document.querySelector('.pp-qty-val');
+  const qtyDec = document.querySelector('.pp-qty-btn.dec');
+  const qtyInc = document.querySelector('.pp-qty-btn.inc');
+
+  if(qtyDec && qtyInc && qtyInput) {
+    qtyDec.addEventListener('click', () => {
       let val = parseInt(qtyInput.value) || 1;
-      if (val > 1) qtyInput.value = val - 1;
+      if(val > 1) qtyInput.value = val - 1;
     });
-    btnInc.addEventListener('click', (e) => {
-      e.preventDefault();
+    qtyInc.addEventListener('click', () => {
       let val = parseInt(qtyInput.value) || 1;
       qtyInput.value = val + 1;
     });
   }
 
   // Add to Cart
-  const form = productPage.querySelector('.product-page__form');
-  const btnAdd = productPage.querySelector('.btn-add-cart');
-  if (form && btnAdd) {
+  const form = document.getElementById('pp-product-form');
+  const btnAdd = document.querySelector('.pp-btn-add');
+  if(form && btnAdd) {
     form.addEventListener('submit', (e) => {
       e.preventDefault();
-      e.stopPropagation();
-      const originalText = btnAdd.textContent;
-      btnAdd.textContent = 'Adding...';
-      const formData = new FormData(form);
-      
+      const origHtml = btnAdd.innerHTML;
+      btnAdd.innerHTML = 'Adding...';
       fetch((window.Shopify?.routes?.root || '/') + 'cart/add.js', {
         method: 'POST',
-        body: formData
+        body: new FormData(form)
       })
-      .then(res => res.json())
-      .then(data => {
-        btnAdd.textContent = 'Added';
-        if (window.openCartDrawer) window.openCartDrawer();
-        setTimeout(() => { btnAdd.textContent = originalText; }, 2000);
+      .then(() => {
+        btnAdd.innerHTML = 'Added!';
+        if(window.openCartDrawer) window.openCartDrawer();
+        setTimeout(() => btnAdd.innerHTML = origHtml, 2000);
       })
-      .catch(err => {
-        console.error(err);
-        btnAdd.textContent = 'Error';
-        setTimeout(() => { btnAdd.textContent = originalText; }, 2000);
+      .catch(() => {
+        btnAdd.innerHTML = 'Error';
+        setTimeout(() => btnAdd.innerHTML = origHtml, 2000);
       });
     });
   }
 
   // Buy Now
-  const btnBuy = productPage.querySelector('.btn-buy-now');
-  if (btnBuy && form) {
+  const btnBuy = document.getElementById('pp-buy-now');
+  if(form && btnBuy) {
     btnBuy.addEventListener('click', (e) => {
       e.preventDefault();
-      e.stopPropagation();
-      const originalText = btnBuy.textContent;
       btnBuy.textContent = 'Processing...';
-      const formData = new FormData(form);
-      
       fetch((window.Shopify?.routes?.root || '/') + 'cart/add.js', {
         method: 'POST',
-        body: formData
+        body: new FormData(form)
       })
       .then(() => {
         window.location.href = '/checkout';
       })
-      .catch(err => {
-        console.error('Error in Buy It Now:', err);
+      .catch(() => {
         btnBuy.textContent = 'Error';
-        setTimeout(() => { btnBuy.textContent = originalText; }, 2000);
+        setTimeout(() => btnBuy.textContent = 'Buy Now', 2000);
       });
-    });
-  }
-  
-  // Wishlist toggle
-  const wishlistBtn = productPage.querySelector('.btn-wishlist');
-  if (wishlistBtn) {
-    wishlistBtn.addEventListener('click', (e) => {
-      e.preventDefault();
-      wishlistBtn.classList.toggle('active');
     });
   }
 });
@@ -818,11 +1035,33 @@ document.addEventListener('DOMContentLoaded', () => {
 
 {% schema %}
 {
-  "name": "Product Details",
+  "name": "Product Premium",
   "settings": [],
+  "blocks": [
+    { "type": "title", "name": "Title & Reviews", "limit": 1 },
+    { "type": "price", "name": "Price", "limit": 1 },
+    { 
+      "type": "discount_code", 
+      "name": "Discount Code", 
+      "limit": 1,
+      "settings": [
+        { "type": "text", "id": "code", "label": "Discount Code", "default": "GOLDEN10" },
+        { "type": "range", "id": "discount_percent", "label": "Discount %", "min": 5, "max": 50, "step": 1, "default": 10 }
+      ]
+    },
+    { "type": "variant_picker", "name": "Variant Picker", "limit": 1 },
+    { "type": "buy_buttons", "name": "Buy Buttons", "limit": 1 }
+  ],
   "presets": [
     {
-      "name": "Product Details"
+      "name": "Product Premium",
+      "blocks": [
+        { "type": "title" },
+        { "type": "price" },
+        { "type": "discount_code" },
+        { "type": "variant_picker" },
+        { "type": "buy_buttons" }
+      ]
     }
   ]
 }

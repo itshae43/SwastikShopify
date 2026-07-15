@@ -1,16 +1,35 @@
-/*
- * ------------------------------------------------------------
- * IMPORTANT: The contents of this file are auto-generated.
- *
- * This file may be updated by the Shopify admin theme editor
- * or related systems. Please exercise caution as any changes
- * made to this file may be overwritten.
- * ------------------------------------------------------------
- */
 {
   "sections": {
     "main": {
       "type": "product",
+      "blocks": {
+        "title": {
+          "type": "title"
+        },
+        "price": {
+          "type": "price"
+        },
+        "discount_code": {
+          "type": "discount_code",
+          "settings": {
+            "code": "GOLDEN10",
+            "discount_percent": 10
+          }
+        },
+        "variant_picker": {
+          "type": "variant_picker"
+        },
+        "buy_buttons": {
+          "type": "buy_buttons"
+        }
+      },
+      "block_order": [
+        "title",
+        "price",
+        "discount_code",
+        "variant_picker",
+        "buy_buttons"
+      ],
       "settings": {}
     }
   },
