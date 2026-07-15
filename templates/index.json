@@ -437,7 +437,7 @@
             "image": "shopify://shop_images/sisters_3.png",
             "title": "For Sisters",
             "subtitle": "Partners in all things.",
-            "link": "/collections/for-sisters",
+            "link": "shopify://collections/for-sisters",
             "icon": "sister",
             "custom_icon_svg": ""
           }
