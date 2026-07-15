@@ -48,31 +48,7 @@
       <!-- Mobile Only Overlay Markup Removed -->
     </a>
 
-    <!-- Center Content Column (Desktop Typography Overlay) -->
-    <div class="gifts-banner__center">
-      <!-- Him Block Removed -->
 
-      <!-- Symmetrical Center Divider -->
-      <div class="gifts-banner__divider" aria-hidden="true">
-        <span class="gifts-banner__divider-line"></span>
-        <div class="gifts-banner__emblem-circle">
-          <svg class="gifts-banner__emblem-svg" viewBox="0 0 100 100" fill="none" stroke="currentColor">
-            <!-- Top Petal -->
-            <path d="M50 50 C40 30, 40 10, 50 10 C60 10, 60 30, 50 50 Z" stroke-width="1.5"/>
-            <!-- Right Petal -->
-            <path d="M50 50 C70 40, 90 40, 90 50 C90 60, 70 60, 50 50 Z" stroke-width="1.5"/>
-            <!-- Bottom Petal -->
-            <path d="M50 50 C60 70, 60 90, 50 90 C40 90, 40 70, 50 50 Z" stroke-width="1.5"/>
-            <!-- Left Petal -->
-            <path d="M50 50 C30 60, 10 60, 10 50 C10 40, 30 40, 50 50 Z" stroke-width="1.5"/>
-            <circle cx="50" cy="50" r="3.5" fill="currentColor"/>
-          </svg>
-        </div>
-        <span class="gifts-banner__divider-line"></span>
-      </div>
-
-      <!-- Her Block Removed -->
-    </div>
 
     <!-- Right Column (Her Image) -->
     <a href="{{ link_her }}" class="gifts-banner__side gifts-banner__side--her" aria-label="Gifts for {{ section.settings.title_her | default: 'Her' }}">
@@ -136,7 +112,7 @@
   position: absolute;
   top: 0;
   bottom: 0;
-  width: 48%;
+  width: 50%;
   height: 100%;
   z-index: 1;
   overflow: hidden;
@@ -145,14 +121,10 @@
 
 .gifts-banner__side--him {
   left: 0;
-  -webkit-mask-image: linear-gradient(to right, rgba(0, 0, 0, 1) 35%, rgba(0, 0, 0, 0) 85%);
-  mask-image: linear-gradient(to right, rgba(0, 0, 0, 1) 35%, rgba(0, 0, 0, 0) 85%);
 }
 
 .gifts-banner__side--her {
   right: 0;
-  -webkit-mask-image: linear-gradient(to left, rgba(0, 0, 0, 1) 35%, rgba(0, 0, 0, 0) 85%);
-  mask-image: linear-gradient(to left, rgba(0, 0, 0, 1) 35%, rgba(0, 0, 0, 0) 85%);
 }
 
 .gifts-banner__image-container {
@@ -182,128 +154,6 @@
   object-position: 80% center;
 }
 
-/* Center Content Area */
-.gifts-banner__center {
-  position: relative;
-  z-index: 2;
-  width: 100%;
-  height: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  pointer-events: none;
-}
-
-.gifts-banner__content-box {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  text-align: center;
-  text-decoration: none;
-  width: 200px;
-  pointer-events: auto;
-}
-
-.gifts-banner__tagline {
-  font-family: 'Montserrat', sans-serif;
-  font-size: 11px;
-  font-weight: 500;
-  letter-spacing: 0.25em;
-  color: var(--accent-color);
-  margin-bottom: 6px;
-  text-transform: uppercase;
-}
-
-.gifts-banner__title {
-  font-family: 'Montserrat', sans-serif;
-  font-size: 42px;
-  font-weight: 400;
-  color: var(--text-color);
-  margin: 0;
-  letter-spacing: 0.05em;
-  line-height: 1.1;
-  text-transform: uppercase;
-}
-
-.gifts-banner__line {
-  width: 24px;
-  height: 1px;
-  background-color: var(--accent-color);
-  margin: 14px 0 20px 0;
-  opacity: 0.35;
-}
-
-.gifts-banner__arrow {
-  width: 44px;
-  height: 44px;
-  border-radius: 50%;
-  border: 1px solid rgba(179, 130, 69, 0.3);
-  color: var(--text-color);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: all 0.4s cubic-bezier(0.25, 1, 0.5, 1);
-}
-
-.gifts-banner__arrow svg {
-  width: 18px;
-  height: 18px;
-  stroke: var(--text-color);
-  transition: transform 0.4s ease, stroke 0.4s ease;
-}
-
-.gifts-banner__content-box:hover .gifts-banner__arrow {
-  border-color: var(--accent-color);
-  background-color: var(--accent-color);
-  color: #fff;
-  box-shadow: 0 4px 12px rgba(179, 130, 69, 0.15);
-  cursor: pointer;
-}
-
-.gifts-banner__content-box:hover .gifts-banner__arrow svg {
-  transform: translateX(2px);
-  stroke: #fff;
-}
-
-/* Center Symmetrical Divider */
-.gifts-banner__divider {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  height: 240px;
-  width: 120px;
-  margin: 0 40px;
-  justify-content: space-between;
-  pointer-events: none;
-}
-
-.gifts-banner__divider-line {
-  width: 1px;
-  flex-grow: 1;
-  background-color: var(--accent-color);
-  opacity: 0.15;
-}
-
-.gifts-banner__emblem-circle {
-  width: 50px;
-  height: 50px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: var(--accent-color);
-  margin: 15px 0;
-}
-
-.gifts-banner__emblem-svg {
-  width: 100%;
-  height: 100%;
-  stroke: var(--accent-color);
-}
-
-.gifts-banner__side-mobile-overlay {
-  display: none;
-}
-
 /* Responsiveness */
 @media screen and (max-width: 1024px) {
   .gifts-banner {
@@ -314,23 +164,7 @@
     height: 350px;
   }
   .gifts-banner__side {
-    width: 44%;
-  }
-  .gifts-banner__content-box {
-    width: 160px;
-  }
-  .gifts-banner__title {
-    font-size: 32px;
-  }
-  .gifts-banner__divider {
-    height: 200px;
-    width: 80px;
-    margin: 0 15px;
-  }
-  .gifts-banner__emblem-circle {
-    width: 40px;
-    height: 40px;
-    margin: 10px 0;
+    width: 50%;
   }
 }
 
@@ -362,71 +196,11 @@
     display: block;
     z-index: 1;
     overflow: hidden;
-    -webkit-mask-image: none;
-    mask-image: none;
-  }
-  
-  .gifts-banner__side::after {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(to top, rgba(10, 42, 38, 0.6) 0%, rgba(10, 42, 38, 0.15) 60%, transparent 100%);
-    z-index: 2;
-    pointer-events: none;
-    display: block;
-  }
-  
-  .gifts-banner__side-mobile-overlay {
-    position: absolute;
-    left: 20px;
-    right: 20px;
-    bottom: 18px;
-    z-index: 3;
-    display: flex;
-    flex-direction: column;
-    color: #ffffff;
-    pointer-events: none;
-  }
-  
-  .gifts-banner__side-mobile-tagline {
-    font-family: 'Montserrat', sans-serif;
-    font-size: 10px;
-    font-weight: 500;
-    letter-spacing: 0.2em;
-    color: var(--accent-color);
-    text-transform: uppercase;
-    margin-bottom: 2px;
-  }
-  
-  .gifts-banner__side-mobile-title {
-    font-family: 'Montserrat', sans-serif;
-    font-size: 24px;
-    font-weight: 400;
-    margin: 0;
-    color: #ffffff;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    text-transform: uppercase;
-  }
-  
-  .gifts-banner__side-mobile-title svg {
-    width: 18px;
-    height: 18px;
-    stroke: var(--accent-color);
-    display: inline-block;
   }
   
   .gifts-banner__side--him .gifts-banner__img,
   .gifts-banner__side--her .gifts-banner__img {
     object-position: center;
-  }
-
-  .gifts-banner__center {
-    display: none;
   }
 }
 {% endstylesheet %}
