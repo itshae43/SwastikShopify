@@ -426,7 +426,7 @@
             "image": "shopify://shop_images/ChatGPT_Image_Jul_14_2026_04_44_45_PM.png",
             "title": "For Mothers",
             "subtitle": "Her love, our forever.",
-            "link": "/collections/for-mothers",
+            "link": "shopify://collections/for-mothers",
             "icon": "mother",
             "custom_icon_svg": ""
           }
