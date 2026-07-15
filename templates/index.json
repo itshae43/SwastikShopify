@@ -174,28 +174,28 @@
         "rings": {
           "type": "card",
           "settings": {
-            "image": "shopify://shop_images/b9_bracelet.png",
+            "image": "shopify://shop_images/new.png",
             "link": "shopify://collections/forever-classics"
           }
         },
         "earrings": {
           "type": "card",
           "settings": {
-            "image": "shopify://shop_images/b11_earrings.png",
+            "image": "shopify://shop_images/new_2.png",
             "link": "shopify://collections/everyday-sparkle"
           }
         },
         "pendants": {
           "type": "card",
           "settings": {
-            "image": "shopify://shop_images/sj_narrow_category_3.png",
+            "image": "shopify://shop_images/new_1_93f59d24-716e-411c-8468-c757322e5509.png",
             "link": "shopify://collections/close-to-heart"
           }
         },
         "tennis": {
           "type": "card",
           "settings": {
-            "image": "shopify://shop_images/b8_ring.png",
+            "image": "shopify://shop_images/new_3.png",
             "link": "shopify://collections/eternal-promises"
           }
         }
