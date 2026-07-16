@@ -237,7 +237,7 @@
           "settings": {
             "collection": "gold-necklaces",
             "title": "GOLD NECKLACES",
-            "image": "shopify://shop_images/new_7.png"
+            "image": "shopify://shop_images/new_8.png"
           }
         },
         "bangle": {
@@ -253,7 +253,7 @@
           "settings": {
             "collection": "pendant-sets",
             "title": "PENDANT SET",
-            "image": "shopify://shop_images/b4_pendent_set.png"
+            "image": "shopify://shop_images/new_9.png"
           }
         }
       },
@@ -596,28 +596,24 @@
         "reel_1": {
           "type": "reel",
           "settings": {
-            "video": "",
             "view_count": "2M"
           }
         },
         "reel_2": {
           "type": "reel",
           "settings": {
-            "video": "",
             "view_count": "773K"
           }
         },
         "reel_3": {
           "type": "reel",
           "settings": {
-            "video": "",
             "view_count": "63.6K"
           }
         },
         "reel_4": {
           "type": "reel",
           "settings": {
-            "video": "",
             "view_count": "9410"
           }
         }
