@@ -40,20 +40,6 @@
             "button_2_link": ""
           }
         },
-        "slide_UCYBVQ": {
-          "type": "slide",
-          "settings": {
-            "image_desktop": "shopify://shop_images/3.png",
-            "alignment": "left",
-            "subheading": "",
-            "title": "",
-            "description": "",
-            "button_1_label": "",
-            "button_1_link": "",
-            "button_2_label": "",
-            "button_2_link": ""
-          }
-        },
         "slide_gMjH6r": {
           "type": "slide",
           "settings": {
@@ -86,7 +72,6 @@
       "block_order": [
         "slide_WxzxDN",
         "slide_RYj8jh",
-        "slide_UCYBVQ",
         "slide_gMjH6r",
         "slide_eWdRCr"
       ],
