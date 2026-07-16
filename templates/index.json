@@ -224,28 +224,12 @@
             "image": "shopify://shop_images/Gold_Jewellery_14_1.png"
           }
         },
-        "earring": {
-          "type": "collection",
-          "settings": {
-            "collection": "gold-earrings",
-            "title": "GOLD EARRINGS",
-            "image": "shopify://shop_images/new_7_47fac250-b13f-485b-8ee5-bcd2f1233966.png"
-          }
-        },
         "necklace": {
           "type": "collection",
           "settings": {
             "collection": "gold-necklaces",
             "title": "GOLD NECKLACES",
             "image": "shopify://shop_images/new_8.png"
-          }
-        },
-        "bangle": {
-          "type": "collection",
-          "settings": {
-            "collection": "gold-bangles",
-            "title": "GOLD BANGLES",
-            "image": "shopify://shop_images/new_1.png"
           }
         },
         "pendant_set": {
@@ -255,14 +239,30 @@
             "title": "PENDANT SET",
             "image": "shopify://shop_images/new_9.png"
           }
+        },
+        "earring": {
+          "type": "collection",
+          "settings": {
+            "collection": "gold-earrings",
+            "title": "GOLD EARRINGS",
+            "image": "shopify://shop_images/new_7_47fac250-b13f-485b-8ee5-bcd2f1233966.png"
+          }
+        },
+        "bangle": {
+          "type": "collection",
+          "settings": {
+            "collection": "gold-bangles",
+            "title": "GOLD BANGLES",
+            "image": "shopify://shop_images/new_1.png"
+          }
         }
       },
       "block_order": [
         "ring",
-        "earring",
         "necklace",
-        "bangle",
-        "pendant_set"
+        "pendant_set",
+        "earring",
+        "bangle"
       ],
       "settings": {
         "subheading": "TIMELESS. TRADITIONAL. YOU.",
