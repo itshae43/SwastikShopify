@@ -44,9 +44,62 @@
         "buy_buttons"
       ],
       "settings": {}
+    },
+    "product_reviews": {
+      "type": "product-reviews",
+      "blocks": {
+        "review_1": {
+          "type": "whatsapp_review",
+          "settings": {
+            "customer_name": "Neha S.",
+            "review_text": "Absolutely stunning! The diamond sparkles beautifully in real. ✨",
+            "reply_text": "Thank you! 💚"
+          }
+        },
+        "review_2": {
+          "type": "whatsapp_review",
+          "settings": {
+            "customer_name": "Ankit R.",
+            "review_text": "Perfect size and quality. Looks even better in person!",
+            "reply_text": "Glad you loved it! 💚"
+          }
+        },
+        "review_3": {
+          "type": "whatsapp_review",
+          "settings": {
+            "customer_name": "Priya M.",
+            "review_text": "Elegant design, very happy with my purchase.",
+            "reply_text": "Thanks a lot! 💚"
+          }
+        },
+        "review_4": {
+          "type": "whatsapp_review",
+          "settings": {
+            "customer_name": "Rohan P.",
+            "review_text": "The finishing is premium and the packaging was lovely.",
+            "reply_text": "We appreciate it! 💚"
+          }
+        }
+      },
+      "block_order": [
+        "review_1",
+        "review_2",
+        "review_3",
+        "review_4"
+      ],
+      "settings": {
+        "average_rating": "4.8",
+        "total_reviews": "4,638",
+        "star_5_percent": "82",
+        "star_4_percent": "12",
+        "star_3_percent": "4",
+        "star_2_percent": "1",
+        "star_1_percent": "1"
+      }
     }
   },
   "order": [
-    "main"
+    "main",
+    "product_reviews"
   ]
 }
