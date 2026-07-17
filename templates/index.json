@@ -12,6 +12,20 @@
     "hero_banner": {
       "type": "hero-banner",
       "blocks": {
+        "slide_yYk8pm": {
+          "type": "slide",
+          "settings": {
+            "image_desktop": "shopify://shop_images/Untitled_design_3.png",
+            "alignment": "left",
+            "subheading": "",
+            "title": "",
+            "description": "",
+            "button_1_label": "",
+            "button_1_link": "",
+            "button_2_label": "",
+            "button_2_link": ""
+          }
+        },
         "slide_pMGFNc": {
           "type": "slide",
           "settings": {
@@ -89,6 +103,7 @@
         }
       },
       "block_order": [
+        "slide_yYk8pm",
         "slide_pMGFNc",
         "slide_WxzxDN",
         "slide_4LQDeb",
