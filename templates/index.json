@@ -12,6 +12,20 @@
     "hero_banner": {
       "type": "hero-banner",
       "blocks": {
+        "slide_9pGXiR": {
+          "type": "slide",
+          "settings": {
+            "image_desktop": "shopify://shop_images/b1_diamond_new_2.png",
+            "alignment": "left",
+            "subheading": "",
+            "title": "",
+            "description": "",
+            "button_1_label": "Shop Daily Ice",
+            "button_1_link": "",
+            "button_2_label": "Discover the Vibe",
+            "button_2_link": ""
+          }
+        },
         "slide_pMGFNc": {
           "type": "slide",
           "settings": {
@@ -89,6 +103,7 @@
         }
       },
       "block_order": [
+        "slide_9pGXiR",
         "slide_pMGFNc",
         "slide_WxzxDN",
         "slide_4LQDeb",
