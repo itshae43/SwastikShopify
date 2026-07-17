@@ -14,9 +14,8 @@
       "blocks": {
         "slide_pMGFNc": {
           "type": "slide",
-          "disabled": true,
           "settings": {
-            "image_desktop": "shopify://shop_images/b3_gold_model_new.png",
+            "image_desktop": "shopify://shop_images/b1_diamond_new.png",
             "image_mobile": "shopify://shop_images/Untitled_800_x_1400_px_800_x_1000_px.png",
             "alignment": "left",
             "subheading": "",
