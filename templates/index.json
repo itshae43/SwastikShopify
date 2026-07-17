@@ -226,7 +226,7 @@
           "settings": {
             "collection": "gold-rings",
             "title": "GOLD RINGS",
-            "image": "shopify://shop_images/Gold_Jewellery_15_1.png"
+            "image": "shopify://shop_images/latest_4.png"
           }
         },
         "necklace": {
@@ -234,7 +234,7 @@
           "settings": {
             "collection": "gold-necklaces",
             "title": "GOLD NECKLACES",
-            "image": "shopify://shop_images/new_8.png"
+            "image": "shopify://shop_images/latest_7.png"
           }
         },
         "pendant_set": {
@@ -242,7 +242,7 @@
           "settings": {
             "collection": "pendant-sets",
             "title": "PENDANT SET",
-            "image": "shopify://shop_images/new_9.png"
+            "image": "shopify://shop_images/latest_6.png"
           }
         },
         "earring": {
@@ -250,7 +250,7 @@
           "settings": {
             "collection": "gold-earrings",
             "title": "GOLD EARRINGS",
-            "image": "shopify://shop_images/new_7_47fac250-b13f-485b-8ee5-bcd2f1233966.png"
+            "image": "shopify://shop_images/latest_5.png"
           }
         },
         "bangle": {
@@ -258,7 +258,7 @@
           "settings": {
             "collection": "gold-bangles",
             "title": "GOLD BANGLES",
-            "image": "shopify://shop_images/new_1.png"
+            "image": "shopify://shop_images/lastest_1.png"
           }
         }
       },
