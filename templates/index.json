@@ -58,6 +58,7 @@
         },
         "slide_eWdRCr": {
           "type": "slide",
+          "disabled": true,
           "settings": {
             "image_desktop": "shopify://shop_images/Untitled_design_12.png",
             "image_mobile": "shopify://shop_images/Untitled_800_x_1400_px.png",
@@ -73,6 +74,7 @@
         },
         "slide_gMjH6r": {
           "type": "slide",
+          "disabled": true,
           "settings": {
             "image_desktop": "shopify://shop_images/4.png",
             "alignment": "left",
