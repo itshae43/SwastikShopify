@@ -96,8 +96,12 @@
                   <svg viewBox="0 0 24 24" width="16" height="16" fill="#F5C518"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
                 {% endfor %}
               </div>
-              <span class="pp-review-text">4.6 (128 reviews)</span>
-              <a href="#" class="pp-review-link">Write a review</a>
+              <span class="pp-review-text">4.6 (338 reviews)</span>
+            </div>
+            
+            <div class="pp-sku-wrap">
+              <span class="pp-sku-label">SKU:</span>
+              <span class="pp-sku-val" id="pp-sku">{{ current_variant.sku }}</span>
             </div>
 
           {%- when 'price' -%}
@@ -141,7 +145,6 @@
                         {%- if option_name_down contains 'metal' or option_name_down contains 'color' -%}
                           {%- for value in option.values -%}
                             <button type="button" class="pp-opt-btn pp-opt-metal {% if option.selected_value == value %}is-active{% endif %}" data-value="{{ value | escape }}">
-                              <span class="pp-metal-color" style="background: {% if value contains 'Yellow' %}#E8C37B{% elsif value contains 'Rose' %}#D8A59C{% else %}#E2E2E2{% endif %};"></span>
                               {{ value }}
                             </button>
                           {%- endfor -%}
@@ -544,6 +547,16 @@
     text-decoration: underline;
     font-weight: 500;
   }
+  
+  .pp-sku-wrap {
+    margin-top: 16px;
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--pp-green);
+    display: flex;
+    gap: 4px;
+    text-transform: uppercase;
+  }
 
   .pp-pricing { margin-top: 8px; }
   .pp-price-row {
@@ -650,20 +663,18 @@
   .pp-opt-btn.is-active {
     border-color: var(--pp-green);
   }
+  .pp-opt-metal {
+    color: var(--pp-text-light);
+  }
   .pp-opt-metal.is-active {
-    border-width: 2px;
+    border-color: var(--pp-gold);
+    color: var(--pp-gold);
+    background: #fff;
   }
   .pp-opt-text.is-active {
     background: var(--pp-green);
     color: #fff;
     border-color: var(--pp-green);
-  }
-  .pp-metal-color {
-    width: 16px;
-    height: 16px;
-    border-radius: 50%;
-    display: inline-block;
-    box-shadow: inset 0 0 2px rgba(0,0,0,0.2);
   }
   .pp-opt-wrapper {
     display: flex;
@@ -934,6 +945,27 @@ document.addEventListener('DOMContentLoaded', () => {
         if(currentVariant) {
           const idInput = document.getElementById('pp-variant-id');
           if(idInput) idInput.value = currentVariant.id;
+
+          const skuEl = document.getElementById('pp-sku');
+          if(skuEl) skuEl.textContent = currentVariant.sku || '';
+
+          if (currentVariant.featured_image) {
+            const variantImgUrl = currentVariant.featured_image.src.split('?')[0];
+            const thumbItems = document.querySelectorAll('.pp-thumb-item');
+            const matchIndex = Array.from(thumbItems).findIndex(t => {
+               const thumbSrc = t.getAttribute('data-image');
+               return thumbSrc && thumbSrc.includes(variantImgUrl);
+            });
+            if (matchIndex !== -1) {
+              setMainImage(matchIndex);
+            } else if (mainImg) {
+              mainImg.style.opacity = 0;
+              setTimeout(() => {
+                mainImg.src = currentVariant.featured_image.src;
+                mainImg.style.opacity = 1;
+              }, 150);
+            }
+          }
 
           const priceEl = document.getElementById('pp-price');
           if(priceEl) priceEl.textContent = formatMoney(currentVariant.price);
