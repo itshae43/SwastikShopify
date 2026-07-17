@@ -12,23 +12,23 @@
     "hero_banner": {
       "type": "hero-banner",
       "blocks": {
-        "slide_qP8mki": {
+        "slide_6gaRiW": {
           "type": "slide",
           "settings": {
-            "image_desktop": "shopify://shop_images/Untitled_design_4.png",
+            "image_desktop": "shopify://shop_images/bridal_jewelry_banner_1784293046086.jpg",
             "alignment": "left",
             "subheading": "",
             "title": "",
             "description": "",
             "button_1_label": "",
             "button_1_link": "",
-            "button_2_label": "",
+            "button_2_label": "Discover the Vibe",
             "button_2_link": ""
           }
         }
       },
       "block_order": [
-        "slide_qP8mki"
+        "slide_6gaRiW"
       ],
       "settings": {
         "autoplay": false,
