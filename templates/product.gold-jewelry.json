@@ -96,10 +96,18 @@
         "star_2_percent": "1",
         "star_1_percent": "1"
       }
+    },
+    "product_recommendations": {
+      "type": "product-recommendations",
+      "settings": {
+        "heading": "You May Also Like",
+        "products_to_show": 6
+      }
     }
   },
   "order": [
     "main",
-    "product_reviews"
+    "product_reviews",
+    "product_recommendations"
   ]
 }
