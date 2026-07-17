@@ -12,10 +12,40 @@
     "hero_banner": {
       "type": "hero-banner",
       "blocks": {
-        "slide_9fFDax": {
+        "slide_pMGFNc": {
           "type": "slide",
           "settings": {
-            "image_desktop": "shopify://shop_images/ChatGPT_Image_Jul_17_2026_06_48_49_PM_a9843030-275d-4b5c-a965-7b107797a264.png",
+            "image_desktop": "shopify://shop_images/new_size_1.png",
+            "image_mobile": "shopify://shop_images/Untitled_800_x_1400_px_800_x_1000_px.png",
+            "alignment": "left",
+            "subheading": "",
+            "title": "",
+            "description": "",
+            "button_1_label": "",
+            "button_1_link": "",
+            "button_2_label": "Discover the Vibe",
+            "button_2_link": ""
+          }
+        },
+        "slide_WxzxDN": {
+          "type": "slide",
+          "settings": {
+            "image_desktop": "shopify://shop_images/Bannerimage_2880_1100.png",
+            "image_mobile": "shopify://shop_images/Untitled_design_1.png",
+            "alignment": "left",
+            "subheading": "",
+            "title": "",
+            "description": "",
+            "button_1_label": "",
+            "button_1_link": "",
+            "button_2_label": "Discover the Vibe",
+            "button_2_link": ""
+          }
+        },
+        "slide_4LQDeb": {
+          "type": "slide",
+          "settings": {
+            "image_desktop": "shopify://shop_images/hero_banner_2880_x_1620_px_2800_x_1100_px_4_7394eb20-59ce-478c-832e-baa4eee621d6.png",
             "alignment": "left",
             "subheading": "",
             "title": "",
@@ -28,7 +58,9 @@
         }
       },
       "block_order": [
-        "slide_9fFDax"
+        "slide_pMGFNc",
+        "slide_WxzxDN",
+        "slide_4LQDeb"
       ],
       "settings": {
         "autoplay": false,
@@ -44,7 +76,7 @@
         "clay_whispers": {
           "type": "collection_card",
           "settings": {
-            "image": "shopify://shop_images/sj_collection_desktop_396_x_460_px_20.png",
+            "image": "shopify://shop_images/sj_collection_desktop_396_x_460_px_21.png",
             "title": "",
             "subtitle": "",
             "link": "shopify://collections/lab-grown-diamonds",
