@@ -12,23 +12,23 @@
     "hero_banner": {
       "type": "hero-banner",
       "blocks": {
-        "slide_WUCXXM": {
+        "slide_9fFDax": {
           "type": "slide",
           "settings": {
-            "image_desktop": "shopify://shop_images/perfect_bridal_banner_safe_zone_1784293725793.jpg",
+            "image_desktop": "shopify://shop_images/ChatGPT_Image_Jul_17_2026_06_48_49_PM_a9843030-275d-4b5c-a965-7b107797a264.png",
             "alignment": "left",
             "subheading": "",
             "title": "",
             "description": "",
             "button_1_label": "",
             "button_1_link": "",
-            "button_2_label": "",
+            "button_2_label": "Discover the Vibe",
             "button_2_link": ""
           }
         }
       },
       "block_order": [
-        "slide_WUCXXM"
+        "slide_9fFDax"
       ],
       "settings": {
         "autoplay": false,
