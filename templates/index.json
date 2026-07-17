@@ -12,10 +12,10 @@
     "hero_banner": {
       "type": "hero-banner",
       "blocks": {
-        "slide_yYk8pm": {
+        "slide_CJACVt": {
           "type": "slide",
           "settings": {
-            "image_desktop": "shopify://shop_images/Untitled_design_3.png",
+            "image_desktop": "shopify://shop_images/Untitled_1500_x_844_px.png",
             "alignment": "left",
             "subheading": "",
             "title": "",
@@ -103,7 +103,7 @@
         }
       },
       "block_order": [
-        "slide_yYk8pm",
+        "slide_CJACVt",
         "slide_pMGFNc",
         "slide_WxzxDN",
         "slide_4LQDeb",
