@@ -12,10 +12,10 @@
     "hero_banner": {
       "type": "hero-banner",
       "blocks": {
-        "slide_6gaRiW": {
+        "slide_VBAXP7": {
           "type": "slide",
           "settings": {
-            "image_desktop": "shopify://shop_images/bridal_jewelry_banner_1784293046086.jpg",
+            "image_desktop": "shopify://shop_images/hero_banner_2880_x_1620_px_2800_x_1100_px_4_7394eb20-59ce-478c-832e-baa4eee621d6.png",
             "alignment": "left",
             "subheading": "",
             "title": "",
@@ -28,7 +28,7 @@
         }
       },
       "block_order": [
-        "slide_6gaRiW"
+        "slide_VBAXP7"
       ],
       "settings": {
         "autoplay": false,
