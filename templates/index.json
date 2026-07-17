@@ -45,7 +45,7 @@
         "slide_4LQDeb": {
           "type": "slide",
           "settings": {
-            "image_desktop": "shopify://shop_images/hero_banner_2880_x_1620_px_2800_x_1100_px_4.png",
+            "image_desktop": "shopify://shop_images/hero_banner_2880_x_1620_px_2800_x_1100_px_4_7394eb20-59ce-478c-832e-baa4eee621d6.png",
             "alignment": "left",
             "subheading": "",
             "title": "",
@@ -55,45 +55,12 @@
             "button_2_label": "Discover the Vibe",
             "button_2_link": ""
           }
-        },
-        "slide_eWdRCr": {
-          "type": "slide",
-          "disabled": true,
-          "settings": {
-            "image_desktop": "shopify://shop_images/Untitled_design_12.png",
-            "image_mobile": "shopify://shop_images/Untitled_800_x_1400_px.png",
-            "alignment": "left",
-            "subheading": "",
-            "title": "",
-            "description": "",
-            "button_1_label": "",
-            "button_1_link": "",
-            "button_2_label": "",
-            "button_2_link": ""
-          }
-        },
-        "slide_gMjH6r": {
-          "type": "slide",
-          "disabled": true,
-          "settings": {
-            "image_desktop": "shopify://shop_images/4.png",
-            "alignment": "left",
-            "subheading": "",
-            "title": "",
-            "description": "",
-            "button_1_label": "",
-            "button_1_link": "",
-            "button_2_label": "",
-            "button_2_link": ""
-          }
         }
       },
       "block_order": [
         "slide_pMGFNc",
         "slide_WxzxDN",
-        "slide_4LQDeb",
-        "slide_eWdRCr",
-        "slide_gMjH6r"
+        "slide_4LQDeb"
       ],
       "settings": {
         "autoplay": false,
