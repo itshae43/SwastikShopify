@@ -1,7 +1,17 @@
 <div class="collection-banner" style="background-color: {{ section.settings.bg_color }};">
-  {%- if section.settings.image != blank -%}
+  {%- if section.settings.image != blank or section.settings.image_mobile != blank -%}
     <div class="collection-banner__image-wrapper">
-      {{ section.settings.image | image_url: width: 2000 | image_tag: loading: 'eager', class: 'collection-banner__image' }}
+      <picture>
+        {%- if section.settings.image_mobile != blank -%}
+          <source media="(max-width: 768px)" srcset="{{ section.settings.image_mobile | image_url: width: 800 }}">
+        {%- endif -%}
+        {%- if section.settings.image != blank -%}
+          <source media="(min-width: 769px)" srcset="{{ section.settings.image | image_url: width: 2800 }}">
+          <img src="{{ section.settings.image | image_url: width: 2000 }}" loading="eager" class="collection-banner__image" alt="{{ section.settings.image.alt | escape | default: collection.title }}">
+        {%- else -%}
+          <img src="{{ section.settings.image_mobile | image_url: width: 800 }}" loading="eager" class="collection-banner__image" alt="{{ section.settings.image_mobile.alt | escape | default: collection.title }}">
+        {%- endif -%}
+      </picture>
     </div>
   {%- endif -%}
   
@@ -135,7 +145,12 @@
     {
       "type": "image_picker",
       "id": "image",
-      "label": "Background Image"
+      "label": "Desktop Background Image (2800x800 recommended)"
+    },
+    {
+      "type": "image_picker",
+      "id": "image_mobile",
+      "label": "Mobile Background Image (800x600 recommended)"
     },
     {
       "type": "richtext",
