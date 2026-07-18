@@ -1,15 +1,18 @@
 <div class="collection-banner" style="background-color: {{ section.settings.bg_color }};">
-  {%- if section.settings.image != blank or section.settings.image_mobile != blank -%}
+  {%- assign desktop_image = collection.image | default: section.settings.image -%}
+  {%- assign mobile_image = section.settings.image_mobile | default: desktop_image -%}
+
+  {%- if desktop_image != blank or mobile_image != blank -%}
     <div class="collection-banner__image-wrapper">
       <picture>
-        {%- if section.settings.image_mobile != blank -%}
-          <source media="(max-width: 768px)" srcset="{{ section.settings.image_mobile | image_url: width: 800 }}">
+        {%- if mobile_image != blank -%}
+          <source media="(max-width: 768px)" srcset="{{ mobile_image | image_url: width: 800 }}">
         {%- endif -%}
-        {%- if section.settings.image != blank -%}
-          <source media="(min-width: 769px)" srcset="{{ section.settings.image | image_url: width: 2800 }}">
-          <img src="{{ section.settings.image | image_url: width: 2000 }}" loading="eager" class="collection-banner__image" alt="{{ section.settings.image.alt | escape | default: collection.title }}">
+        {%- if desktop_image != blank -%}
+          <source media="(min-width: 769px)" srcset="{{ desktop_image | image_url: width: 2800 }}">
+          <img src="{{ desktop_image | image_url: width: 2000 }}" loading="eager" class="collection-banner__image" alt="{{ desktop_image.alt | escape | default: collection.title }}">
         {%- else -%}
-          <img src="{{ section.settings.image_mobile | image_url: width: 800 }}" loading="eager" class="collection-banner__image" alt="{{ section.settings.image_mobile.alt | escape | default: collection.title }}">
+          <img src="{{ mobile_image | image_url: width: 800 }}" loading="eager" class="collection-banner__image" alt="{{ mobile_image.alt | escape | default: collection.title }}">
         {%- endif -%}
       </picture>
     </div>
