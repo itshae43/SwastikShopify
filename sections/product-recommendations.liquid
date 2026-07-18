@@ -16,6 +16,12 @@
       "step": 1,
       "default": 5,
       "label": "Maximum products to show"
+    },
+    {
+      "type": "collection",
+      "id": "fallback_collection",
+      "label": "Fallback Collection",
+      "info": "Choose a collection to show if Shopify's AI recommendations are empty (common in new stores)."
     }
   ],
   "presets": [
@@ -27,7 +33,16 @@
 {% endschema %}
 
 <product-recommendations class="pr-recommendations-section" data-url="{{ routes.product_recommendations_url }}?section_id={{ section.id }}&product_id={{ product.id }}&limit={{ section.settings.products_to_show }}&intent=related">
+  {%- assign has_products = false -%}
   {%- if recommendations.performed and recommendations.products_count > 0 -%}
+    {%- assign has_products = true -%}
+    {%- assign display_products = recommendations.products -%}
+  {%- elsif section.settings.fallback_collection != blank and section.settings.fallback_collection.products_count > 0 -%}
+    {%- assign has_products = true -%}
+    {%- assign display_products = section.settings.fallback_collection.products -%}
+  {%- endif -%}
+
+  {%- if has_products -%}
     <div class="pr-recommendations-container">
       <h2 class="pr-recommendations-title">{{ section.settings.heading | escape }}</h2>
       
@@ -37,7 +52,7 @@
         </button>
 
         <div class="pr-rec-carousel" id="pr-rec-carousel">
-          {%- for recommendation in recommendations.products -%}
+          {%- for recommendation in display_products limit: section.settings.products_to_show -%}
             <div class="pr-rec-card">
               <button class="pr-rec-wishlist" aria-label="Add to wishlist">
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#DDA541" stroke-width="1.5">
@@ -267,10 +282,12 @@
           html.innerHTML = text;
           const recommendations = html.querySelector('.pr-recommendations-section');
 
-          if (recommendations && recommendations.innerHTML.trim().length) {
+          // Only replace if the fetch actually returned products.
+          // Otherwise, keep the fallback collection that was rendered on load.
+          if (recommendations && recommendations.querySelector('.pr-rec-card')) {
             this.innerHTML = recommendations.innerHTML;
-            this.setupCarousel();
           }
+          this.setupCarousel();
         })
         .catch(e => {
           console.error(e);
