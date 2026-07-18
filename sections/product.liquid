@@ -26,6 +26,9 @@
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 5l7 7-7 7"/></svg>
           </button>
           
+          <button class="pp-fullscreen-btn" aria-label="Fullscreen">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#333" stroke-width="2"><path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"/></svg>
+          </button>
 
         </div>
         
@@ -304,6 +307,61 @@
     right: 20px;
     background: var(--pp-gold);
     color: white;
+  }
+
+  .pp-fullscreen-btn {
+    position: absolute;
+    bottom: 20px;
+    right: 20px;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: white;
+    border: none;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    z-index: 2;
+  }
+  .pp-zoom-overlay {
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(0,0,0,0.9);
+    z-index: 9999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+  }
+  .pp-zoom-overlay.is-active {
+    opacity: 1;
+    pointer-events: auto;
+  }
+  .pp-zoom-overlay img {
+    max-width: 90vw;
+    max-height: 90vh;
+    object-fit: contain;
+    transform: scale(0.9);
+    transition: transform 0.3s ease;
+  }
+  .pp-zoom-overlay.is-active img {
+    transform: scale(1);
+  }
+  .pp-zoom-close {
+    position: absolute;
+    top: 20px; right: 20px;
+    background: white;
+    border: none;
+    width: 44px; height: 44px;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
 
   .pp-main-img-container {
@@ -1029,6 +1087,43 @@ document.addEventListener('DOMContentLoaded', () => {
         btnBuy.textContent = 'Error';
         setTimeout(() => btnBuy.textContent = 'Buy Now', 2000);
       });
+    });
+  }
+});
+</script>
+
+<div class="pp-zoom-overlay" id="pp-zoom-overlay">
+  <button class="pp-zoom-close" id="pp-zoom-close" aria-label="Close Zoom">
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6L6 18M6 6l12 12"/></svg>
+  </button>
+  <img id="pp-zoom-img" src="" alt="Zoomed Image">
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  const zoomBtn = document.querySelector('.pp-fullscreen-btn');
+  const zoomOverlay = document.getElementById('pp-zoom-overlay');
+  const zoomClose = document.getElementById('pp-zoom-close');
+  const zoomImg = document.getElementById('pp-zoom-img');
+  const mainImg = document.getElementById('pp-main-image');
+
+  if(zoomBtn && zoomOverlay && zoomClose && zoomImg && mainImg) {
+    zoomBtn.addEventListener('click', () => {
+      let src = mainImg.src;
+      // Change to a higher resolution if needed
+      src = src.replace('width=800', 'width=1600');
+      zoomImg.src = src;
+      zoomOverlay.classList.add('is-active');
+    });
+
+    zoomClose.addEventListener('click', () => {
+      zoomOverlay.classList.remove('is-active');
+    });
+
+    zoomOverlay.addEventListener('click', (e) => {
+      if(e.target === zoomOverlay) {
+        zoomOverlay.classList.remove('is-active');
+      }
     });
   }
 });
