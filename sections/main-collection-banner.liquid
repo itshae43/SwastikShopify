@@ -1,6 +1,6 @@
 <div class="collection-banner" style="background-color: {{ section.settings.bg_color }};">
   {%- assign desktop_image = collection.image | default: section.settings.image -%}
-  {%- assign mobile_image = section.settings.image_mobile | default: desktop_image -%}
+  {%- assign mobile_image = collection.metafields.custom.mobile_banner | default: section.settings.image_mobile | default: desktop_image -%}
 
   {%- if desktop_image != blank or mobile_image != blank -%}
     <div class="collection-banner__image-wrapper">
