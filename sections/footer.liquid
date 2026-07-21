@@ -1,6 +1,5 @@
 {% comment %}
-  Renders the main store footer, featuring brand profile, quick links, customer support links, contact details, social media links, and copyright info.
-  Styled on a dark brand green background with gold/accent headings and elegant hover states.
+  Renders the main store footer.
 {% endcomment %}
 
 <footer class="footer-wrapper" style="{% if section.settings.color_footer_bg != blank %}--footer-bg: {{ section.settings.color_footer_bg }};{% endif %} {% if section.settings.color_footer_text != blank %}--footer-text: {{ section.settings.color_footer_text }};{% endif %} {% if section.settings.color_footer_accent != blank %}--footer-accent-setting: {{ section.settings.color_footer_accent }};{% endif %}">
@@ -8,104 +7,180 @@
     <div class="footer__grid">
       <!-- Col 1: Brand Info & Contact Info -->
       <div class="footer__col footer__col--brand">
-        <h3 class="footer__logo serif-font">{{ section.settings.brand_name }}</h3>
-        <p class="footer__description">
+        <a href="{{ routes.root_url }}" class="footer__logo-link">
+          <div class="footer__logo-icon">
+            {%- if section.settings.logo != blank -%}
+              {{ section.settings.logo | image_url: width: 300 | image_tag: class: 'footer__logo-img', style: 'max-width: ' | append: section.settings.logo_width | append: 'px; height: auto;' }}
+            {%- else -%}
+              <img src="{{ 'logo.png' | asset_url }}" 
+                   alt="{{ section.settings.brand_name }}" 
+                   class="footer__logo-img" 
+                   width="65"
+                   height="65"
+                   style="max-width: {{ section.settings.logo_width }}px; height: auto; object-fit: contain;">
+            {%- endif -%}
+          </div>
+          <div class="footer__logo-text-wrapper">
+            <span class="footer__logo-title">SWASTIK</span>
+            <div class="footer__logo-subtitle-wrapper">
+              <span class="footer__logo-line"></span>
+              <span class="footer__logo-subtitle">JEWELS</span>
+              <span class="footer__logo-line"></span>
+            </div>
+          </div>
+        </a>
+        
+        <div class="footer__description">
           {{ section.settings.brand_description }}
-        </p>
-        <ul class="footer__contact-list-inline">
-          {% if section.settings.contact_address != blank %}
-            <li>{{ section.settings.contact_address | escape }}</li>
-          {% endif %}
-          {% if section.settings.contact_phone != blank %}
-            <li><a href="tel:{{ section.settings.contact_phone | replace: ' ', '' }}">{{ section.settings.contact_phone | escape }}</a></li>
-          {% endif %}
-          {% if section.settings.contact_email != blank %}
-            <li><a href="mailto:{{ section.settings.contact_email }}">{{ section.settings.contact_email | escape }}</a></li>
-          {% endif %}
-        </ul>
-        <div class="footer__social-icons">
-          {% if section.settings.social_facebook_link != blank %}
-            <a href="{{ section.settings.social_facebook_link }}" class="footer__social-link" aria-label="Facebook">
-              <svg class="icon icon-facebook" viewBox="0 0 24 24" fill="currentColor">
-                <path d="M22 12c0-5.52-4.48-10-10-10S2 6.48 2 12c0 4.84 3.44 8.87 8 9.8V15H8v-3h2V9.5C10 7.57 11.57 6 13.5 6H16v3h-2c-.55 0-1 .45-1 1v2h3v3h-3v6.95c5.05-.5 9-4.76 9-9.95z"/>
-              </svg>
-            </a>
-          {% endif %}
-          {% if section.settings.social_instagram_link != blank %}
-            <a href="{{ section.settings.social_instagram_link }}" class="footer__social-link" aria-label="Instagram">
-              <svg class="icon icon-instagram" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
-                <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
-                <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
-              </svg>
-            </a>
-          {% endif %}
-          {% if section.settings.social_twitter_link != blank %}
-            <a href="{{ section.settings.social_twitter_link }}" class="footer__social-link" aria-label="Twitter">
-              <svg class="icon icon-twitter" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"></path>
-              </svg>
-            </a>
-          {% endif %}
-          {% if section.settings.social_youtube_link != blank %}
-            <a href="{{ section.settings.social_youtube_link }}" class="footer__social-link" aria-label="YouTube">
-              <svg class="icon icon-youtube" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M22.54 6.42a2.78 2.78 0 0 0-1.95-1.96C18.88 4 12 4 12 4s-6.88 0-8.59.46a2.78 2.78 0 0 0-1.95 1.96A29 29 0 0 0 1 11.75a29 29 0 0 0 .46 5.33A2.78 2.78 0 0 0 3.41 19c1.71.46 8.59.46 8.59.46s6.88 0 8.59-.46a2.78 2.78 0 0 0 1.95-1.96 29 29 0 0 0 .46-5.33 29 29 0 0 0-.46-5.33z"></path>
-                <polygon points="9.75 15.02 15.5 11.75 9.75 8.48 9.75 15.02"></polygon>
-              </svg>
-            </a>
-          {% endif %}
+        </div>
+        
+        <div class="footer__social-section">
+          <h4 class="footer__social-heading">FOLLOW US</h4>
+          <div class="footer__social-icons">
+            {% if section.settings.social_instagram_link != blank %}
+              <a href="{{ section.settings.social_instagram_link }}" class="footer__social-link" aria-label="Instagram">
+                <svg class="icon icon-instagram" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                  <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+                  <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+                  <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+                </svg>
+              </a>
+            {% endif %}
+            {% if section.settings.social_facebook_link != blank %}
+              <a href="{{ section.settings.social_facebook_link }}" class="footer__social-link" aria-label="Facebook">
+                <svg class="icon icon-facebook" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path>
+                </svg>
+              </a>
+            {% endif %}
+            {% if section.settings.social_pinterest_link != blank %}
+              <a href="{{ section.settings.social_pinterest_link }}" class="footer__social-link" aria-label="Pinterest">
+                <svg class="icon icon-pinterest" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M12 2a10 10 0 1 0 10 10 10 10 0 0 0-10-10zm0 18a8 8 0 1 1 8-8 8 8 0 0 1-8 8zm1-11c-1 0-2 .5-2 1.5s.5 1.5 1.5 1.5c1 0 1.5-.5 1.5-1.5s-1-1.5-1-1.5zm-1 3c-1.5 0-3 1-3 2.5s1 2.5 2.5 2.5 3-1 3-2.5-1-2.5-2.5-2.5z"></path>
+                </svg>
+              </a>
+            {% endif %}
+            {% if section.settings.social_youtube_link != blank %}
+              <a href="{{ section.settings.social_youtube_link }}" class="footer__social-link" aria-label="YouTube">
+                <svg class="icon icon-youtube" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M22.54 6.42a2.78 2.78 0 0 0-1.95-1.96C18.88 4 12 4 12 4s-6.88 0-8.59.46a2.78 2.78 0 0 0-1.95 1.96A29 29 0 0 0 1 11.75a29 29 0 0 0 .46 5.33A2.78 2.78 0 0 0 3.41 19c1.71.46 8.59.46 8.59.46s6.88 0 8.59-.46a2.78 2.78 0 0 0 1.95-1.96 29 29 0 0 0 .46-5.33 29 29 0 0 0-.46-5.33z"></path>
+                  <polygon points="9.75 15.02 15.5 11.75 9.75 8.48 9.75 15.02"></polygon>
+                </svg>
+              </a>
+            {% endif %}
+          </div>
         </div>
       </div>
 
-      <!-- Col 2: Quick Links Navigation -->
+      <!-- Col 2: Know Your Jewellery -->
       <div class="footer__col">
-        <h4 class="footer__heading serif-font">Quick Links</h4>
+        <h4 class="footer__heading serif-font">KNOW YOUR JEWELLERY</h4>
         <ul class="footer__links-list">
-          {% if section.settings.menu != blank %}
-            {% for link in section.settings.menu.links %}
-              <li><a href="{{ link.url }}" class="footer__link">{{ link.title }}</a></li>
+          {% if section.settings.know_jewellery_menu != blank %}
+            {% for link in section.settings.know_jewellery_menu.links %}
+              <li><a href="{{ link.url }}" class="footer__link"><svg class="icon-chevron-right" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg> {{ link.title }}</a></li>
             {% endfor %}
           {% else %}
-            <li><a href="/pages/about-us" class="footer__link">About Us</a></li>
-            <li><a href="{{ routes.collections_url }}" class="footer__link">Collections</a></li>
-            <li><a href="{{ routes.collections_url }}/bridal" class="footer__link">Bridal Jewelry</a></li>
-            <li><a href="{{ routes.collections_url }}/new-arrivals" class="footer__link">New Arrivals</a></li>
-            <li><a href="/pages/contact" class="footer__link">Contact Us</a></li>
+            <li><a href="#" class="footer__link"><svg class="icon-chevron-right" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg> Diamond Guide</a></li>
+            <li><a href="#" class="footer__link"><svg class="icon-chevron-right" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg> Gold Guide</a></li>
+            <li><a href="#" class="footer__link"><svg class="icon-chevron-right" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg> Ring Size Guide</a></li>
+            <li><a href="#" class="footer__link"><svg class="icon-chevron-right" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg> Carat War</a></li>
           {% endif %}
         </ul>
       </div>
 
-      <!-- Col 3: Customer Care Navigation -->
+      <!-- Col 3: Policy -->
       <div class="footer__col">
-        <h4 class="footer__heading serif-font">Customer Care</h4>
+        <h4 class="footer__heading serif-font">POLICY</h4>
         <ul class="footer__links-list">
-          {% if section.settings.customer_menu != blank %}
-            {% for link in section.settings.customer_menu.links %}
-              <li><a href="{{ link.url }}" class="footer__link">{{ link.title }}</a></li>
+          {% if section.settings.policy_menu != blank %}
+            {% for link in section.settings.policy_menu.links %}
+              <li><a href="{{ link.url }}" class="footer__link"><svg class="icon-chevron-right" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg> {{ link.title }}</a></li>
             {% endfor %}
           {% else %}
-            <li><a href="/pages/shipping-policy" class="footer__link">Shipping Policy</a></li>
-            <li><a href="/pages/returns-exchanges" class="footer__link">Return & Exchange</a></li>
-            <li><a href="/pages/jewelry-care" class="footer__link">Jewelry Care</a></li>
-            <li><a href="/pages/size-guide" class="footer__link">Size Guide</a></li>
-            <li><a href="/pages/faq" class="footer__link">FAQ</a></li>
+            <li><a href="/policies/privacy-policy" class="footer__link"><svg class="icon-chevron-right" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg> Privacy Policy</a></li>
+            <li><a href="/policies/terms-of-service" class="footer__link"><svg class="icon-chevron-right" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg> Terms & Conditions</a></li>
+            <li><a href="/policies/refund-policy" class="footer__link"><svg class="icon-chevron-right" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg> Return Policy</a></li>
+            <li><a href="#" class="footer__link"><svg class="icon-chevron-right" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg> Buyback Policy</a></li>
+            <li><a href="/policies/shipping-policy" class="footer__link"><svg class="icon-chevron-right" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg> Shipping Policy</a></li>
           {% endif %}
         </ul>
       </div>
 
+      <!-- Col 4: Help -->
+      <div class="footer__col">
+        <h4 class="footer__heading serif-font">HELP</h4>
+        <ul class="footer__links-list">
+          {% if section.settings.help_menu != blank %}
+            {% for link in section.settings.help_menu.links %}
+              <li><a href="{{ link.url }}" class="footer__link"><svg class="icon-chevron-right" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg> {{ link.title }}</a></li>
+            {% endfor %}
+          {% else %}
+            <li><a href="/pages/contact" class="footer__link"><svg class="icon-chevron-right" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg> Contact Us</a></li>
+            <li><a href="/pages/faq" class="footer__link"><svg class="icon-chevron-right" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg> FAQ's</a></li>
+            <li><a href="#" class="footer__link"><svg class="icon-chevron-right" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg> Find Store</a></li>
+          {% endif %}
+        </ul>
+      </div>
+
+      <!-- Col 5: Stay Updated (Newsletter) -->
+      <div class="footer__col footer__col--newsletter">
+        <h4 class="footer__heading serif-font">{{ section.settings.newsletter_heading }}</h4>
+        <p class="footer__newsletter-text">{{ section.settings.newsletter_text }}</p>
+        
+        {%- form 'customer', id: 'FooterNewsletterForm', class: 'footer__newsletter-form' -%}
+          <input type="hidden" name="contact[tags]" value="newsletter">
+          <div class="footer__newsletter-input-group">
+            <input type="email" name="contact[email]" class="footer__newsletter-input" placeholder="Enter your email" required>
+            <button type="submit" class="footer__newsletter-btn" aria-label="Subscribe">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width: 20px; height: 20px;"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            </button>
+          </div>
+          {%- if form.posted_successfully? -%}
+            <p class="footer__newsletter-success">Thanks for subscribing!</p>
+          {%- endif -%}
+        {%- endform -%}
+      </div>
 
     </div>
+  </div>
 
-    <!-- Bottom copyright and policy links -->
-    <div class="footer__bottom">
-      <div class="footer__copyright">
-        &copy; {{ 'now' | date: '%Y' }} {{ section.settings.brand_name }}. All rights reserved.
+  <!-- Bottom Details Bar -->
+  <div class="footer__bottom-bar">
+    <div class="container footer__bottom-container">
+      <div class="footer__bottom-left">
+        <div class="footer__bottom-logo">
+          {%- if section.settings.logo != blank -%}
+            {{ section.settings.logo | image_url: width: 50 | image_tag: alt: section.settings.brand_name, style: 'width:30px;height:auto;' }}
+          {%- else -%}
+            <img src="{{ 'logo.png' | asset_url }}" alt="Swastik" width="30" height="30" style="object-fit: contain;">
+          {%- endif -%}
+        </div>
+        <div class="footer__copyright">
+          &copy; 2011 - {{ 'now' | date: '%Y' }} {{ section.settings.brand_name }}. All Rights Reserved.
+        </div>
       </div>
+      
       <div class="footer__bottom-links">
-        <a href="{{ section.settings.privacy_policy_url | default: '#' }}" class="footer__bottom-link">Privacy Policy</a>
-        <a href="{{ section.settings.terms_of_service_url | default: '#' }}" class="footer__bottom-link">Terms of Service</a>
-        <a href="{{ section.settings.sitemap_url | default: '#' }}" class="footer__bottom-link">Sitemap</a>
+        <a href="{{ section.settings.sitemap_url | default: '#' }}" class="footer__bottom-link">SITEMAP</a>
+        <span class="footer__bottom-divider">|</span>
+        <a href="{{ section.settings.accessibility_url | default: '#' }}" class="footer__bottom-link">ACCESSIBILITY</a>
+        <span class="footer__bottom-divider">|</span>
+        <a href="{{ section.settings.disclaimer_url | default: '#' }}" class="footer__bottom-link">DISCLAIMER</a>
+      </div>
+
+      <div class="footer__bottom-right">
+        <span class="footer__accept-text">WE ACCEPT</span>
+        <div class="footer__payment-icons">
+          <!-- Default Payment Icons if none selected; usually Shopify provides a loop, but we can hardcode some generic ones if needed, or use shop.enabled_payment_types -->
+          {%- for type in shop.enabled_payment_types -%}
+            {{ type | payment_type_svg_tag: class: 'icon-payment' }}
+          {%- else -%}
+            {{ 'visa' | payment_type_svg_tag: class: 'icon-payment' }}
+            {{ 'master' | payment_type_svg_tag: class: 'icon-payment' }}
+            {{ 'american_express' | payment_type_svg_tag: class: 'icon-payment' }}
+          {%- endfor -%}
+        </div>
       </div>
     </div>
   </div>
@@ -117,8 +192,6 @@
     color: var(--footer-text, var(--color-secondary-bg, #FDFBF7));
     --footer-accent: var(--footer-accent-setting, var(--color-accent, #D4AF37));
     padding-top: 6.5rem;
-    padding-bottom: 3rem;
-    border-top: 1px solid rgba(255, 255, 255, 0.05);
     font-family: 'Montserrat', sans-serif;
   }
 
@@ -133,76 +206,123 @@
 
   .footer__grid {
     display: grid;
-    grid-template-columns: 1.5fr 1fr 1fr;
-    gap: 5rem;
-    padding-bottom: 4rem;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    grid-template-columns: 2fr 1.2fr 1.2fr 1.2fr 1.8fr;
+    gap: 3rem;
+    padding-bottom: 5rem;
   }
 
   .footer__col {
     display: flex;
     flex-direction: column;
-    gap: 2rem;
+    gap: 1.8rem;
+  }
+  
+  .footer__col--brand {
+    gap: 2.5rem;
   }
 
-  /* Typography */
-  .footer__logo {
-    color: var(--footer-accent);
-    font-family: 'Montserrat', sans-serif;
-    font-size: 2.2rem;
-    font-weight: 700;
-    letter-spacing: 0.02em;
-    margin: 0;
+  /* Logo styling */
+  .footer__logo-link {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1.2rem;
+    text-decoration: none;
+    width: max-content;
+  }
+  .footer__logo-icon {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+  }
+  .footer__logo-text-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+  }
+  .footer__logo-title {
+    color: var(--footer-text);
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    font-size: 2.8rem;
+    font-weight: 500;
+    line-height: 1.1;
+    letter-spacing: 0.08em;
+  }
+  .footer__logo-subtitle-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 5px;
+    width: 100%;
+  }
+  .footer__logo-line {
+    flex-grow: 1;
+    height: 1px;
+    background-color: var(--footer-accent);
+  }
+  .footer__logo-subtitle {
+    color: var(--footer-text);
+    font-size: 0.9rem;
+    letter-spacing: 0.4em;
+    font-weight: 500;
   }
 
   .footer__heading {
-    color: var(--footer-accent);
-    font-family: 'Montserrat', sans-serif;
-    font-size: 1.8rem;
+    color: var(--footer-text);
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    font-size: 1.4rem;
     font-weight: 600;
-    letter-spacing: 0.03em;
+    letter-spacing: 0.05em;
     margin: 0;
-    padding-bottom: 0.5rem;
+    text-transform: uppercase;
+    position: relative;
+    padding-bottom: 0.8rem;
+  }
+  .footer__heading::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 28px;
+    height: 1px;
+    background-color: var(--footer-accent);
   }
 
   .footer__description {
-    font-size: 1.4rem;
-    line-height: 1.7;
-    color: rgba(253, 251, 247, 0.75);
+    font-size: 1.35rem;
+    line-height: 1.8;
+    color: var(--footer-text);
     margin: 0;
     max-width: 32rem;
   }
-
-  /* Navigation Lists */
-  .footer__links-list {
+  .footer__description ul {
     list-style: none;
+    padding: 0;
+    margin-top: 1.5rem;
     display: flex;
     flex-direction: column;
-    gap: 1.4rem;
-    margin: 0;
-    padding: 0;
-  }
-
-  .footer__link {
-    font-size: 1.4rem;
-    color: rgba(253, 251, 247, 0.75);
-    text-decoration: none;
-    transition: color 0.25s ease, transform 0.25s ease;
-    display: inline-block;
-  }
-
-  .footer__link:hover {
-    color: var(--footer-accent);
-    transform: translateX(4px);
+    gap: 0.8rem;
   }
 
   /* Social Icons */
+  .footer__social-section {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    margin-top: 1rem;
+  }
+  .footer__social-heading {
+    font-size: 1.2rem;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    color: var(--footer-text);
+    margin: 0;
+  }
   .footer__social-icons {
     display: flex;
     gap: 1.2rem;
-    margin-top: 0.5rem;
   }
-
   .footer__social-link {
     display: inline-flex;
     align-items: center;
@@ -210,90 +330,205 @@
     width: 3.6rem;
     height: 3.6rem;
     border-radius: 50%;
-    background-color: rgba(255, 255, 255, 0.04);
-    border: 1px solid rgba(255, 255, 255, 0.08);
-    color: rgba(253, 251, 247, 0.85);
-    transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+    border: 1px solid var(--footer-text);
+    color: var(--footer-text);
+    transition: all 0.3s ease;
     text-decoration: none;
   }
-
   .footer__social-link:hover {
-    background-color: rgba(212, 175, 55, 0.15);
     border-color: var(--footer-accent);
     color: var(--footer-accent);
-    transform: translateY(-2px);
   }
-
   .footer__social-link svg {
-    width: 1.6rem;
-    height: 1.6rem;
+    width: 1.8rem;
+    height: 1.8rem;
   }
 
-  /* Inline Contact Info */
-  .footer__contact-list-inline {
-    list-style-type: disc;
-    padding-left: 2rem;
-    margin: 0;
+  /* Navigation Lists */
+  .footer__links-list {
+    list-style: none;
     display: flex;
     flex-direction: column;
-    gap: 0.8rem;
-    color: rgba(253, 251, 247, 0.75);
-    font-size: 1.4rem;
+    gap: 1.2rem;
+    margin: 0;
+    padding: 0;
+    padding-top: 0.5rem;
   }
 
-  .footer__contact-list-inline li {
-    line-height: 1.6;
-    padding-left: 0.5rem;
-  }
-
-  .footer__contact-list-inline li::marker {
-    color: rgba(253, 251, 247, 0.75);
-    font-size: 1.2em;
-  }
-
-  .footer__contact-list-inline a {
-    color: inherit;
+  .footer__link {
+    font-size: 1.35rem;
+    color: var(--footer-text);
     text-decoration: none;
     transition: color 0.25s ease;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
   }
-
-  .footer__contact-list-inline a:hover {
+  .footer__link .icon-chevron-right {
+    width: 1.1rem;
+    height: 1.1rem;
+    color: var(--footer-text);
+    opacity: 0.7;
+    transition: transform 0.2s;
+    stroke-width: 1.5;
+  }
+  .footer__link:hover {
     color: var(--footer-accent);
   }
+  .footer__link:hover .icon-chevron-right {
+    color: var(--footer-accent);
+    transform: translateX(4px);
+    opacity: 1;
+  }
 
-  /* Footer Bottom Details */
-  .footer__bottom {
+  /* Newsletter */
+  .footer__newsletter-text {
+    font-size: 1.35rem;
+    line-height: 1.6;
+    color: var(--footer-text);
+    margin-top: 0.5rem;
+    margin-bottom: 1.5rem;
+  }
+  .footer__newsletter-input-group {
+    display: flex;
+    position: relative;
+    max-width: 100%;
+  }
+  .footer__newsletter-input {
+    width: 100%;
+    padding: 1.2rem 1.5rem;
+    background: #FFFFFF;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    color: var(--footer-text);
+    font-family: inherit;
+    font-size: 1.35rem;
+    outline: none;
+    transition: border-color 0.3s;
+  }
+  .footer__newsletter-input::placeholder {
+    color: var(--footer-text);
+    opacity: 0.6;
+  }
+  .footer__newsletter-input:focus {
+    border-color: var(--footer-accent);
+  }
+  .footer__newsletter-btn {
+    position: absolute;
+    right: 0;
+    top: 0;
+    height: 100%;
+    width: 3.8rem;
+    background: var(--footer-text);
+    color: #FFFFFF;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.3s, color 0.3s;
+  }
+  .footer__newsletter-btn:hover {
+    background: var(--footer-accent);
+    color: #000;
+  }
+  .footer__newsletter-btn svg {
+    width: 1.5rem;
+    height: 1.5rem;
+  }
+  .footer__newsletter-success {
+    color: var(--footer-accent);
+    font-size: 1.2rem;
+    margin-top: 1rem;
+  }
+
+  /* Bottom Bar */
+  .footer__bottom-bar {
+    background-color: var(--footer-text);
+    padding: 1.5rem 0;
+    border-top: none;
+  }
+  .footer__bottom-container {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding-top: 2.8rem;
+    flex-wrap: wrap;
+    gap: 2rem;
+    width: 100%;
+    max-width: 1600px;
+    margin: 0 auto;
+    padding-left: 4rem;
+    padding-right: 4rem;
+    box-sizing: border-box;
+  }
+  
+  .footer__bottom-left {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+  }
+  .footer__bottom-logo img {
+    display: block;
+  }
+  .footer__copyright {
     font-size: 1.25rem;
-    color: rgba(253, 251, 247, 0.5);
+    color: var(--footer-bg);
   }
 
   .footer__bottom-links {
     display: flex;
-    gap: 2.4rem;
+    align-items: center;
+    gap: 1.5rem;
   }
-
   .footer__bottom-link {
-    color: rgba(253, 251, 247, 0.5);
+    font-size: 1.2rem;
+    color: var(--footer-bg);
     text-decoration: none;
-    transition: color 0.25s ease;
+    letter-spacing: 0.05em;
+    transition: color 0.2s;
   }
-
   .footer__bottom-link:hover {
     color: var(--footer-accent);
   }
+  .footer__bottom-divider {
+    color: var(--footer-bg);
+    opacity: 0.5;
+    font-size: 1.1rem;
+  }
+
+  .footer__bottom-right {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+  }
+  .footer__accept-text {
+    font-size: 1.2rem;
+    color: var(--footer-bg);
+    letter-spacing: 0.05em;
+  }
+  .footer__payment-icons {
+    display: flex;
+    gap: 0.8rem;
+    align-items: center;
+  }
+  .footer__payment-icons svg {
+    width: 38px;
+    height: 24px;
+    border-radius: 3px;
+  }
 
   /* Responsive Adjustments */
-  @media (max-width: 1100px) {
+  @media (max-width: 1200px) {
     .footer__grid {
-      grid-template-columns: 1fr 1fr;
-      gap: 4rem;
+      grid-template-columns: 2fr 1fr 1fr 1.5fr;
     }
-    .footer__col:first-child {
-      grid-column: span 2;
+    .footer__col:nth-child(4) {
+      grid-column: span 3;
+    }
+    .footer__bottom-container {
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      gap: 1.5rem;
     }
   }
 
@@ -301,7 +536,13 @@
     .footer__grid {
       grid-template-columns: 1fr 1fr;
     }
-    .footer__col:first-child {
+    .footer__col--brand {
+      grid-column: span 2;
+    }
+    .footer__col:nth-child(4) {
+      grid-column: span 1;
+    }
+    .footer__col--newsletter {
       grid-column: span 2;
     }
   }
@@ -309,7 +550,6 @@
   @media (max-width: 768px) {
     .footer-wrapper {
       padding-top: 5rem;
-      padding-bottom: 2.5rem;
     }
     .footer.container {
       padding-left: 2rem;
@@ -317,20 +557,28 @@
     }
     .footer__grid {
       grid-template-columns: 1fr;
-      gap: 3.5rem;
+      gap: 4rem;
       padding-bottom: 3.5rem;
     }
-    .footer__bottom {
+    .footer__col {
+      grid-column: 1 !important;
+    }
+    .footer__bottom-container {
+      padding-left: 2rem;
+      padding-right: 2rem;
       flex-direction: column;
-      gap: 1.8rem;
-      align-items: flex-start;
-      padding-top: 2.4rem;
+      gap: 2rem;
+    }
+    .footer__bottom-left {
+      flex-direction: column;
+      text-align: center;
     }
     .footer__bottom-links {
-      width: 100%;
-      justify-content: flex-start;
       flex-wrap: wrap;
-      gap: 1.6rem;
+      justify-content: center;
+    }
+    .footer__bottom-right {
+      flex-direction: column;
     }
   }
 {% endstylesheet %}
@@ -340,21 +588,34 @@
   "name": "Footer",
   "settings": [
     {
+      "type": "image_picker",
+      "id": "logo",
+      "label": "Logo Image"
+    },
+    {
+      "type": "range",
+      "id": "logo_width",
+      "min": 50,
+      "max": 300,
+      "step": 10,
+      "default": 150,
+      "label": "Logo Width"
+    },
+    {
       "type": "text",
       "id": "brand_name",
       "label": "Brand Name",
-      "default": "Swastik Jewels"
+      "default": "SWASTIK JEWELS"
     },
     {
       "type": "textarea",
       "id": "brand_description",
       "label": "Brand Description",
-      "default": "Crafting timeless elegance since 1985. Your trusted partner for luxury jewelry."
+      "default": "Timeless elegance. Trusted since 2011.\n22KT Hallmarked Gold & 14KT Diamond Jewellery crafted for every moment."
     },
     {
-      "type": "url",
-      "id": "social_facebook_link",
-      "label": "Facebook Link"
+      "type": "header",
+      "content": "Social Media"
     },
     {
       "type": "url",
@@ -363,8 +624,13 @@
     },
     {
       "type": "url",
-      "id": "social_twitter_link",
-      "label": "Twitter/X Link"
+      "id": "social_facebook_link",
+      "label": "Facebook Link"
+    },
+    {
+      "type": "url",
+      "id": "social_pinterest_link",
+      "label": "Pinterest Link"
     },
     {
       "type": "url",
@@ -372,36 +638,39 @@
       "label": "YouTube Link"
     },
     {
-      "type": "link_list",
-      "id": "menu",
-      "label": "Quick Links Menu"
+      "type": "header",
+      "content": "Menus"
     },
     {
       "type": "link_list",
-      "id": "customer_menu",
-      "label": "Customer Care Menu"
+      "id": "know_jewellery_menu",
+      "label": "Know Your Jewellery Menu"
+    },
+    {
+      "type": "link_list",
+      "id": "policy_menu",
+      "label": "Policy Menu"
+    },
+    {
+      "type": "link_list",
+      "id": "help_menu",
+      "label": "Help Menu"
     },
     {
       "type": "header",
-      "content": "Contact Info"
+      "content": "Newsletter"
     },
     {
       "type": "text",
-      "id": "contact_address",
-      "label": "Address",
-      "default": "123 Jewelry Street, Mumbai, Maharashtra 400001"
+      "id": "newsletter_heading",
+      "label": "Newsletter Heading",
+      "default": "STAY UPDATED"
     },
     {
-      "type": "text",
-      "id": "contact_phone",
-      "label": "Phone Number",
-      "default": "+91 22 1234 5678"
-    },
-    {
-      "type": "text",
-      "id": "contact_email",
-      "label": "Email Address",
-      "default": "contact@swastikjewels.com"
+      "type": "textarea",
+      "id": "newsletter_text",
+      "label": "Newsletter Text",
+      "default": "Subscribe to get updates on new collections, offers and more."
     },
     {
       "type": "header",
@@ -409,18 +678,18 @@
     },
     {
       "type": "url",
-      "id": "privacy_policy_url",
-      "label": "Privacy Policy URL"
-    },
-    {
-      "type": "url",
-      "id": "terms_of_service_url",
-      "label": "Terms of Service URL"
-    },
-    {
-      "type": "url",
       "id": "sitemap_url",
       "label": "Sitemap URL"
+    },
+    {
+      "type": "url",
+      "id": "accessibility_url",
+      "label": "Accessibility URL"
+    },
+    {
+      "type": "url",
+      "id": "disclaimer_url",
+      "label": "Disclaimer URL"
     },
     {
       "type": "header",
@@ -430,13 +699,13 @@
       "type": "color",
       "id": "color_footer_bg",
       "label": "Background Color",
-      "default": "#013F3E"
+      "default": "#FDFBF7"
     },
     {
       "type": "color",
       "id": "color_footer_text",
       "label": "Text Color",
-      "default": "#FDFBF7"
+      "default": "#012726"
     },
     {
       "type": "color",

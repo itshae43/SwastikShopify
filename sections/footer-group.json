@@ -28,8 +28,8 @@
         "privacy_policy_url": "",
         "terms_of_service_url": "",
         "sitemap_url": "",
-        "color_footer_bg": "#013f3e",
-        "color_footer_text": "#fdfbf7",
+        "color_footer_bg": "#FDFBF7",
+        "color_footer_text": "#012726",
         "color_footer_accent": "#d4af37"
       }
     }
