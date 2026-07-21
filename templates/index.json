@@ -615,54 +615,36 @@
           "type": "testimonial",
           "settings": {
             "rating": 5,
-            "text": "The ring is even more beautiful in real life. The sparkle, the finish, everything is just perfect. Swastik made our proposal moment truly unforgettable",
-            "author": "Arjun",
-            "location": "DELHI"
+            "text": "Beautiful craftsmanship and genuine diamonds. Worth every penny.",
+            "author": "Neha Agarwal",
+            "location": "JAIPUR"
           }
         },
         "testimonial_2": {
           "type": "testimonial",
           "settings": {
             "rating": 5,
-            "text": "The design consultation was incredibly helpful. They understood exactly what I wanted and the final pendant exceeded my expectations.",
-            "author": "Priya",
-            "location": "MUMBAI"
+            "text": "The engagement ring was everything I hoped for and more.",
+            "author": "Kunal Malhotra",
+            "location": "PUNE"
           }
         },
         "testimonial_3": {
           "type": "testimonial",
           "settings": {
             "rating": 5,
-            "text": "Excellent service and stunning craftsmanship. The team was supportive at every step, and the lifetime warranty gives absolute peace of mind.",
-            "author": "Rohan",
-            "location": "BANGALORE"
+            "text": "Customer support was amazing. They answered every question patiently.",
+            "author": "Simran Bhatia",
+            "location": "GURUGRAM"
           }
         },
         "testimonial_4": {
           "type": "testimonial",
           "settings": {
             "rating": 5,
-            "text": "I bought my wedding necklace from Swastik Jewels. The experience was magical. The transparency in gold weight and diamond quality certification made me choose them.",
-            "author": "Aditi",
+            "text": "Loved the packaging and the certification details.",
+            "author": "Aditi Sharma",
             "location": "DELHI"
-          }
-        },
-        "testimonial_5": {
-          "type": "testimonial",
-          "settings": {
-            "rating": 5,
-            "text": "The customer service is outstanding. They answered all my design questions over video call and helped me select the perfect daily wear earrings.",
-            "author": "Vikram",
-            "location": "CHENNAI"
-          }
-        },
-        "testimonial_6": {
-          "type": "testimonial",
-          "settings": {
-            "rating": 5,
-            "text": "Absolutely love the stackable rings. They look so elegant and premium. I get compliments every time I wear them. Highly recommend Swastik!",
-            "author": "Meera",
-            "location": "HYDERABAD"
           }
         }
       },
@@ -670,19 +652,22 @@
         "testimonial_1",
         "testimonial_2",
         "testimonial_3",
-        "testimonial_4",
-        "testimonial_5",
-        "testimonial_6"
+        "testimonial_4"
       ],
       "settings": {
-        "title": "In Their Own Words",
-        "subheading": "VOICES OF SWASTIK",
-        "description": "From first purchase to forever memories, here's what our customers have to say.",
-        "bg_color": "#fdfcfa",
-        "text_color": "#0a2a26",
-        "accent_color": "#b38245",
-        "autoplay": true,
-        "autoplay_speed": 6
+        "title": "Trusted by\n4,800+\ncustomers",
+        "subheading": "IN THEIR OWN WORDS",
+        "stat_1_value": "",
+        "stat_1_label": "",
+        "stat_2_value": "",
+        "stat_2_label": "",
+        "stat_3_value": "",
+        "stat_3_label": "",
+        "stat_4_value": "",
+        "stat_4_label": "",
+        "bg_color": "#fdfbf7",
+        "text_color": "#013f3e",
+        "accent_color": "#d4af37"
       }
     }
   },
