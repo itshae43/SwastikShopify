@@ -38,7 +38,7 @@
     <!-- Category: Rings -->
     <button class="mobile-category-card js-open-category-sheet" data-category="rings" style="background-color: #E8F0E9;">
       <div class="mobile-category-card__image">
-        <img src="https://cdn.shopify.com/s/files/1/0805/0121/1413/files/engagement_ring_icon.png" alt="Rings" loading="lazy">
+        <img src="https://cdn.shopify.com/s/files/1/0805/0121/1413/files/engagement_ring_icon.png" alt="Rings" loading="lazy" width="100" height="100">
       </div>
       <div class="mobile-category-card__footer">
         <span class="mobile-category-card__title">Rings</span>
@@ -53,7 +53,7 @@
     <!-- Category: Earrings -->
     <button class="mobile-category-card js-open-category-sheet" data-category="earrings" style="background-color: #F8EFE6;">
       <div class="mobile-category-card__image">
-        <img src="https://cdn.shopify.com/s/files/1/0805/0121/1413/files/engagement_ring_icon.png" alt="Earrings" loading="lazy" style="filter: hue-rotate(45deg);">
+        <img src="https://cdn.shopify.com/s/files/1/0805/0121/1413/files/engagement_ring_icon.png" alt="Earrings" loading="lazy" width="100" height="100" style="filter: hue-rotate(45deg);">
       </div>
       <div class="mobile-category-card__footer">
         <span class="mobile-category-card__title">Earrings</span>
@@ -68,7 +68,7 @@
     <!-- Category: Bracelets & Bangles -->
     <button class="mobile-category-card js-open-category-sheet" data-category="bracelets" style="background-color: #FCE8E9;">
       <div class="mobile-category-card__image">
-        <img src="https://cdn.shopify.com/s/files/1/0805/0121/1413/files/engagement_ring_icon.png" alt="Bracelets & Bangles" loading="lazy" style="filter: hue-rotate(90deg);">
+        <img src="https://cdn.shopify.com/s/files/1/0805/0121/1413/files/engagement_ring_icon.png" alt="Bracelets & Bangles" loading="lazy" width="100" height="100" style="filter: hue-rotate(90deg);">
       </div>
       <div class="mobile-category-card__footer">
         <span class="mobile-category-card__title">Bracelets & Bangles</span>
@@ -83,7 +83,7 @@
     <!-- Category: Necklaces -->
     <button class="mobile-category-card js-open-category-sheet" data-category="necklaces" style="background-color: #EEF3ED;">
       <div class="mobile-category-card__image">
-        <img src="https://cdn.shopify.com/s/files/1/0805/0121/1413/files/engagement_ring_icon.png" alt="Necklaces" loading="lazy" style="filter: hue-rotate(135deg);">
+        <img src="https://cdn.shopify.com/s/files/1/0805/0121/1413/files/engagement_ring_icon.png" alt="Necklaces" loading="lazy" width="100" height="100" style="filter: hue-rotate(135deg);">
       </div>
       <div class="mobile-category-card__footer">
         <span class="mobile-category-card__title">Necklaces</span>
@@ -98,7 +98,7 @@
     <!-- Category: Pendants -->
     <button class="mobile-category-card js-open-category-sheet" data-category="pendants" style="background-color: #FAF4F0;">
       <div class="mobile-category-card__image">
-        <img src="https://cdn.shopify.com/s/files/1/0805/0121/1413/files/engagement_ring_icon.png" alt="Pendants" loading="lazy" style="filter: hue-rotate(180deg);">
+        <img src="https://cdn.shopify.com/s/files/1/0805/0121/1413/files/engagement_ring_icon.png" alt="Pendants" loading="lazy" width="100" height="100" style="filter: hue-rotate(180deg);">
       </div>
       <div class="mobile-category-card__footer">
         <span class="mobile-category-card__title">Pendants</span>
@@ -113,7 +113,7 @@
     <!-- Category: Solitaires -->
     <button class="mobile-category-card js-open-category-sheet" data-category="solitaires" style="background-color: #F8ECE0;">
       <div class="mobile-category-card__image">
-        <img src="https://cdn.shopify.com/s/files/1/0805/0121/1413/files/engagement_ring_icon.png" alt="Solitaires" loading="lazy" style="filter: hue-rotate(225deg);">
+        <img src="https://cdn.shopify.com/s/files/1/0805/0121/1413/files/engagement_ring_icon.png" alt="Solitaires" loading="lazy" width="100" height="100" style="filter: hue-rotate(225deg);">
       </div>
       <div class="mobile-category-card__footer">
         <span class="mobile-category-card__title">Solitaires</span>
@@ -128,7 +128,7 @@
     <!-- Category: Diamonds -->
     <button class="mobile-category-card js-open-category-sheet" data-category="diamonds" style="background-color: #E2EFE7;">
       <div class="mobile-category-card__image">
-        <img src="https://cdn.shopify.com/s/files/1/0805/0121/1413/files/engagement_ring_icon.png" alt="Diamonds" loading="lazy" style="filter: hue-rotate(270deg);">
+        <img src="https://cdn.shopify.com/s/files/1/0805/0121/1413/files/engagement_ring_icon.png" alt="Diamonds" loading="lazy" width="100" height="100" style="filter: hue-rotate(270deg);">
       </div>
       <div class="mobile-category-card__footer">
         <span class="mobile-category-card__title">Diamonds</span>
@@ -593,16 +593,22 @@
 <script>
 document.addEventListener('DOMContentLoaded', () => {
   // 1. Full Screen Overlay Toggle
-  const categoriesToggle = document.querySelector('.js-mobile-categories-toggle');
+  const categoriesToggles = document.querySelectorAll('.js-mobile-categories-toggle, .js-mobile-search-toggle');
   const categoriesOverlay = document.getElementById('MobileCategoriesOverlay');
   const categoriesClose = document.getElementById('MobileCategoriesClose');
 
-  if (categoriesToggle && categoriesOverlay) {
-    categoriesToggle.addEventListener('click', (e) => {
-      e.preventDefault();
-      categoriesOverlay.classList.add('open');
-      categoriesOverlay.setAttribute('aria-hidden', 'false');
-      document.body.style.overflow = 'hidden'; // Prevent background scrolling
+  if (categoriesToggles.length > 0 && categoriesOverlay) {
+    categoriesToggles.forEach(toggle => {
+      toggle.addEventListener('click', (e) => {
+        e.preventDefault();
+        categoriesOverlay.classList.add('open');
+        categoriesOverlay.setAttribute('aria-hidden', 'false');
+        document.body.style.overflow = 'hidden'; // Prevent background scrolling
+        const searchInput = categoriesOverlay.querySelector('input[type="search"]');
+        if (searchInput) {
+          setTimeout(() => searchInput.focus(), 150);
+        }
+      });
     });
   }
 

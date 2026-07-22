@@ -239,6 +239,11 @@
         navbarBadge.textContent = items.length;
         navbarBadge.style.display = items.length > 0 ? 'flex' : 'none';
     }
+    const mobileWishlistBadge = document.getElementById('mobile-wishlist-badge');
+    if (mobileWishlistBadge) {
+        mobileWishlistBadge.textContent = items.length;
+        mobileWishlistBadge.style.display = items.length > 0 ? 'flex' : 'none';
+    }
 
     if (items.length === 0) {
       body.innerHTML = `

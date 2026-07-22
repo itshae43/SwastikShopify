@@ -289,6 +289,9 @@
         <span class="header__badge" id="cart-count-badge" {% if cart_count == 0 %}style="display: none;"{% endif %}>{{ cart_count }}</span>
       </a>
 
+      <!-- Vertical Divider Line -->
+      <span class="header__icon-divider"></span>
+
       <!-- Profile Link -->
       <a href="{{ routes.account_url }}" class="header__icon-link header__profile-trigger" aria-label="Account">
         <svg class="icon icon-profile" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
@@ -298,1148 +301,234 @@
     </div>
   </header>
 
-  <!-- Mobile Navigation Drawer -->
+  <!-- Mobile Navigation Drawer (Bespoke Swastik Jewels Design) -->
   <div class="mobile-menu-drawer" id="MobileNavDrawer" aria-hidden="true">
     <div class="mobile-menu-drawer__overlay" id="MobileNavOverlay"></div>
     <div class="mobile-menu-drawer__content">
+      <!-- Drawer Header -->
       <div class="mobile-menu-drawer__header">
         <div class="mobile-menu-drawer__logo">
-          <div class="header__logo-text-wrapper" style="align-items: flex-start; filter: none;">
-            <span class="header__logo-title" style="font-size: 1.8rem; color: #D4AF37; -webkit-text-stroke: 0; background: none; -webkit-text-fill-color: #D4AF37; font-weight: 600;">Swastik</span>
-            <span class="header__logo-subtitle" style="font-size: 0.6rem; letter-spacing: 0.45em; color: #D4AF37; margin-top: 1px;">JEWELS</span>
-          </div>
+          <a href="{{ routes.root_url }}" class="header__logo-link">
+            <img src="{{ 'Swastik_logo.png' | asset_url }}" alt="Swastik Jewels" class="header__logo-img" width="34" height="34" style="max-height: 2.8rem; width: auto; object-fit: contain;">
+            <div class="header__logo-text-wrapper" style="align-items: flex-start;">
+              <span class="header__logo-title" style="font-size: 1.85rem; color: #111111; -webkit-text-fill-color: initial; background: none; -webkit-text-stroke: 0; font-weight: 700;">Swastik</span>
+              <span class="header__logo-subtitle" style="font-size: 0.62rem; letter-spacing: 0.45em; color: #888888; margin-top: -0.1rem;">JEWELS • SINCE 1997</span>
+            </div>
+          </a>
         </div>
         <button type="button" class="mobile-menu-drawer__close" id="MobileNavClose" aria-label="Close menu">
-          <svg viewBox="0 0 24 24" fill="none" stroke="#D4AF37" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width: 20px; height: 20px;">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#111111" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="width: 22px; height: 22px;">
             <line x1="18" y1="6" x2="6" y2="18"></line>
             <line x1="6" y1="6" x2="18" y2="18"></line>
           </svg>
         </button>
       </div>
 
-      <!-- Live Gold Rate Pill -->
+      <!-- Live Gold Rate Banner -->
       <div class="mobile-drawer-gold-rate">
         <span class="gold-rate-pulse"></span>
-        <span class="gold-rate-label">Live Gold Rate:</span>
-        <span class="gold-rate-val">₹{{ shop.metafields.custom.daily_gold_rate.value | default: '14,422' }}/1g</span>
+        <span class="gold-rate-label">LIVE RATE</span>
+        <span class="gold-rate-val">{{ section.settings.gold_price | default: "Gold 15,620/g" }}</span>
       </div>
 
-      <!-- Embedded Search Bar -->
-      <form action="{{ routes.search_url }}" method="get" role="search" class="mobile-drawer-search">
-        <input type="search" name="q" placeholder="Search rings, 22K gold, necklaces..." class="mobile-drawer-search__input">
-        <button type="submit" class="mobile-drawer-search__btn" aria-label="Search">
-          <svg viewBox="0 0 24 24" fill="none" stroke="#D4AF37" stroke-width="2" style="width:16px;height:16px;"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
-        </button>
-      </form>
+      <!-- Search Bar -->
+      <div class="mobile-drawer-search">
+        <form action="{{ routes.search_url }}" method="get" role="search" style="position: relative; width: 100%;">
+          <input type="search" name="q" class="mobile-drawer-search__input" placeholder="Search Solitaires, Diamonds, Polki..." value="{{ search.terms | escape }}">
+          <input type="hidden" name="options[prefix]" value="last">
+          <button type="submit" class="mobile-drawer-search__btn" aria-label="Search">
+            <svg viewBox="0 0 24 24" fill="none" stroke="#013F3E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width: 18px; height: 18px;">
+              <circle cx="11" cy="11" r="8"></circle>
+              <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+            </svg>
+          </button>
+        </form>
+      </div>
 
-      <!-- VIP Virtual Consultation Card -->
-      <a href="/pages/expert-consultation" class="mobile-drawer-vip-card">
-        <div class="vip-card-icon">
-          <svg viewBox="0 0 24 24" fill="none" stroke="#D4AF37" stroke-width="1.8" style="width:18px;height:18px;"><path d="M23 7l-7 5 7 5V7z"/><rect x="1" y="5" width="15" height="14" rx="2" ry="2"/></svg>
-        </div>
-        <div class="vip-card-info">
-          <span class="vip-card-title">Book Virtual Call</span>
-          <span class="vip-card-subtitle">Live 1-on-1 Jewellery Experience</span>
-        </div>
-        <span class="vip-card-btn">BOOK NOW</span>
-      </a>
-
+      <!-- Drawer Nav Items (Dynamic Desktop & Detailed Swastik Categories) -->
       <nav class="mobile-menu-drawer__nav">
-        <div class="mobile-menu-drawer__main-tabs">
-          <button type="button" class="mobile-main-tab active" data-maintab="women">Women</button>
-          <button type="button" class="mobile-main-tab" data-maintab="men">Men</button>
-        </div>
+        <ul class="mobile-menu-list">
+          {%- assign menu_links = section.settings.menu.links -%}
+          {%- if menu_links != blank -%}
+            {%- for link in menu_links -%}
+              {%- assign has_sub = false -%}
+              {%- if link.links != blank -%}
+                {%- assign downcase_t = link.title | downcase -%}
+                {%- if downcase_t != 'our story' -%}
+                  {%- assign has_sub = true -%}
+                {%- endif -%}
+              {%- endif -%}
 
-        <div class="mobile-menu-drawer__divider">
-          <span class="line"></span>
-          <span class="text">Shop Categories</span>
-          <span class="line"></span>
-        </div>
-
-        <div class="mobile-main-content active" id="maintab-women">
-          <ul class="mobile-menu-drawer__accordion">
-            <!-- RINGS -->
-            <li class="mobile-accordion-item">
-              <button class="mobile-accordion-header" aria-expanded="true">
-                <div class="accordion-title">
-                  <svg class="category-icon" viewBox="0 0 24 24" fill="none" stroke="#D4AF37" stroke-width="1.5">
-                    <circle cx="12" cy="14" r="6" />
-                    <path d="M9.5 8h5l1.5-4h-8z" />
-                  </svg>
-                  <span>RINGS</span>
-                </div>
-                <svg class="icon-chevron" viewBox="0 0 24 24" fill="none" stroke="#D4AF37" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="m6 9 6 6 6-6" /></svg>
+              <li class="mobile-menu-item{% if has_sub %} mobile-menu-item--has-sub{% endif %}">
+                {%- if has_sub -%}
+                  <button type="button" class="mobile-menu-trigger" aria-expanded="false">
+                    <span class="mobile-menu-title">{{ link.title | upcase }}</span>
+                    <svg class="mobile-menu-arrow" viewBox="0 0 24 24" fill="none" stroke="#222222" stroke-width="1.5">
+                      <path stroke-linecap="round" stroke-linejoin="round" d="m9 18 6-6-6-6" />
+                    </svg>
+                  </button>
+                  <ul class="mobile-submenu" style="display: none;">
+                    {%- for child in link.links -%}
+                      <li>
+                        <a href="{{ child.url }}">{{ child.title }}</a>
+                      </li>
+                    {%- endfor -%}
+                  </ul>
+                {%- else -%}
+                  <a href="{{ link.url }}" class="mobile-menu-link">
+                    <span class="mobile-menu-title">{{ link.title | upcase }}</span>
+                  </a>
+                {%- endif -%}
+              </li>
+            {%- endfor -%}
+          {%- else -%}
+            <!-- Bespoke Swastik Categories -->
+            <li class="mobile-menu-item mobile-menu-item--has-sub">
+              <button type="button" class="mobile-menu-trigger" aria-expanded="false">
+                <span class="mobile-menu-title">SOLITAIRES</span>
+                <svg class="mobile-menu-arrow" viewBox="0 0 24 24" fill="none" stroke="#222222" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="m9 18 6-6-6-6" /></svg>
               </button>
-              <div class="mobile-accordion-content" style="display: block;">
-                <div class="mobile-subtabs">
-                  <button class="mobile-subtab active" data-sub="rings-style">Shop By Style</button>
-                  <button class="mobile-subtab" data-sub="rings-price">Shop By Price</button>
-                  <button class="mobile-subtab" data-sub="rings-metal">Shop By Metal</button>
-                </div>
-                
-                <div class="mobile-subcontent active" id="rings-style">
-                  <ul class="mobile-sublist">
-                    <li>
-                      <a href="{{ routes.collections_url }}/engagement-rings">
-                        <div class="item-left">
-                          <img src="https://cdn.shopify.com/s/files/1/0805/0121/1413/files/engagement_ring_icon.png" width="24" height="24" loading="lazy" alt="Engagement Rings" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 24 24\' fill=\'none\' stroke=\'%23D4AF37\' stroke-width=\'1.5\'><circle cx=\'12\' cy=\'14\' r=\'6\'/><path d=\'M9.5 8h5l1.5-4h-8z\'/></svg>'">
-                          <span>Engagement Rings</span>
-                        </div>
-                        <svg class="icon-arrow" viewBox="0 0 24 24" fill="none" stroke="#D4AF37" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="m9 18 6-6-6-6" /></svg>
-                      </a>
-                    </li>
-                    <li>
-                      <a href="{{ routes.collections_url }}/couple-bands">
-                        <div class="item-left">
-                          <img src="https://cdn.shopify.com/s/files/1/0805/0121/1413/files/couple_bands_icon.png" width="24" height="24" loading="lazy" alt="Couple Bands" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 24 24\' fill=\'none\' stroke=\'%23D4AF37\' stroke-width=\'1.5\'><ellipse cx=\'10\' cy=\'12\' rx=\'6\' ry=\'3\' transform=\'rotate(-15 10 12)\'/><ellipse cx=\'14\' cy=\'14\' rx=\'6\' ry=\'3\' transform=\'rotate(-15 14 14)\'/></svg>'">
-                          <span>Couple Bands</span>
-                        </div>
-                        <svg class="icon-arrow" viewBox="0 0 24 24" fill="none" stroke="#D4AF37" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="m9 18 6-6-6-6" /></svg>
-                      </a>
-                    </li>
-                    <li>
-                      <a href="{{ routes.collections_url }}/casual-rings">
-                        <div class="item-left">
-                          <img src="https://cdn.shopify.com/s/files/1/0805/0121/1413/files/casual_rings_icon.png" width="24" height="24" loading="lazy" alt="Casual Rings" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 24 24\' fill=\'none\' stroke=\'%23D4AF37\' stroke-width=\'1.5\'><circle cx=\'12\' cy=\'12\' r=\'6\'/><circle cx=\'12\' cy=\'6\' r=\'1.5\'/></svg>'">
-                          <span>Casual Rings</span>
-                        </div>
-                        <svg class="icon-arrow" viewBox="0 0 24 24" fill="none" stroke="#D4AF37" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="m9 18 6-6-6-6" /></svg>
-                      </a>
-                    </li>
-                    <li>
-                      <a href="{{ routes.collections_url }}/eternity-rings">
-                        <div class="item-left">
-                          <img src="https://cdn.shopify.com/s/files/1/0805/0121/1413/files/eternity_rings_icon.png" width="24" height="24" loading="lazy" alt="Eternity Rings" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 24 24\' fill=\'none\' stroke=\'%23D4AF37\' stroke-width=\'1.5\'><ellipse cx=\'12\' cy=\'12\' rx=\'8\' ry=\'3\' stroke-dasharray=\'2 2\'/></svg>'">
-                          <span>Eternity Rings</span>
-                        </div>
-                        <svg class="icon-arrow" viewBox="0 0 24 24" fill="none" stroke="#D4AF37" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="m9 18 6-6-6-6" /></svg>
-                      </a>
-                    </li>
-                  </ul>
-                </div>
-                
-                <div class="mobile-subcontent" id="rings-price">
-                  <ul class="mobile-sublist mobile-sublist--text">
-                    <li><a href="{{ routes.collections_url }}/rings?filter.v.price.gte=&filter.v.price.lte=10000"><span>Under ₹10,000</span><svg class="icon-arrow" viewBox="0 0 24 24" fill="none" stroke="#D4AF37" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="m9 18 6-6-6-6" /></svg></a></li>
-                    <li><a href="{{ routes.collections_url }}/rings?filter.v.price.gte=10000&filter.v.price.lte=20000"><span>₹10,000 - ₹20,000</span><svg class="icon-arrow" viewBox="0 0 24 24" fill="none" stroke="#D4AF37" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="m9 18 6-6-6-6" /></svg></a></li>
-                    <li><a href="{{ routes.collections_url }}/rings?filter.v.price.gte=20000&filter.v.price.lte=30000"><span>₹20,000 - ₹30,000</span><svg class="icon-arrow" viewBox="0 0 24 24" fill="none" stroke="#D4AF37" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="m9 18 6-6-6-6" /></svg></a></li>
-                    <li><a href="{{ routes.collections_url }}/rings?filter.v.price.gte=30000&filter.v.price.lte=50000"><span>₹30,000 - ₹50,000</span><svg class="icon-arrow" viewBox="0 0 24 24" fill="none" stroke="#D4AF37" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="m9 18 6-6-6-6" /></svg></a></li>
-                    <li><a href="{{ routes.collections_url }}/rings?filter.v.price.gte=50000&filter.v.price.lte=100000"><span>₹50,000 - ₹1,00,000</span><svg class="icon-arrow" viewBox="0 0 24 24" fill="none" stroke="#D4AF37" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="m9 18 6-6-6-6" /></svg></a></li>
-                    <li><a href="{{ routes.collections_url }}/rings?filter.v.price.gte=100000"><span>Above ₹1,00,000</span><svg class="icon-arrow" viewBox="0 0 24 24" fill="none" stroke="#D4AF37" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="m9 18 6-6-6-6" /></svg></a></li>
-                  </ul>
-                </div>
-                
-                <div class="mobile-subcontent" id="rings-metal">
-                  <ul class="mobile-sublist">
-                    <li>
-                      <a href="{{ routes.collections_url }}/rings?filter.p.m.custom.metal=Yellow+Gold">
-                        <div class="item-left">
-                          <span class="metal-circle metal-yellow-gold"></span>
-                          <span>Yellow Gold</span>
-                        </div>
-                        <svg class="icon-arrow" viewBox="0 0 24 24" fill="none" stroke="#D4AF37" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="m9 18 6-6-6-6" /></svg>
-                      </a>
-                    </li>
-                    <li>
-                      <a href="{{ routes.collections_url }}/rings?filter.p.m.custom.metal=White+Gold">
-                        <div class="item-left">
-                          <span class="metal-circle metal-white-gold"></span>
-                          <span>White Gold</span>
-                        </div>
-                        <svg class="icon-arrow" viewBox="0 0 24 24" fill="none" stroke="#D4AF37" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="m9 18 6-6-6-6" /></svg>
-                      </a>
-                    </li>
-                    <li>
-                      <a href="{{ routes.collections_url }}/rings?filter.p.m.custom.metal=Rose+Gold">
-                        <div class="item-left">
-                          <span class="metal-circle metal-rose-gold"></span>
-                          <span>Rose Gold</span>
-                        </div>
-                        <svg class="icon-arrow" viewBox="0 0 24 24" fill="none" stroke="#D4AF37" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="m9 18 6-6-6-6" /></svg>
-                      </a>
-                    </li>
-                    <li>
-                      <a href="{{ routes.collections_url }}/rings?filter.p.m.custom.metal=Platinum">
-                        <div class="item-left">
-                          <span class="metal-circle metal-platinum"></span>
-                          <span>Platinum</span>
-                        </div>
-                        <svg class="icon-arrow" viewBox="0 0 24 24" fill="none" stroke="#D4AF37" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="m9 18 6-6-6-6" /></svg>
-                      </a>
-                    </li>
-                  </ul>
-                </div>
-              </div>
-            </li>
-            
-            <!-- EARRINGS -->
-            <li class="mobile-accordion-item">
-              <button class="mobile-accordion-header" aria-expanded="false">
-                <div class="accordion-title">
-                  <svg class="category-icon" viewBox="0 0 24 24" fill="none" stroke="#D4AF37" stroke-width="1.5">
-                    <circle cx="8" cy="16" r="3" />
-                    <circle cx="16" cy="16" r="3" />
-                    <path d="M8 13v-3a4 4 0 0 1 8 0v3" />
-                  </svg>
-                  <span>EARRINGS</span>
-                </div>
-                <svg class="icon-chevron" viewBox="0 0 24 24" fill="none" stroke="#D4AF37" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="m6 9 6 6 6-6" /></svg>
-              </button>
-              <div class="mobile-accordion-content" style="display: none;">
-                <div class="mobile-subtabs">
-                  <button class="mobile-subtab active" data-sub="earrings-style">Shop By Style</button>
-                  <button class="mobile-subtab" data-sub="earrings-price">Shop By Price</button>
-                  <button class="mobile-subtab" data-sub="earrings-metal">Shop By Metal</button>
-                </div>
-                
-                <div class="mobile-subcontent active" id="earrings-style">
-                  <ul class="mobile-sublist">
-
-                    <li>
-                      <a href="{{ routes.collections_url }}/earrings/stud-earrings">
-                        <div class="item-left">
-                          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="#D4AF37" stroke-width="1.5" style="width:24px;height:24px;">
-                            <circle cx="12" cy="12" r="3" fill="#D4AF37"/>
-                          </svg>
-                          <span>Stud Earrings</span>
-                        </div>
-                        <svg class="icon-arrow" viewBox="0 0 24 24" fill="none" stroke="#D4AF37" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="m9 18 6-6-6-6" /></svg>
-                      </a>
-                    </li>
-                    <li>
-                      <a href="{{ routes.collections_url }}/earrings/drop-earrings">
-                        <div class="item-left">
-                          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="#D4AF37" stroke-width="1.5" style="width:24px;height:24px;">
-                            <path d="M12 4v6M12 10c-2 0-3 2-3 4s1.5 4 3 4 3-2 3-4-1-4-3-4z"/>
-                          </svg>
-                          <span>Drop Earrings</span>
-                        </div>
-                        <svg class="icon-arrow" viewBox="0 0 24 24" fill="none" stroke="#D4AF37" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="m9 18 6-6-6-6" /></svg>
-                      </a>
-                    </li>
-                    <li>
-                      <a href="{{ routes.collections_url }}/earrings/hoop-earrings">
-                        <div class="item-left">
-                          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="#D4AF37" stroke-width="1.5" style="width:24px;height:24px;">
-                            <circle cx="12" cy="14" r="6"/><circle cx="12" cy="14" r="4"/>
-                          </svg>
-                          <span>Hoop Earrings</span>
-                        </div>
-                        <svg class="icon-arrow" viewBox="0 0 24 24" fill="none" stroke="#D4AF37" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="m9 18 6-6-6-6" /></svg>
-                      </a>
-                    </li>
-                    <li>
-                      <a href="{{ routes.collections_url }}/earrings/jhumkas">
-                        <div class="item-left">
-                          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="#D4AF37" stroke-width="1.5" style="width:24px;height:24px;">
-                            <path d="M12 4v2M8 10c0-2 8-2 8 0v2c0 1-8 1-8 0zM9 12v3M12 12v4M15 12v3"/>
-                          </svg>
-                          <span>Jhumkas</span>
-                        </div>
-                        <svg class="icon-arrow" viewBox="0 0 24 24" fill="none" stroke="#D4AF37" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="m9 18 6-6-6-6" /></svg>
-                      </a>
-                    </li>
-                  </ul>
-                </div>
-                
-                <div class="mobile-subcontent" id="earrings-price">
-                  <ul class="mobile-sublist mobile-sublist--text">
-                    <li><a href="{{ routes.collections_url }}/earrings?filter.v.price.gte=&filter.v.price.lte=10000"><span>Under ₹10,000</span><svg class="icon-arrow" viewBox="0 0 24 24" fill="none" stroke="#D4AF37" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="m9 18 6-6-6-6" /></svg></a></li>
-                    <li><a href="{{ routes.collections_url }}/earrings?filter.v.price.gte=10000&filter.v.price.lte=20000"><span>₹10,000 - ₹20,000</span><svg class="icon-arrow" viewBox="0 0 24 24" fill="none" stroke="#D4AF37" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="m9 18 6-6-6-6" /></svg></a></li>
-                    <li><a href="{{ routes.collections_url }}/earrings?filter.v.price.gte=20000&filter.v.price.lte=30000"><span>₹20,000 - ₹30,000</span><svg class="icon-arrow" viewBox="0 0 24 24" fill="none" stroke="#D4AF37" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="m9 18 6-6-6-6" /></svg></a></li>
-                    <li><a href="{{ routes.collections_url }}/earrings?filter.v.price.gte=30000&filter.v.price.lte=50000"><span>₹30,000 - ₹50,000</span><svg class="icon-arrow" viewBox="0 0 24 24" fill="none" stroke="#D4AF37" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="m9 18 6-6-6-6" /></svg></a></li>
-                    <li><a href="{{ routes.collections_url }}/earrings?filter.v.price.gte=50000&filter.v.price.lte=100000"><span>₹50,000 - ₹1,00,000</span><svg class="icon-arrow" viewBox="0 0 24 24" fill="none" stroke="#D4AF37" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="m9 18 6-6-6-6" /></svg></a></li>
-                    <li><a href="{{ routes.collections_url }}/earrings?filter.v.price.gte=100000"><span>Above ₹1,00,000</span><svg class="icon-arrow" viewBox="0 0 24 24" fill="none" stroke="#D4AF37" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="m9 18 6-6-6-6" /></svg></a></li>
-                  </ul>
-                </div>
-                
-                <div class="mobile-subcontent" id="earrings-metal">
-                  <ul class="mobile-sublist">
-                    <li>
-                      <a href="{{ routes.collections_url }}/earrings?filter.p.m.custom.metal=Yellow+Gold">
-                        <div class="item-left">
-                          <span class="metal-circle metal-yellow-gold"></span>
-                          <span>Yellow Gold</span>
-                        </div>
-                        <svg class="icon-arrow" viewBox="0 0 24 24" fill="none" stroke="#D4AF37" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="m9 18 6-6-6-6" /></svg>
-                      </a>
-                    </li>
-                    <li>
-                      <a href="{{ routes.collections_url }}/earrings?filter.p.m.custom.metal=White+Gold">
-                        <div class="item-left">
-                          <span class="metal-circle metal-white-gold"></span>
-                          <span>White Gold</span>
-                        </div>
-                        <svg class="icon-arrow" viewBox="0 0 24 24" fill="none" stroke="#D4AF37" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="m9 18 6-6-6-6" /></svg>
-                      </a>
-                    </li>
-                    <li>
-                      <a href="{{ routes.collections_url }}/earrings?filter.p.m.custom.metal=Rose+Gold">
-                        <div class="item-left">
-                          <span class="metal-circle metal-rose-gold"></span>
-                          <span>Rose Gold</span>
-                        </div>
-                        <svg class="icon-arrow" viewBox="0 0 24 24" fill="none" stroke="#D4AF37" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="m9 18 6-6-6-6" /></svg>
-                      </a>
-                    </li>
-                    <li>
-                      <a href="{{ routes.collections_url }}/earrings?filter.p.m.custom.metal=Platinum">
-                        <div class="item-left">
-                          <span class="metal-circle metal-platinum"></span>
-                          <span>Platinum</span>
-                        </div>
-                        <svg class="icon-arrow" viewBox="0 0 24 24" fill="none" stroke="#D4AF37" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="m9 18 6-6-6-6" /></svg>
-                      </a>
-                    </li>
-                  </ul>
-                </div>
-              </div>
+              <ul class="mobile-submenu" style="display: none;">
+                <li><a href="{{ routes.collections_url }}/solitaires/solitaire-rings">Solitaire Rings</a></li>
+                <li><a href="{{ routes.collections_url }}/solitaires/solitaire-earrings">Solitaire Earrings</a></li>
+                <li><a href="{{ routes.collections_url }}/solitaires/solitaire-pendants">Solitaire Pendants</a></li>
+                <li><a href="{{ routes.collections_url }}/solitaires?filter.v.price.lte=50000">Under ₹50,000</a></li>
+              </ul>
             </li>
 
-            <!-- BRACELETS & BANGLES -->
-            <li class="mobile-accordion-item">
-              <button class="mobile-accordion-header" aria-expanded="false">
-                <div class="accordion-title">
-                  <svg class="category-icon" viewBox="0 0 24 24" fill="none" stroke="#D4AF37" stroke-width="1.5">
-                    <ellipse cx="12" cy="12" rx="8" ry="4" />
-                    <ellipse cx="12" cy="14" rx="8" ry="4" />
-                  </svg>
-                  <span>BRACELETS & BANGLES</span>
-                </div>
-                <svg class="icon-chevron" viewBox="0 0 24 24" fill="none" stroke="#D4AF37" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="m6 9 6 6 6-6" /></svg>
+            <li class="mobile-menu-item mobile-menu-item--has-sub">
+              <button type="button" class="mobile-menu-trigger" aria-expanded="false">
+                <span class="mobile-menu-title">DIAMONDS</span>
+                <svg class="mobile-menu-arrow" viewBox="0 0 24 24" fill="none" stroke="#222222" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="m9 18 6-6-6-6" /></svg>
               </button>
-              <div class="mobile-accordion-content" style="display: none;">
-                <div class="mobile-subtabs">
-                  <button class="mobile-subtab active" data-sub="bracelets-style">Shop By Style</button>
-                  <button class="mobile-subtab" data-sub="bracelets-price">Shop By Price</button>
-                  <button class="mobile-subtab" data-sub="bracelets-metal">Shop By Metal</button>
-                </div>
-                
-                <div class="mobile-subcontent active" id="bracelets-style">
-                  <ul class="mobile-sublist">
-
-                    <li>
-                      <a href="{{ routes.collections_url }}/bracelets/tennis-bracelets">
-                        <div class="item-left">
-                          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="#D4AF37" stroke-width="1.5" style="width:24px;height:24px;">
-                            <path d="M4 12h16" stroke-dasharray="2 2" stroke-width="3"/>
-                          </svg>
-                          <span>Tennis Bracelets</span>
-                        </div>
-                        <svg class="icon-arrow" viewBox="0 0 24 24" fill="none" stroke="#D4AF37" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="m9 18 6-6-6-6" /></svg>
-                      </a>
-                    </li>
-                    <li>
-                      <a href="{{ routes.collections_url }}/bracelets/chain-bracelets">
-                        <div class="item-left">
-                          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="#D4AF37" stroke-width="1.5" style="width:24px;height:24px;">
-                            <rect x="6" y="10" width="4" height="4" rx="1"/><rect x="10" y="10" width="4" height="4" rx="1"/><rect x="14" y="10" width="4" height="4" rx="1"/>
-                          </svg>
-                          <span>Chain Bracelets</span>
-                        </div>
-                        <svg class="icon-arrow" viewBox="0 0 24 24" fill="none" stroke="#D4AF37" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="m9 18 6-6-6-6" /></svg>
-                      </a>
-                    </li>
-                    <li>
-                      <a href="{{ routes.collections_url }}/bracelets/bangles">
-                        <div class="item-left">
-                          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="#D4AF37" stroke-width="1.5" style="width:24px;height:24px;">
-                            <ellipse cx="12" cy="12" rx="9" ry="5"/><ellipse cx="12" cy="10" rx="9" ry="5"/>
-                          </svg>
-                          <span>Bangles</span>
-                        </div>
-                        <svg class="icon-arrow" viewBox="0 0 24 24" fill="none" stroke="#D4AF37" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="m9 18 6-6-6-6" /></svg>
-                      </a>
-                    </li>
-                    <li>
-                      <a href="{{ routes.collections_url }}/bracelets/mangalsutra-bracelets">
-                        <div class="item-left">
-                          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="#D4AF37" stroke-width="1.5" style="width:24px;height:24px;">
-                            <path d="M4 12h16"/><circle cx="12" cy="12" r="2" fill="#D4AF37"/>
-                          </svg>
-                          <span>Mangalsutra Bracelets</span>
-                        </div>
-                        <svg class="icon-arrow" viewBox="0 0 24 24" fill="none" stroke="#D4AF37" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="m9 18 6-6-6-6" /></svg>
-                      </a>
-                    </li>
-                  </ul>
-                </div>
-                
-                <div class="mobile-subcontent" id="bracelets-price">
-                  <ul class="mobile-sublist mobile-sublist--text">
-                    <li><a href="{{ routes.collections_url }}/bracelets?filter.v.price.gte=&filter.v.price.lte=10000"><span>Under ₹10,000</span><svg class="icon-arrow" viewBox="0 0 24 24" fill="none" stroke="#D4AF37" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="m9 18 6-6-6-6" /></svg></a></li>
-                    <li><a href="{{ routes.collections_url }}/bracelets?filter.v.price.gte=10000&filter.v.price.lte=20000"><span>₹10,000 - ₹20,000</span><svg class="icon-arrow" viewBox="0 0 24 24" fill="none" stroke="#D4AF37" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="m9 18 6-6-6-6" /></svg></a></li>
-                    <li><a href="{{ routes.collections_url }}/bracelets?filter.v.price.gte=20000&filter.v.price.lte=30000"><span>₹20,000 - ₹30,000</span><svg class="icon-arrow" viewBox="0 0 24 24" fill="none" stroke="#D4AF37" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="m9 18 6-6-6-6" /></svg></a></li>
-                    <li><a href="{{ routes.collections_url }}/bracelets?filter.v.price.gte=30000&filter.v.price.lte=50000"><span>₹30,000 - ₹50,000</span><svg class="icon-arrow" viewBox="0 0 24 24" fill="none" stroke="#D4AF37" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="m9 18 6-6-6-6" /></svg></a></li>
-                    <li><a href="{{ routes.collections_url }}/bracelets?filter.v.price.gte=50000&filter.v.price.lte=100000"><span>₹50,000 - ₹1,00,000</span><svg class="icon-arrow" viewBox="0 0 24 24" fill="none" stroke="#D4AF37" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="m9 18 6-6-6-6" /></svg></a></li>
-                    <li><a href="{{ routes.collections_url }}/bracelets?filter.v.price.gte=100000"><span>Above ₹1,00,000</span><svg class="icon-arrow" viewBox="0 0 24 24" fill="none" stroke="#D4AF37" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="m9 18 6-6-6-6" /></svg></a></li>
-                  </ul>
-                </div>
-                
-                <div class="mobile-subcontent" id="bracelets-metal">
-                  <ul class="mobile-sublist">
-                    <li>
-                      <a href="{{ routes.collections_url }}/bracelets?filter.p.m.custom.metal=Yellow+Gold">
-                        <div class="item-left">
-                          <span class="metal-circle metal-yellow-gold"></span>
-                          <span>Yellow Gold</span>
-                        </div>
-                        <svg class="icon-arrow" viewBox="0 0 24 24" fill="none" stroke="#D4AF37" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="m9 18 6-6-6-6" /></svg>
-                      </a>
-                    </li>
-                    <li>
-                      <a href="{{ routes.collections_url }}/bracelets?filter.p.m.custom.metal=White+Gold">
-                        <div class="item-left">
-                          <span class="metal-circle metal-white-gold"></span>
-                          <span>White Gold</span>
-                        </div>
-                        <svg class="icon-arrow" viewBox="0 0 24 24" fill="none" stroke="#D4AF37" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="m9 18 6-6-6-6" /></svg>
-                      </a>
-                    </li>
-                    <li>
-                      <a href="{{ routes.collections_url }}/bracelets?filter.p.m.custom.metal=Rose+Gold">
-                        <div class="item-left">
-                          <span class="metal-circle metal-rose-gold"></span>
-                          <span>Rose Gold</span>
-                        </div>
-                        <svg class="icon-arrow" viewBox="0 0 24 24" fill="none" stroke="#D4AF37" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="m9 18 6-6-6-6" /></svg>
-                      </a>
-                    </li>
-                    <li>
-                      <a href="{{ routes.collections_url }}/bracelets?filter.p.m.custom.metal=Platinum">
-                        <div class="item-left">
-                          <span class="metal-circle metal-platinum"></span>
-                          <span>Platinum</span>
-                        </div>
-                        <svg class="icon-arrow" viewBox="0 0 24 24" fill="none" stroke="#D4AF37" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="m9 18 6-6-6-6" /></svg>
-                      </a>
-                    </li>
-                  </ul>
-                </div>
-              </div>
+              <ul class="mobile-submenu" style="display: none;">
+                <li><a href="{{ routes.collections_url }}/diamonds/natural-diamonds">Natural Diamonds</a></li>
+                <li><a href="{{ routes.collections_url }}/diamonds/lab-grown-diamonds">Lab Grown Diamonds</a></li>
+                <li><a href="{{ routes.collections_url }}/diamonds/diamond-bangles">Diamond Bangles & Bracelets</a></li>
+              </ul>
             </li>
 
-            <!-- NECKLACES -->
-            <li class="mobile-accordion-item">
-              <button class="mobile-accordion-header" aria-expanded="false">
-                <div class="accordion-title">
-                  <svg class="category-icon" viewBox="0 0 24 24" fill="none" stroke="#D4AF37" stroke-width="1.5">
-                    <path d="M7 4a5 5 0 0 0 10 0" />
-                    <circle cx="12" cy="12" r="3" />
-                  </svg>
-                  <span>NECKLACES</span>
-                </div>
-                <svg class="icon-chevron" viewBox="0 0 24 24" fill="none" stroke="#D4AF37" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="m6 9 6 6 6-6" /></svg>
+            <li class="mobile-menu-item mobile-menu-item--has-sub">
+              <button type="button" class="mobile-menu-trigger" aria-expanded="false">
+                <span class="mobile-menu-title">POLKI & HERITAGE</span>
+                <svg class="mobile-menu-arrow" viewBox="0 0 24 24" fill="none" stroke="#222222" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="m9 18 6-6-6-6" /></svg>
               </button>
-              <div class="mobile-accordion-content" style="display: none;">
-                <div class="mobile-subtabs">
-                  <button class="mobile-subtab active" data-sub="necklaces-style">Shop By Style</button>
-                  <button class="mobile-subtab" data-sub="necklaces-price">Shop By Price</button>
-                  <button class="mobile-subtab" data-sub="necklaces-metal">Shop By Metal</button>
-                </div>
-                
-                <div class="mobile-subcontent active" id="necklaces-style">
-                  <ul class="mobile-sublist">
-
-                    <li>
-                      <a href="{{ routes.collections_url }}/necklaces/choker-necklaces">
-                        <div class="item-left">
-                          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="#D4AF37" stroke-width="1.5" style="width:24px;height:24px;">
-                            <path d="M6 8c0 4 12 4 12 0" stroke-width="2"/>
-                          </svg>
-                          <span>Choker Necklaces</span>
-                        </div>
-                        <svg class="icon-arrow" viewBox="0 0 24 24" fill="none" stroke="#D4AF37" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="m9 18 6-6-6-6" /></svg>
-                      </a>
-                    </li>
-                    <li>
-                      <a href="{{ routes.collections_url }}/necklaces/pendant-necklaces">
-                        <div class="item-left">
-                          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="#D4AF37" stroke-width="1.5" style="width:24px;height:24px;">
-                            <path d="M6 6c0 8 12 8 12 0"/><circle cx="12" cy="14" r="3"/>
-                          </svg>
-                          <span>Pendant Necklaces</span>
-                        </div>
-                        <svg class="icon-arrow" viewBox="0 0 24 24" fill="none" stroke="#D4AF37" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="m9 18 6-6-6-6" /></svg>
-                      </a>
-                    </li>
-                    <li>
-                      <a href="{{ routes.collections_url }}/necklaces/layered-necklaces">
-                        <div class="item-left">
-                          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="#D4AF37" stroke-width="1.5" style="width:24px;height:24px;">
-                            <path d="M5 5c0 6 14 6 14 0"/><path d="M7 8c0 4 10 4 10 0"/>
-                          </svg>
-                          <span>Layered Necklaces</span>
-                        </div>
-                        <svg class="icon-arrow" viewBox="0 0 24 24" fill="none" stroke="#D4AF37" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="m9 18 6-6-6-6" /></svg>
-                      </a>
-                    </li>
-                    <li>
-                      <a href="{{ routes.collections_url }}/necklaces/mangalsutras">
-                        <div class="item-left">
-                          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="#D4AF37" stroke-width="1.5" style="width:24px;height:24px;">
-                            <path d="M6 6c0 8 12 8 12 0" stroke-dasharray="2 1"/><circle cx="12" cy="14" r="3" fill="#D4AF37"/>
-                          </svg>
-                          <span>Mangalsutras</span>
-                        </div>
-                        <svg class="icon-arrow" viewBox="0 0 24 24" fill="none" stroke="#D4AF37" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="m9 18 6-6-6-6" /></svg>
-                      </a>
-                    </li>
-                  </ul>
-                </div>
-                
-                <div class="mobile-subcontent" id="necklaces-price">
-                  <ul class="mobile-sublist mobile-sublist--text">
-                    <li><a href="{{ routes.collections_url }}/necklaces?filter.v.price.gte=&filter.v.price.lte=10000"><span>Under ₹10,000</span><svg class="icon-arrow" viewBox="0 0 24 24" fill="none" stroke="#D4AF37" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="m9 18 6-6-6-6" /></svg></a></li>
-                    <li><a href="{{ routes.collections_url }}/necklaces?filter.v.price.gte=10000&filter.v.price.lte=20000"><span>₹10,000 - ₹20,000</span><svg class="icon-arrow" viewBox="0 0 24 24" fill="none" stroke="#D4AF37" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="m9 18 6-6-6-6" /></svg></a></li>
-                    <li><a href="{{ routes.collections_url }}/necklaces?filter.v.price.gte=20000&filter.v.price.lte=30000"><span>₹20,000 - ₹30,000</span><svg class="icon-arrow" viewBox="0 0 24 24" fill="none" stroke="#D4AF37" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="m9 18 6-6-6-6" /></svg></a></li>
-                    <li><a href="{{ routes.collections_url }}/necklaces?filter.v.price.gte=30000&filter.v.price.lte=50000"><span>₹30,000 - ₹50,000</span><svg class="icon-arrow" viewBox="0 0 24 24" fill="none" stroke="#D4AF37" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="m9 18 6-6-6-6" /></svg></a></li>
-                    <li><a href="{{ routes.collections_url }}/necklaces?filter.v.price.gte=50000&filter.v.price.lte=100000"><span>₹50,000 - ₹1,00,000</span><svg class="icon-arrow" viewBox="0 0 24 24" fill="none" stroke="#D4AF37" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="m9 18 6-6-6-6" /></svg></a></li>
-                    <li><a href="{{ routes.collections_url }}/necklaces?filter.v.price.gte=100000"><span>Above ₹1,00,000</span><svg class="icon-arrow" viewBox="0 0 24 24" fill="none" stroke="#D4AF37" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="m9 18 6-6-6-6" /></svg></a></li>
-                  </ul>
-                </div>
-                
-                <div class="mobile-subcontent" id="necklaces-metal">
-                  <ul class="mobile-sublist">
-                    <li>
-                      <a href="{{ routes.collections_url }}/necklaces?filter.p.m.custom.metal=Yellow+Gold">
-                        <div class="item-left">
-                          <span class="metal-circle metal-yellow-gold"></span>
-                          <span>Yellow Gold</span>
-                        </div>
-                        <svg class="icon-arrow" viewBox="0 0 24 24" fill="none" stroke="#D4AF37" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="m9 18 6-6-6-6" /></svg>
-                      </a>
-                    </li>
-                    <li>
-                      <a href="{{ routes.collections_url }}/necklaces?filter.p.m.custom.metal=White+Gold">
-                        <div class="item-left">
-                          <span class="metal-circle metal-white-gold"></span>
-                          <span>White Gold</span>
-                        </div>
-                        <svg class="icon-arrow" viewBox="0 0 24 24" fill="none" stroke="#D4AF37" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="m9 18 6-6-6-6" /></svg>
-                      </a>
-                    </li>
-                    <li>
-                      <a href="{{ routes.collections_url }}/necklaces?filter.p.m.custom.metal=Rose+Gold">
-                        <div class="item-left">
-                          <span class="metal-circle metal-rose-gold"></span>
-                          <span>Rose Gold</span>
-                        </div>
-                        <svg class="icon-arrow" viewBox="0 0 24 24" fill="none" stroke="#D4AF37" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="m9 18 6-6-6-6" /></svg>
-                      </a>
-                    </li>
-                    <li>
-                      <a href="{{ routes.collections_url }}/necklaces?filter.p.m.custom.metal=Platinum">
-                        <div class="item-left">
-                          <span class="metal-circle metal-platinum"></span>
-                          <span>Platinum</span>
-                        </div>
-                        <svg class="icon-arrow" viewBox="0 0 24 24" fill="none" stroke="#D4AF37" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="m9 18 6-6-6-6" /></svg>
-                      </a>
-                    </li>
-                  </ul>
-                </div>
-              </div>
+              <ul class="mobile-submenu" style="display: none;">
+                <li><a href="{{ routes.collections_url }}/polki/uncut-diamond-sets">Uncut Diamond Sets</a></li>
+                <li><a href="{{ routes.collections_url }}/polki/kundan-polki">Kundan & Meenakari</a></li>
+                <li><a href="{{ routes.collections_url }}/polki/royal-chokers">Royal Heritage Chokers</a></li>
+              </ul>
             </li>
 
-            <!-- PENDANTS -->
-            <li class="mobile-accordion-item">
-              <button class="mobile-accordion-header" aria-expanded="false">
-                <div class="accordion-title">
-                  <svg class="category-icon" viewBox="0 0 24 24" fill="none" stroke="#D4AF37" stroke-width="1.5">
-                    <path d="M12 2v6" />
-                    <circle cx="12" cy="12" r="4" />
-                    <circle cx="12" cy="12" r="1.5" />
-                  </svg>
-                  <span>PENDANTS</span>
-                </div>
-                <svg class="icon-chevron" viewBox="0 0 24 24" fill="none" stroke="#D4AF37" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="m6 9 6 6 6-6" /></svg>
-              </button>
-              <div class="mobile-accordion-content" style="display: none;">
-                <div class="mobile-subtabs">
-                  <button class="mobile-subtab active" data-sub="pendants-style">Shop By Style</button>
-                  <button class="mobile-subtab" data-sub="pendants-price">Shop By Price</button>
-                  <button class="mobile-subtab" data-sub="pendants-metal">Shop By Metal</button>
-                </div>
-                
-                <div class="mobile-subcontent active" id="pendants-style">
-                  <ul class="mobile-sublist">
-
-                    <li>
-                      <a href="{{ routes.collections_url }}/pendants/solitaire-pendants">
-                        <div class="item-left">
-                          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="#D4AF37" stroke-width="1.5" style="width:24px;height:24px;">
-                            <path d="M12 4v4"/><circle cx="12" cy="11" r="3"/>
-                          </svg>
-                          <span>Solitaire Pendants</span>
-                        </div>
-                        <svg class="icon-arrow" viewBox="0 0 24 24" fill="none" stroke="#D4AF37" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="m9 18 6-6-6-6" /></svg>
-                      </a>
-                    </li>
-                    <li>
-                      <a href="{{ routes.collections_url }}/pendants/religious-pendants">
-                        <div class="item-left">
-                          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="#D4AF37" stroke-width="1.5" style="width:24px;height:24px;">
-                            <path d="M12 4v4"/><rect x="9" y="8" width="6" height="6" rx="1"/>
-                          </svg>
-                          <span>Religious Pendants</span>
-                        </div>
-                        <svg class="icon-arrow" viewBox="0 0 24 24" fill="none" stroke="#D4AF37" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="m9 18 6-6-6-6" /></svg>
-                      </a>
-                    </li>
-                    <li>
-                      <a href="{{ routes.collections_url }}/pendants/heart-pendants">
-                        <div class="item-left">
-                          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="#D4AF37" stroke-width="1.5" style="width:24px;height:24px;">
-                            <path d="M12 4v4"/><path d="M12 10c-2-2-5-1-5 2 0 3 5 5 5 5s5-2 5-5c0-3-3-4-5-2z"/>
-                          </svg>
-                          <span>Heart Pendants</span>
-                        </div>
-                        <svg class="icon-arrow" viewBox="0 0 24 24" fill="none" stroke="#D4AF37" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="m9 18 6-6-6-6" /></svg>
-                      </a>
-                    </li>
-                    <li>
-                      <a href="{{ routes.collections_url }}/pendants/alphabet-pendants">
-                        <div class="item-left">
-                          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="#D4AF37" stroke-width="1.5" style="width:24px;height:24px;">
-                            <path d="M12 4v4"/><path d="M10 16l2-6 2 6M11 13h2"/>
-                          </svg>
-                          <span>Alphabet Pendants</span>
-                        </div>
-                        <svg class="icon-arrow" viewBox="0 0 24 24" fill="none" stroke="#D4AF37" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="m9 18 6-6-6-6" /></svg>
-                      </a>
-                    </li>
-                  </ul>
-                </div>
-                
-                <div class="mobile-subcontent" id="pendants-price">
-                  <ul class="mobile-sublist mobile-sublist--text">
-                    <li><a href="{{ routes.collections_url }}/pendants?filter.v.price.gte=&filter.v.price.lte=10000"><span>Under ₹10,000</span><svg class="icon-arrow" viewBox="0 0 24 24" fill="none" stroke="#D4AF37" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="m9 18 6-6-6-6" /></svg></a></li>
-                    <li><a href="{{ routes.collections_url }}/pendants?filter.v.price.gte=10000&filter.v.price.lte=20000"><span>₹10,000 - ₹20,000</span><svg class="icon-arrow" viewBox="0 0 24 24" fill="none" stroke="#D4AF37" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="m9 18 6-6-6-6" /></svg></a></li>
-                    <li><a href="{{ routes.collections_url }}/pendants?filter.v.price.gte=20000&filter.v.price.lte=30000"><span>₹20,000 - ₹30,000</span><svg class="icon-arrow" viewBox="0 0 24 24" fill="none" stroke="#D4AF37" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="m9 18 6-6-6-6" /></svg></a></li>
-                    <li><a href="{{ routes.collections_url }}/pendants?filter.v.price.gte=30000&filter.v.price.lte=50000"><span>₹30,000 - ₹50,000</span><svg class="icon-arrow" viewBox="0 0 24 24" fill="none" stroke="#D4AF37" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="m9 18 6-6-6-6" /></svg></a></li>
-                    <li><a href="{{ routes.collections_url }}/pendants?filter.v.price.gte=50000&filter.v.price.lte=100000"><span>₹50,000 - ₹1,00,000</span><svg class="icon-arrow" viewBox="0 0 24 24" fill="none" stroke="#D4AF37" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="m9 18 6-6-6-6" /></svg></a></li>
-                    <li><a href="{{ routes.collections_url }}/pendants?filter.v.price.gte=100000"><span>Above ₹1,00,000</span><svg class="icon-arrow" viewBox="0 0 24 24" fill="none" stroke="#D4AF37" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="m9 18 6-6-6-6" /></svg></a></li>
-                  </ul>
-                </div>
-                
-                <div class="mobile-subcontent" id="pendants-metal">
-                  <ul class="mobile-sublist">
-                    <li>
-                      <a href="{{ routes.collections_url }}/pendants?filter.p.m.custom.metal=Yellow+Gold">
-                        <div class="item-left">
-                          <span class="metal-circle metal-yellow-gold"></span>
-                          <span>Yellow Gold</span>
-                        </div>
-                        <svg class="icon-arrow" viewBox="0 0 24 24" fill="none" stroke="#D4AF37" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="m9 18 6-6-6-6" /></svg>
-                      </a>
-                    </li>
-                    <li>
-                      <a href="{{ routes.collections_url }}/pendants?filter.p.m.custom.metal=White+Gold">
-                        <div class="item-left">
-                          <span class="metal-circle metal-white-gold"></span>
-                          <span>White Gold</span>
-                        </div>
-                        <svg class="icon-arrow" viewBox="0 0 24 24" fill="none" stroke="#D4AF37" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="m9 18 6-6-6-6" /></svg>
-                      </a>
-                    </li>
-                    <li>
-                      <a href="{{ routes.collections_url }}/pendants?filter.p.m.custom.metal=Rose+Gold">
-                        <div class="item-left">
-                          <span class="metal-circle metal-rose-gold"></span>
-                          <span>Rose Gold</span>
-                        </div>
-                        <svg class="icon-arrow" viewBox="0 0 24 24" fill="none" stroke="#D4AF37" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="m9 18 6-6-6-6" /></svg>
-                      </a>
-                    </li>
-                    <li>
-                      <a href="{{ routes.collections_url }}/pendants?filter.p.m.custom.metal=Platinum">
-                        <div class="item-left">
-                          <span class="metal-circle metal-platinum"></span>
-                          <span>Platinum</span>
-                        </div>
-                        <svg class="icon-arrow" viewBox="0 0 24 24" fill="none" stroke="#D4AF37" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="m9 18 6-6-6-6" /></svg>
-                      </a>
-                    </li>
-                  </ul>
-                </div>
-              </div>
+            <li class="mobile-menu-item">
+              <a href="{{ routes.collections_url }}/quick-ship" class="mobile-menu-link">
+                <span class="mobile-menu-title" style="color: #D4AF37; font-weight: 600;">SHIPS IN 3 DAYS</span>
+              </a>
             </li>
 
-            <!-- SOLITAIRES -->
-            <li class="mobile-accordion-item">
-              <button class="mobile-accordion-header" aria-expanded="false">
-                <div class="accordion-title">
-                  <svg class="category-icon" viewBox="0 0 24 24" fill="none" stroke="#D4AF37" stroke-width="1.5">
-                    <polygon points="12 2 15 8 22 9 17 14 18 21 12 17 6 21 7 14 2 9 9 8 12 2" />
-                  </svg>
-                  <span>SOLITAIRES</span>
-                </div>
-                <svg class="icon-chevron" viewBox="0 0 24 24" fill="none" stroke="#D4AF37" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="m6 9 6 6 6-6" /></svg>
+            <li class="mobile-menu-item mobile-menu-item--has-sub">
+              <button type="button" class="mobile-menu-trigger" aria-expanded="false">
+                <span class="mobile-menu-title">COLLECTIONS</span>
+                <svg class="mobile-menu-arrow" viewBox="0 0 24 24" fill="none" stroke="#222222" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="m9 18 6-6-6-6" /></svg>
               </button>
-              <div class="mobile-accordion-content" style="display: none;">
-                <div class="mobile-subtabs">
-                  <button class="mobile-subtab active" data-sub="solitaires-style">Shop By Style</button>
-                  <button class="mobile-subtab" data-sub="solitaires-price">Shop By Price</button>
-                  <button class="mobile-subtab" data-sub="solitaires-metal">Shop By Metal</button>
-                </div>
-                
-                <div class="mobile-subcontent active" id="solitaires-style">
-                  <ul class="mobile-sublist">
-
-                    <li>
-                      <a href="{{ routes.collections_url }}/solitaires/solitaire-rings">
-                        <div class="item-left">
-                          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="#D4AF37" stroke-width="1.5" style="width:24px;height:24px;">
-                            <circle cx="12" cy="15" r="5"/><path d="M10.5 9l1.5-3 1.5 3z"/>
-                          </svg>
-                          <span>Solitaire Rings</span>
-                        </div>
-                        <svg class="icon-arrow" viewBox="0 0 24 24" fill="none" stroke="#D4AF37" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="m9 18 6-6-6-6" /></svg>
-                      </a>
-                    </li>
-                    <li>
-                      <a href="{{ routes.collections_url }}/solitaires/solitaire-earrings">
-                        <div class="item-left">
-                          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="#D4AF37" stroke-width="1.5" style="width:24px;height:24px;">
-                            <circle cx="8" cy="12" r="2"/><circle cx="16" cy="12" r="2"/>
-                          </svg>
-                          <span>Solitaire Earrings</span>
-                        </div>
-                        <svg class="icon-arrow" viewBox="0 0 24 24" fill="none" stroke="#D4AF37" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="m9 18 6-6-6-6" /></svg>
-                      </a>
-                    </li>
-                    <li>
-                      <a href="{{ routes.collections_url }}/solitaires/solitaire-pendants">
-                        <div class="item-left">
-                          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="#D4AF37" stroke-width="1.5" style="width:24px;height:24px;">
-                            <path d="M12 4v6"/><circle cx="12" cy="13" r="3"/>
-                          </svg>
-                          <span>Solitaire Pendants</span>
-                        </div>
-                        <svg class="icon-arrow" viewBox="0 0 24 24" fill="none" stroke="#D4AF37" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="m9 18 6-6-6-6" /></svg>
-                      </a>
-                    </li>
-                  </ul>
-                </div>
-                
-                <div class="mobile-subcontent" id="solitaires-price">
-                  <ul class="mobile-sublist mobile-sublist--text">
-                    <li><a href="{{ routes.collections_url }}/solitaires?filter.v.price.gte=&filter.v.price.lte=10000"><span>Under ₹10,000</span><svg class="icon-arrow" viewBox="0 0 24 24" fill="none" stroke="#D4AF37" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="m9 18 6-6-6-6" /></svg></a></li>
-                    <li><a href="{{ routes.collections_url }}/solitaires?filter.v.price.gte=10000&filter.v.price.lte=20000"><span>₹10,000 - ₹20,000</span><svg class="icon-arrow" viewBox="0 0 24 24" fill="none" stroke="#D4AF37" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="m9 18 6-6-6-6" /></svg></a></li>
-                    <li><a href="{{ routes.collections_url }}/solitaires?filter.v.price.gte=20000&filter.v.price.lte=30000"><span>₹20,000 - ₹30,000</span><svg class="icon-arrow" viewBox="0 0 24 24" fill="none" stroke="#D4AF37" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="m9 18 6-6-6-6" /></svg></a></li>
-                    <li><a href="{{ routes.collections_url }}/solitaires?filter.v.price.gte=30000&filter.v.price.lte=50000"><span>₹30,000 - ₹50,000</span><svg class="icon-arrow" viewBox="0 0 24 24" fill="none" stroke="#D4AF37" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="m9 18 6-6-6-6" /></svg></a></li>
-                    <li><a href="{{ routes.collections_url }}/solitaires?filter.v.price.gte=50000&filter.v.price.lte=100000"><span>₹50,000 - ₹1,00,000</span><svg class="icon-arrow" viewBox="0 0 24 24" fill="none" stroke="#D4AF37" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="m9 18 6-6-6-6" /></svg></a></li>
-                    <li><a href="{{ routes.collections_url }}/solitaires?filter.v.price.gte=100000"><span>Above ₹1,00,000</span><svg class="icon-arrow" viewBox="0 0 24 24" fill="none" stroke="#D4AF37" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="m9 18 6-6-6-6" /></svg></a></li>
-                  </ul>
-                </div>
-                
-                <div class="mobile-subcontent" id="solitaires-metal">
-                  <ul class="mobile-sublist">
-                    <li>
-                      <a href="{{ routes.collections_url }}/solitaires?filter.p.m.custom.metal=Yellow+Gold">
-                        <div class="item-left">
-                          <span class="metal-circle metal-yellow-gold"></span>
-                          <span>Yellow Gold</span>
-                        </div>
-                        <svg class="icon-arrow" viewBox="0 0 24 24" fill="none" stroke="#D4AF37" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="m9 18 6-6-6-6" /></svg>
-                      </a>
-                    </li>
-                    <li>
-                      <a href="{{ routes.collections_url }}/solitaires?filter.p.m.custom.metal=White+Gold">
-                        <div class="item-left">
-                          <span class="metal-circle metal-white-gold"></span>
-                          <span>White Gold</span>
-                        </div>
-                        <svg class="icon-arrow" viewBox="0 0 24 24" fill="none" stroke="#D4AF37" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="m9 18 6-6-6-6" /></svg>
-                      </a>
-                    </li>
-                    <li>
-                      <a href="{{ routes.collections_url }}/solitaires?filter.p.m.custom.metal=Rose+Gold">
-                        <div class="item-left">
-                          <span class="metal-circle metal-rose-gold"></span>
-                          <span>Rose Gold</span>
-                        </div>
-                        <svg class="icon-arrow" viewBox="0 0 24 24" fill="none" stroke="#D4AF37" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="m9 18 6-6-6-6" /></svg>
-                      </a>
-                    </li>
-                    <li>
-                      <a href="{{ routes.collections_url }}/solitaires?filter.p.m.custom.metal=Platinum">
-                        <div class="item-left">
-                          <span class="metal-circle metal-platinum"></span>
-                          <span>Platinum</span>
-                        </div>
-                        <svg class="icon-arrow" viewBox="0 0 24 24" fill="none" stroke="#D4AF37" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="m9 18 6-6-6-6" /></svg>
-                      </a>
-                    </li>
-                  </ul>
-                </div>
-              </div>
+              <ul class="mobile-submenu" style="display: none;">
+                <li><a href="{{ routes.collections_url }}/bridal">Bridal Collection</a></li>
+                <li><a href="{{ routes.collections_url }}/everyday-luxe">Everyday Luxe</a></li>
+                <li><a href="{{ routes.collections_url }}/for-every-you">For Every You</a></li>
+              </ul>
             </li>
 
-            <!-- DIAMONDS -->
-            <li class="mobile-accordion-item">
-              <button class="mobile-accordion-header" aria-expanded="false">
-                <div class="accordion-title">
-                  <svg class="category-icon" viewBox="0 0 24 24" fill="none" stroke="#D4AF37" stroke-width="1.5">
-                    <polygon points="12 22 2 9 6 2 18 2 22 9 12 22" />
-                    <path d="M2 9h20M6 2l6 7 6-7M12 22l-6-13M12 22l6-13" />
-                  </svg>
-                  <span>DIAMONDS</span>
-                </div>
-                <svg class="icon-chevron" viewBox="0 0 24 24" fill="none" stroke="#D4AF37" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="m6 9 6 6 6-6" /></svg>
-              </button>
-              <div class="mobile-accordion-content" style="display: none;">
-                <div class="mobile-subtabs">
-                  <button class="mobile-subtab active" data-sub="diamonds-style">Shop By Style</button>
-                  <button class="mobile-subtab" data-sub="diamonds-price">Shop By Price</button>
-                  <button class="mobile-subtab" data-sub="diamonds-metal">Shop By Metal</button>
-                </div>
-                
-                <div class="mobile-subcontent active" id="diamonds-style">
-                  <ul class="mobile-sublist">
-
-                    <li>
-                      <a href="{{ routes.collections_url }}/diamonds/natural-diamonds">
-                        <div class="item-left">
-                          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="#D4AF37" stroke-width="1.5" style="width:24px;height:24px;">
-                            <polygon points="12 4 18 10 12 20 6 10"/><path d="M6 10h12"/>
-                          </svg>
-                          <span>Natural Diamonds</span>
-                        </div>
-                        <svg class="icon-arrow" viewBox="0 0 24 24" fill="none" stroke="#D4AF37" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="m9 18 6-6-6-6" /></svg>
-                      </a>
-                    </li>
-                    <li>
-                      <a href="{{ routes.collections_url }}/diamonds/lab-grown-diamonds">
-                        <div class="item-left">
-                          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="#D4AF37" stroke-width="1.5" style="width:24px;height:24px;">
-                            <polygon points="12 4 18 10 12 20 6 10"/><path d="M9 13l3-3 3 3"/>
-                          </svg>
-                          <span>Lab Grown Diamonds</span>
-                        </div>
-                        <svg class="icon-arrow" viewBox="0 0 24 24" fill="none" stroke="#D4AF37" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="m9 18 6-6-6-6" /></svg>
-                      </a>
-                    </li>
-                  </ul>
-                </div>
-                
-                <div class="mobile-subcontent" id="diamonds-price">
-                  <ul class="mobile-sublist mobile-sublist--text">
-                    <li><a href="{{ routes.collections_url }}/diamonds?filter.v.price.gte=&filter.v.price.lte=10000"><span>Under ₹10,000</span><svg class="icon-arrow" viewBox="0 0 24 24" fill="none" stroke="#D4AF37" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="m9 18 6-6-6-6" /></svg></a></li>
-                    <li><a href="{{ routes.collections_url }}/diamonds?filter.v.price.gte=10000&filter.v.price.lte=20000"><span>₹10,000 - ₹20,000</span><svg class="icon-arrow" viewBox="0 0 24 24" fill="none" stroke="#D4AF37" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="m9 18 6-6-6-6" /></svg></a></li>
-                    <li><a href="{{ routes.collections_url }}/diamonds?filter.v.price.gte=20000&filter.v.price.lte=30000"><span>₹20,000 - ₹30,000</span><svg class="icon-arrow" viewBox="0 0 24 24" fill="none" stroke="#D4AF37" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="m9 18 6-6-6-6" /></svg></a></li>
-                    <li><a href="{{ routes.collections_url }}/diamonds?filter.v.price.gte=30000&filter.v.price.lte=50000"><span>₹30,000 - ₹50,000</span><svg class="icon-arrow" viewBox="0 0 24 24" fill="none" stroke="#D4AF37" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="m9 18 6-6-6-6" /></svg></a></li>
-                    <li><a href="{{ routes.collections_url }}/diamonds?filter.v.price.gte=50000&filter.v.price.lte=100000"><span>₹50,000 - ₹1,00,000</span><svg class="icon-arrow" viewBox="0 0 24 24" fill="none" stroke="#D4AF37" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="m9 18 6-6-6-6" /></svg></a></li>
-                    <li><a href="{{ routes.collections_url }}/diamonds?filter.v.price.gte=100000"><span>Above ₹1,00,000</span><svg class="icon-arrow" viewBox="0 0 24 24" fill="none" stroke="#D4AF37" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="m9 18 6-6-6-6" /></svg></a></li>
-                  </ul>
-                </div>
-                
-                <div class="mobile-subcontent" id="diamonds-metal">
-                  <ul class="mobile-sublist">
-                    <li>
-                      <a href="{{ routes.collections_url }}/diamonds?filter.p.m.custom.metal=Yellow+Gold">
-                        <div class="item-left">
-                          <span class="metal-circle metal-yellow-gold"></span>
-                          <span>Yellow Gold</span>
-                        </div>
-                        <svg class="icon-arrow" viewBox="0 0 24 24" fill="none" stroke="#D4AF37" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="m9 18 6-6-6-6" /></svg>
-                      </a>
-                    </li>
-                    <li>
-                      <a href="{{ routes.collections_url }}/diamonds?filter.p.m.custom.metal=White+Gold">
-                        <div class="item-left">
-                          <span class="metal-circle metal-white-gold"></span>
-                          <span>White Gold</span>
-                        </div>
-                        <svg class="icon-arrow" viewBox="0 0 24 24" fill="none" stroke="#D4AF37" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="m9 18 6-6-6-6" /></svg>
-                      </a>
-                    </li>
-                    <li>
-                      <a href="{{ routes.collections_url }}/diamonds?filter.p.m.custom.metal=Rose+Gold">
-                        <div class="item-left">
-                          <span class="metal-circle metal-rose-gold"></span>
-                          <span>Rose Gold</span>
-                        </div>
-                        <svg class="icon-arrow" viewBox="0 0 24 24" fill="none" stroke="#D4AF37" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="m9 18 6-6-6-6" /></svg>
-                      </a>
-                    </li>
-                    <li>
-                      <a href="{{ routes.collections_url }}/diamonds?filter.p.m.custom.metal=Platinum">
-                        <div class="item-left">
-                          <span class="metal-circle metal-platinum"></span>
-                          <span>Platinum</span>
-                        </div>
-                        <svg class="icon-arrow" viewBox="0 0 24 24" fill="none" stroke="#D4AF37" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="m9 18 6-6-6-6" /></svg>
-                      </a>
-                    </li>
-                  </ul>
-                </div>
-              </div>
+            <li class="mobile-menu-item">
+              <a href="{{ routes.collections_url }}/gifting" class="mobile-menu-link">
+                <span class="mobile-menu-title">GIFTING</span>
+              </a>
             </li>
-          </ul>
-        </div>
 
-        <div class="mobile-main-content" id="maintab-men">
-          <ul class="mobile-menu-drawer__accordion">
-            <li class="mobile-accordion-item">
-              <button class="mobile-accordion-header" aria-expanded="false">
-                <div class="accordion-title">
-                  <svg class="category-icon" viewBox="0 0 24 24" fill="none" stroke="#D4AF37" stroke-width="1.5">
-                    <circle cx="12" cy="14" r="6" />
-                    <path d="M9.5 8h5l1.5-4h-8z" />
-                  </svg>
-                  <span>MEN'S RINGS</span>
-                </div>
-                <svg class="icon-chevron" viewBox="0 0 24 24" fill="none" stroke="#D4AF37" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="m6 9 6 6 6-6" /></svg>
-              </button>
-              <div class="mobile-accordion-content" style="display: none;">
-                <div class="mobile-subtabs">
-                  <button class="mobile-subtab active" data-sub="men_rings-style">Shop By Style</button>
-                  <button class="mobile-subtab" data-sub="men_rings-price">Shop By Price</button>
-                  <button class="mobile-subtab" data-sub="men_rings-metal">Shop By Metal</button>
-                </div>
-                
-                <div class="mobile-subcontent active" id="men_rings-style">
-                  <ul class="mobile-sublist">
-
-                    <li>
-                      <a href="{{ routes.collections_url }}/men-rings/wedding-bands">
-                        <div class="item-left">
-                          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="#D4AF37" stroke-width="1.5" style="width:24px;height:24px;">
-                            <rect x="6" y="10" width="12" height="4" rx="1"/>
-                          </svg>
-                          <span>Wedding Bands</span>
-                        </div>
-                        <svg class="icon-arrow" viewBox="0 0 24 24" fill="none" stroke="#D4AF37" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="m9 18 6-6-6-6" /></svg>
-                      </a>
-                    </li>
-                    <li>
-                      <a href="{{ routes.collections_url }}/men-rings/signet-rings">
-                        <div class="item-left">
-                          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="#D4AF37" stroke-width="1.5" style="width:24px;height:24px;">
-                            <path d="M6 12a6 6 0 0 1 12 0"/><rect x="9" y="7" width="6" height="4"/>
-                          </svg>
-                          <span>Signet Rings</span>
-                        </div>
-                        <svg class="icon-arrow" viewBox="0 0 24 24" fill="none" stroke="#D4AF37" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="m9 18 6-6-6-6" /></svg>
-                      </a>
-                    </li>
-                    <li>
-                      <a href="{{ routes.collections_url }}/men-rings/casual-rings">
-                        <div class="item-left">
-                          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="#D4AF37" stroke-width="1.5" style="width:24px;height:24px;">
-                            <circle cx="12" cy="12" r="6" stroke-width="2"/>
-                          </svg>
-                          <span>Casual Rings</span>
-                        </div>
-                        <svg class="icon-arrow" viewBox="0 0 24 24" fill="none" stroke="#D4AF37" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="m9 18 6-6-6-6" /></svg>
-                      </a>
-                    </li>
-                  </ul>
-                </div>
-                
-                <div class="mobile-subcontent" id="men_rings-price">
-                  <ul class="mobile-sublist mobile-sublist--text">
-                    <li><a href="{{ routes.collections_url }}/men-rings?filter.v.price.gte=&filter.v.price.lte=10000"><span>Under ₹10,000</span><svg class="icon-arrow" viewBox="0 0 24 24" fill="none" stroke="#D4AF37" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="m9 18 6-6-6-6" /></svg></a></li>
-                    <li><a href="{{ routes.collections_url }}/men-rings?filter.v.price.gte=10000&filter.v.price.lte=20000"><span>₹10,000 - ₹20,000</span><svg class="icon-arrow" viewBox="0 0 24 24" fill="none" stroke="#D4AF37" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="m9 18 6-6-6-6" /></svg></a></li>
-                    <li><a href="{{ routes.collections_url }}/men-rings?filter.v.price.gte=20000&filter.v.price.lte=30000"><span>₹20,000 - ₹30,000</span><svg class="icon-arrow" viewBox="0 0 24 24" fill="none" stroke="#D4AF37" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="m9 18 6-6-6-6" /></svg></a></li>
-                    <li><a href="{{ routes.collections_url }}/men-rings?filter.v.price.gte=30000&filter.v.price.lte=50000"><span>₹30,000 - ₹50,000</span><svg class="icon-arrow" viewBox="0 0 24 24" fill="none" stroke="#D4AF37" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="m9 18 6-6-6-6" /></svg></a></li>
-                    <li><a href="{{ routes.collections_url }}/men-rings?filter.v.price.gte=50000&filter.v.price.lte=100000"><span>₹50,000 - ₹1,00,000</span><svg class="icon-arrow" viewBox="0 0 24 24" fill="none" stroke="#D4AF37" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="m9 18 6-6-6-6" /></svg></a></li>
-                    <li><a href="{{ routes.collections_url }}/men-rings?filter.v.price.gte=100000"><span>Above ₹1,00,000</span><svg class="icon-arrow" viewBox="0 0 24 24" fill="none" stroke="#D4AF37" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="m9 18 6-6-6-6" /></svg></a></li>
-                  </ul>
-                </div>
-                
-                <div class="mobile-subcontent" id="men_rings-metal">
-                  <ul class="mobile-sublist">
-                    <li>
-                      <a href="{{ routes.collections_url }}/men-rings?filter.p.m.custom.metal=Yellow+Gold">
-                        <div class="item-left">
-                          <span class="metal-circle metal-yellow-gold"></span>
-                          <span>Yellow Gold</span>
-                        </div>
-                        <svg class="icon-arrow" viewBox="0 0 24 24" fill="none" stroke="#D4AF37" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="m9 18 6-6-6-6" /></svg>
-                      </a>
-                    </li>
-                    <li>
-                      <a href="{{ routes.collections_url }}/men-rings?filter.p.m.custom.metal=White+Gold">
-                        <div class="item-left">
-                          <span class="metal-circle metal-white-gold"></span>
-                          <span>White Gold</span>
-                        </div>
-                        <svg class="icon-arrow" viewBox="0 0 24 24" fill="none" stroke="#D4AF37" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="m9 18 6-6-6-6" /></svg>
-                      </a>
-                    </li>
-                    <li>
-                      <a href="{{ routes.collections_url }}/men-rings?filter.p.m.custom.metal=Rose+Gold">
-                        <div class="item-left">
-                          <span class="metal-circle metal-rose-gold"></span>
-                          <span>Rose Gold</span>
-                        </div>
-                        <svg class="icon-arrow" viewBox="0 0 24 24" fill="none" stroke="#D4AF37" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="m9 18 6-6-6-6" /></svg>
-                      </a>
-                    </li>
-                    <li>
-                      <a href="{{ routes.collections_url }}/men-rings?filter.p.m.custom.metal=Platinum">
-                        <div class="item-left">
-                          <span class="metal-circle metal-platinum"></span>
-                          <span>Platinum</span>
-                        </div>
-                        <svg class="icon-arrow" viewBox="0 0 24 24" fill="none" stroke="#D4AF37" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="m9 18 6-6-6-6" /></svg>
-                      </a>
-                    </li>
-                  </ul>
-                </div>
-              </div>
+            <li class="mobile-menu-item">
+              <a href="/pages/stores" class="mobile-menu-link">
+                <span class="mobile-menu-title">STORES & EXPERIENCE CENTERS</span>
+              </a>
             </li>
-            <li class="mobile-accordion-item">
-              <button class="mobile-accordion-header" aria-expanded="false">
-                <div class="accordion-title">
-                  <svg class="category-icon" viewBox="0 0 24 24" fill="none" stroke="#D4AF37" stroke-width="1.5">
-                    <ellipse cx="12" cy="12" rx="8" ry="4" />
-                    <ellipse cx="12" cy="14" rx="8" ry="4" />
-                  </svg>
-                  <span>MEN'S BRACELETS</span>
-                </div>
-                <svg class="icon-chevron" viewBox="0 0 24 24" fill="none" stroke="#D4AF37" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="m6 9 6 6 6-6" /></svg>
-              </button>
-              <div class="mobile-accordion-content" style="display: none;">
-                <div class="mobile-subtabs">
-                  <button class="mobile-subtab active" data-sub="men_bracelets-style">Shop By Style</button>
-                  <button class="mobile-subtab" data-sub="men_bracelets-price">Shop By Price</button>
-                  <button class="mobile-subtab" data-sub="men_bracelets-metal">Shop By Metal</button>
-                </div>
-                
-                <div class="mobile-subcontent active" id="men_bracelets-style">
-                  <ul class="mobile-sublist">
 
-                    <li>
-                      <a href="{{ routes.collections_url }}/men-bracelets/chain-bracelets">
-                        <div class="item-left">
-                          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="#D4AF37" stroke-width="1.5" style="width:24px;height:24px;">
-                            <rect x="6" y="10" width="4" height="4" rx="1"/><rect x="10" y="10" width="4" height="4" rx="1"/><rect x="14" y="10" width="4" height="4" rx="1"/>
-                          </svg>
-                          <span>Chain Bracelets</span>
-                        </div>
-                        <svg class="icon-arrow" viewBox="0 0 24 24" fill="none" stroke="#D4AF37" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="m9 18 6-6-6-6" /></svg>
-                      </a>
-                    </li>
-                    <li>
-                      <a href="{{ routes.collections_url }}/men-bracelets/cuff-bracelets">
-                        <div class="item-left">
-                          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="#D4AF37" stroke-width="1.5" style="width:24px;height:24px;">
-                            <path d="M5 12a7 5 0 0 1 14 0" stroke-width="3"/>
-                          </svg>
-                          <span>Cuff Bracelets</span>
-                        </div>
-                        <svg class="icon-arrow" viewBox="0 0 24 24" fill="none" stroke="#D4AF37" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="m9 18 6-6-6-6" /></svg>
-                      </a>
-                    </li>
-                  </ul>
-                </div>
-                
-                <div class="mobile-subcontent" id="men_bracelets-price">
-                  <ul class="mobile-sublist mobile-sublist--text">
-                    <li><a href="{{ routes.collections_url }}/men-bracelets?filter.v.price.gte=&filter.v.price.lte=10000"><span>Under ₹10,000</span><svg class="icon-arrow" viewBox="0 0 24 24" fill="none" stroke="#D4AF37" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="m9 18 6-6-6-6" /></svg></a></li>
-                    <li><a href="{{ routes.collections_url }}/men-bracelets?filter.v.price.gte=10000&filter.v.price.lte=20000"><span>₹10,000 - ₹20,000</span><svg class="icon-arrow" viewBox="0 0 24 24" fill="none" stroke="#D4AF37" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="m9 18 6-6-6-6" /></svg></a></li>
-                    <li><a href="{{ routes.collections_url }}/men-bracelets?filter.v.price.gte=20000&filter.v.price.lte=30000"><span>₹20,000 - ₹30,000</span><svg class="icon-arrow" viewBox="0 0 24 24" fill="none" stroke="#D4AF37" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="m9 18 6-6-6-6" /></svg></a></li>
-                    <li><a href="{{ routes.collections_url }}/men-bracelets?filter.v.price.gte=30000&filter.v.price.lte=50000"><span>₹30,000 - ₹50,000</span><svg class="icon-arrow" viewBox="0 0 24 24" fill="none" stroke="#D4AF37" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="m9 18 6-6-6-6" /></svg></a></li>
-                    <li><a href="{{ routes.collections_url }}/men-bracelets?filter.v.price.gte=50000&filter.v.price.lte=100000"><span>₹50,000 - ₹1,00,000</span><svg class="icon-arrow" viewBox="0 0 24 24" fill="none" stroke="#D4AF37" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="m9 18 6-6-6-6" /></svg></a></li>
-                    <li><a href="{{ routes.collections_url }}/men-bracelets?filter.v.price.gte=100000"><span>Above ₹1,00,000</span><svg class="icon-arrow" viewBox="0 0 24 24" fill="none" stroke="#D4AF37" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="m9 18 6-6-6-6" /></svg></a></li>
-                  </ul>
-                </div>
-                
-                <div class="mobile-subcontent" id="men_bracelets-metal">
-                  <ul class="mobile-sublist">
-                    <li>
-                      <a href="{{ routes.collections_url }}/men-bracelets?filter.p.m.custom.metal=Yellow+Gold">
-                        <div class="item-left">
-                          <span class="metal-circle metal-yellow-gold"></span>
-                          <span>Yellow Gold</span>
-                        </div>
-                        <svg class="icon-arrow" viewBox="0 0 24 24" fill="none" stroke="#D4AF37" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="m9 18 6-6-6-6" /></svg>
-                      </a>
-                    </li>
-                    <li>
-                      <a href="{{ routes.collections_url }}/men-bracelets?filter.p.m.custom.metal=White+Gold">
-                        <div class="item-left">
-                          <span class="metal-circle metal-white-gold"></span>
-                          <span>White Gold</span>
-                        </div>
-                        <svg class="icon-arrow" viewBox="0 0 24 24" fill="none" stroke="#D4AF37" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="m9 18 6-6-6-6" /></svg>
-                      </a>
-                    </li>
-                    <li>
-                      <a href="{{ routes.collections_url }}/men-bracelets?filter.p.m.custom.metal=Rose+Gold">
-                        <div class="item-left">
-                          <span class="metal-circle metal-rose-gold"></span>
-                          <span>Rose Gold</span>
-                        </div>
-                        <svg class="icon-arrow" viewBox="0 0 24 24" fill="none" stroke="#D4AF37" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="m9 18 6-6-6-6" /></svg>
-                      </a>
-                    </li>
-                    <li>
-                      <a href="{{ routes.collections_url }}/men-bracelets?filter.p.m.custom.metal=Platinum">
-                        <div class="item-left">
-                          <span class="metal-circle metal-platinum"></span>
-                          <span>Platinum</span>
-                        </div>
-                        <svg class="icon-arrow" viewBox="0 0 24 24" fill="none" stroke="#D4AF37" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="m9 18 6-6-6-6" /></svg>
-                      </a>
-                    </li>
-                  </ul>
-                </div>
-              </div>
+            <li class="mobile-menu-item">
+              <a href="/pages/franchise-enquiry" class="mobile-menu-link">
+                <span class="mobile-menu-title">FRANCHISE ENQUIRY</span>
+              </a>
             </li>
-          </ul>
-        </div>
-
+          {%- endif -%}
+        </ul>
       </nav>
 
-      <div class="mobile-menu-drawer__footer" style="display: flex; justify-content: flex-end; align-items: center; padding-top: 1.5rem; margin-top: auto; border-top: 1px solid rgba(255, 255, 255, 0.08); gap: 1.5rem;">
-        <div style="position: relative;" id="MobileCurrencyWrapper">
-          <button type="button" id="MobileCurrencyBtn" class="mobile-currency-btn" style="display: flex; align-items: center; gap: 0.5rem; background: transparent; border: 1px solid rgba(255,255,255,0.2); border-radius: 20px; padding: 6px 14px; color: #FFFFFF; font-family: 'Montserrat', sans-serif; font-size: 0.9rem; cursor: pointer;">
-            INR ₹ 
-            <svg viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width: 14px; height: 14px;"><path d="m6 9 6 6 6-6" /></svg>
+      <!-- Bespoke Drawer Footer -->
+      <div class="mobile-menu-drawer__footer">
+        <div style="display: flex; justify-content: space-between; align-items: center;">
+          <button type="button" class="mobile-drawer-currency-btn">
+            <span>INR ₹</span>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="width: 14px; height: 14px;">
+              <path d="m6 9 6 6 6-6"/>
+            </svg>
           </button>
-          
-          <ul id="MobileCurrencyDropdown" style="display: none; position: absolute; bottom: calc(100% + 10px); left: 0; background: #0A2922; border: 1px solid rgba(255,255,255,0.1); border-radius: 8px; padding: 8px 0; min-width: 100px; list-style: none; margin: 0; box-shadow: 0 4px 12px rgba(0,0,0,0.5); z-index: 10;">
-            <li><a href="#" style="display: block; padding: 8px 16px; color: #D4AF37; text-decoration: none; font-family: 'Montserrat', sans-serif; font-size: 0.9rem;">INR ₹</a></li>
-            <li><a href="#" style="display: block; padding: 8px 16px; color: #E0E0E0; text-decoration: none; font-family: 'Montserrat', sans-serif; font-size: 0.9rem;">USD $</a></li>
-            <li><a href="#" style="display: block; padding: 8px 16px; color: #E0E0E0; text-decoration: none; font-family: 'Montserrat', sans-serif; font-size: 0.9rem;">EUR €</a></li>
-            <li><a href="#" style="display: block; padding: 8px 16px; color: #E0E0E0; text-decoration: none; font-family: 'Montserrat', sans-serif; font-size: 0.9rem;">GBP £</a></li>
-          </ul>
+          <span style="font-family: 'Cormorant Garamond', serif; font-size: 1.15rem; color: #888888; font-style: italic;">Delhi • Since 1997</span>
         </div>
-        <a href="{{ routes.account_url }}" class="mobile-account-link" style="display: flex; align-items: center; gap: 0.5rem; color: #FFFFFF; text-decoration: none; font-family: 'Montserrat', sans-serif; font-size: 1rem; font-weight: 500;">
-          <svg viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="width: 24px; height: 24px;"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
-          My Account
-        </a>
+
+        <div class="mobile-drawer-actions">
+          <a href="https://wa.me/8920905268?text=Hi%2C%20I%20would%20like%20to%20inquire%20about%20jewellery." target="_blank" class="mobile-btn mobile-btn--chat">
+            <svg viewBox="0 0 24 24" fill="none" stroke="#25D366" stroke-width="2" style="width: 17px; height: 17px; margin-right: 6px;">
+              <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path>
+            </svg>
+            CHAT WITH US
+          </a>
+          <a href="/pages/expert-consultation" class="mobile-btn mobile-btn--consultation">
+            BOOK VIP CALL
+          </a>
+        </div>
       </div>
     </div>
   </div>
   <!-- Fixed Mobile Bottom Navigation -->
   <div class="mobile-bottom-nav">
-    <a href="{{ routes.root_url }}" class="mobile-bottom-nav__item {% if request.path == routes.root_url %}active{% endif %}">
-      <svg viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline stroke-linecap="round" stroke-linejoin="round" points="9 22 9 12 15 12 15 22"></polyline></svg>
+    <a href="{{ routes.root_url }}" class="mobile-bottom-nav__item {% if request.page_type == 'index' or request.path == routes.root_url %}active{% endif %}" aria-label="Home">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M3 9.5L12 3l9 6.5V20a1 1 0 0 1-1 1h-5v-6h-6v6H4a1 1 0 0 1-1-1V9.5z"/>
+      </svg>
       <span>Home</span>
     </a>
-    <button type="button" class="mobile-bottom-nav__item js-mobile-categories-toggle">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>
-      <span>Categories</span>
-    </button>
-    <a href="javascript:void(0)" class="mobile-bottom-nav__item mobile-bottom-nav__item--chat js-whatsapp-toggle">
+
+    <a href="{{ routes.search_url }}" class="mobile-bottom-nav__item js-mobile-categories-toggle js-mobile-search-toggle {% if request.page_type == 'search' %}active{% endif %}" aria-label="Search">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="11" cy="11" r="8"></circle>
+        <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+      </svg>
+      <span>Search</span>
+    </a>
+
+    <a href="https://wa.me/8920905268?text=Hi%2C%20I%20would%20like%20to%20inquire%20about%20jewellery." target="_blank" class="mobile-bottom-nav__item mobile-bottom-nav__item--chat js-whatsapp-toggle" aria-label="Chat">
       <div class="chat-icon-wrapper">
-        <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51a12.8 12.8 0 0 0-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 2C6.486 2 2 6.486 2 12c0 1.846.505 3.58 1.405 5.066L2 22l5.067-1.353A9.957 9.957 0 0 0 12 22c5.514 0 10-4.486 10-10S17.514 2 12 2zm0 18c-1.6 0-3.12-.416-4.44-1.16l-.318-.182-3.3.88.88-3.23-.2-.317A7.95 7.95 0 0 1 4 12c0-4.411 3.589-8 8-8s8 3.589 8 8-3.589 8-8 8z"/></svg>
+        <svg viewBox="0 0 24 24" fill="#FFFFFF">
+          <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51a12.8 12.8 0 0 0-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/>
+          <path d="M12 2C6.486 2 2 6.486 2 12c0 1.846.505 3.58 1.405 5.066L2 22l5.067-1.353A9.957 9.957 0 0 0 12 22c5.514 0 10-4.486 10-10S17.514 2 12 2zm0 18c-1.6 0-3.12-.416-4.44-1.16l-.318-.182-3.3.88.88-3.23-.2-.317A7.95 7.95 0 0 1 4 12c0-4.411 3.589-8 8-8s8 3.589 8 8-3.589 8-8 8z"/>
+        </svg>
       </div>
       <span>Chat</span>
     </a>
-    <a href="javascript:void(0)" onclick="if(window.openWishlistDrawer) window.openWishlistDrawer(); return false;" class="mobile-bottom-nav__item">
-      <svg viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12Z" /></svg>
+
+    <a href="javascript:void(0)" class="mobile-bottom-nav__item js-mobile-wishlist-trigger" aria-label="Wishlist">
+      <div style="position: relative;">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+        </svg>
+        <span class="mobile-bottom-nav__badge" id="mobile-wishlist-badge" style="display: none;">0</span>
+      </div>
       <span>Wishlist</span>
     </a>
-    <a href="javascript:void(0)" onclick="if(window.openCartDrawer) window.openCartDrawer(); return false;" class="mobile-bottom-nav__item">
+
+    <a href="{{ routes.cart_url }}" class="mobile-bottom-nav__item js-mobile-cart-trigger" aria-label="Bag">
       <div style="position: relative;">
-        <svg viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path><line x1="3" y1="6" x2="21" y2="6"></line><path stroke-linecap="round" stroke-linejoin="round" d="M16 10a4 4 0 0 1-8 0"></path></svg>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path>
+          <line x1="3" y1="6" x2="21" y2="6"></line>
+          <path d="M16 10a4 4 0 0 1-8 0"></path>
+        </svg>
         {% assign cart_count = cart.item_count | default: 0 %}
         <span class="mobile-bottom-nav__badge" id="mobile-cart-badge" {% if cart_count == 0 %}style="display: none;"{% endif %}>{{ cart_count }}</span>
       </div>
@@ -1724,7 +813,16 @@
     display: flex;
     align-items: center;
     justify-content: flex-end;
-    gap: 2.4rem;
+    gap: 2.0rem;
+  }
+  .header__icon-divider {
+    display: inline-block;
+    width: 1px;
+    height: 1.8rem;
+    background-color: var(--color-accent, #D4AF37);
+    opacity: 0.4;
+    margin: 0 -0.4rem;
+    flex-shrink: 0;
   }
 
   /* Custom Currency Selector */
@@ -2134,9 +1232,18 @@
     .header__icons {
       display: flex;
       align-items: center;
-      gap: 1.0rem;
+      gap: 0.8rem;
       justify-self: end;
       z-index: 10;
+    }
+    .header__icon-divider {
+      display: inline-block;
+      width: 1px;
+      height: 1.6rem;
+      background-color: var(--color-accent, #D4AF37);
+      opacity: 0.45;
+      margin: 0 0.2rem;
+      flex-shrink: 0;
     }
     .header__icon-link {
       display: inline-flex;
@@ -2241,14 +1348,15 @@
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(0, 30, 26, 0.55);
-    backdrop-filter: blur(5px);
-    -webkit-backdrop-filter: blur(5px);
+    background-color: rgba(0, 0, 0, 0.4);
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
     opacity: 0;
     transition: opacity 0.35s ease;
   }
 
-  .mobile-menu-drawer--open .mobile-menu-drawer__overlay {
+  .mobile-menu-drawer--open .mobile-menu-drawer__overlay,
+  .mobile-menu-drawer.active .mobile-menu-drawer__overlay {
     opacity: 1;
   }
 
@@ -2256,31 +1364,33 @@
     position: absolute;
     top: 0;
     left: 0;
-    width: 82%;
+    width: 85%;
     max-width: 380px;
     height: 100%;
-    background: linear-gradient(180deg, #041C16 0%, #002E28 100%);
-    border-top-right-radius: 24px;
-    border-bottom-right-radius: 24px;
-    box-shadow: 10px 0 35px rgba(0, 0, 0, 0.35);
-    border-right: 1px solid rgba(212, 175, 55, 0.2);
+    background-color: #FFFFFF;
+    color: #111111;
     display: flex;
     flex-direction: column;
+    box-shadow: 4px 0 25px rgba(0, 0, 0, 0.12);
     transform: translateX(-100%);
     transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
     box-sizing: border-box;
-    padding: 1.8rem 1.6rem 1.6rem;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
   }
 
-  .mobile-menu-drawer--open .mobile-menu-drawer__content {
+  .mobile-menu-drawer--open .mobile-menu-drawer__content,
+  .mobile-menu-drawer.active .mobile-menu-drawer__content {
     transform: translateX(0);
   }
 
+  /* Drawer Header */
   .mobile-menu-drawer__header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 1.2rem;
+    padding: 1.6rem 2.0rem;
+    border-bottom: 1px solid #EEEEEE;
   }
 
   .mobile-menu-drawer__logo {
@@ -2289,42 +1399,102 @@
   }
 
   .mobile-menu-drawer__close {
-    background: rgba(255, 255, 255, 0.06);
-    border: 1px solid rgba(212, 175, 55, 0.3);
-    border-radius: 50%;
+    background: transparent;
+    border: none;
     cursor: pointer;
-    width: 34px;
-    height: 34px;
-    padding: 0;
+    padding: 0.6rem;
     display: flex;
     align-items: center;
     justify-content: center;
-    transition: all 0.2s ease;
   }
 
-  .mobile-menu-drawer__close:hover,
-  .mobile-menu-drawer__close:active {
-    background: rgba(212, 175, 55, 0.15);
-    border-color: #D4AF37;
+  /* Navigation Links (Dynamic Desktop Menu) */
+  .mobile-menu-drawer__nav {
+    flex: 1 1 auto;
+    padding: 0;
+  }
+  .mobile-menu-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  .mobile-menu-item {
+    border-bottom: 1px solid #EEEEEE;
+  }
+  .mobile-menu-link,
+  .mobile-menu-trigger {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    padding: 1.6rem 2.0rem;
+    background: none;
+    border: none;
+    text-decoration: none;
+    color: #222222;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 1.25rem;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    cursor: pointer;
+    text-align: left;
+    transition: background-color 0.15s ease, color 0.15s ease;
+  }
+  .mobile-menu-link:active,
+  .mobile-menu-trigger:active {
+    background-color: #F8F8F8;
+    color: #D4AF37;
+  }
+  .mobile-menu-arrow {
+    width: 16px;
+    height: 16px;
+    stroke: #666666;
+    transition: transform 0.25s ease, stroke 0.15s ease;
+  }
+  .mobile-menu-trigger[aria-expanded="true"] .mobile-menu-arrow {
+    transform: rotate(90deg);
+    stroke: #D4AF37;
   }
 
-  /* Live Gold Rate Banner inside Mobile Drawer */
+  /* Submenu */
+  .mobile-submenu {
+    list-style: none;
+    margin: 0;
+    padding: 0.6rem 0 1.2rem 3.0rem;
+    background-color: #FAFAFA;
+    border-top: 1px solid #F0F0F0;
+  }
+  .mobile-submenu a {
+    display: block;
+    padding: 0.9rem 0;
+    color: #555555;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 1.15rem;
+    text-decoration: none;
+    transition: color 0.15s ease;
+  }
+  .mobile-submenu a:hover,
+  .mobile-submenu a:active {
+    color: #D4AF37;
+  }
+
+  /* Live Gold Rate Banner inside Bespoke Mobile Drawer */
   .mobile-drawer-gold-rate {
     display: flex;
     align-items: center;
-    gap: 0.6rem;
-    background: rgba(212, 175, 55, 0.08);
-    border: 1px solid rgba(212, 175, 55, 0.25);
-    border-radius: 12px;
-    padding: 0.6rem 1.0rem;
-    margin-bottom: 1.0rem;
+    gap: 0.8rem;
+    background: #FAF7F0;
+    border: 1px solid rgba(212, 175, 55, 0.4);
+    border-radius: 8px;
+    padding: 0.8rem 1.4rem;
+    margin: 1.2rem 1.6rem 0.8rem;
   }
   .gold-rate-pulse {
     width: 8px;
     height: 8px;
-    background-color: #3EE067;
+    background-color: #25D366;
     border-radius: 50%;
-    box-shadow: 0 0 8px #3EE067;
+    box-shadow: 0 0 8px #25D366;
     animation: goldPulse 2s infinite;
     flex-shrink: 0;
   }
@@ -2335,47 +1505,48 @@
   }
   .gold-rate-label {
     font-family: 'Montserrat', sans-serif;
-    font-size: 1.1rem;
-    color: #CCCCCC;
+    font-size: 0.9rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    color: #013F3E;
   }
   .gold-rate-val {
-    font-family: 'Montserrat', sans-serif;
-    font-size: 1.15rem;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.3rem;
     font-weight: 700;
-    color: #D4AF37;
+    color: #B58E2E;
     margin-left: auto;
   }
 
-  /* Mobile Drawer Search Bar */
+  /* Bespoke Mobile Drawer Search Bar */
   .mobile-drawer-search {
-    position: relative;
-    width: 100%;
-    margin-bottom: 1.2rem;
+    padding: 0.6rem 1.6rem 1.0rem;
+    border-bottom: 1px solid #EEEEEE;
   }
   .mobile-drawer-search__input {
     width: 100%;
-    height: 4.0rem;
-    background: rgba(255, 255, 255, 0.06);
-    border: 1px solid rgba(255, 255, 255, 0.12);
-    border-radius: 12px;
-    padding: 0 3.8rem 0 1.4rem;
-    color: #FFFFFF;
+    height: 40px;
+    background-color: #FBF9F5;
+    border: 1px solid #E5E0D5;
+    border-radius: 20px;
+    padding: 0 3.6rem 0 1.4rem;
+    color: #111111;
     font-family: 'Montserrat', sans-serif;
-    font-size: 1.2rem;
+    font-size: 1.1rem;
     box-sizing: border-box;
     outline: none;
     transition: border-color 0.2s ease, background-color 0.2s ease;
   }
   .mobile-drawer-search__input::placeholder {
-    color: rgba(255, 255, 255, 0.45);
+    color: #888888;
   }
   .mobile-drawer-search__input:focus {
     border-color: #D4AF37;
-    background: rgba(255, 255, 255, 0.09);
+    background-color: #FFFFFF;
   }
   .mobile-drawer-search__btn {
     position: absolute;
-    right: 0.8rem;
+    right: 0.6rem;
     top: 50%;
     transform: translateY(-50%);
     background: transparent;
@@ -2387,302 +1558,70 @@
     justify-content: center;
   }
 
-  /* VIP Virtual Consultation Banner Card */
-  .mobile-drawer-vip-card {
-    display: flex;
-    align-items: center;
-    gap: 1.0rem;
-    background: linear-gradient(135deg, rgba(212, 175, 55, 0.15) 0%, rgba(0, 46, 40, 0.3) 100%);
-    border: 1px solid rgba(212, 175, 55, 0.35);
-    border-radius: 14px;
-    padding: 1.0rem 1.2rem;
-    margin-bottom: 1.4rem;
-    text-decoration: none;
-    transition: transform 0.2s ease, border-color 0.2s ease;
-  }
-  .mobile-drawer-vip-card:active {
-    transform: scale(0.98);
-  }
-  .vip-card-icon {
-    width: 36px;
-    height: 36px;
-    border-radius: 10px;
-    background: rgba(212, 175, 55, 0.15);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-shrink: 0;
-  }
-  .vip-card-info {
+  /* Drawer Footer */
+  .mobile-menu-drawer__footer {
+    padding: 1.8rem 1.6rem 2.2rem;
+    border-top: 1px solid #EEEEEE;
+    background-color: #FFFFFF;
+    margin-top: auto;
     display: flex;
     flex-direction: column;
-    gap: 0.2rem;
+    gap: 1.4rem;
   }
-  .vip-card-title {
-    font-family: 'Montserrat', sans-serif;
-    font-size: 1.2rem;
-    font-weight: 600;
-    color: #FFFFFF;
-  }
-  .vip-card-subtitle {
-    font-family: 'Montserrat', sans-serif;
-    font-size: 0.95rem;
-    color: rgba(255, 255, 255, 0.65);
-  }
-  .vip-card-btn {
-    font-family: 'Montserrat', sans-serif;
-    font-size: 0.9rem;
-    font-weight: 700;
-    color: #002E28;
-    background: #D4AF37;
-    padding: 0.5rem 0.8rem;
-    border-radius: 6px;
-    margin-left: auto;
-    letter-spacing: 0.05em;
-    flex-shrink: 0;
-  }
-
-  .mobile-menu-drawer__nav {
-    flex: 1;
-    overflow-y: auto;
-    -ms-overflow-style: none;
-    scrollbar-width: none;
-  }
-
-  .mobile-menu-drawer__nav::-webkit-scrollbar {
-    display: none;
-  }
-
-  .mobile-menu-drawer__main-tabs {
-    display: flex;
-    background-color: #0A2922; /* Slightly lighter dark green */
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    border-radius: 8px;
-    padding: 4px;
-    margin-bottom: 2rem;
-  }
-
-  .mobile-main-tab {
-    flex: 1;
-    background: transparent;
-    border: 1px solid transparent;
-    color: #FFFFFF;
-    font-family: 'Montserrat', sans-serif;
-    font-size: 1rem;
-    font-weight: 500;
-    padding: 10px 0;
-    border-radius: 6px;
-    cursor: pointer;
-    transition: all 0.2s ease;
-  }
-
-  .mobile-main-tab.active {
-    border: 1px solid #D4AF37;
-    color: #D4AF37;
-  }
-
-  .mobile-menu-drawer__divider {
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-    margin-bottom: 1.5rem;
-  }
-
-  .mobile-menu-drawer__divider .line {
-    flex: 1;
-    height: 1px;
-    background-color: #D4AF37;
-    opacity: 0.5;
-  }
-
-  .mobile-menu-drawer__divider .text {
-    font-family: 'Montserrat', sans-serif;
-    font-size: 0.95rem;
-    font-weight: 600;
-    color: #D4AF37;
-    text-transform: capitalize;
-  }
-
-  .mobile-main-content {
-    display: none;
-  }
-  .mobile-main-content.active {
-    display: block;
-    animation: fadeIn 0.3s ease;
-  }
-
-  .mobile-menu-drawer__accordion {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-  }
-
-  .mobile-accordion-item {
-    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-  }
-  .mobile-accordion-item:last-child {
-    border-bottom: none;
-  }
-
-  .mobile-accordion-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    width: 100%;
+  .mobile-drawer-currency-btn {
     background: none;
     border: none;
-    padding: 1.2rem 0;
-    cursor: pointer;
-    color: #FFFFFF;
-    text-decoration: none;
-  }
-  
-  .mobile-accordion-link {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
-
-  .mobile-accordion-header .accordion-title {
-    display: flex;
-    align-items: center;
-    gap: 1.2rem;
+    padding: 0;
+    color: #444444;
     font-family: 'Montserrat', sans-serif;
-    font-size: 1.1rem;
-    font-weight: 600;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-  }
-
-  .mobile-accordion-header .category-icon {
-    width: 2rem;
-    height: 2rem;
-  }
-
-  .mobile-accordion-header .icon-chevron {
-    width: 1.5rem;
-    height: 1.5rem;
-    transition: transform 0.3s ease;
-  }
-  
-  .mobile-accordion-header .icon-arrow {
-    width: 1.5rem;
-    height: 1.5rem;
-  }
-
-  .mobile-accordion-header[aria-expanded="true"] .icon-chevron {
-    transform: rotate(180deg);
-  }
-  
-  .mobile-accordion-header[aria-expanded="true"] .accordion-title {
-    color: #D4AF37;
-  }
-
-  .mobile-accordion-content {
-    display: none;
-    padding-bottom: 1.5rem;
-  }
-
-  .mobile-subtabs {
-    display: flex;
-    background-color: rgba(255,255,255,0.03);
-    border: 1px solid rgba(255,255,255,0.1);
-    border-radius: 6px;
-    padding: 2px;
-    margin-bottom: 1rem;
-  }
-
-  .mobile-subtab {
-    flex: 1;
-    background: transparent;
-    border: 1px solid transparent;
-    color: rgba(255,255,255,0.6);
-    font-family: 'Montserrat', sans-serif;
-    font-size: 0.85rem;
+    font-size: 1.15rem;
     font-weight: 500;
-    padding: 8px 0;
-    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
     cursor: pointer;
+  }
+
+  .mobile-drawer-actions {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.0rem;
+    width: 100%;
+  }
+  .mobile-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    height: 44px;
+    border-radius: 22px;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 1.0rem;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    text-decoration: none;
+    text-align: center;
+    box-sizing: border-box;
     transition: all 0.2s ease;
   }
-
-  .mobile-subtab.active {
-    border: 1px solid #D4AF37;
-    color: #D4AF37;
+  .mobile-btn--chat {
+    background-color: #FFFFFF;
+    border: 1px solid #25D366;
+    color: #111111;
   }
-
-  .mobile-subcontent {
-    display: none;
+  .mobile-btn--chat:active {
+    background-color: #F5FBF7;
+    border-color: #128C7E;
   }
-  .mobile-subcontent.active {
-    display: block;
-    animation: fadeIn 0.3s ease;
+  .mobile-btn--login,
+  .mobile-btn--consultation {
+    background-color: #013F3E;
+    color: #FFFFFF;
+    border: 1px solid #013F3E;
   }
-
-  .mobile-sublist {
-    list-style: none;
-    padding: 0;
-    margin: 0;
+  .mobile-btn--login:active,
+  .mobile-btn--consultation:active {
+    background-color: #002E28;
   }
-
-  .mobile-sublist li a {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    background: rgba(255,255,255,0.05);
-    padding: 12px 16px;
-    border-radius: 8px;
-    margin-bottom: 8px;
-    text-decoration: none;
-    color: #E0E0E0;
-    font-family: 'Montserrat', sans-serif;
-    font-size: 0.95rem;
-    font-weight: 500;
-    transition: background 0.2s;
-  }
-
-  .mobile-sublist li a:hover {
-    background: rgba(255,255,255,0.08);
-  }
-
-  .mobile-sublist .item-left {
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-  }
-
-  .mobile-sublist .item-left img {
-    width: 24px;
-    height: 24px;
-    object-fit: contain;
-  }
-  
-  .mobile-sublist .item-left svg {
-    width: 24px;
-    height: 24px;
-  }
-
-  .mobile-sublist .icon-arrow {
-    width: 1.2rem;
-    height: 1.2rem;
-  }
-  
-  .mobile-sublist--text li a {
-    padding-left: 16px;
-  }
-
-  .metal-circle {
-    display: inline-block;
-    width: 24px;
-    height: 24px;
-    border-radius: 50%;
-    box-shadow: inset 0 2px 4px rgba(255,255,255,0.4), inset 0 -2px 4px rgba(0,0,0,0.4);
-    border: 1px solid rgba(255,255,255,0.1);
-  }
-  .metal-yellow-gold { background: radial-gradient(circle at 30% 30%, #F5DEB3, #D4AF37, #B8860B); }
-  .metal-white-gold { background: radial-gradient(circle at 30% 30%, #FFFFFF, #E0E0E0, #A9A9A9); }
-  .metal-rose-gold { background: radial-gradient(circle at 30% 30%, #FADadd, #B76E79, #9C515D); }
-  .metal-platinum { background: radial-gradient(circle at 30% 30%, #FFFFFF, #D3D3D3, #778899); }
 
   @keyframes fadeIn {
     from { opacity: 0; }
@@ -2774,42 +1713,53 @@
     .mobile-bottom-nav {
       display: flex !important;
       justify-content: space-around !important;
-      align-items: center !important;
+      align-items: flex-end !important;
       position: fixed !important;
       bottom: 0 !important;
       left: 0 !important;
       right: 0 !important;
       width: 100% !important;
-      background-color: #FFFFFF !important;
-      box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.1) !important;
+      height: calc(58px + env(safe-area-inset-bottom, 0px)) !important;
+      background-color: var(--color-background, #FFFFFF) !important;
+      box-shadow: 0 -4px 20px rgba(1, 39, 38, 0.08) !important;
       z-index: 99999 !important;
-      padding: 0.7rem 0.8rem max(0.9rem, env(safe-area-inset-bottom)) !important;
+      padding: 4px 6px max(6px, env(safe-area-inset-bottom, 0px)) !important;
       box-sizing: border-box !important;
-      border-top-left-radius: 20px !important;
-      border-top-right-radius: 20px !important;
-      border-top: 1px solid rgba(212, 175, 55, 0.25) !important;
+      border-top-left-radius: 18px !important;
+      border-top-right-radius: 18px !important;
+      border-top: 1px solid rgba(212, 175, 55, 0.3) !important;
       visibility: visible !important;
       opacity: 1 !important;
       pointer-events: auto !important;
+      font-family: 'Montserrat', var(--font-primary--family), sans-serif !important;
     }
     
     .mobile-bottom-nav__item {
       display: flex;
       flex-direction: column;
       align-items: center;
+      justify-content: flex-end;
       text-decoration: none;
-      color: #666666;
-      font-family: 'Montserrat', sans-serif;
-      font-size: 0.75rem;
+      color: #4B5855;
+      font-family: 'Montserrat', var(--font-primary--family), sans-serif;
+      font-size: 0.72rem;
       font-weight: 500;
-      gap: 0.3rem;
+      line-height: 1.1;
+      gap: 3px;
       flex: 1;
+      height: 100%;
       background: none;
       border: none;
-      padding: 0;
+      padding: 4px 0 2px;
       outline: none;
       cursor: pointer;
+      -webkit-tap-highlight-color: transparent;
       transition: color 0.2s ease, transform 0.15s ease;
+      position: relative;
+    }
+
+    .mobile-bottom-nav__item * {
+      pointer-events: none !important;
     }
 
     .mobile-bottom-nav__item:active {
@@ -2817,38 +1767,45 @@
     }
     
     .mobile-bottom-nav__item.active {
-      color: #D4AF37;
+      color: var(--color-primary, #012726);
       font-weight: 600;
     }
     .mobile-bottom-nav__item.active svg {
-      stroke: #D4AF37;
+      stroke: var(--color-primary, #012726);
     }
     
     .mobile-bottom-nav__item svg {
-      width: 1.7rem;
-      height: 1.7rem;
+      width: 22px;
+      height: 22px;
       stroke: currentColor;
-      stroke-width: 1.6;
+      stroke-width: 1.65;
       fill: none;
     }
     
     .mobile-bottom-nav__item--chat {
       position: relative;
+      overflow: visible !important;
     }
     
     .chat-icon-wrapper {
-      background: linear-gradient(135deg, #3EE067, #25D366);
+      background: linear-gradient(135deg, #25D366 0%, #128C7E 100%);
       border-radius: 50%;
-      width: 4.0rem;
-      height: 4.0rem;
+      width: 48px;
+      height: 48px;
       display: flex;
       align-items: center;
       justify-content: center;
-      box-shadow: 0 4px 15px rgba(37, 211, 102, 0.45);
+      box-shadow: 0 4px 14px rgba(37, 211, 102, 0.45);
       border: 3.5px solid #FFFFFF;
-      margin-top: -2.3rem;
-      margin-bottom: 0rem;
-      transition: transform 0.2s ease, box-shadow 0.2s ease;
+      margin-top: -24px;
+      margin-bottom: 2px;
+      transition: transform 0.2s ease, box-shadow 0.2s ease, opacity 0.25s ease, visibility 0.25s ease;
+    }
+
+    body.whatsapp-menu-open .chat-icon-wrapper {
+      opacity: 0 !important;
+      visibility: hidden !important;
+      transform: scale(0.8) !important;
     }
 
     .mobile-bottom-nav__item--chat:active .chat-icon-wrapper {
@@ -2856,8 +1813,8 @@
     }
     
     .chat-icon-wrapper svg {
-      width: 2.1rem;
-      height: 2.1rem;
+      width: 26px;
+      height: 26px;
       stroke: none;
       fill: #FFFFFF;
     }
@@ -2867,31 +1824,34 @@
       text-align: center;
       white-space: nowrap;
       font-weight: 600;
-      color: #00352A;
+      color: var(--color-primary, #012726);
+      font-size: 0.72rem;
+      font-family: 'Montserrat', var(--font-primary--family), sans-serif;
     }
     
     .mobile-bottom-nav__badge {
       position: absolute;
-      top: -0.5rem;
-      right: -0.6rem;
+      top: -4px;
+      right: -7px;
       background-color: var(--color-accent, #D4AF37);
-      color: var(--color-primary, #002E28);
-      font-family: 'Montserrat', sans-serif;
-      font-size: 0.7rem;
+      color: var(--color-primary, #012726);
+      font-family: 'Montserrat', var(--font-primary--family), sans-serif;
+      font-size: 0.65rem;
       font-weight: 700;
-      width: 1.3rem;
-      height: 1.3rem;
-      border-radius: 50%;
+      min-width: 16px;
+      height: 16px;
+      padding: 0 4px;
+      border-radius: 10px;
       display: flex;
       align-items: center;
       justify-content: center;
       line-height: 1;
-      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.25);
     }
     
     /* Pad body so fixed bottom nav doesn't overlap content */
     body {
-      padding-bottom: calc(5.5rem + env(safe-area-inset-bottom)) !important;
+      padding-bottom: calc(65px + env(safe-area-inset-bottom, 0px)) !important;
     }
   }
 {% endstylesheet %}
@@ -2942,53 +1902,50 @@
       });
     });
 
-    // Accordions (e.g. Rings)
-    const accordions = document.querySelectorAll('.mobile-accordion-header');
-    accordions.forEach(acc => {
-      acc.addEventListener('click', function(e) {
-        if(this.tagName.toLowerCase() === 'a') return; // Skip if it's a direct link
+    // Submenu Triggers (Dynamic Links)
+    const menuTriggers = document.querySelectorAll('.mobile-menu-trigger');
+    menuTriggers.forEach(trig => {
+      trig.addEventListener('click', function(e) {
         e.preventDefault();
         const expanded = this.getAttribute('aria-expanded') === 'true';
         this.setAttribute('aria-expanded', !expanded);
-        const content = this.nextElementSibling;
-        if (content) {
-          content.style.display = expanded ? 'none' : 'block';
+        const sub = this.nextElementSibling;
+        if (sub) {
+          sub.style.display = expanded ? 'none' : 'block';
         }
       });
     });
 
-    // Currency Dropdown
-    const currBtn = document.getElementById('MobileCurrencyBtn');
-    const currDropdown = document.getElementById('MobileCurrencyDropdown');
-    if (currBtn && currDropdown) {
-      currBtn.addEventListener('click', function(e) {
-        e.stopPropagation();
-        currDropdown.style.display = currDropdown.style.display === 'none' ? 'block' : 'none';
-      });
-      document.addEventListener('click', function(e) {
-        if (!currBtn.contains(e.target) && !currDropdown.contains(e.target)) {
-          currDropdown.style.display = 'none';
+    // Wishlist bottom bar trigger
+    const wishlistTriggers = document.querySelectorAll('.js-mobile-wishlist-trigger');
+    wishlistTriggers.forEach(btn => {
+      btn.addEventListener('click', function(e) {
+        e.preventDefault();
+        if (typeof window.openWishlistDrawer === 'function') {
+          window.openWishlistDrawer();
+        } else {
+          const drawer = document.getElementById('WishlistDrawer');
+          if (drawer) {
+            drawer.classList.add('is-open');
+            document.body.style.overflow = 'hidden';
+          }
         }
       });
-    }
+    });
 
-    // Sub Tabs (Style, Price, Metal)
-    const subtabs = document.querySelectorAll('.mobile-subtab');
-    subtabs.forEach(tab => {
-      tab.addEventListener('click', function() {
-        const container = this.closest('.mobile-accordion-content');
-        container.querySelectorAll('.mobile-subtab').forEach(t => t.classList.remove('active'));
-        container.querySelectorAll('.mobile-subcontent').forEach(c => c.classList.remove('active'));
-        
-        this.classList.add('active');
-        const targetId = this.getAttribute('data-sub');
-        const targetContent = container.querySelector('#' + targetId);
-        if (targetContent) targetContent.classList.add('active');
+    // Cart/Bag bottom bar trigger
+    const cartTriggers = document.querySelectorAll('.js-mobile-cart-trigger');
+    cartTriggers.forEach(btn => {
+      btn.addEventListener('click', function(e) {
+        const drawer = document.getElementById('CartDrawer');
+        if (drawer && typeof window.openCartDrawer === 'function') {
+          e.preventDefault();
+          window.openCartDrawer();
+        }
       });
     });
   }
 
-  
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', initMobileMenu);
   } else {

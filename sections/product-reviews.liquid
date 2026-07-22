@@ -3,572 +3,686 @@
   "name": "Product Reviews",
   "settings": [
     {
-      "type": "header",
-      "content": "Rating Summary"
+      "type": "text",
+      "id": "heading",
+      "label": "Section Heading",
+      "default": "What people are saying?"
     },
     {
       "type": "text",
-      "id": "average_rating",
-      "label": "Average Rating",
-      "default": "4.8"
+      "id": "subheading",
+      "label": "Section Subheading",
+      "default": "Don't just take our word for it—see what our customers have to say about their experience!"
     },
     {
       "type": "text",
-      "id": "total_reviews",
-      "label": "Total Reviews",
-      "default": "4,638"
+      "id": "whatsapp_number",
+      "label": "WhatsApp Number",
+      "default": "+91 96500 90730"
     },
     {
-      "type": "text",
-      "id": "star_5_percent",
-      "label": "5 Star Percentage",
-      "default": "82"
-    },
-    {
-      "type": "text",
-      "id": "star_4_percent",
-      "label": "4 Star Percentage",
-      "default": "12"
-    },
-    {
-      "type": "text",
-      "id": "star_3_percent",
-      "label": "3 Star Percentage",
-      "default": "4"
-    },
-    {
-      "type": "text",
-      "id": "star_2_percent",
-      "label": "2 Star Percentage",
-      "default": "1"
-    },
-    {
-      "type": "text",
-      "id": "star_1_percent",
-      "label": "1 Star Percentage",
-      "default": "1"
+      "type": "url",
+      "id": "whatsapp_link",
+      "label": "WhatsApp Chat Link"
     }
   ],
   "blocks": [
     {
-      "type": "whatsapp_review",
-      "name": "WhatsApp Review",
+      "type": "review_card",
+      "name": "Review Card",
       "settings": [
         {
-          "type": "image_picker",
-          "id": "avatar",
-          "label": "Customer Avatar"
+          "type": "textarea",
+          "id": "review_text",
+          "label": "Review Text",
+          "default": "Absolutely stunning diamond ring! The craftsmanship is incredible and it sparkles beautifully."
         },
         {
           "type": "text",
           "id": "customer_name",
           "label": "Customer Name",
-          "default": "Neha S."
+          "default": "Priya Sharma"
+        },
+        {
+          "type": "text",
+          "id": "customer_location",
+          "label": "Customer Location",
+          "default": "New Delhi, India"
+        },
+        {
+          "type": "range",
+          "id": "rating",
+          "label": "Star Rating",
+          "min": 1,
+          "max": 5,
+          "default": 5
+        },
+        {
+          "type": "text",
+          "id": "time",
+          "label": "Message Time",
+          "default": "10:30 AM"
         },
         {
           "type": "image_picker",
-          "id": "product_image",
-          "label": "Product Image"
+          "id": "chat_screenshot",
+          "label": "WhatsApp Chat Screenshot (optional)"
         },
         {
-          "type": "textarea",
-          "id": "review_text",
-          "label": "Customer Review",
-          "default": "Absolutely stunning! The diamond sparkles beautifully in real. ✨"
-        },
-        {
-          "type": "textarea",
-          "id": "reply_text",
-          "label": "Store Reply",
-          "default": "Thank you! 💚"
+          "type": "select",
+          "id": "card_color",
+          "label": "Card Background Color",
+          "options": [
+            { "value": "green", "label": "Light Green" },
+            { "value": "pink", "label": "Light Pink" },
+            { "value": "yellow", "label": "Light Yellow" },
+            { "value": "blue", "label": "Light Blue" },
+            { "value": "peach", "label": "Light Peach" },
+            { "value": "lavender", "label": "Light Lavender" }
+          ],
+          "default": "green"
         }
       ]
     }
   ],
   "presets": [
     {
-      "name": "Product Reviews"
+      "name": "Product Reviews",
+      "blocks": [
+        {
+          "type": "review_card",
+          "settings": {
+            "review_text": "The 18K gold necklace is absolutely breathtaking! The quality exceeded my expectations. Every detail is perfect and it sparkles like nothing I've seen before.",
+            "customer_name": "Priya Sharma",
+            "customer_location": "New Delhi, India",
+            "rating": 5,
+            "time": "9:30 AM",
+            "card_color": "green"
+          }
+        },
+        {
+          "type": "review_card",
+          "settings": {
+            "review_text": "Ordered a diamond pendant for my anniversary. The packaging was luxurious and delivery was super fast. My wife absolutely loves it!",
+            "customer_name": "Rajesh Gupta",
+            "customer_location": "Mumbai, India",
+            "rating": 5,
+            "time": "10:12 AM",
+            "card_color": "yellow"
+          }
+        },
+        {
+          "type": "review_card",
+          "settings": {
+            "review_text": "I never knew online jewellery shopping could be this good! The diamond clarity is amazing and the hallmarked gold feels so premium.",
+            "customer_name": "Aisha Khan",
+            "customer_location": "Hyderabad, India",
+            "rating": 5,
+            "time": "11:05 AM",
+            "card_color": "pink"
+          }
+        },
+        {
+          "type": "review_card",
+          "settings": {
+            "review_text": "Been a loyal customer for 2 years now. Every piece I've bought from Swastik Jewels has been exceptional. The craftsmanship speaks for itself!",
+            "customer_name": "Sneha Reddy",
+            "customer_location": "Bangalore, India",
+            "rating": 5,
+            "time": "12:45 PM",
+            "card_color": "blue"
+          }
+        },
+        {
+          "type": "review_card",
+          "settings": {
+            "review_text": "The engagement ring I ordered was absolutely perfect. The diamond quality, the gold finish, everything was exactly as shown. Highly recommend!",
+            "customer_name": "Amit Patel",
+            "customer_location": "Ahmedabad, India",
+            "rating": 5,
+            "time": "1:20 PM",
+            "card_color": "peach"
+          }
+        },
+        {
+          "type": "review_card",
+          "settings": {
+            "review_text": "Bought earrings for my mother's birthday. She was thrilled! The packaging made it feel like a gift from a luxury boutique. Will definitely order again.",
+            "customer_name": "Meera Iyer",
+            "customer_location": "Chennai, India",
+            "rating": 5,
+            "time": "2:10 PM",
+            "card_color": "lavender"
+          }
+        },
+        {
+          "type": "review_card",
+          "settings": {
+            "review_text": "I compared prices with many brands, Swastik Jewels offers the best value for certified diamond jewellery. 100% genuine and beautiful designs!",
+            "customer_name": "Neha Saxena",
+            "customer_location": "Jaipur, India",
+            "rating": 5,
+            "time": "3:15 PM",
+            "card_color": "green"
+          }
+        },
+        {
+          "type": "review_card",
+          "settings": {
+            "review_text": "The buyback policy gave me so much confidence to order online. The bracelet arrived beautifully and fits perfectly. Outstanding service!",
+            "customer_name": "Kavita Joshi",
+            "customer_location": "Pune, India",
+            "rating": 5,
+            "time": "4:00 PM",
+            "card_color": "yellow"
+          }
+        }
+      ]
     }
   ]
 }
 {% endschema %}
 
-<div class="pr-section">
-  <!-- Rating Summary -->
-  <div class="pr-summary-card">
-    <div class="pr-summary-col-1">
-      <div class="pr-rating-large">{{ section.settings.average_rating }}</div>
-      <div class="pr-rating-stars">
-        {% for i in (1..5) %}
-          <svg viewBox="0 0 24 24" width="20" height="20" fill="#F5C518"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
-        {% endfor %}
-      </div>
-      <div class="pr-rating-count">({{ section.settings.total_reviews }} reviews)</div>
+<div class="wpr-section">
+  <!-- Section Header -->
+  <div class="wpr-header">
+    <div class="wpr-header-ornament">
+      <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#D4AF37" stroke-width="1.5"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
     </div>
+    <h2 class="wpr-title">{{ section.settings.heading }}</h2>
+    <p class="wpr-subtitle">{{ section.settings.subheading }}</p>
 
-    <div class="pr-summary-col-2">
-      <div class="pr-bar-row">
-        <span class="pr-bar-num">5 <svg viewBox="0 0 24 24" width="12" height="12" fill="#F5C518"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg></span>
-        <div class="pr-bar-track"><div class="pr-bar-fill" style="width: {{ section.settings.star_5_percent }}%;"></div></div>
-        <span class="pr-bar-percent">{{ section.settings.star_5_percent }}%</span>
-      </div>
-      <div class="pr-bar-row">
-        <span class="pr-bar-num">4 <svg viewBox="0 0 24 24" width="12" height="12" fill="#F5C518"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg></span>
-        <div class="pr-bar-track"><div class="pr-bar-fill" style="width: {{ section.settings.star_4_percent }}%;"></div></div>
-        <span class="pr-bar-percent">{{ section.settings.star_4_percent }}%</span>
-      </div>
-      <div class="pr-bar-row">
-        <span class="pr-bar-num">3 <svg viewBox="0 0 24 24" width="12" height="12" fill="#F5C518"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg></span>
-        <div class="pr-bar-track"><div class="pr-bar-fill" style="width: {{ section.settings.star_3_percent }}%;"></div></div>
-        <span class="pr-bar-percent">{{ section.settings.star_3_percent }}%</span>
-      </div>
-      <div class="pr-bar-row">
-        <span class="pr-bar-num">2 <svg viewBox="0 0 24 24" width="12" height="12" fill="#F5C518"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg></span>
-        <div class="pr-bar-track"><div class="pr-bar-fill" style="width: {{ section.settings.star_2_percent }}%;"></div></div>
-        <span class="pr-bar-percent">{{ section.settings.star_2_percent }}%</span>
-      </div>
-      <div class="pr-bar-row">
-        <span class="pr-bar-num">1 <svg viewBox="0 0 24 24" width="12" height="12" fill="#F5C518"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg></span>
-        <div class="pr-bar-track"><div class="pr-bar-fill" style="width: {{ section.settings.star_1_percent }}%;"></div></div>
-        <span class="pr-bar-percent">{{ section.settings.star_1_percent }}%</span>
-      </div>
-    </div>
-
-    <div class="pr-summary-col-3">
-      <div class="pr-summary-title">What our customers say</div>
-      <div class="pr-badges">
-        <div class="pr-badge-item">
-          <div class="pr-badge-icon">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#DDA541" stroke-width="1.5"><path d="M6 3h12l4 6-10 12L2 9l4-6z"/><path d="M2 9h20M12 21l-4-12m8 0l-4 12M6 3l2 6m8-6l-2 6"/></svg>
-          </div>
-          <div class="pr-badge-text">Beautiful<br>Craftsmanship</div>
-        </div>
-        <div class="pr-badge-item">
-          <div class="pr-badge-icon">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#DDA541" stroke-width="1.5"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
-          </div>
-          <div class="pr-badge-text">100% Certified<br>& Hallmarked</div>
-        </div>
-        <div class="pr-badge-item">
-          <div class="pr-badge-icon">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#DDA541" stroke-width="1.5"><rect x="1" y="3" width="15" height="13"/><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>
-          </div>
-          <div class="pr-badge-text">Safe & Insured<br>Delivery</div>
-        </div>
-      </div>
-    </div>
+    <!-- WhatsApp CTA Button -->
+    <a href="{{ section.settings.whatsapp_link | default: '#' }}" class="wpr-wa-cta" target="_blank" rel="noopener noreferrer">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="#25D366"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51a12.8 12.8 0 0 0-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413z"/></svg>
+      <span>Chat with us on WhatsApp&nbsp;&nbsp;{{ section.settings.whatsapp_number }}</span>
+    </a>
   </div>
 
-  <!-- WhatsApp Carousel -->
-  <div class="pr-carousel-header">
-    <div class="pr-carousel-title">
-      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#DDA541" stroke-width="2"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/><circle cx="9" cy="12" r="1" fill="#DDA541"/><circle cx="12" cy="12" r="1" fill="#DDA541"/><circle cx="15" cy="12" r="1" fill="#DDA541"/></svg>
-      Real reviews from real customers
-    </div>
-    <a href="#" class="pr-view-all">View all reviews &rarr;</a>
-  </div>
-
-  <div class="pr-carousel-container">
-    <button class="pr-nav-btn prev" aria-label="Previous review">
-      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg>
-    </button>
-    
-    <div class="pr-carousel" id="pr-carousel">
+  <!-- Row 1: Marquee scrolling RIGHT (text reviews) -->
+  <div class="wpr-marquee-wrap">
+    <div class="wpr-marquee wpr-marquee-row1" id="wpr-marquee-row1">
       {% for block in section.blocks %}
-        {% if block.type == 'whatsapp_review' %}
-          <div class="pr-wa-card">
-            <!-- WA Header -->
-            <div class="pr-wa-header">
-              <div class="pr-wa-avatar">
-                {% if block.settings.avatar %}
-                  <img src="{{ block.settings.avatar | image_url: width: 40 }}" alt="{{ block.settings.customer_name }}" loading="lazy">
-                {% else %}
-                  <div class="pr-wa-avatar-placeholder"></div>
-                {% endif %}
+        {% if block.settings.chat_screenshot == blank %}
+          <div class="wpr-card wpr-card--{{ block.settings.card_color }}" {{ block.shopify_attributes }}>
+            <!-- Quote icon -->
+            <div class="wpr-card-quote">
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor" opacity="0.15"><path d="M6 17h3l2-4V7H5v6h3l-2 4zm8 0h3l2-4V7h-6v6h3l-2 4z"/></svg>
+            </div>
+            <p class="wpr-card-text">{{ block.settings.review_text }}</p>
+
+            <div class="wpr-card-footer">
+              <div class="wpr-card-author">
+                <span class="wpr-card-name">{{ block.settings.customer_name }}</span>
+                <span class="wpr-card-location">{{ block.settings.customer_location }}</span>
               </div>
-              <div class="pr-wa-user-info">
-                <div class="pr-wa-name">{{ block.settings.customer_name }}</div>
-                <div class="pr-wa-status">online</div>
-              </div>
-              <div class="pr-wa-icon">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="#25D366"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51a12.8 12.8 0 0 0-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413z"/></svg>
+              <div class="wpr-card-meta">
+                <div class="wpr-card-stars">
+                  {% for i in (1..5) %}
+                    {% if i <= block.settings.rating %}
+                      <svg viewBox="0 0 24 24" width="14" height="14" fill="#F5C518"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                    {% else %}
+                      <svg viewBox="0 0 24 24" width="14" height="14" fill="#E0E0E0"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                    {% endif %}
+                  {% endfor %}
+                </div>
+                <span class="wpr-card-time">{{ block.settings.time }}
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#53bdeb" stroke-width="2.5"><path d="M18 6L7 17l-5-5"/><path d="M22 10l-11 11"/></svg>
+                </span>
               </div>
             </div>
-            
-            <!-- WA Body -->
-            <div class="pr-wa-body">
-              {% if block.settings.product_image %}
-                <div class="pr-wa-product-img">
-                  <img src="{{ block.settings.product_image | image_url: width: 400 }}" alt="Product Image" loading="lazy">
-                </div>
-              {% else %}
-                <div class="pr-wa-product-img-placeholder">Product Image</div>
-              {% endif %}
+          </div>
+        {% endif %}
+      {% endfor %}
 
-              <div class="pr-wa-message left">
-                <div class="pr-wa-bubble">{{ block.settings.review_text }}</div>
-                <div class="pr-wa-time">11:24 AM</div>
+      {%- comment -%} Duplicate for seamless infinite scroll {%- endcomment -%}
+      {% for block in section.blocks %}
+        {% if block.settings.chat_screenshot == blank %}
+          <div class="wpr-card wpr-card--{{ block.settings.card_color }}" aria-hidden="true">
+            <div class="wpr-card-quote">
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor" opacity="0.15"><path d="M6 17h3l2-4V7H5v6h3l-2 4zm8 0h3l2-4V7h-6v6h3l-2 4z"/></svg>
+            </div>
+            <p class="wpr-card-text">{{ block.settings.review_text }}</p>
+
+            <div class="wpr-card-footer">
+              <div class="wpr-card-author">
+                <span class="wpr-card-name">{{ block.settings.customer_name }}</span>
+                <span class="wpr-card-location">{{ block.settings.customer_location }}</span>
               </div>
-
-              <div class="pr-wa-message right">
-                <div class="pr-wa-bubble">{{ block.settings.reply_text }}</div>
-                <div class="pr-wa-time">11:26 AM <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#53bdeb" stroke-width="2"><path d="M18 6L7 17l-5-5"/><path d="M22 10l-6 6-1 1M13 6l-2 2"/></svg></div>
+              <div class="wpr-card-meta">
+                <div class="wpr-card-stars">
+                  {% for i in (1..5) %}
+                    {% if i <= block.settings.rating %}
+                      <svg viewBox="0 0 24 24" width="14" height="14" fill="#F5C518"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                    {% else %}
+                      <svg viewBox="0 0 24 24" width="14" height="14" fill="#E0E0E0"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                    {% endif %}
+                  {% endfor %}
+                </div>
+                <span class="wpr-card-time">{{ block.settings.time }}
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#53bdeb" stroke-width="2.5"><path d="M18 6L7 17l-5-5"/><path d="M22 10l-11 11"/></svg>
+                </span>
               </div>
             </div>
           </div>
         {% endif %}
       {% endfor %}
     </div>
+  </div>
 
-    <button class="pr-nav-btn next" aria-label="Next review">
-      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>
-    </button>
+  <!-- Row 2: Marquee scrolling LEFT (mix of text + screenshot reviews) -->
+  <div class="wpr-marquee-wrap">
+    <div class="wpr-marquee wpr-marquee-row2" id="wpr-marquee-row2">
+      {% for block in section.blocks %}
+        {% if block.settings.chat_screenshot != blank %}
+          <!-- Screenshot Card -->
+          <div class="wpr-card wpr-card--screenshot wpr-card--{{ block.settings.card_color }}" {{ block.shopify_attributes }}>
+            <div class="wpr-screenshot-img">
+              <img src="{{ block.settings.chat_screenshot | image_url: width: 400 }}" alt="WhatsApp Chat from {{ block.settings.customer_name }}" loading="lazy" width="400" height="400">
+            </div>
+            <div class="wpr-card-footer">
+              <div class="wpr-card-author">
+                <span class="wpr-card-name">{{ block.settings.customer_name }}</span>
+                <span class="wpr-card-location">{{ block.settings.customer_location }}</span>
+              </div>
+              <div class="wpr-card-meta">
+                <div class="wpr-card-stars">
+                  {% for i in (1..5) %}
+                    {% if i <= block.settings.rating %}
+                      <svg viewBox="0 0 24 24" width="14" height="14" fill="#F5C518"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                    {% else %}
+                      <svg viewBox="0 0 24 24" width="14" height="14" fill="#E0E0E0"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                    {% endif %}
+                  {% endfor %}
+                </div>
+                <span class="wpr-card-time">{{ block.settings.time }}
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#53bdeb" stroke-width="2.5"><path d="M18 6L7 17l-5-5"/><path d="M22 10l-11 11"/></svg>
+                </span>
+              </div>
+            </div>
+          </div>
+        {% else %}
+          <!-- Text Card (duplicate in row 2 for fullness) -->
+          <div class="wpr-card wpr-card--{{ block.settings.card_color }}" {{ block.shopify_attributes }}>
+            <div class="wpr-card-quote">
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor" opacity="0.15"><path d="M6 17h3l2-4V7H5v6h3l-2 4zm8 0h3l2-4V7h-6v6h3l-2 4z"/></svg>
+            </div>
+            <p class="wpr-card-text">{{ block.settings.review_text }}</p>
+
+            <div class="wpr-card-footer">
+              <div class="wpr-card-author">
+                <span class="wpr-card-name">{{ block.settings.customer_name }}</span>
+                <span class="wpr-card-location">{{ block.settings.customer_location }}</span>
+              </div>
+              <div class="wpr-card-meta">
+                <div class="wpr-card-stars">
+                  {% for i in (1..5) %}
+                    {% if i <= block.settings.rating %}
+                      <svg viewBox="0 0 24 24" width="14" height="14" fill="#F5C518"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                    {% else %}
+                      <svg viewBox="0 0 24 24" width="14" height="14" fill="#E0E0E0"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                    {% endif %}
+                  {% endfor %}
+                </div>
+                <span class="wpr-card-time">{{ block.settings.time }}
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#53bdeb" stroke-width="2.5"><path d="M18 6L7 17l-5-5"/><path d="M22 10l-11 11"/></svg>
+                </span>
+              </div>
+            </div>
+          </div>
+        {% endif %}
+      {% endfor %}
+
+      {%- comment -%} Duplicate for seamless infinite scroll {%- endcomment -%}
+      {% for block in section.blocks %}
+        {% if block.settings.chat_screenshot != blank %}
+          <div class="wpr-card wpr-card--screenshot wpr-card--{{ block.settings.card_color }}" aria-hidden="true">
+            <div class="wpr-screenshot-img">
+              <img src="{{ block.settings.chat_screenshot | image_url: width: 400 }}" alt="WhatsApp Chat from {{ block.settings.customer_name }}" loading="lazy" width="400" height="400">
+            </div>
+            <div class="wpr-card-footer">
+              <div class="wpr-card-author">
+                <span class="wpr-card-name">{{ block.settings.customer_name }}</span>
+                <span class="wpr-card-location">{{ block.settings.customer_location }}</span>
+              </div>
+              <div class="wpr-card-meta">
+                <div class="wpr-card-stars">
+                  {% for i in (1..5) %}
+                    {% if i <= block.settings.rating %}
+                      <svg viewBox="0 0 24 24" width="14" height="14" fill="#F5C518"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                    {% else %}
+                      <svg viewBox="0 0 24 24" width="14" height="14" fill="#E0E0E0"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                    {% endif %}
+                  {% endfor %}
+                </div>
+                <span class="wpr-card-time">{{ block.settings.time }}
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#53bdeb" stroke-width="2.5"><path d="M18 6L7 17l-5-5"/><path d="M22 10l-11 11"/></svg>
+                </span>
+              </div>
+            </div>
+          </div>
+        {% else %}
+          <div class="wpr-card wpr-card--{{ block.settings.card_color }}" aria-hidden="true">
+            <div class="wpr-card-quote">
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor" opacity="0.15"><path d="M6 17h3l2-4V7H5v6h3l-2 4zm8 0h3l2-4V7h-6v6h3l-2 4z"/></svg>
+            </div>
+            <p class="wpr-card-text">{{ block.settings.review_text }}</p>
+
+            <div class="wpr-card-footer">
+              <div class="wpr-card-author">
+                <span class="wpr-card-name">{{ block.settings.customer_name }}</span>
+                <span class="wpr-card-location">{{ block.settings.customer_location }}</span>
+              </div>
+              <div class="wpr-card-meta">
+                <div class="wpr-card-stars">
+                  {% for i in (1..5) %}
+                    {% if i <= block.settings.rating %}
+                      <svg viewBox="0 0 24 24" width="14" height="14" fill="#F5C518"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                    {% else %}
+                      <svg viewBox="0 0 24 24" width="14" height="14" fill="#E0E0E0"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                    {% endif %}
+                  {% endfor %}
+                </div>
+                <span class="wpr-card-time">{{ block.settings.time }}
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#53bdeb" stroke-width="2.5"><path d="M18 6L7 17l-5-5"/><path d="M22 10l-11 11"/></svg>
+                </span>
+              </div>
+            </div>
+          </div>
+        {% endif %}
+      {% endfor %}
+    </div>
   </div>
 </div>
 
-<style>
-  :root {
-    --pr-green: #0A3C35;
-    --pr-gold: #DDA541;
-    --pr-text: #333333;
-    --pr-text-light: #666666;
-    --pr-bg: #fcf9f2;
-    --wa-bg: #efe8df;
-    --wa-bubble-left: #ffffff;
-    --wa-bubble-right: #dcf8c6;
-  }
-  
-  .pr-section {
-    max-width: 1200px;
-    margin: 40px auto;
-    padding: 0 24px;
-    font-family: 'Inter', sans-serif;
-  }
-
-  /* SUMMARY CARD */
-  .pr-summary-card {
-    background: #FFFCF7;
-    border: 1px solid #f0e6d2;
-    border-radius: 12px;
-    display: grid;
-    grid-template-columns: 1fr 1fr 2fr;
-    padding: 32px;
-    gap: 40px;
-    margin-bottom: 60px;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.02);
-  }
-  .pr-summary-col-1 {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    border-right: 1px solid #f0e6d2;
-    padding-right: 20px;
-  }
-  .pr-rating-large {
-    font-size: 64px;
-    font-weight: 700;
-    color: var(--pr-green);
-    line-height: 1;
-    margin-bottom: 8px;
-  }
-  .pr-rating-stars {
-    display: flex;
-    gap: 4px;
-    margin-bottom: 8px;
-  }
-  .pr-rating-count {
-    font-size: 14px;
-    color: var(--pr-text-light);
-  }
-
-  .pr-summary-col-2 {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    gap: 10px;
-    border-right: 1px solid #f0e6d2;
-    padding-right: 20px;
-  }
-  .pr-bar-row {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    font-size: 13px;
-    color: var(--pr-text);
-  }
-  .pr-bar-num {
-    display: flex;
-    align-items: center;
-    gap: 4px;
-    width: 28px;
-  }
-  .pr-bar-track {
-    flex: 1;
-    height: 6px;
-    background: #f0e6d2;
-    border-radius: 4px;
+{% stylesheet %}
+  /* ===== WhatsApp-Style Product Reviews Section ===== */
+  .wpr-section {
+    padding: 60px 0 70px 0;
     overflow: hidden;
-  }
-  .pr-bar-fill {
-    height: 100%;
-    background: var(--pr-gold);
-    border-radius: 4px;
-  }
-  .pr-bar-percent {
-    width: 32px;
-    text-align: right;
-    color: var(--pr-text-light);
+    font-family: 'Inter', sans-serif;
+    background: #FAFAFA;
   }
 
-  .pr-summary-col-3 {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-  }
-  .pr-summary-title {
-    font-size: 16px;
-    font-weight: 600;
-    color: var(--pr-text);
-    margin-bottom: 20px;
-  }
-  .pr-badges {
-    display: flex;
-    gap: 24px;
-    width: 100%;
-    justify-content: space-around;
-  }
-  .pr-badge-item {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+  /* Header */
+  .wpr-header {
     text-align: center;
-    gap: 8px;
-  }
-  .pr-badge-icon {
-    width: 48px;
-    height: 48px;
-    border-radius: 50%;
-    border: 1px solid #DDA541;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: #fff;
-    box-shadow: 0 2px 8px rgba(221,165,65,0.1);
-  }
-  .pr-badge-text {
-    font-size: 12px;
-    color: var(--pr-text-light);
-    line-height: 1.4;
+    max-width: 700px;
+    margin: 0 auto 40px auto;
+    padding: 0 24px;
   }
 
-  /* CAROUSEL HEADER */
-  .pr-carousel-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 24px;
+  .wpr-header-ornament {
+    margin-bottom: 8px;
+    opacity: 0.7;
   }
-  .pr-carousel-title {
-    font-size: 20px;
-    font-weight: 600;
-    color: var(--pr-green);
-    display: flex;
-    align-items: center;
-    gap: 8px;
+
+  .wpr-title {
+    font-family: 'Cormorant Garamond', 'Playfair Display', serif;
+    font-size: 2.6rem;
+    font-weight: 700;
+    color: #013F3E;
+    margin: 0 0 12px 0;
+    line-height: 1.15;
   }
-  .pr-view-all {
+
+  .wpr-subtitle {
+    font-size: 1rem;
+    color: #666;
+    margin: 0 0 24px 0;
+    line-height: 1.6;
+  }
+
+  .wpr-wa-cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    background: #FFFFFF;
+    border: 1.5px solid #25D366;
+    border-radius: 50px;
+    padding: 10px 28px;
     font-size: 14px;
     font-weight: 600;
-    color: var(--pr-green);
+    color: #333;
     text-decoration: none;
+    transition: all 0.25s ease;
+    box-shadow: 0 2px 10px rgba(37, 211, 102, 0.1);
   }
 
-  /* CAROUSEL BODY */
-  .pr-carousel-container {
+  .wpr-wa-cta:hover {
+    background: #25D366;
+    color: #FFFFFF;
+    box-shadow: 0 6px 20px rgba(37, 211, 102, 0.25);
+    transform: translateY(-1px);
+  }
+
+  .wpr-wa-cta:hover svg {
+    fill: #FFFFFF;
+  }
+
+  /* ===== Marquee Container ===== */
+  .wpr-marquee-wrap {
+    overflow: hidden;
     position: relative;
-    display: flex;
-    align-items: center;
+    margin-bottom: 20px;
+    padding: 4px 0;
   }
-  .pr-nav-btn {
+
+  /* Fade edges */
+  .wpr-marquee-wrap::before,
+  .wpr-marquee-wrap::after {
+    content: '';
     position: absolute;
-    z-index: 10;
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    background: #fff;
-    border: 1px solid #e0e0e0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-    color: var(--pr-text);
+    top: 0;
+    bottom: 0;
+    width: 80px;
+    z-index: 2;
+    pointer-events: none;
   }
-  .pr-nav-btn.prev { left: -20px; }
-  .pr-nav-btn.next { right: -20px; }
-  
-  .pr-carousel {
+  .wpr-marquee-wrap::before {
+    left: 0;
+    background: linear-gradient(to right, #FAFAFA 0%, transparent 100%);
+  }
+  .wpr-marquee-wrap::after {
+    right: 0;
+    background: linear-gradient(to left, #FAFAFA 0%, transparent 100%);
+  }
+
+  .wpr-marquee {
     display: flex;
     gap: 20px;
-    overflow-x: auto;
-    scroll-snap-type: x mandatory;
-    scroll-behavior: smooth;
-    padding-bottom: 20px;
-    -ms-overflow-style: none;  /* IE and Edge */
-    scrollbar-width: none;  /* Firefox */
+    width: max-content;
+    will-change: transform;
   }
-  .pr-carousel::-webkit-scrollbar { display: none; }
 
-  /* WHATSAPP CARD */
-  .pr-wa-card {
-    min-width: 320px;
-    max-width: 320px;
-    background: #fff;
-    border-radius: 12px;
-    border: 1px solid #e0e0e0;
-    overflow: hidden;
-    scroll-snap-align: start;
+  /* Row 1 scrolls RIGHT */
+  .wpr-marquee-row1 {
+    animation: wpr-scroll-right 60s linear infinite;
+  }
+
+  /* Row 2 scrolls LEFT */
+  .wpr-marquee-row2 {
+    animation: wpr-scroll-left 65s linear infinite;
+  }
+
+  @keyframes wpr-scroll-right {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+  }
+
+  @keyframes wpr-scroll-left {
+    0% { transform: translateX(-50%); }
+    100% { transform: translateX(0); }
+  }
+
+  /* Pause on hover */
+  .wpr-marquee-wrap:hover .wpr-marquee {
+    animation-play-state: paused;
+  }
+
+  /* ===== Review Card ===== */
+  .wpr-card {
+    flex: 0 0 340px;
+    border-radius: 16px;
+    padding: 22px 24px 16px 24px;
     display: flex;
     flex-direction: column;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.03);
+    position: relative;
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+    cursor: default;
+    border: 1px solid rgba(0,0,0,0.06);
   }
-  .pr-wa-header {
-    background: #fff;
-    padding: 12px 16px;
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    border-bottom: 1px solid #f0f0f0;
+
+  .wpr-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 24px rgba(0,0,0,0.08);
   }
-  .pr-wa-avatar {
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    overflow: hidden;
-    background: #eee;
+
+  /* Card color variants */
+  .wpr-card--green {
+    background: linear-gradient(145deg, #E8F5E9 0%, #F1F8E9 100%);
+    border-color: #C8E6C9;
+    color: #2E7D32;
   }
-  .pr-wa-avatar img { width: 100%; height: 100%; object-fit: cover; }
-  .pr-wa-user-info { flex: 1; }
-  .pr-wa-name { font-size: 14px; font-weight: 600; color: var(--pr-text); margin-bottom: 2px; }
-  .pr-wa-status { font-size: 11px; color: #666; }
-  
-  .pr-wa-body {
-    background: var(--wa-bg);
-    /* subtle pattern for WA bg could go here */
-    padding: 0;
-    display: flex;
-    flex-direction: column;
+  .wpr-card--pink {
+    background: linear-gradient(145deg, #FCE4EC 0%, #F8BBD0 30%, #FCE4EC 100%);
+    border-color: #F8BBD0;
+    color: #AD1457;
+  }
+  .wpr-card--yellow {
+    background: linear-gradient(145deg, #FFF8E1 0%, #FFF3C4 100%);
+    border-color: #FFE082;
+    color: #F57F17;
+  }
+  .wpr-card--blue {
+    background: linear-gradient(145deg, #E3F2FD 0%, #BBDEFB 40%, #E3F2FD 100%);
+    border-color: #90CAF9;
+    color: #1565C0;
+  }
+  .wpr-card--peach {
+    background: linear-gradient(145deg, #FFF3E0 0%, #FFE0B2 40%, #FFF3E0 100%);
+    border-color: #FFCC80;
+    color: #E65100;
+  }
+  .wpr-card--lavender {
+    background: linear-gradient(145deg, #F3E5F5 0%, #E1BEE7 40%, #F3E5F5 100%);
+    border-color: #CE93D8;
+    color: #6A1B9A;
+  }
+
+  .wpr-card-quote {
+    position: absolute;
+    top: 16px;
+    left: 18px;
+    line-height: 1;
+  }
+
+  .wpr-card-text {
+    font-size: 14px;
+    font-style: italic;
+    line-height: 1.65;
+    color: #333;
+    margin: 8px 0 16px 0;
+    padding-top: 12px;
     flex: 1;
   }
-  .pr-wa-product-img {
-    width: 100%;
-    height: 240px;
-    background: #fff;
-  }
-  .pr-wa-product-img img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-  }
-  .pr-wa-product-img-placeholder {
-    width: 100%;
-    height: 240px;
-    background: #f5f5f5;
+
+  /* Card Footer: Author + Stars + Time */
+  .wpr-card-footer {
     display: flex;
-    align-items: center;
-    justify-content: center;
-    color: #999;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 12px;
+    border-top: 1px solid rgba(0,0,0,0.06);
+    padding-top: 12px;
+    margin-top: auto;
   }
 
-  .pr-wa-message {
-    padding: 8px 16px;
+  .wpr-card-author {
     display: flex;
     flex-direction: column;
-    position: relative;
-    max-width: 85%;
-  }
-  .pr-wa-message.left { align-self: flex-start; margin-top: 12px; }
-  .pr-wa-message.right { align-self: flex-end; margin-bottom: 12px; }
-  
-  .pr-wa-bubble {
-    padding: 10px 14px;
-    border-radius: 8px;
-    font-size: 13px;
-    line-height: 1.4;
-    color: var(--pr-text);
-    box-shadow: 0 1px 2px rgba(0,0,0,0.1);
-    position: relative;
-  }
-  .pr-wa-message.left .pr-wa-bubble {
-    background: var(--wa-bubble-left);
-    border-top-left-radius: 0;
-  }
-  .pr-wa-message.left .pr-wa-bubble::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: -8px;
-    width: 0;
-    height: 0;
-    border-right: 8px solid var(--wa-bubble-left);
-    border-bottom: 8px solid transparent;
-  }
-  
-  .pr-wa-message.right .pr-wa-bubble {
-    background: var(--wa-bubble-right);
-    border-top-right-radius: 0;
-  }
-  .pr-wa-message.right .pr-wa-bubble::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    right: -8px;
-    width: 0;
-    height: 0;
-    border-left: 8px solid var(--wa-bubble-right);
-    border-bottom: 8px solid transparent;
+    gap: 2px;
   }
 
-  .pr-wa-time {
-    font-size: 10px;
-    color: #999;
-    align-self: flex-end;
-    margin-top: 4px;
+  .wpr-card-name {
+    font-size: 13px;
+    font-weight: 700;
+    color: #222;
+    font-style: normal;
+  }
+
+  .wpr-card-location {
+    font-size: 11px;
+    color: #888;
+    font-style: normal;
+  }
+
+  .wpr-card-meta {
     display: flex;
-    align-items: center;
+    flex-direction: column;
+    align-items: flex-end;
     gap: 4px;
   }
 
-  @media(max-width: 900px) {
-    .pr-summary-card {
-      grid-template-columns: 1fr;
-      gap: 24px;
-    }
-    .pr-summary-col-1, .pr-summary-col-2 {
-      border-right: none;
-      border-bottom: 1px solid #f0e6d2;
-      padding-right: 0;
-      padding-bottom: 24px;
-    }
-    .pr-nav-btn { display: none; }
+  .wpr-card-stars {
+    display: flex;
+    gap: 1px;
   }
-</style>
 
-<script>
-  document.addEventListener('DOMContentLoaded', function() {
-    const carousel = document.getElementById('pr-carousel');
-    const prevBtn = document.querySelector('.pr-nav-btn.prev');
-    const nextBtn = document.querySelector('.pr-nav-btn.next');
+  .wpr-card-time {
+    font-size: 10px;
+    color: #999;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    font-style: normal;
+  }
 
-    if(carousel && prevBtn && nextBtn) {
-      nextBtn.addEventListener('click', () => {
-        carousel.scrollBy({ left: 340, behavior: 'smooth' });
-      });
-      prevBtn.addEventListener('click', () => {
-        carousel.scrollBy({ left: -340, behavior: 'smooth' });
-      });
+  /* ===== Screenshot Card ===== */
+  .wpr-card--screenshot {
+    padding: 0;
+    overflow: hidden;
+    flex: 0 0 280px;
+  }
+
+  .wpr-screenshot-img {
+    width: 100%;
+    overflow: hidden;
+    border-radius: 16px 16px 0 0;
+  }
+
+  .wpr-screenshot-img img {
+    width: 100%;
+    height: auto;
+    display: block;
+    object-fit: cover;
+  }
+
+  .wpr-card--screenshot .wpr-card-footer {
+    padding: 12px 16px 14px 16px;
+    border-top: none;
+    margin-top: 0;
+  }
+
+  /* ===== Mobile: hide for now (desktop only) ===== */
+  @media screen and (max-width: 768px) {
+    .wpr-section {
+      display: none;
     }
+  }
+{% endstylesheet %}
+
+{% javascript %}
+  /* Ensure marquee pauses on hover and resumes on mouse leave */
+  document.addEventListener('DOMContentLoaded', function() {
+    var marquees = document.querySelectorAll('.wpr-marquee');
+    marquees.forEach(function(m) {
+      m.addEventListener('mouseenter', function() {
+        this.style.animationPlayState = 'paused';
+      });
+      m.addEventListener('mouseleave', function() {
+        this.style.animationPlayState = 'running';
+      });
+    });
   });
-</script>
+{% endjavascript %}
