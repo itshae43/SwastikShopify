@@ -97,5 +97,17 @@
         "default": 4
       }
     ]
+  },
+  {
+    "name": "Favicon",
+    "settings": [
+      {
+        "type": "image_picker",
+        "id": "favicon",
+        "label": "Favicon image",
+        "info": "Will be scaled down to 32x32px for desktop tabs and 180x180px for mobile devices."
+      }
+    ]
   }
 ]
+

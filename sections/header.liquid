@@ -60,11 +60,10 @@
   <header class="header">
     <!-- Left: Hamburger button for mobile menu -->
     <button type="button" class="header__hamburger" aria-label="Open menu" aria-controls="MobileNavDrawer" aria-expanded="false">
-      <svg class="icon icon-hamburger" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-        <line x1="3" y1="12" x2="21" y2="12"></line>
-        <line x1="3" y1="6" x2="21" y2="6"></line>
-        <line x1="3" y1="18" x2="21" y2="18"></line>
-      </svg>
+      <div class="header__hamburger-lines">
+        <span class="line line-1"></span>
+        <span class="line line-2"></span>
+      </div>
     </button>
 
     <!-- Left: Brand Logo -->
@@ -306,17 +305,44 @@
       <div class="mobile-menu-drawer__header">
         <div class="mobile-menu-drawer__logo">
           <div class="header__logo-text-wrapper" style="align-items: flex-start; filter: none;">
-            <span class="header__logo-title" style="font-size: 1.6rem; color: #D4AF37; -webkit-text-stroke: 0; background: none; -webkit-text-fill-color: #D4AF37;">Swastik</span>
-            <span class="header__logo-subtitle" style="font-size: 0.55rem; letter-spacing: 0.4em; color: #D4AF37; margin-top: 2px;">JEWELS</span>
+            <span class="header__logo-title" style="font-size: 1.8rem; color: #D4AF37; -webkit-text-stroke: 0; background: none; -webkit-text-fill-color: #D4AF37; font-weight: 600;">Swastik</span>
+            <span class="header__logo-subtitle" style="font-size: 0.6rem; letter-spacing: 0.45em; color: #D4AF37; margin-top: 1px;">JEWELS</span>
           </div>
         </div>
         <button type="button" class="mobile-menu-drawer__close" id="MobileNavClose" aria-label="Close menu">
-          <svg viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width: 28px; height: 28px;">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#D4AF37" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width: 20px; height: 20px;">
             <line x1="18" y1="6" x2="6" y2="18"></line>
             <line x1="6" y1="6" x2="18" y2="18"></line>
           </svg>
         </button>
       </div>
+
+      <!-- Live Gold Rate Pill -->
+      <div class="mobile-drawer-gold-rate">
+        <span class="gold-rate-pulse"></span>
+        <span class="gold-rate-label">Live Gold Rate:</span>
+        <span class="gold-rate-val">₹{{ shop.metafields.custom.daily_gold_rate.value | default: '14,422' }}/1g</span>
+      </div>
+
+      <!-- Embedded Search Bar -->
+      <form action="{{ routes.search_url }}" method="get" role="search" class="mobile-drawer-search">
+        <input type="search" name="q" placeholder="Search rings, 22K gold, necklaces..." class="mobile-drawer-search__input">
+        <button type="submit" class="mobile-drawer-search__btn" aria-label="Search">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#D4AF37" stroke-width="2" style="width:16px;height:16px;"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+        </button>
+      </form>
+
+      <!-- VIP Virtual Consultation Card -->
+      <a href="/pages/expert-consultation" class="mobile-drawer-vip-card">
+        <div class="vip-card-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#D4AF37" stroke-width="1.8" style="width:18px;height:18px;"><path d="M23 7l-7 5 7 5V7z"/><rect x="1" y="5" width="15" height="14" rx="2" ry="2"/></svg>
+        </div>
+        <div class="vip-card-info">
+          <span class="vip-card-title">Book Virtual Call</span>
+          <span class="vip-card-subtitle">Live 1-on-1 Jewellery Experience</span>
+        </div>
+        <span class="vip-card-btn">BOOK NOW</span>
+      </a>
 
       <nav class="mobile-menu-drawer__nav">
         <div class="mobile-menu-drawer__main-tabs">
@@ -356,7 +382,7 @@
                     <li>
                       <a href="{{ routes.collections_url }}/engagement-rings">
                         <div class="item-left">
-                          <img src="https://cdn.shopify.com/s/files/1/0805/0121/1413/files/engagement_ring_icon.png" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 24 24\' fill=\'none\' stroke=\'%23D4AF37\' stroke-width=\'1.5\'><circle cx=\'12\' cy=\'14\' r=\'6\'/><path d=\'M9.5 8h5l1.5-4h-8z\'/></svg>'">
+                          <img src="https://cdn.shopify.com/s/files/1/0805/0121/1413/files/engagement_ring_icon.png" width="24" height="24" loading="lazy" alt="Engagement Rings" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 24 24\' fill=\'none\' stroke=\'%23D4AF37\' stroke-width=\'1.5\'><circle cx=\'12\' cy=\'14\' r=\'6\'/><path d=\'M9.5 8h5l1.5-4h-8z\'/></svg>'">
                           <span>Engagement Rings</span>
                         </div>
                         <svg class="icon-arrow" viewBox="0 0 24 24" fill="none" stroke="#D4AF37" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="m9 18 6-6-6-6" /></svg>
@@ -365,7 +391,7 @@
                     <li>
                       <a href="{{ routes.collections_url }}/couple-bands">
                         <div class="item-left">
-                          <img src="https://cdn.shopify.com/s/files/1/0805/0121/1413/files/couple_bands_icon.png" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 24 24\' fill=\'none\' stroke=\'%23D4AF37\' stroke-width=\'1.5\'><ellipse cx=\'10\' cy=\'12\' rx=\'6\' ry=\'3\' transform=\'rotate(-15 10 12)\'/><ellipse cx=\'14\' cy=\'14\' rx=\'6\' ry=\'3\' transform=\'rotate(-15 14 14)\'/></svg>'">
+                          <img src="https://cdn.shopify.com/s/files/1/0805/0121/1413/files/couple_bands_icon.png" width="24" height="24" loading="lazy" alt="Couple Bands" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 24 24\' fill=\'none\' stroke=\'%23D4AF37\' stroke-width=\'1.5\'><ellipse cx=\'10\' cy=\'12\' rx=\'6\' ry=\'3\' transform=\'rotate(-15 10 12)\'/><ellipse cx=\'14\' cy=\'14\' rx=\'6\' ry=\'3\' transform=\'rotate(-15 14 14)\'/></svg>'">
                           <span>Couple Bands</span>
                         </div>
                         <svg class="icon-arrow" viewBox="0 0 24 24" fill="none" stroke="#D4AF37" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="m9 18 6-6-6-6" /></svg>
@@ -374,7 +400,7 @@
                     <li>
                       <a href="{{ routes.collections_url }}/casual-rings">
                         <div class="item-left">
-                          <img src="https://cdn.shopify.com/s/files/1/0805/0121/1413/files/casual_rings_icon.png" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 24 24\' fill=\'none\' stroke=\'%23D4AF37\' stroke-width=\'1.5\'><circle cx=\'12\' cy=\'12\' r=\'6\'/><circle cx=\'12\' cy=\'6\' r=\'1.5\'/></svg>'">
+                          <img src="https://cdn.shopify.com/s/files/1/0805/0121/1413/files/casual_rings_icon.png" width="24" height="24" loading="lazy" alt="Casual Rings" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 24 24\' fill=\'none\' stroke=\'%23D4AF37\' stroke-width=\'1.5\'><circle cx=\'12\' cy=\'12\' r=\'6\'/><circle cx=\'12\' cy=\'6\' r=\'1.5\'/></svg>'">
                           <span>Casual Rings</span>
                         </div>
                         <svg class="icon-arrow" viewBox="0 0 24 24" fill="none" stroke="#D4AF37" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="m9 18 6-6-6-6" /></svg>
@@ -383,7 +409,7 @@
                     <li>
                       <a href="{{ routes.collections_url }}/eternity-rings">
                         <div class="item-left">
-                          <img src="https://cdn.shopify.com/s/files/1/0805/0121/1413/files/eternity_rings_icon.png" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 24 24\' fill=\'none\' stroke=\'%23D4AF37\' stroke-width=\'1.5\'><ellipse cx=\'12\' cy=\'12\' rx=\'8\' ry=\'3\' stroke-dasharray=\'2 2\'/></svg>'">
+                          <img src="https://cdn.shopify.com/s/files/1/0805/0121/1413/files/eternity_rings_icon.png" width="24" height="24" loading="lazy" alt="Eternity Rings" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 24 24\' fill=\'none\' stroke=\'%23D4AF37\' stroke-width=\'1.5\'><ellipse cx=\'12\' cy=\'12\' rx=\'8\' ry=\'3\' stroke-dasharray=\'2 2\'/></svg>'">
                           <span>Eternity Rings</span>
                         </div>
                         <svg class="icon-arrow" viewBox="0 0 24 24" fill="none" stroke="#D4AF37" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="m9 18 6-6-6-6" /></svg>
@@ -1430,6 +1456,11 @@
     top: 0;
     z-index: 100;
   }
+  @media (max-width: 768px) {
+    #shopify-section-{{ section.id }} {
+      z-index: 99999 !important;
+    }
+  }
   {% if section.settings.show_announcement %}
   #shopify-section-{{ section.id }} {
     top: -3.6rem;
@@ -1437,6 +1468,7 @@
   @media (max-width: 768px) {
     #shopify-section-{{ section.id }} {
       top: -3.0rem;
+      z-index: 99999 !important;
     }
   }
   {% endif %}
@@ -1545,14 +1577,15 @@
   .header__logo-link {
     display: flex;
     align-items: center;
-    gap: 0.5rem;
+    gap: 0.8rem;
     text-decoration: none;
   }
   .header__logo-img {
     display: block;
-    max-height: 4.8rem;
+    max-height: 5.2rem;
     width: auto;
     object-fit: contain;
+    background: transparent;
   }
   .header__logo-text-wrapper {
     display: flex;
@@ -1560,7 +1593,7 @@
     justify-content: center;
     align-items: center;
     line-height: 1;
-    filter: drop-shadow(2px 3px 4px rgba(0, 0, 0, 0.12));
+    background: transparent;
   }
   .header__logo-title, .header__logo-subtitle {
     font-family: 'Cormorant Garamond', serif;
@@ -1937,7 +1970,7 @@
 
   @media (max-width: 768px) {
     .announcement-bar {
-      height: 3.0rem;
+      height: 3.4rem;
       padding: 0;
       display: flex;
       align-items: center;
@@ -1968,7 +2001,7 @@
       justify-content: center;
       margin: 0;
       gap: 0.8rem;
-      padding: 0.2rem 4rem;
+      padding: 0.2rem 3rem;
       box-sizing: border-box;
     }
     .announcement-bar__item--duplicate {
@@ -1982,23 +2015,24 @@
       flex: 0 0 auto;
     }
     .announcement-bar__text {
-      font-size: 1.15rem;
+      font-size: 1.2rem;
+      font-weight: 500;
       letter-spacing: 0.08em;
       white-space: nowrap;
     }
     .announcement-icon {
-      width: 1.3rem;
-      height: 1.3rem;
+      width: 1.4rem;
+      height: 1.4rem;
       flex-shrink: 0;
     }
 
     @media (max-width: 480px) {
       .announcement-bar__text {
-        font-size: 1.1rem;
+        font-size: 1.15rem;
         letter-spacing: 0.06em;
       }
       .announcement-bar__item {
-        padding: 0.2rem 3rem;
+        padding: 0.2rem 2rem;
       }
     }
 
@@ -2017,11 +2051,11 @@
       position: relative;
       padding-top: 0.6rem;
       padding-bottom: 0.6rem;
-      min-height: 5.0rem;
+      min-height: 5.4rem;
       padding-left: 1.6rem;
       padding-right: 1.6rem;
       width: 100%;
-      max-width: 540px;
+      max-width: 100%;
       margin: 0 auto;
       box-sizing: border-box;
     }
@@ -2033,17 +2067,24 @@
       border: none;
       color: var(--color-primary, #002E28);
       cursor: pointer;
-      padding: 0.6rem;
+      padding: 0.8rem;
+      min-width: 44px;
+      min-height: 44px;
+      box-sizing: border-box;
       justify-self: start;
       z-index: 10;
+      border-radius: 8px;
+      transition: background-color 0.2s ease, color 0.2s ease;
     }
     .header__hamburger svg {
-      width: 2rem;
-      height: 2rem;
-      stroke-width: 1.5px;
+      width: 2.4rem;
+      height: 2.4rem;
+      stroke-width: 2px;
     }
-    .header__hamburger:hover {
+    .header__hamburger:hover,
+    .header__hamburger:active {
       color: var(--color-accent, #D4AF37);
+      background-color: rgba(0, 46, 40, 0.04);
     }
     .header__logo {
       position: absolute;
@@ -2060,17 +2101,18 @@
       gap: 0.6rem;
     }
     .header__logo-img {
-      max-height: 3.4rem;
+      max-height: 3.8rem;
     }
     .header__logo-title {
-      font-size: 2.5rem;
-      font-weight: 500;
+      font-size: 2.1rem;
+      font-weight: 600;
+      letter-spacing: 0.02em;
     }
     .header__logo-subtitle {
-      font-size: 0.85rem;
-      letter-spacing: 0.6em;
+      font-size: 0.75rem;
+      letter-spacing: 0.45em;
       margin-top: 0.15rem;
-      padding-left: 0.6em;
+      padding-left: 0.45em;
     }
     .header__nav {
       display: none;
@@ -2080,25 +2122,93 @@
     }
     .header__icons {
       display: flex;
-      gap: 1.6rem;
+      align-items: center;
+      gap: 1.0rem;
       justify-self: end;
       z-index: 10;
     }
+    .header__icon-link {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 44px;
+      min-height: 44px;
+      padding: 0.6rem;
+      box-sizing: border-box;
+      color: var(--color-primary, #002E28);
+      border-radius: 8px;
+      transition: background-color 0.2s ease, color 0.2s ease;
+    }
+    .header__icon-link:hover,
+    .header__icon-link:active {
+      color: var(--color-accent, #D4AF37);
+      background-color: rgba(0, 46, 40, 0.04);
+    }
     .header__icon-link svg {
-      width: 1.8rem;
-      height: 1.8rem;
-      stroke-width: 1.5px;
+      width: 2.4rem;
+      height: 2.4rem;
+      stroke-width: 1.8px;
     }
     .header__badge {
-      width: 1.3rem;
-      height: 1.3rem;
-      font-size: 0.8rem;
-      top: -0.4rem;
-      right: -0.5rem;
+      width: 1.4rem;
+      height: 1.4rem;
+      font-size: 0.85rem;
+      top: -0.2rem;
+      right: -0.2rem;
     }
   }
 
-  /* Mobile Drawer styling */
+  /* Luxury Asymmetric 2-Line Hamburger Menu Button */
+  .header__hamburger-lines {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 5px;
+    width: 22px;
+    height: 18px;
+  }
+
+  .header__hamburger-lines .line {
+    display: block;
+    height: 2px;
+    border-radius: 2px;
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .header__hamburger-lines .line-1 {
+    width: 22px;
+    background-color: var(--color-primary, #002E28);
+  }
+
+  .header__hamburger-lines .line-2 {
+    width: 14px;
+    background-color: var(--color-accent, #D4AF37);
+  }
+
+  .header__hamburger:hover .line-2,
+  .header__hamburger:active .line-2 {
+    width: 22px;
+    background-color: var(--color-accent, #D4AF37);
+  }
+
+  .header__hamburger:hover .line-1,
+  .header__hamburger:active .line-1 {
+    background-color: var(--color-accent, #D4AF37);
+  }
+
+  .header__hamburger[aria-expanded="true"] .line-1 {
+    transform: translateY(3.5px) rotate(45deg);
+    background-color: var(--color-accent, #D4AF37);
+  }
+
+  .header__hamburger[aria-expanded="true"] .line-2 {
+    width: 22px;
+    transform: translateY(-3.5px) rotate(-45deg);
+    background-color: var(--color-accent, #D4AF37);
+  }
+
+  /* Mobile Drawer styling - 80% Luxury Side Sheet */
   .mobile-menu-drawer {
     position: fixed;
     top: 0;
@@ -2120,8 +2230,9 @@
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(0, 0, 0, 0.6);
-    backdrop-filter: blur(2px);
+    background-color: rgba(0, 30, 26, 0.55);
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px);
     opacity: 0;
     transition: opacity 0.35s ease;
   }
@@ -2134,16 +2245,20 @@
     position: absolute;
     top: 0;
     left: 0;
-    width: 90%;
-    max-width: 420px;
+    width: 82%;
+    max-width: 380px;
     height: 100%;
-    background-color: #061B16; /* Dark Green */
+    background: linear-gradient(180deg, #041C16 0%, #002E28 100%);
+    border-top-right-radius: 24px;
+    border-bottom-right-radius: 24px;
+    box-shadow: 10px 0 35px rgba(0, 0, 0, 0.35);
+    border-right: 1px solid rgba(212, 175, 55, 0.2);
     display: flex;
     flex-direction: column;
     transform: translateX(-100%);
     transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
     box-sizing: border-box;
-    padding: 2rem;
+    padding: 1.8rem 1.6rem 1.6rem;
   }
 
   .mobile-menu-drawer--open .mobile-menu-drawer__content {
@@ -2154,7 +2269,7 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 2rem;
+    margin-bottom: 1.2rem;
   }
 
   .mobile-menu-drawer__logo {
@@ -2163,13 +2278,157 @@
   }
 
   .mobile-menu-drawer__close {
-    background: none;
-    border: none;
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(212, 175, 55, 0.3);
+    border-radius: 50%;
     cursor: pointer;
-    padding: 0.5rem;
+    width: 34px;
+    height: 34px;
+    padding: 0;
     display: flex;
     align-items: center;
     justify-content: center;
+    transition: all 0.2s ease;
+  }
+
+  .mobile-menu-drawer__close:hover,
+  .mobile-menu-drawer__close:active {
+    background: rgba(212, 175, 55, 0.15);
+    border-color: #D4AF37;
+  }
+
+  /* Live Gold Rate Banner inside Mobile Drawer */
+  .mobile-drawer-gold-rate {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    background: rgba(212, 175, 55, 0.08);
+    border: 1px solid rgba(212, 175, 55, 0.25);
+    border-radius: 12px;
+    padding: 0.6rem 1.0rem;
+    margin-bottom: 1.0rem;
+  }
+  .gold-rate-pulse {
+    width: 8px;
+    height: 8px;
+    background-color: #3EE067;
+    border-radius: 50%;
+    box-shadow: 0 0 8px #3EE067;
+    animation: goldPulse 2s infinite;
+    flex-shrink: 0;
+  }
+  @keyframes goldPulse {
+    0% { transform: scale(0.95); opacity: 0.8; }
+    50% { transform: scale(1.2); opacity: 1; }
+    100% { transform: scale(0.95); opacity: 0.8; }
+  }
+  .gold-rate-label {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 1.1rem;
+    color: #CCCCCC;
+  }
+  .gold-rate-val {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: #D4AF37;
+    margin-left: auto;
+  }
+
+  /* Mobile Drawer Search Bar */
+  .mobile-drawer-search {
+    position: relative;
+    width: 100%;
+    margin-bottom: 1.2rem;
+  }
+  .mobile-drawer-search__input {
+    width: 100%;
+    height: 4.0rem;
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 12px;
+    padding: 0 3.8rem 0 1.4rem;
+    color: #FFFFFF;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 1.2rem;
+    box-sizing: border-box;
+    outline: none;
+    transition: border-color 0.2s ease, background-color 0.2s ease;
+  }
+  .mobile-drawer-search__input::placeholder {
+    color: rgba(255, 255, 255, 0.45);
+  }
+  .mobile-drawer-search__input:focus {
+    border-color: #D4AF37;
+    background: rgba(255, 255, 255, 0.09);
+  }
+  .mobile-drawer-search__btn {
+    position: absolute;
+    right: 0.8rem;
+    top: 50%;
+    transform: translateY(-50%);
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 0.6rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  /* VIP Virtual Consultation Banner Card */
+  .mobile-drawer-vip-card {
+    display: flex;
+    align-items: center;
+    gap: 1.0rem;
+    background: linear-gradient(135deg, rgba(212, 175, 55, 0.15) 0%, rgba(0, 46, 40, 0.3) 100%);
+    border: 1px solid rgba(212, 175, 55, 0.35);
+    border-radius: 14px;
+    padding: 1.0rem 1.2rem;
+    margin-bottom: 1.4rem;
+    text-decoration: none;
+    transition: transform 0.2s ease, border-color 0.2s ease;
+  }
+  .mobile-drawer-vip-card:active {
+    transform: scale(0.98);
+  }
+  .vip-card-icon {
+    width: 36px;
+    height: 36px;
+    border-radius: 10px;
+    background: rgba(212, 175, 55, 0.15);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+  .vip-card-info {
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+  }
+  .vip-card-title {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: #FFFFFF;
+  }
+  .vip-card-subtitle {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 0.95rem;
+    color: rgba(255, 255, 255, 0.65);
+  }
+  .vip-card-btn {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 0.9rem;
+    font-weight: 700;
+    color: #002E28;
+    background: #D4AF37;
+    padding: 0.5rem 0.8rem;
+    border-radius: 6px;
+    margin-left: auto;
+    letter-spacing: 0.05em;
+    flex-shrink: 0;
   }
 
   .mobile-menu-drawer__nav {
@@ -2426,54 +2685,73 @@
   
   @media (max-width: 480px) {
     .header {
-      padding-left: 1.6rem;
-      padding-right: 1.6rem;
+      padding-left: 1.2rem;
+      padding-right: 1.2rem;
       padding-top: 0.4rem;
       padding-bottom: 0.4rem;
-      min-height: 4.5rem;
-      gap: 0.8rem;
+      min-height: 5.0rem;
+      gap: 0.6rem;
     }
     .header__logo-link {
-      gap: 0.6rem;
+      gap: 0.5rem;
     }
     .header__logo-title {
       font-size: 1.9rem;
+      font-weight: 600;
     }
     .header__logo-subtitle {
-      font-size: 0.65rem;
+      font-size: 0.68rem;
       letter-spacing: 0.4em;
     }
     .header__logo-img {
-      max-height: 3.8rem;
+      max-height: 3.4rem;
     }
     .header__icons {
-      gap: 1.2rem;
+      gap: 0.6rem;
     }
     .header__hamburger {
-      padding: 0.5rem;
+      padding: 0.6rem;
       margin-left: 0;
+      min-width: 42px;
+      min-height: 42px;
     }
     .header__hamburger svg {
-      width: 1.8rem;
-      height: 1.8rem;
+      width: 2.2rem;
+      height: 2.2rem;
+      stroke-width: 2px;
+    }
+    .header__icon-link {
+      min-width: 42px;
+      min-height: 42px;
+      padding: 0.5rem;
     }
     .header__icon-link svg {
-      width: 1.6rem;
-      height: 1.6rem;
+      width: 2.2rem;
+      height: 2.2rem;
+      stroke-width: 1.8px;
     }
     .header__badge {
-      width: 1.2rem;
-      height: 1.2rem;
-      font-size: 0.75rem;
-      top: -0.3rem;
-      right: -0.4rem;
+      width: 1.3rem;
+      height: 1.3rem;
+      font-size: 0.78rem;
+      top: -0.2rem;
+      right: -0.2rem;
+    }
+    .custom-currency-selector__trigger {
+      font-size: 1.25rem;
+      padding: 0.4rem 0.4rem;
+      gap: 0.3rem;
+    }
+    .custom-currency-selector__trigger .icon-chevron-down {
+      width: 1.1rem;
+      height: 1.1rem;
     }
   }
 
   /* Force refresh for Shopify theme watcher */
   /* Fixed Mobile Bottom Navigation */
   .mobile-bottom-nav {
-    display: none;
+    display: none !important;
   }
 
   @media (max-width: 768px) {
@@ -2481,21 +2759,27 @@
     .header__cart-trigger {
       display: none !important;
     }
+
     .mobile-bottom-nav {
-      display: flex;
-      justify-content: space-around;
-      align-items: center;
-      position: fixed;
-      bottom: 0;
-      left: 0;
-      width: 100%;
-      background-color: #FFFFFF;
-      box-shadow: 0 -2px 10px rgba(0,0,0,0.05);
-      z-index: 100;
-      padding: 0.8rem 1rem 1.2rem;
-      box-sizing: border-box;
-      border-top-left-radius: 20px;
-      border-top-right-radius: 20px;
+      display: flex !important;
+      justify-content: space-around !important;
+      align-items: center !important;
+      position: fixed !important;
+      bottom: 0 !important;
+      left: 0 !important;
+      right: 0 !important;
+      width: 100% !important;
+      background-color: #FFFFFF !important;
+      box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.1) !important;
+      z-index: 99999 !important;
+      padding: 0.7rem 0.8rem max(0.9rem, env(safe-area-inset-bottom)) !important;
+      box-sizing: border-box !important;
+      border-top-left-radius: 20px !important;
+      border-top-right-radius: 20px !important;
+      border-top: 1px solid rgba(212, 175, 55, 0.25) !important;
+      visibility: visible !important;
+      opacity: 1 !important;
+      pointer-events: auto !important;
     }
     
     .mobile-bottom-nav__item {
@@ -2503,9 +2787,10 @@
       flex-direction: column;
       align-items: center;
       text-decoration: none;
-      color: #888888;
+      color: #666666;
       font-family: 'Montserrat', sans-serif;
       font-size: 0.75rem;
+      font-weight: 500;
       gap: 0.3rem;
       flex: 1;
       background: none;
@@ -2513,20 +2798,26 @@
       padding: 0;
       outline: none;
       cursor: pointer;
+      transition: color 0.2s ease, transform 0.15s ease;
+    }
+
+    .mobile-bottom-nav__item:active {
+      transform: scale(0.94);
     }
     
     .mobile-bottom-nav__item.active {
-      color: #D4AF37; /* or theme color */
+      color: #D4AF37;
+      font-weight: 600;
     }
     .mobile-bottom-nav__item.active svg {
       stroke: #D4AF37;
     }
     
     .mobile-bottom-nav__item svg {
-      width: 1.6rem;
-      height: 1.6rem;
+      width: 1.7rem;
+      height: 1.7rem;
       stroke: currentColor;
-      stroke-width: 1.5;
+      stroke-width: 1.6;
       fill: none;
     }
     
@@ -2537,21 +2828,25 @@
     .chat-icon-wrapper {
       background: linear-gradient(135deg, #3EE067, #25D366);
       border-radius: 50%;
-      width: 3.8rem;
-      height: 3.8rem;
+      width: 4.0rem;
+      height: 4.0rem;
       display: flex;
       align-items: center;
       justify-content: center;
-      box-shadow: 0 4px 15px rgba(37, 211, 102, 0.4);
-      border: 4px solid #FFFFFF;
-      margin-top: -2.2rem;
+      box-shadow: 0 4px 15px rgba(37, 211, 102, 0.45);
+      border: 3.5px solid #FFFFFF;
+      margin-top: -2.3rem;
       margin-bottom: 0rem;
-      transition: transform 0.2s ease;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .mobile-bottom-nav__item--chat:active .chat-icon-wrapper {
+      transform: scale(0.92);
     }
     
     .chat-icon-wrapper svg {
-      width: 2rem;
-      height: 2rem;
+      width: 2.1rem;
+      height: 2.1rem;
       stroke: none;
       fill: #FFFFFF;
     }
@@ -2560,6 +2855,8 @@
       position: relative;
       text-align: center;
       white-space: nowrap;
+      font-weight: 600;
+      color: #00352A;
     }
     
     .mobile-bottom-nav__badge {
@@ -2571,8 +2868,8 @@
       font-family: 'Montserrat', sans-serif;
       font-size: 0.7rem;
       font-weight: 700;
-      width: 1.2rem;
-      height: 1.2rem;
+      width: 1.3rem;
+      height: 1.3rem;
       border-radius: 50%;
       display: flex;
       align-items: center;
@@ -2581,9 +2878,9 @@
       box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
     }
     
-    /* Pad body so bottom nav doesn't overlap content */
+    /* Pad body so fixed bottom nav doesn't overlap content */
     body {
-      padding-bottom: 5rem !important;
+      padding-bottom: calc(5.5rem + env(safe-area-inset-bottom)) !important;
     }
   }
 {% endstylesheet %}

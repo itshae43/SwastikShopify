@@ -1,6 +1,36 @@
+{% doc %}
+  Renders meta tags, title, SEO tags, open graph metadata, mobile theme settings, and favicon icons for desktop and mobile devices.
+{% enddoc %}
+
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width,initial-scale=1">
+
+{% comment %} Mobile Web App & Theme Color Meta Tags {% endcomment %}
+<meta name="theme-color" content="#012726">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="{{ shop.name | escape }}">
+<meta name="application-name" content="{{ shop.name | escape }}">
+<meta name="msapplication-TileColor" content="#012726">
+
+{% comment %} Favicons for Web, Desktop, iOS, Android, and Web Manifest {% endcomment %}
+{%- if settings.favicon != blank -%}
+  <link rel="icon" type="image/png" sizes="32x32" href="{{ settings.favicon | image_url: width: 32, height: 32 }}">
+  <link rel="icon" type="image/png" sizes="16x16" href="{{ settings.favicon | image_url: width: 16, height: 16 }}">
+  <link rel="apple-touch-icon" sizes="180x180" href="{{ settings.favicon | image_url: width: 180, height: 180 }}">
+  <link rel="icon" type="image/png" sizes="192x192" href="{{ settings.favicon | image_url: width: 192, height: 192 }}">
+  <link rel="icon" type="image/png" sizes="512x512" href="{{ settings.favicon | image_url: width: 512, height: 512 }}">
+{%- else -%}
+  <link rel="shortcut icon" href="{{ 'favicon.ico' | asset_url }}">
+  <link rel="icon" type="image/png" sizes="32x32" href="{{ 'favicon-32x32.png' | asset_url }}">
+  <link rel="icon" type="image/png" sizes="16x16" href="{{ 'favicon-16x16.png' | asset_url }}">
+  <link rel="apple-touch-icon" sizes="180x180" href="{{ 'apple-touch-icon.png' | asset_url }}">
+  <link rel="icon" type="image/png" sizes="192x192" href="{{ 'android-chrome-192x192.png' | asset_url }}">
+  <link rel="icon" type="image/png" sizes="512x512" href="{{ 'android-chrome-512x512.png' | asset_url }}">
+{%- endif -%}
+
+<link rel="manifest" href="{{ 'site.webmanifest' | asset_url }}">
 
 {%- liquid
   assign og_title = page_title | default: shop.name
@@ -15,7 +45,7 @@
   elsif request.page_type == 'password'
     assign og_url = request.origin
   endif
-%}
+-%}
 
 <meta
   property="og:site_name"

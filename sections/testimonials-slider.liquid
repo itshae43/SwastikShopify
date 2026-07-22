@@ -8,14 +8,46 @@
   <div class="testimonials-v2__container">
     
     <div class="testimonials-v2__left">
+      {%- if section.settings.show_rating_badge -%}
+        <div class="testimonials-v2__rating-badge">
+          <div class="testimonials-v2__rating-stars">
+            {%- for i in (1..5) -%}
+              <svg class="star star--filled" viewBox="0 0 24 24" fill="currentColor"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+            {%- endfor -%}
+          </div>
+          {%- if section.settings.rating_badge_text != blank -%}
+            <span class="testimonials-v2__rating-score">{{ section.settings.rating_badge_text }}</span>
+          {%- endif -%}
+        </div>
+      {%- endif -%}
+
       {%- if section.settings.subheading != blank -%}
         <div class="testimonials-v2__subheading">{{ section.settings.subheading | escape }}</div>
       {%- endif -%}
       
       {%- if section.settings.title != blank -%}
-        <h2 class="testimonials-v2__heading serif-font">{{ section.settings.title | newline_to_br }}</h2>
+        <h2 class="testimonials-v2__heading serif-font">
+          {%- assign title_lines = section.settings.title | newline_to_br | split: '<br />' -%}
+          {%- for line in title_lines -%}
+            {%- assign stripped_line = line | strip -%}
+            {%- if stripped_line contains '+' or stripped_line contains '0' or stripped_line contains '1' or stripped_line contains '2' or stripped_line contains '3' or stripped_line contains '4' or stripped_line contains '5' or stripped_line contains '6' or stripped_line contains '7' or stripped_line contains '8' or stripped_line contains '9' -%}
+              <span class="testimonials-v2__heading-highlight">{{ stripped_line }}</span>
+            {%- else -%}
+              <span class="testimonials-v2__heading-line">{{ stripped_line }}</span>
+            {%- endif -%}
+          {%- endfor -%}
+        </h2>
       {%- endif -%}
-      
+
+      {%- if section.settings.trust_copy != blank -%}
+        <div class="testimonials-v2__trust-copy">
+          <span class="testimonials-v2__trust-text">{{ section.settings.trust_copy | newline_to_br }}</span>
+          <svg class="testimonials-v2__heart-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
+          </svg>
+        </div>
+      {%- endif -%}
+
       <div class="testimonials-v2__divider"></div>
 
       <div class="testimonials-v2__stats">
@@ -126,9 +158,37 @@
 }
 
 .testimonials-v2__left {
-  flex: 0 0 320px;
-  max-width: 350px;
+  flex: 0 0 300px;
+  max-width: 330px;
   padding-right: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.testimonials-v2__rating-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.8rem;
+  margin-bottom: 2rem;
+}
+
+.testimonials-v2__rating-stars {
+  display: flex;
+  gap: 3px;
+}
+
+.testimonials-v2__rating-stars .star {
+  width: 14px;
+  height: 14px;
+  color: var(--accent-color, #b38245);
+}
+
+.testimonials-v2__rating-score {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--text-color, #0a2a26);
+  letter-spacing: 0.02em;
 }
 
 .testimonials-v2__subheading {
@@ -143,18 +203,56 @@
 }
 
 .testimonials-v2__heading {
-  font-size: 3.8rem;
+  font-size: 3.4rem;
   color: var(--text-color, #0a2a26);
   margin: 0 0 2rem 0;
   font-weight: 400;
-  line-height: 1.2;
+  line-height: 1.15;
+  display: flex;
+  flex-direction: column;
+}
+
+.testimonials-v2__heading-line {
+  display: block;
+}
+
+.testimonials-v2__heading-highlight {
+  display: block;
+  font-size: 5.2rem;
+  font-weight: 500;
+  color: var(--text-color, #0a2a26);
+  line-height: 1.05;
+  margin: 0.2rem 0;
+}
+
+.testimonials-v2__trust-copy {
+  display: inline-flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 1.35rem;
+  font-weight: 600;
+  color: var(--text-color, #0a2a26);
+  opacity: 0.8;
+  line-height: 1.45;
+  margin-bottom: 2rem;
+}
+
+.testimonials-v2__heart-icon {
+  width: 15px;
+  height: 15px;
+  color: var(--accent-color, #b38245);
+  display: inline-block;
+  vertical-align: middle;
+  flex-shrink: 0;
 }
 
 .testimonials-v2__divider {
   height: 2px;
   background-color: var(--accent-color, #b38245);
   width: 70px;
-  margin-bottom: 3.5rem;
+  margin-bottom: 3rem;
 }
 
 .testimonials-v2__stats {
@@ -377,13 +475,13 @@
 
 @media (max-width: 990px) {
   .testimonials-v2 {
-    padding: 5rem 0;
+    padding: 3.5rem 0 3rem 0;
   }
   .testimonials-v2__container {
     flex-direction: column;
     padding-left: 2rem;
     padding-right: 2rem;
-    gap: 2rem;
+    gap: 0;
   }
   .testimonials-v2__left {
     flex: 0 0 auto;
@@ -391,13 +489,79 @@
     max-width: 100%;
     padding-right: 0;
     text-align: center;
-    margin-bottom: 1rem;
+    margin-bottom: 0.5rem;
+    align-items: center;
+  }
+  .testimonials-v2__rating-badge {
+    margin: 0 auto 1rem auto;
+    padding: 0.45rem 1.3rem;
+    background: rgba(179, 130, 69, 0.09);
+    border: 1px solid rgba(179, 130, 69, 0.22);
+    border-radius: 50px;
+    box-shadow: 0 2px 8px rgba(179, 130, 69, 0.05);
+    gap: 0.6rem;
+  }
+  .testimonials-v2__rating-stars .star {
+    width: 14px;
+    height: 14px;
+  }
+  .testimonials-v2__rating-score {
+    font-size: 1.25rem;
+    font-weight: 700;
+    letter-spacing: 0.03em;
+  }
+  .testimonials-v2__subheading {
+    font-size: 1.1rem;
+    letter-spacing: 0.15em;
+    margin-bottom: 0.8rem;
   }
   .testimonials-v2__heading {
-    font-size: 3.2rem;
+    font-size: 2.2rem;
+    margin: 0 0 1rem 0;
+    line-height: 1.2;
+    align-items: center;
+  }
+  .testimonials-v2__heading-line {
+    font-size: 2.1rem;
+    font-weight: 400;
+    letter-spacing: -0.01em;
+    color: var(--text-color, #0a2a26);
+    line-height: 1.25;
+  }
+  .testimonials-v2__heading-highlight {
+    font-size: 4rem;
+    font-weight: 600;
+    color: var(--text-color, #0a2a26);
+    line-height: 1.05;
+    margin: 0.2rem 0;
+  }
+  .testimonials-v2__trust-copy {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.25rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+    opacity: 0.85;
+    gap: 0.5rem;
+    line-height: 1.35;
+  }
+  .testimonials-v2__heart-icon {
+    width: 16px;
+    height: 16px;
+    fill: var(--accent-color, #b38245);
+    stroke: var(--accent-color, #b38245);
+    display: inline-block;
+    vertical-align: middle;
+    flex-shrink: 0;
   }
   .testimonials-v2__divider {
-    margin: 0 auto 2.5rem auto;
+    width: 50px;
+    height: 3px;
+    border-radius: 3px;
+    margin: 0 auto 0.5rem auto;
+    background-color: var(--accent-color, #b38245);
+    opacity: 0.85;
   }
   .testimonials-v2__stat {
     align-items: center;
@@ -411,7 +575,7 @@
     mask-image: none;
     -webkit-mask-image: none;
     margin: 0 -2rem; /* Bleed out on mobile */
-    padding: 1.5rem 2rem;
+    padding: 0.8rem 2rem 1.5rem 2rem;
   }
   .testimonials-v2__card-wrapper {
     width: 290px;
@@ -541,6 +705,18 @@ document.addEventListener('DOMContentLoaded', () => {
   "name": "Testimonials Showcase",
   "settings": [
     {
+      "type": "checkbox",
+      "id": "show_rating_badge",
+      "label": "Show Rating Badge",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "rating_badge_text",
+      "label": "Rating Score Text",
+      "default": "4.9/5"
+    },
+    {
       "type": "text",
       "id": "subheading",
       "label": "Subheading",
@@ -550,7 +726,13 @@ document.addEventListener('DOMContentLoaded', () => {
       "type": "textarea",
       "id": "title",
       "label": "Heading",
-      "default": "Trusted by\n4,800+ customers"
+      "default": "Trusted by\n4,800+\nHappy Customers"
+    },
+    {
+      "type": "text",
+      "id": "trust_copy",
+      "label": "Trust Subtext",
+      "default": "98% of our customers recommend us"
     },
     {
       "type": "header",

@@ -9,39 +9,55 @@
       <!-- Col 1: Brand Info & Contact Info -->
       <div class="footer__col footer__col--brand">
         <h3 class="footer__logo serif-font">{{ section.settings.brand_name }}</h3>
-        <p class="footer__description">
-          {{ section.settings.brand_description }}
-        </p>
+        <div class="footer__description">
+          {{ section.settings.brand_description | replace: '\n', '' | replace: '\n', '' }}
+        </div>
         <ul class="footer__contact-list-inline">
           {% if section.settings.contact_phone != blank %}
-            <li>
+            <li class="footer__contact-item footer__contact-item--phone">
               <a href="tel:{{ section.settings.contact_phone | replace: ' ', '' }}" class="footer__contact-link">
-                <svg class="footer__contact-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                  <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
-                </svg>
-                <span>{{ section.settings.contact_phone | escape }}</span>
+                <div class="footer__contact-icon-wrapper">
+                  <svg class="footer__contact-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
+                  </svg>
+                </div>
+                <div class="footer__contact-text-group">
+                  <span class="footer__contact-label">CALL US</span>
+                  <span class="footer__contact-value">{{ section.settings.contact_phone | escape }}</span>
+                </div>
               </a>
             </li>
           {% endif %}
           {% if section.settings.contact_email != blank %}
-            <li>
+            <li class="footer__contact-item footer__contact-item--email">
               <a href="mailto:{{ section.settings.contact_email }}" class="footer__contact-link">
-                <svg class="footer__contact-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                  <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
-                  <polyline points="22,6 12,13 2,6"></polyline>
-                </svg>
-                <span>{{ section.settings.contact_email | escape }}</span>
+                <div class="footer__contact-icon-wrapper">
+                  <svg class="footer__contact-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+                    <polyline points="22,6 12,13 2,6"></polyline>
+                  </svg>
+                </div>
+                <div class="footer__contact-text-group">
+                  <span class="footer__contact-label">EMAIL US</span>
+                  <span class="footer__contact-value">{{ section.settings.contact_email | escape }}</span>
+                </div>
               </a>
             </li>
           {% endif %}
           {% if section.settings.contact_address != blank %}
-            <li>
+            <li class="footer__contact-item footer__contact-item--address">
               <a href="https://www.google.com/maps/place/Swastik+Jewels/@28.6504041,77.1913016,17z" target="_blank" rel="noopener noreferrer" class="footer__contact-link">
-                <svg class="footer__contact-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                  <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
-                  <circle cx="12" cy="10" r="3"></circle>
-                </svg>
-                <span>{{ section.settings.contact_address | escape }}</span>
+                <div class="footer__contact-icon-wrapper">
+                  <svg class="footer__contact-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+                    <circle cx="12" cy="10" r="3"></circle>
+                  </svg>
+                </div>
+                <div class="footer__contact-text-group">
+                  <span class="footer__contact-label">BOUTIQUE STORE</span>
+                  <span class="footer__contact-value">{{ section.settings.contact_address | escape }}</span>
+                  <span class="footer__contact-action">Get Directions &rarr;</span>
+                </div>
               </a>
             </li>
           {% endif %}
@@ -82,54 +98,81 @@
       </div>
 
       <!-- Col 2: Menu 1 -->
-      <div class="footer__col">
-        <h4 class="footer__heading">{{ section.settings.menu_title | default: "KNOW YOUR JEWELLERY" }}</h4>
-        <ul class="footer__links-list">
-          {% if section.settings.menu != blank %}
-            {% for link in section.settings.menu.links %}
-              <li><a href="{{ link.url }}" class="footer__link">{{ link.title }}</a></li>
-            {% endfor %}
-          {% else %}
-            <li><a href="/pages/diamond-guide" class="footer__link">Diamond Guide</a></li>
-            <li><a href="/pages/gold-guide" class="footer__link">Gold Guide</a></li>
-            <li><a href="/pages/ring-size-guide" class="footer__link">Ring Size Guide</a></li>
-            <li><a href="/pages/carat-war" class="footer__link">Carat War</a></li>
-          {% endif %}
-        </ul>
+      <div class="footer__col footer__col--accordion">
+        <button class="footer__heading footer__heading--accordion" type="button" aria-expanded="false">
+          <span>{{ section.settings.menu_title | default: "KNOW YOUR JEWELLERY" }}</span>
+          <div class="footer__accordion-chevron-bg">
+            <svg class="footer__accordion-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="6 9 12 15 18 9"></polyline>
+            </svg>
+          </div>
+        </button>
+        <div class="footer__accordion-content">
+          <ul class="footer__links-list">
+            {% if section.settings.menu != blank %}
+              {% for link in section.settings.menu.links %}
+                <li><a href="{{ link.url }}" class="footer__link">{{ link.title }}</a></li>
+              {% endfor %}
+            {% else %}
+              <li><a href="/pages/diamond-guide" class="footer__link">Diamond Guide</a></li>
+              <li><a href="/pages/gold-guide" class="footer__link">Gold Guide</a></li>
+              <li><a href="/pages/ring-size-guide" class="footer__link">Ring Size Guide</a></li>
+              <li><a href="/pages/carat-war" class="footer__link">Carat War</a></li>
+            {% endif %}
+          </ul>
+        </div>
       </div>
 
       <!-- Col 3: Menu 2 -->
-      <div class="footer__col">
-        <h4 class="footer__heading">{{ section.settings.customer_menu_title | default: "POLICY" }}</h4>
-        <ul class="footer__links-list">
-          {% if section.settings.customer_menu != blank %}
-            {% for link in section.settings.customer_menu.links %}
-              <li><a href="{{ link.url }}" class="footer__link">{{ link.title }}</a></li>
-            {% endfor %}
-          {% else %}
-            <li><a href="/pages/privacy-policy" class="footer__link">Privacy Policy</a></li>
-            <li><a href="/pages/terms-conditions" class="footer__link">Terms & Conditions</a></li>
-            <li><a href="/pages/return-policy" class="footer__link">Return Policy</a></li>
-            <li><a href="/pages/buyback-policy" class="footer__link">Buyback Policy</a></li>
-            <li><a href="/pages/shipping-policy" class="footer__link">Shipping Policy</a></li>
-          {% endif %}
-        </ul>
+      <div class="footer__col footer__col--accordion">
+        <button class="footer__heading footer__heading--accordion" type="button" aria-expanded="false">
+          <span>{{ section.settings.customer_menu_title | default: "POLICY" }}</span>
+          <div class="footer__accordion-chevron-bg">
+            <svg class="footer__accordion-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="6 9 12 15 18 9"></polyline>
+            </svg>
+          </div>
+        </button>
+        <div class="footer__accordion-content">
+          <ul class="footer__links-list">
+            {% if section.settings.customer_menu != blank %}
+              {% for link in section.settings.customer_menu.links %}
+                <li><a href="{{ link.url }}" class="footer__link">{{ link.title }}</a></li>
+              {% endfor %}
+            {% else %}
+              <li><a href="/pages/privacy-policy" class="footer__link">Privacy Policy</a></li>
+              <li><a href="/pages/terms-conditions" class="footer__link">Terms & Conditions</a></li>
+              <li><a href="/pages/return-policy" class="footer__link">Return Policy</a></li>
+              <li><a href="/pages/buyback-policy" class="footer__link">Buyback Policy</a></li>
+              <li><a href="/pages/shipping-policy" class="footer__link">Shipping Policy</a></li>
+            {% endif %}
+          </ul>
+        </div>
       </div>
 
       <!-- Col 4: Menu 3 -->
-      <div class="footer__col">
-        <h4 class="footer__heading">{{ section.settings.help_menu_title | default: "HELP" }}</h4>
-        <ul class="footer__links-list">
-          {% if section.settings.help_menu != blank %}
-            {% for link in section.settings.help_menu.links %}
-              <li><a href="{{ link.url }}" class="footer__link">{{ link.title }}</a></li>
-            {% endfor %}
-          {% else %}
-            <li><a href="/pages/contact-us" class="footer__link">Contact Us</a></li>
-            <li><a href="/pages/faq" class="footer__link">FAQ's</a></li>
-            <li><a href="/pages/find-store" class="footer__link">Find Store</a></li>
-          {% endif %}
-        </ul>
+      <div class="footer__col footer__col--accordion">
+        <button class="footer__heading footer__heading--accordion" type="button" aria-expanded="false">
+          <span>{{ section.settings.help_menu_title | default: "HELP" }}</span>
+          <div class="footer__accordion-chevron-bg">
+            <svg class="footer__accordion-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="6 9 12 15 18 9"></polyline>
+            </svg>
+          </div>
+        </button>
+        <div class="footer__accordion-content">
+          <ul class="footer__links-list">
+            {% if section.settings.help_menu != blank %}
+              {% for link in section.settings.help_menu.links %}
+                <li><a href="{{ link.url }}" class="footer__link">{{ link.title }}</a></li>
+              {% endfor %}
+            {% else %}
+              <li><a href="/pages/contact-us" class="footer__link">Contact Us</a></li>
+              <li><a href="/pages/faq" class="footer__link">FAQ's</a></li>
+              <li><a href="/pages/find-store" class="footer__link">Find Store</a></li>
+            {% endif %}
+          </ul>
+        </div>
       </div>
 
 
@@ -165,6 +208,32 @@
   </div>
 </footer>
 
+<script>
+  (function() {
+    function initFooterAccordions() {
+      const accordionButtons = document.querySelectorAll('.footer__heading--accordion');
+      accordionButtons.forEach(button => {
+        button.addEventListener('click', function() {
+          if (window.innerWidth > 768) return;
+          const col = this.closest('.footer__col--accordion');
+          const isExpanded = this.getAttribute('aria-expanded') === 'true';
+          
+          this.setAttribute('aria-expanded', !isExpanded);
+          if (col) {
+            col.classList.toggle('is-open', !isExpanded);
+          }
+        });
+      });
+    }
+
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', initFooterAccordions);
+    } else {
+      initFooterAccordions();
+    }
+  })();
+</script>
+
 {% stylesheet %}
   .footer-wrapper {
     background-color: var(--footer-bg, #013F3E);
@@ -196,6 +265,39 @@
     display: flex;
     flex-direction: column;
     gap: 2rem;
+  }
+
+  /* Accordion Desktop Defaults */
+  .footer__heading--accordion {
+    background: none;
+    border: none;
+    padding: 0;
+    margin: 0;
+    font: inherit;
+    color: inherit;
+    text-align: left;
+    width: 100%;
+    display: block;
+    cursor: default;
+  }
+  .footer__accordion-chevron-bg {
+    display: none;
+  }
+  .footer__accordion-chevron {
+    display: none;
+  }
+  .footer__accordion-content {
+    display: block;
+  }
+  .footer__contact-label,
+  .footer__contact-action {
+    display: none;
+  }
+  .footer__contact-icon-wrapper {
+    display: inline;
+  }
+  .footer__contact-text-group {
+    display: inline;
   }
 
   /* Typography */
@@ -453,7 +555,7 @@
 
   @media (max-width: 768px) {
     .footer-wrapper {
-      padding-top: 5rem;
+      padding-top: 4rem;
       padding-bottom: 0;
     }
     .footer.container {
@@ -461,16 +563,262 @@
       padding-right: 2rem;
     }
     .footer__grid {
-      grid-template-columns: 1fr;
-      gap: 3.5rem;
-      padding-bottom: 3.5rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1.8rem;
+      padding-bottom: 2.5rem;
     }
+
+    /* Brand Column on Mobile */
+    .footer__col--brand {
+      align-items: center;
+      text-align: center;
+      gap: 1.8rem;
+      padding-bottom: 2rem;
+      border-bottom: 1px solid color-mix(in srgb, var(--footer-text) 12%, transparent);
+    }
+    .footer__logo {
+      font-size: 2.4rem;
+      text-align: center;
+    }
+    .footer__description {
+      text-align: center;
+      font-size: 1.35rem;
+      line-height: 1.65;
+      max-width: 100%;
+    }
+    .footer__contact-list-inline {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.2rem;
+      width: 100%;
+      max-width: 450px;
+      margin-top: 0.5rem;
+    }
+    .footer__contact-item--phone,
+    .footer__contact-item--email {
+      grid-column: span 1;
+    }
+    .footer__contact-item--address {
+      grid-column: 1 / -1;
+    }
+
+    .footer__contact-link {
+      display: flex;
+      height: 100%;
+      box-sizing: border-box;
+      background: linear-gradient(145deg, rgba(212, 175, 55, 0.08) 0%, rgba(1, 63, 62, 0.03) 100%);
+      border: 1.5px solid rgba(212, 175, 55, 0.28);
+      border-radius: 14px;
+      text-decoration: none;
+      color: inherit;
+      transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.02);
+    }
+    
+    .footer__contact-item--phone .footer__contact-link,
+    .footer__contact-item--email .footer__contact-link {
+      padding: 1.4rem 1rem;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      gap: 0.8rem;
+    }
+
+    .footer__contact-item--address .footer__contact-link {
+      padding: 1.4rem 1.6rem;
+      flex-direction: row;
+      align-items: flex-start;
+      text-align: left;
+      gap: 1.2rem;
+    }
+
+    .footer__contact-link:active {
+      background: linear-gradient(145deg, rgba(212, 175, 55, 0.18) 0%, rgba(1, 63, 62, 0.08) 100%);
+      border-color: var(--footer-accent);
+      transform: scale(0.98);
+    }
+
+    .footer__contact-icon-wrapper {
+      display: flex;
+      width: 4rem;
+      height: 4rem;
+      border-radius: 50%;
+      background-color: rgba(212, 175, 55, 0.15);
+      border: 1px solid rgba(212, 175, 55, 0.35);
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    .footer__contact-icon {
+      width: 2rem;
+      height: 2rem;
+      margin: 0;
+      color: var(--footer-accent);
+    }
+
+    .footer__contact-text-group {
+      display: flex;
+      flex-direction: column;
+      gap: 0.3rem;
+      width: 100%;
+    }
+    .footer__contact-item--phone .footer__contact-text-group,
+    .footer__contact-item--email .footer__contact-text-group {
+      align-items: center;
+    }
+
+    .footer__contact-label {
+      display: block;
+      font-size: 1.05rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--footer-accent);
+    }
+
+    .footer__contact-value {
+      display: block;
+      font-size: 1.25rem;
+      font-weight: 500;
+      color: color-mix(in srgb, var(--footer-text) 90%, transparent);
+      line-height: 1.4;
+      word-break: break-word;
+    }
+
+    .footer__contact-action {
+      display: inline-flex;
+      align-items: center;
+      margin-top: 0.4rem;
+      font-size: 1.2rem;
+      font-weight: 600;
+      color: var(--footer-accent);
+      letter-spacing: 0.02em;
+    }
+
+    .footer__social-icons {
+      justify-content: center;
+      gap: 1.6rem;
+      margin-top: 0.6rem;
+    }
+    .footer__social-link {
+      width: 4.4rem;
+      height: 4.4rem;
+      border: 1.5px solid var(--footer-accent);
+      background-color: rgba(212, 175, 55, 0.1);
+      color: var(--footer-accent);
+      box-shadow: 0 2px 10px rgba(212, 175, 55, 0.12);
+    }
+    .footer__social-link svg {
+      width: 2rem;
+      height: 2rem;
+    }
+
+    /* Accordion Columns on Mobile */
+    .footer__col--accordion {
+      gap: 0;
+      margin-bottom: 0.8rem;
+      border: 1.5px solid rgba(212, 175, 55, 0.22);
+      border-radius: 12px;
+      background-color: color-mix(in srgb, var(--footer-text) 3%, transparent);
+      overflow: hidden;
+      transition: border-color 0.3s ease, background-color 0.3s ease;
+    }
+    .footer__col--accordion.is-open {
+      border-color: var(--footer-accent);
+      border-left: 4px solid var(--footer-accent);
+      background-color: color-mix(in srgb, var(--footer-accent) 6%, transparent);
+    }
+
+    .footer__heading--accordion {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      width: 100%;
+      padding: 1.5rem 1.6rem;
+      cursor: pointer;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .footer__heading--accordion span {
+      font-size: 1.4rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      color: color-mix(in srgb, var(--footer-text) 95%, transparent);
+    }
+    .footer__col--accordion.is-open .footer__heading--accordion span {
+      color: var(--footer-accent);
+    }
+
+    .footer__heading::after {
+      display: none;
+    }
+
+    .footer__accordion-chevron-bg {
+      display: flex;
+      width: 2.8rem;
+      height: 2.8rem;
+      border-radius: 50%;
+      background-color: rgba(212, 175, 55, 0.15);
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      transition: background-color 0.3s ease, transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .footer__col--accordion.is-open .footer__accordion-chevron-bg {
+      background-color: var(--footer-accent);
+      transform: rotate(180deg);
+    }
+    .footer__accordion-chevron {
+      display: block;
+      width: 1.6rem;
+      height: 1.6rem;
+      color: var(--footer-accent);
+      transition: color 0.3s ease;
+    }
+    .footer__col--accordion.is-open .footer__accordion-chevron {
+      color: #013F3E;
+    }
+    
+    .footer__accordion-content {
+      max-height: 0;
+      opacity: 0;
+      overflow: hidden;
+      transition: max-height 0.35s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.25s ease, padding 0.35s ease;
+      padding: 0 1.6rem;
+    }
+    .footer__col--accordion.is-open .footer__accordion-content {
+      max-height: 350px;
+      opacity: 1;
+      padding-top: 0.5rem;
+      padding-bottom: 1.8rem;
+    }
+    .footer__links-list {
+      margin-top: 0;
+      gap: 1.2rem;
+    }
+    .footer__link {
+      font-size: 1.35rem;
+      padding: 0.4rem 0;
+    }
+    .footer__link::before {
+      content: "◆";
+      font-size: 0.8rem;
+      color: var(--footer-accent);
+      margin-right: 1rem;
+      transform: none;
+      border: none;
+      width: auto;
+      height: auto;
+      opacity: 0.9;
+    }
+
+    /* Footer Bottom on Mobile */
     .footer-bottom-wrapper {
-      padding: 2rem 0;
+      padding: 2.5rem 0;
     }
     .footer__bottom.container {
       flex-direction: column;
-      gap: 2.5rem;
+      gap: 2rem;
       text-align: center;
       padding-left: 2rem;
       padding-right: 2rem;
@@ -478,15 +826,41 @@
     .footer__bottom-left {
       flex-direction: column;
       gap: 1rem;
+      align-items: center;
+    }
+    .footer__bottom-logo {
+      height: 36px;
+    }
+    .footer__copyright {
+      font-size: 1.15rem;
+      line-height: 1.6;
+      opacity: 0.9;
+      text-align: center;
     }
     .footer__bottom-center {
       flex-wrap: wrap;
       justify-content: center;
-      gap: 1rem;
+      gap: 0.8rem 1.2rem;
+      font-size: 1.15rem;
     }
     .footer__bottom-right {
       flex-direction: column;
       gap: 1rem;
+      align-items: center;
+    }
+    .footer__accept-text {
+      font-size: 1.1rem;
+      letter-spacing: 0.08em;
+      color: var(--footer-accent);
+      font-weight: 600;
+    }
+    .footer__payment-icons {
+      justify-content: center;
+      gap: 0.8rem;
+      flex-wrap: wrap;
+    }
+    .footer__payment-icons svg {
+      height: 26px;
     }
   }
 {% endstylesheet %}

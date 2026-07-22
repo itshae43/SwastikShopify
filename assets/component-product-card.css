@@ -131,3 +131,78 @@
   bottom: 0;
   z-index: 1;
 }
+
+/* Mobile Optimizations for 2-column grid */
+@media screen and (max-width: 768px) {
+  .product-card-ui {
+    border-radius: 8px;
+    background: #FAF7F2;
+    border: 1px solid rgba(1, 63, 62, 0.08);
+  }
+
+  .product-card-ui__wishlist {
+    top: 0.5rem;
+    right: 0.5rem;
+    background: rgba(255, 255, 255, 0.85);
+    border-radius: 50%;
+    width: 28px;
+    height: 28px;
+    backdrop-filter: blur(2px);
+    box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+  }
+
+  .product-card-ui__wishlist svg {
+    width: 15px;
+    height: 15px;
+  }
+
+  .product-card-ui__content {
+    padding: 0.75rem;
+  }
+
+  .product-card-ui__title {
+    font-size: 0.85rem;
+    margin: 0 0 0.4rem 0;
+    line-height: 1.3;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    height: 2.6em;
+  }
+
+  .product-card-ui__price-row {
+    margin-bottom: 0.75rem;
+    gap: 0.3rem;
+  }
+
+  .product-card-ui__price-row .price-current {
+    font-size: 0.95rem;
+  }
+
+  .product-card-ui__price-row .price-original {
+    font-size: 0.78rem;
+  }
+
+  .price-discount {
+    font-size: 0.68rem;
+    padding: 1px 5px;
+    background: #FFF4D2;
+    color: #013F3E;
+    border-radius: 4px;
+    font-weight: 600;
+  }
+
+  .product-card-ui__btn {
+    padding: 0.6rem 0.3rem;
+    font-size: 0.7rem;
+    letter-spacing: 0.02em;
+    gap: 4px;
+    border-radius: 6px;
+  }
+
+  .product-card-ui__btn svg {
+    width: 13px;
+    height: 13px;
+  }
+}

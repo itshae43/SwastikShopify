@@ -655,8 +655,11 @@
         "testimonial_4"
       ],
       "settings": {
-        "title": "Trusted by\n4,800+\ncustomers",
-        "subheading": "IN THEIR OWN WORDS",
+        "show_rating_badge": true,
+        "rating_badge_text": "4.9/5",
+        "subheading": "",
+        "title": "Trusted by\n4,800+\nHappy Customers",
+        "trust_copy": "98% of our customers\nrecommend us",
         "stat_1_value": "",
         "stat_1_label": "",
         "stat_2_value": "",
