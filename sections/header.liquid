@@ -69,7 +69,7 @@
     <!-- Left: Brand Logo -->
     <div class="header__logo">
       <a href="{{ routes.root_url }}" class="header__logo-link">
-        <img src="{{ 'logo.png' | asset_url }}" 
+        <img src="{{ 'Swastik_logo.png' | asset_url }}" 
              alt="Swastik Jewels" 
              class="header__logo-img" 
              width="65"
@@ -1572,28 +1572,32 @@
   .header__logo {
     flex: 1 1 25%;
     display: flex;
+    align-items: center;
     justify-content: flex-start;
   }
   .header__logo-link {
-    display: flex;
+    display: inline-flex;
     align-items: center;
+    justify-content: center;
     gap: 0.8rem;
     text-decoration: none;
   }
   .header__logo-img {
     display: block;
-    max-height: 5.2rem;
+    max-height: 4.4rem;
     width: auto;
     object-fit: contain;
     background: transparent;
+    flex-shrink: 0;
   }
   .header__logo-text-wrapper {
-    display: flex;
+    display: inline-flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     line-height: 1;
     background: transparent;
+    margin-top: -1px;
   }
   .header__logo-title, .header__logo-subtitle {
     font-family: 'Cormorant Garamond', serif;
@@ -1606,21 +1610,21 @@
     margin: 0;
   }
   .header__logo-title {
-    font-size: 3.8rem;
+    font-size: 3.4rem;
     font-weight: 800;
     letter-spacing: 0.02em;
     text-transform: none;
     -webkit-text-stroke: 0.5px rgba(107, 76, 10, 0.5);
   }
   .header__logo-subtitle {
-    font-size: 1.3rem;
+    font-size: 1.15rem;
     font-weight: 700;
-    letter-spacing: 0.8em;
+    letter-spacing: 0.75em;
     text-transform: uppercase;
     margin-top: -0.1rem;
     text-align: center;
     -webkit-text-stroke: 0.2px rgba(107, 76, 10, 0.5);
-    padding-left: 0.8em;
+    padding-left: 0.75em;
   }
 
   /* Nav menu - Centered */
@@ -2091,27 +2095,34 @@
       left: 50%;
       transform: translateX(-50%);
       display: flex;
+      align-items: center;
       justify-content: center;
       flex: 0 0 auto;
       pointer-events: none;
       z-index: 5;
     }
     .header__logo-link {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
       pointer-events: auto;
       gap: 0.6rem;
     }
     .header__logo-img {
-      max-height: 3.8rem;
+      max-height: 3.0rem;
+      width: auto;
+      display: block;
+      flex-shrink: 0;
     }
     .header__logo-title {
-      font-size: 2.1rem;
-      font-weight: 600;
+      font-size: 2.2rem;
+      font-weight: 700;
       letter-spacing: 0.02em;
     }
     .header__logo-subtitle {
       font-size: 0.75rem;
       letter-spacing: 0.45em;
-      margin-top: 0.15rem;
+      margin-top: 0.05rem;
       padding-left: 0.45em;
     }
     .header__nav {
@@ -2696,15 +2707,15 @@
       gap: 0.5rem;
     }
     .header__logo-title {
-      font-size: 1.9rem;
-      font-weight: 600;
+      font-size: 1.95rem;
+      font-weight: 700;
     }
     .header__logo-subtitle {
       font-size: 0.68rem;
       letter-spacing: 0.4em;
     }
     .header__logo-img {
-      max-height: 3.4rem;
+      max-height: 2.7rem;
     }
     .header__icons {
       gap: 0.6rem;
