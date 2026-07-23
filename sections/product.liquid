@@ -1,6 +1,8 @@
 {%- assign current_variant = product.selected_or_first_available_variant -%}
 
 <div class="premium-product" data-product-id="{{ product.id }}" data-url="{{ product.url }}">
+  {% render 'breadcrumb', product: product, collection: collection %}
+
   <div class="pp-container">
     
     <!-- LEFT COLUMN -->
@@ -398,8 +400,63 @@
   }
   .premium-product {
     background-color: var(--pp-bg);
-    padding: 60px 24px;
+    padding: 32px 24px 60px 24px;
     font-family: 'Inter', sans-serif;
+  }
+  /* Breadcrumbs Styling */
+  .pp-breadcrumb-nav {
+    width: 100%;
+    margin-bottom: 24px;
+  }
+  .pp-breadcrumb-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  .pp-breadcrumb-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 8px;
+    font-size: 13px;
+    font-weight: 500;
+    font-family: 'Inter', sans-serif;
+  }
+  .pp-breadcrumb-item {
+    display: inline-flex;
+    align-items: center;
+  }
+  .pp-breadcrumb-link {
+    color: var(--pp-text-light, #666666);
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    transition: color 0.2s ease;
+  }
+  .pp-breadcrumb-link:hover {
+    color: var(--pp-green, #013F3E);
+    text-decoration: underline;
+  }
+  .pp-home-icon {
+    color: var(--pp-gold, #D4AF37);
+  }
+  .pp-breadcrumb-separator {
+    display: inline-flex;
+    align-items: center;
+    color: #BBB;
+  }
+  .pp-breadcrumb-current {
+    color: var(--pp-green, #013F3E);
+    font-weight: 700;
+    max-width: 320px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
   .pp-container {
     max-width: 1200px;
@@ -1029,11 +1086,25 @@
     }
 
     .premium-product {
-      padding: 1.2rem 1rem 3rem 1rem !important;
+      padding: 1rem 1rem 3rem 1rem !important;
       overflow-x: hidden !important;
       width: 100% !important;
       max-width: 100vw !important;
       box-sizing: border-box !important;
+    }
+
+    .pp-breadcrumb-nav {
+      margin-bottom: 14px !important;
+    }
+    .pp-breadcrumb-container {
+      padding: 0 !important;
+    }
+    .pp-breadcrumb-list {
+      font-size: 12px !important;
+      gap: 6px !important;
+    }
+    .pp-breadcrumb-current {
+      max-width: 160px !important;
     }
 
     .pp-container {
@@ -1759,8 +1830,13 @@
      ========================================================================== */
   @media screen and (min-width: 992px) {
     .premium-product {
-      padding: 48px 0 80px 0;
+      padding: 32px 0 80px 0;
       background: #FAFAFA;
+    }
+
+    .pp-breadcrumb-container {
+      max-width: 1280px;
+      padding: 0 40px;
     }
 
     .pp-container {
