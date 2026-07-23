@@ -40,7 +40,6 @@
                   <div class="pp-thumb-img">
                     <img src="{{ image | image_url: width: 150 }}" alt="{{ image.alt | escape }}" width="150" height="150">
                   </div>
-                  <div class="pp-thumb-label">{{ image.alt | default: 'View' }}</div>
                 </div>
               {% endfor %}
             </div>
@@ -54,7 +53,6 @@
                   <div class="pp-thumb-img">
                     {{ 'product-' | append: forloop.index | placeholder_svg_tag: 'placeholder-svg' }}
                   </div>
-                  <div class="pp-thumb-label">{{ label }}</div>
                 </div>
               {% endfor %}
             </div>
@@ -570,9 +568,9 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 8px;
     cursor: pointer;
-    flex: 0 0 84px; /* Fixed size */
+    flex: 0 0 80px;
+    width: 80px;
   }
   .pp-thumb-img {
     width: 100%;
@@ -592,20 +590,9 @@
     height: 100%;
     object-fit: cover; /* Fill the thumbnail */
   }
-  .pp-thumb-label {
-    font-size: 11px;
-    font-weight: 600;
-    color: var(--pp-text);
-    padding-bottom: 4px;
-    border-bottom: 2px solid transparent;
-    transition: all 0.2s;
-    white-space: nowrap;
-  }
   .pp-thumb-item.is-active .pp-thumb-img {
     border-color: var(--pp-green);
-  }
-  .pp-thumb-item.is-active .pp-thumb-label {
-    border-color: var(--pp-gold); /* Updated to gold underline based on mockup */
+    box-shadow: 0 0 0 2px var(--pp-gold);
   }
 
   /* Accordions */
@@ -1804,27 +1791,25 @@
 
     .pp-gallery {
       display: flex;
-      flex-direction: row;
+      flex-direction: column;
       gap: 16px;
-      align-items: flex-start;
     }
 
-    /* Vertical thumbnails strip on the LEFT */
+    /* Horizontal thumbnails strip at the BOTTOM */
     .pp-thumbnails-wrapper {
-      order: -1;
-      width: 88px;
-      flex-shrink: 0;
-      overflow-x: visible;
-      overflow-y: auto;
-      max-height: 540px;
-      margin-top: 0;
-      padding: 0;
+      order: 0;
+      width: 100%;
+      overflow-x: auto;
+      overflow-y: hidden;
+      max-height: none;
+      margin-top: 16px;
+      padding: 4px 0 8px 0;
       scrollbar-width: thin;
       scrollbar-color: #E5DBCF transparent;
     }
     .pp-thumbnails-wrapper::-webkit-scrollbar {
-      width: 3px;
-      height: 0;
+      height: 4px;
+      width: 0;
     }
     .pp-thumbnails-wrapper::-webkit-scrollbar-thumb {
       background: #E5DBCF;
@@ -1833,15 +1818,15 @@
 
     .pp-thumbnails {
       display: flex;
-      flex-direction: column;
-      gap: 10px;
-      width: 100%;
+      flex-direction: row;
+      gap: 12px;
+      width: max-content;
       justify-content: flex-start;
     }
 
     .pp-thumb-item {
-      flex: 0 0 auto;
-      width: 100%;
+      flex: 0 0 80px;
+      width: 80px;
       transition: transform 0.2s ease;
     }
 
@@ -1861,19 +1846,7 @@
 
     .pp-thumb-item.is-active .pp-thumb-img {
       border-color: #013F3E;
-      box-shadow: 0 3px 10px rgba(1, 63, 62, 0.18);
-    }
-
-    .pp-thumb-label {
-      font-size: 10px;
-      font-weight: 600;
-      letter-spacing: 0.02em;
-      color: #666;
-      text-align: center;
-      margin-top: 4px;
-    }
-    .pp-thumb-item.is-active .pp-thumb-label {
-      color: #013F3E;
+      box-shadow: 0 0 0 2px #D4AF37;
     }
 
     /* Main image takes remaining space */
