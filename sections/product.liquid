@@ -124,6 +124,16 @@
               <input type="hidden" name="id" id="pp-variant-id" value="{{ current_variant.id }}">
               
               {%- unless product.has_only_default_variant -%}
+                <div class="pp-customization-trigger-wrap">
+                  <button type="button" class="pp-customization-trigger-btn" id="pp-open-customization-drawer">
+                    <div class="pp-trigger-left">
+                      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+                      <span>Customise Metal, Diamond & Size</span>
+                    </div>
+                    <span class="pp-trigger-arrow">&rarr;</span>
+                  </button>
+                </div>
+
                 <div class="pp-variants">
                   {%- for option in product.options_with_values -%}
                     <div class="pp-option-group" data-option-index="{{ forloop.index0 }}">
@@ -385,6 +395,76 @@
   {{ product.variants | json }}
 </script>
 
+<!-- CARATLANE-STYLE CUSTOMIZATION SIDEBAR DRAWER -->
+<div class="pp-customization-overlay" id="pp-customization-overlay">
+  <div class="pp-customization-drawer" id="pp-customization-drawer">
+    
+    <!-- Drawer Header -->
+    <div class="pp-drawer-header">
+      <div class="pp-drawer-title-wrap">
+        <span class="pp-drawer-sub">Estimated price</span>
+        <div class="pp-drawer-price" id="pp-drawer-estimated-price">{{ current_variant.price | money }}</div>
+      </div>
+      <button type="button" class="pp-drawer-close" id="pp-drawer-close" aria-label="Close Customization">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6L6 18M6 6l12 12"/></svg>
+      </button>
+    </div>
+
+    <!-- Drawer Body -->
+    <div class="pp-drawer-body">
+      {%- unless product.has_only_default_variant -%}
+        {%- for option in product.options_with_values -%}
+          <div class="pp-drawer-section" data-option-index="{{ forloop.index0 }}">
+            <div class="pp-drawer-section-header">
+              <span class="pp-drawer-section-title">
+                {% assign option_name_down = option.name | downcase %}
+                {% if option_name_down contains 'metal' or option_name_down contains 'color' %}
+                  Choice of Metal
+                {% elsif option_name_down contains 'diamond' or option_name_down contains 'clarity' %}
+                  Diamond Quality
+                {% elsif option_name_down contains 'size' or option_name_down contains 'length' %}
+                  Select Length / Size
+                {% else %}
+                  {{ option.name }}
+                {% endif %}
+              </span>
+              {% if option_name_down contains 'diamond' or option_name_down contains 'clarity' %}
+                <a href="#" class="pp-diamond-guide-link" onclick="event.preventDefault(); alert('DIAMOND GUIDE:\n\n• EF-VVS: Highest Colorless purity with microscopic inclusions.\n• FG-SI: Excellent eye-clean diamond offering exceptional value.');">DIAMOND GUIDE</a>
+              {% endif %}
+            </div>
+
+            <div class="pp-drawer-options-grid">
+              {%- for value in option.values -%}
+                {% assign is_selected = false %}
+                {% if option.selected_value == value %}{% assign is_selected = true %}{% endif %}
+                <button type="button" class="pp-drawer-opt-card {% if is_selected %}is-active{% endif %}" data-value="{{ value | escape }}">
+                  <div class="pp-drawer-opt-title">{{ value }}</div>
+                  
+                  {% if forloop.index == 1 %}
+                    <div class="pp-drawer-badge pp-badge-stock">in Stock!</div>
+                  {% elsif forloop.index == 2 %}
+                    <div class="pp-drawer-badge pp-badge-limited">Only 4 left!</div>
+                  {% else %}
+                    <div class="pp-drawer-badge pp-badge-order">Made to Order</div>
+                  {% endif %}
+                </button>
+              {%- endfor -%}
+            </div>
+          </div>
+        {%- endfor -%}
+      {%- endunless -%}
+    </div>
+
+    <!-- Drawer Footer -->
+    <div class="pp-drawer-footer">
+      <button type="button" class="pp-drawer-confirm-btn" id="pp-drawer-confirm">
+        CONFIRM CUSTOMISATION
+      </button>
+    </div>
+
+  </div>
+</div>
+
 {% stylesheet %}
   :root {
     --pp-green: #0A3C35;
@@ -397,6 +477,242 @@
     --pp-radius-img: 16px;
     --pp-radius-box: 8px;
     --pp-radius-btn: 8px;
+  }
+
+  /* Customization Trigger Button */
+  .pp-customization-trigger-wrap {
+    margin: 12px 0 20px 0;
+  }
+  .pp-customization-trigger-btn {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    padding: 13px 18px;
+    background: #FDFBF7;
+    border: 1.5px solid #D4AF37;
+    border-radius: 10px;
+    color: #0A3C35;
+    font-weight: 600;
+    font-size: 14px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    box-shadow: 0 2px 8px rgba(212, 175, 55, 0.12);
+  }
+  .pp-customization-trigger-btn:hover {
+    background: #F7EFDF;
+    border-color: #B8860B;
+  }
+  .pp-trigger-left {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .pp-trigger-arrow {
+    font-size: 16px;
+    color: #D4AF37;
+    font-weight: bold;
+  }
+
+  /* Customization Sidebar Overlay & Drawer */
+  .pp-customization-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.45);
+    backdrop-filter: blur(4px);
+    z-index: 99999;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+  }
+  .pp-customization-overlay.is-active {
+    opacity: 1;
+    visibility: visible;
+  }
+
+  .pp-customization-drawer {
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: 100%;
+    max-width: 440px;
+    height: 100vh;
+    background: #FFFFFF;
+    box-shadow: -4px 0 24px rgba(0, 0, 0, 0.18);
+    display: flex;
+    flex-direction: column;
+    transform: translateX(100%);
+    transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+    z-index: 100000;
+  }
+  .pp-customization-overlay.is-active .pp-customization-drawer {
+    transform: translateX(0);
+  }
+
+  .pp-drawer-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 24px;
+    border-bottom: 1px solid #EEEEEE;
+    background: #FAFAFA;
+  }
+  .pp-drawer-sub {
+    font-size: 12px;
+    color: #777777;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    font-weight: 500;
+  }
+  .pp-drawer-price {
+    font-size: 24px;
+    font-weight: 700;
+    color: #4A154B;
+    margin-top: 2px;
+  }
+  .pp-drawer-close {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    color: #555555;
+    padding: 6px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.2s ease;
+  }
+  .pp-drawer-close:hover {
+    background: #EAEAEA;
+    color: #111111;
+  }
+
+  .pp-drawer-body {
+    flex: 1;
+    overflow-y: auto;
+    padding: 24px;
+  }
+
+  .pp-drawer-section {
+    margin-bottom: 24px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid #F0F0F0;
+  }
+  .pp-drawer-section:last-child {
+    border-bottom: none;
+  }
+  .pp-drawer-section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 14px;
+  }
+  .pp-drawer-section-title {
+    font-size: 15px;
+    font-weight: 700;
+    color: #222222;
+  }
+  .pp-diamond-guide-link {
+    font-size: 11px;
+    font-weight: 700;
+    color: #C026D3;
+    text-decoration: none;
+    letter-spacing: 0.5px;
+  }
+  .pp-diamond-guide-link:hover {
+    text-decoration: underline;
+  }
+
+  .pp-drawer-options-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(110px, 1fr));
+    gap: 12px;
+  }
+
+  .pp-drawer-opt-card {
+    background: #F9F8FD;
+    border: 1.5px solid #E2E0EE;
+    border-radius: 12px;
+    padding: 14px 10px;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    min-height: 84px;
+  }
+  .pp-drawer-opt-card:hover {
+    border-color: #A855F7;
+    background: #F3EEFF;
+  }
+  .pp-drawer-opt-card.is-active {
+    border-color: #8B5CF6;
+    background: #EDE9FE;
+    box-shadow: 0 0 0 2px rgba(139, 92, 246, 0.25);
+  }
+
+  .pp-drawer-opt-title {
+    font-size: 13px;
+    font-weight: 700;
+    color: #1F2937;
+    margin-bottom: 6px;
+    line-height: 1.25;
+  }
+
+  .pp-drawer-badge {
+    font-size: 10px;
+    font-weight: 600;
+    padding: 3px 8px;
+    border-radius: 12px;
+    background: #FFFFFF;
+    margin-top: 4px;
+    display: inline-block;
+  }
+  .pp-badge-stock {
+    color: #059669;
+    border: 1px solid #A7F3D0;
+    background: #ECFDF5;
+  }
+  .pp-badge-limited {
+    color: #D97706;
+    border: 1px solid #FDE68A;
+    background: #FFFBEB;
+  }
+  .pp-badge-order {
+    color: #6B7280;
+    border: 1px solid #E5E7EB;
+    background: #F9FAFB;
+  }
+
+  .pp-drawer-footer {
+    padding: 16px 24px;
+    background: #FFFFFF;
+    border-top: 1px solid #EEEEEE;
+    box-shadow: 0 -4px 12px rgba(0, 0, 0, 0.05);
+  }
+
+  .pp-drawer-confirm-btn {
+    width: 100%;
+    padding: 16px;
+    background: linear-gradient(135deg, #4A154B 0%, #350d36 100%);
+    color: #FFFFFF;
+    border: none;
+    border-radius: 12px;
+    font-size: 15px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    cursor: pointer;
+    transition: transform 0.15s ease, background 0.2s ease;
+    box-shadow: 0 4px 14px rgba(74, 21, 75, 0.3);
+  }
+  .pp-drawer-confirm-btn:hover {
+    background: linear-gradient(135deg, #5B1B5C 0%, #431244 100%);
+    transform: translateY(-1px);
   }
   .premium-product {
     background-color: var(--pp-bg);
@@ -2382,11 +2698,103 @@ document.addEventListener('DOMContentLoaded', () => {
           if(history.replaceState) {
             const url = window.location.protocol + '//' + window.location.host + window.location.pathname + '?variant=' + currentVariant.id;
             window.history.replaceState({path: url}, '', url);
-          }
         }
       });
     });
   });
+
+  // CARATLANE CUSTOMIZATION DRAWER LOGIC
+  const openDrawerBtn = document.getElementById('pp-open-customization-drawer');
+  const overlay = document.getElementById('pp-customization-overlay');
+  const closeDrawerBtn = document.getElementById('pp-drawer-close');
+  const confirmDrawerBtn = document.getElementById('pp-drawer-confirm');
+  const drawerEstimatedPriceEl = document.getElementById('pp-drawer-estimated-price');
+  const drawerSections = document.querySelectorAll('.pp-drawer-section');
+
+  const recalculateDrawerPrice = () => {
+    if(!drawerSections.length || !variants.length) return;
+    const selectedDrawerOptions = Array.from(drawerSections).map(sec => {
+      const activeCard = sec.querySelector('.pp-drawer-opt-card.is-active');
+      return activeCard ? activeCard.getAttribute('data-value') : null;
+    });
+
+    const matchingVar = variants.find(v => {
+      return v.options && v.options.every((opt, i) => opt === selectedDrawerOptions[i]);
+    });
+
+    if(matchingVar && drawerEstimatedPriceEl) {
+      drawerEstimatedPriceEl.textContent = formatMoney(matchingVar.price);
+    }
+  };
+
+  const syncDrawerFromMainPage = () => {
+    optGroups.forEach((group, index) => {
+      const activeMainBtn = group.querySelector('.pp-opt-btn.is-active');
+      if(activeMainBtn) {
+        const val = activeMainBtn.getAttribute('data-value');
+        const drawerSec = document.querySelector(`.pp-drawer-section[data-option-index="${index}"]`);
+        if(drawerSec) {
+          drawerSec.querySelectorAll('.pp-drawer-opt-card').forEach(card => {
+            if(card.getAttribute('data-value') === val) {
+              card.classList.add('is-active');
+            } else {
+              card.classList.remove('is-active');
+            }
+          });
+        }
+      }
+    });
+    recalculateDrawerPrice();
+  };
+
+  const openDrawer = () => {
+    if(overlay) overlay.classList.add('is-active');
+    syncDrawerFromMainPage();
+  };
+
+  const closeDrawer = () => {
+    if(overlay) overlay.classList.remove('is-active');
+  };
+
+  if(openDrawerBtn) openDrawerBtn.addEventListener('click', openDrawer);
+  if(closeDrawerBtn) closeDrawerBtn.addEventListener('click', closeDrawer);
+  if(overlay) {
+    overlay.addEventListener('click', (e) => {
+      if(e.target === overlay) closeDrawer();
+    });
+  }
+
+  drawerSections.forEach(sec => {
+    const cards = sec.querySelectorAll('.pp-drawer-opt-card');
+    cards.forEach(card => {
+      card.addEventListener('click', () => {
+        cards.forEach(c => c.classList.remove('is-active'));
+        card.classList.add('is-active');
+        recalculateDrawerPrice();
+      });
+    });
+  });
+
+  if(confirmDrawerBtn) {
+    confirmDrawerBtn.addEventListener('click', () => {
+      drawerSections.forEach((sec, index) => {
+        const activeCard = sec.querySelector('.pp-drawer-opt-card.is-active');
+        if(activeCard) {
+          const selectedVal = activeCard.getAttribute('data-value');
+          const mainOptGroup = document.querySelector(`.pp-option-group[data-option-index="${index}"]`);
+          if(mainOptGroup) {
+            const mainBtns = mainOptGroup.querySelectorAll('.pp-opt-btn');
+            mainBtns.forEach(btn => {
+              if(btn.getAttribute('data-value') === selectedVal) {
+                btn.click();
+              }
+            });
+          }
+        }
+      });
+      closeDrawer();
+    });
+  }
 
   // Qty
   const qtyInput = document.querySelector('.pp-qty-val');
