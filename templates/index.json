@@ -132,7 +132,7 @@
         "eyebrow": "",
         "title": "Three Worlds of Beauty",
         "bg_color": "#fdfcfa",
-        "padding_top": 60,
+        "padding_top": 64,
         "padding_bottom": 60,
         "button_label": "Browse Collections",
         "button_link": "",
@@ -183,7 +183,7 @@
       "settings": {
         "subheading": "DISCOVER",
         "title": "Diamonds that stay with you",
-        "description": "Explore collections for every celebration, every memory, and every you.",
+        "description": "Explore collections for every celebration,har bar gussa nahi hona hota hai  .",
         "bg_color": "#fdfcfa"
       }
     },
