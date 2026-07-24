@@ -233,18 +233,30 @@ class StoreHighlights {
   constructor(element) {
     this.section = element;
     this.grid = element.querySelector('.store-highlights__grid');
-    this.items = element.querySelectorAll('.store-highlights__item');
-    this.dots = element.querySelectorAll('.store-highlights__dot');
+    this.items = Array.from(element.querySelectorAll('.store-highlights__item'));
+    this.dots = Array.from(element.querySelectorAll('.store-highlights__dot'));
     if (!this.grid || this.items.length === 0 || this.dots.length === 0) return;
     this.currentIndex = 0;
     this.autoplayTimer = null;
+    this.jumpTimeout = null;
+    this.isTransitioning = false;
     this.autoplay = element.getAttribute('data-autoplay') === 'true';
     this.autoplaySpeed = parseInt(element.getAttribute('data-autoplay-speed'), 10) * 1000 || 4000;
     this.init();
   }
   init() {
+    // Clone first item for infinite loop illusion on mobile
+    if (this.items.length > 0) {
+      const clone = this.items[0].cloneNode(true);
+      clone.classList.add('store-highlights__item--clone');
+      clone.setAttribute('aria-hidden', 'true');
+      this.grid.appendChild(clone);
+    }
+
     this.grid.addEventListener('scroll', () => {
-      this.updateDots();
+      if (!this.isTransitioning) {
+        this.updateDots();
+      }
       this.resetAutoplay();
     });
     this.dots.forEach((dot, index) => {
@@ -266,14 +278,26 @@ class StoreHighlights {
   }
   updateDots() {
     const itemWidth = this.items[0].offsetWidth;
-    const gap = 16;
+    const gap = 16; // gap from CSS
     const scrollLeft = this.grid.scrollLeft;
-    this.currentIndex = Math.min(
-      this.items.length - 1,
-      Math.max(0, Math.round(scrollLeft / (itemWidth + gap)))
-    );
-    this.dots.forEach((dot, index) => {
-      if (index === this.currentIndex) {
+    let index = Math.round(scrollLeft / (itemWidth + gap));
+    
+    // Handle manual scroll to the clone
+    if (index >= this.items.length) {
+      index = 0;
+      clearTimeout(this.jumpTimeout);
+      this.jumpTimeout = setTimeout(() => {
+        const currentScroll = this.grid.scrollLeft;
+        const maxScroll = this.items.length * (itemWidth + gap);
+        if (currentScroll >= maxScroll - (itemWidth / 2)) {
+          this.scrollToIndex(0, false);
+        }
+      }, 150);
+    }
+    
+    this.currentIndex = index;
+    this.dots.forEach((dot, i) => {
+      if (i === this.currentIndex) {
         dot.classList.add('store-highlights__dot--active');
         dot.setAttribute('aria-selected', 'true');
       } else {
@@ -282,24 +306,55 @@ class StoreHighlights {
       }
     });
   }
-  scrollToIndex(index) {
+  scrollToIndex(index, smooth = true) {
     const itemWidth = this.items[0].offsetWidth;
     const gap = 16;
     const targetScroll = index * (itemWidth + gap);
-    this.grid.scrollTo({
-      left: targetScroll,
-      behavior: 'smooth'
-    });
+    
+    if (!smooth) {
+      this.grid.style.scrollBehavior = 'auto';
+      this.grid.style.scrollSnapType = 'none';
+      this.grid.scrollLeft = targetScroll;
+      // Force reflow
+      void this.grid.offsetWidth;
+      this.grid.style.scrollBehavior = 'smooth';
+      this.grid.style.scrollSnapType = 'x mandatory';
+    } else {
+      this.grid.scrollTo({
+        left: targetScroll,
+        behavior: 'smooth'
+      });
+    }
   }
   startAutoplay() {
     if (!this.autoplay || window.innerWidth > 991) return;
     this.stopAutoplay();
     this.autoplayTimer = setInterval(() => {
       let nextIndex = this.currentIndex + 1;
-      if (nextIndex >= this.items.length) {
-        nextIndex = 0;
+      
+      if (nextIndex === this.items.length) {
+        this.isTransitioning = true;
+        this.scrollToIndex(nextIndex); // Smooth scroll to clone
+        
+        // Visually update dots to 0
+        this.dots.forEach((dot, i) => {
+          if (i === 0) {
+            dot.classList.add('store-highlights__dot--active');
+            dot.setAttribute('aria-selected', 'true');
+          } else {
+            dot.classList.remove('store-highlights__dot--active');
+            dot.setAttribute('aria-selected', 'false');
+          }
+        });
+
+        setTimeout(() => {
+          this.scrollToIndex(0, false); // Instant jump to start
+          this.currentIndex = 0;
+          this.isTransitioning = false;
+        }, 600); // Wait for snap scroll to finish
+      } else {
+        this.scrollToIndex(nextIndex);
       }
-      this.scrollToIndex(nextIndex);
     }, this.autoplaySpeed);
   }
   stopAutoplay() {

@@ -1,4 +1,8 @@
-<div class="discover-grid-section" style="--bg-color: {{ section.settings.bg_color }};">
+{%- liquid
+  assign padding_top = section.settings.padding_top | default: 80
+  assign padding_bottom = section.settings.padding_bottom | default: 80
+-%}
+<div class="discover-grid-section" style="--bg-color: {{ section.settings.bg_color }}; --padding-top: {{ padding_top }}px; --padding-bottom: {{ padding_bottom }}px;">
   <div class="discover-grid-header">
     {%- if section.settings.subheading != blank -%}
       <span class="discover-grid-subheading">{{ section.settings.subheading | escape }}</span>
@@ -43,7 +47,10 @@
 {% stylesheet %}
 .discover-grid-section {
   background-color: var(--bg-color, #ffffff);
-  padding: 80px 20px;
+  padding-top: var(--padding-top, 80px);
+  padding-bottom: var(--padding-bottom, 80px);
+  padding-left: 20px;
+  padding-right: 20px;
   width: 100%;
   box-sizing: border-box;
 }
@@ -160,7 +167,10 @@
 /* Mobile Layout */
 @media screen and (max-width: 768px) {
   .discover-grid-section {
-    padding: 30px 12px;
+    padding-top: calc(var(--padding-top, 80px) * 0.5);
+    padding-bottom: calc(var(--padding-bottom, 80px) * 0.5);
+    padding-left: 12px;
+    padding-right: 12px;
   }
 
   .discover-grid-header {
@@ -286,6 +296,26 @@
       "id": "bg_color",
       "label": "Background Color",
       "default": "#fdfbf7"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding Top",
+      "default": 80
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding Bottom",
+      "default": 80
     }
   ],
   "blocks": [
