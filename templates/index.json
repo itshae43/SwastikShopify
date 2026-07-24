@@ -156,6 +156,7 @@
           "type": "card",
           "settings": {
             "image": "shopify://shop_images/new_2.png",
+            "image_mobile": "shopify://shop_images/latest_ear_ring_flipped_version.png",
             "link": "shopify://collections/everyday-sparkle"
           }
         },
