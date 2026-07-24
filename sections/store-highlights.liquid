@@ -240,64 +240,104 @@ class StoreHighlights {
     this.autoplayTimer = null;
     this.jumpTimeout = null;
     this.isTransitioning = false;
+    this.isInfiniteSetup = false;
     this.autoplay = element.getAttribute('data-autoplay') === 'true';
     this.autoplaySpeed = parseInt(element.getAttribute('data-autoplay-speed'), 10) * 1000 || 4000;
     this.init();
   }
+
   init() {
-    // Clone first item for infinite loop illusion on mobile
-    if (this.items.length > 0) {
-      const clone = this.items[0].cloneNode(true);
-      clone.classList.add('store-highlights__item--clone');
-      clone.setAttribute('aria-hidden', 'true');
-      this.grid.appendChild(clone);
+    if (window.innerWidth <= 991) {
+      this.setupInfiniteScroll();
     }
 
     this.grid.addEventListener('scroll', () => {
-      if (!this.isTransitioning) {
-        this.updateDots();
-      }
+      this.handleScroll();
       this.resetAutoplay();
     });
+
     this.dots.forEach((dot, index) => {
       dot.addEventListener('click', () => {
         this.scrollToIndex(index);
         this.resetAutoplay();
       });
     });
+
     window.addEventListener('resize', () => {
-      this.updateDots();
+      if (window.innerWidth <= 991 && !this.isInfiniteSetup) {
+        this.setupInfiniteScroll();
+      }
+      this.handleScroll();
       this.resetAutoplay();
     });
-    this.grid.addEventListener('touchstart', () => this.stopAutoplay());
+
+    this.grid.addEventListener('touchstart', () => this.stopAutoplay(), { passive: true });
     this.grid.addEventListener('mousedown', () => this.stopAutoplay());
     this.grid.addEventListener('touchend', () => this.startAutoplay());
     this.grid.addEventListener('mouseup', () => this.startAutoplay());
-    this.updateDots();
+
+    this.handleScroll();
     this.startAutoplay();
   }
-  updateDots() {
+
+  setupInfiniteScroll() {
+    if (this.isInfiniteSetup || this.items.length === 0) return;
+    this.isInfiniteSetup = true;
+
+    // Clone last item and prepend
+    const lastClone = this.items[this.items.length - 1].cloneNode(true);
+    lastClone.classList.add('store-highlights__item--clone', 'clone-start');
+    lastClone.setAttribute('aria-hidden', 'true');
+    this.grid.insertBefore(lastClone, this.items[0]);
+
+    // Clone first item and append
+    const firstClone = this.items[0].cloneNode(true);
+    firstClone.classList.add('store-highlights__item--clone', 'clone-end');
+    firstClone.setAttribute('aria-hidden', 'true');
+    this.grid.appendChild(firstClone);
+
+    // Jump to the first real item immediately
+    setTimeout(() => {
+      this.scrollToIndex(0, false);
+    }, 50);
+  }
+
+  handleScroll() {
+    if (window.innerWidth > 991) return;
+    
     const itemWidth = this.items[0].offsetWidth;
-    const gap = 16; // gap from CSS
+    const gap = 16; 
+    const itemFullWidth = itemWidth + gap;
     const scrollLeft = this.grid.scrollLeft;
-    let index = Math.round(scrollLeft / (itemWidth + gap));
     
-    // Handle manual scroll to the clone
-    if (index >= this.items.length) {
-      index = 0;
-      clearTimeout(this.jumpTimeout);
-      this.jumpTimeout = setTimeout(() => {
-        const currentScroll = this.grid.scrollLeft;
-        const maxScroll = this.items.length * (itemWidth + gap);
-        if (currentScroll >= maxScroll - (itemWidth / 2)) {
-          this.scrollToIndex(0, false);
-        }
-      }, 150);
-    }
+    // Calculate current snapped child index
+    const currentSnap = Math.round(scrollLeft / itemFullWidth);
     
-    this.currentIndex = index;
+    // Determine real visual index (subtract 1 for prepended clone)
+    let visualIndex = currentSnap - 1;
+    if (visualIndex < 0) visualIndex = this.items.length - 1;
+    if (visualIndex >= this.items.length) visualIndex = 0;
+    
+    this.currentIndex = visualIndex;
+    this.updateDotsVisually(visualIndex);
+    
+    if (this.isTransitioning) return;
+
+    // Handle jump for infinite scroll
+    clearTimeout(this.jumpTimeout);
+    this.jumpTimeout = setTimeout(() => {
+      const snapAfterScroll = Math.round(this.grid.scrollLeft / itemFullWidth);
+      if (snapAfterScroll === 0) {
+        this.scrollToIndex(this.items.length - 1, false);
+      } else if (snapAfterScroll === this.items.length + 1) {
+        this.scrollToIndex(0, false);
+      }
+    }, 150);
+  }
+
+  updateDotsVisually(index) {
     this.dots.forEach((dot, i) => {
-      if (i === this.currentIndex) {
+      if (i === index) {
         dot.classList.add('store-highlights__dot--active');
         dot.setAttribute('aria-selected', 'true');
       } else {
@@ -306,12 +346,17 @@ class StoreHighlights {
       }
     });
   }
+
   scrollToIndex(index, smooth = true) {
+    if (window.innerWidth > 991) return;
     const itemWidth = this.items[0].offsetWidth;
     const gap = 16;
-    const targetScroll = index * (itemWidth + gap);
+    // Add 1 to target index to account for the prepended clone
+    const targetChildIndex = this.isInfiniteSetup ? index + 1 : index;
+    const targetScroll = targetChildIndex * (itemWidth + gap);
     
     if (!smooth) {
+      this.isTransitioning = true;
       this.grid.style.scrollBehavior = 'auto';
       this.grid.style.scrollSnapType = 'none';
       this.grid.scrollLeft = targetScroll;
@@ -319,6 +364,10 @@ class StoreHighlights {
       void this.grid.offsetWidth;
       this.grid.style.scrollBehavior = 'smooth';
       this.grid.style.scrollSnapType = 'x mandatory';
+      
+      setTimeout(() => {
+        this.isTransitioning = false;
+      }, 50);
     } else {
       this.grid.scrollTo({
         left: targetScroll,
@@ -326,43 +375,30 @@ class StoreHighlights {
       });
     }
   }
+
   startAutoplay() {
     if (!this.autoplay || window.innerWidth > 991) return;
     this.stopAutoplay();
     this.autoplayTimer = setInterval(() => {
-      let nextIndex = this.currentIndex + 1;
+      const itemWidth = this.items[0].offsetWidth;
+      const gap = 16;
+      const currentSnap = Math.round(this.grid.scrollLeft / (itemWidth + gap));
+      const nextSnap = currentSnap + 1;
       
-      if (nextIndex === this.items.length) {
-        this.isTransitioning = true;
-        this.scrollToIndex(nextIndex); // Smooth scroll to clone
-        
-        // Visually update dots to 0
-        this.dots.forEach((dot, i) => {
-          if (i === 0) {
-            dot.classList.add('store-highlights__dot--active');
-            dot.setAttribute('aria-selected', 'true');
-          } else {
-            dot.classList.remove('store-highlights__dot--active');
-            dot.setAttribute('aria-selected', 'false');
-          }
-        });
-
-        setTimeout(() => {
-          this.scrollToIndex(0, false); // Instant jump to start
-          this.currentIndex = 0;
-          this.isTransitioning = false;
-        }, 600); // Wait for snap scroll to finish
-      } else {
-        this.scrollToIndex(nextIndex);
-      }
+      this.grid.scrollTo({
+        left: nextSnap * (itemWidth + gap),
+        behavior: 'smooth'
+      });
     }, this.autoplaySpeed);
   }
+
   stopAutoplay() {
     if (this.autoplayTimer) {
       clearInterval(this.autoplayTimer);
       this.autoplayTimer = null;
     }
   }
+
   resetAutoplay() {
     if (window.innerWidth <= 991) {
       this.stopAutoplay();

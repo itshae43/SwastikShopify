@@ -8,7 +8,7 @@
       <span class="discover-grid-subheading">{{ section.settings.subheading | escape }}</span>
     {%- endif -%}
     {%- if section.settings.title != blank -%}
-      <h2 class="discover-grid-title">{{ section.settings.title | escape }}</h2>
+      <h2 class="discover-grid-title serif-font">{{ section.settings.title | escape }}</h2>
     {%- endif -%}
     {%- if section.settings.description != blank -%}
       <p class="discover-grid-description">{{ section.settings.description | escape }}</p>
@@ -72,13 +72,11 @@
 }
 
 .discover-grid-title {
-  font-family: Georgia, serif;
   font-size: 36px;
   line-height: 1.2;
-  text-transform: uppercase;
-  color: #0b2e27;
+  color: var(--color-primary, #013F3E);
   margin: 0 0 16px 0;
-  font-weight: normal;
+  font-weight: 500;
   letter-spacing: 0.05em;
 }
 
@@ -178,7 +176,7 @@
   }
 
   .discover-grid-title {
-    font-size: 24px;
+    font-size: 28px;
     margin-bottom: 8px;
   }
 

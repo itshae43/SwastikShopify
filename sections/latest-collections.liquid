@@ -6,13 +6,19 @@
 
 <latest-collections-slider class="latest-collections" style="--bg-color: {{ bg_color }}; --padding-top: {{ padding_top }}px; --padding-bottom: {{ padding_bottom }}px;">
   <div class="latest-collections__container">
-    {%- if section.settings.eyebrow != blank -%}
-      <span class="latest-collections__eyebrow">{{ section.settings.eyebrow | escape }}</span>
-    {%- endif -%}
+    <div class="latest-collections__header">
+      {%- if section.settings.eyebrow != blank -%}
+        <span class="latest-collections__eyebrow">{{ section.settings.eyebrow | escape }}</span>
+      {%- endif -%}
 
-    {%- if section.settings.title != blank -%}
-      <h2 class="latest-collections__heading serif-font">{{ section.settings.title | escape }}</h2>
-    {%- endif -%}
+      {%- if section.settings.title != blank -%}
+        <h2 class="latest-collections__heading serif-font">{{ section.settings.title | escape }}</h2>
+      {%- endif -%}
+
+      {%- if section.settings.subtitle != blank -%}
+        <p class="latest-collections__description">{{ section.settings.subtitle | escape }}</p>
+      {%- endif -%}
+    </div>
 
     <div class="latest-collections__grid">
       {%- for block in section.blocks -%}
@@ -119,18 +125,36 @@
     box-sizing: border-box;
   }
 
-  /* Hidden on desktop to match Image 2 reference */
+  .latest-collections__header {
+    text-align: center;
+    max-width: 800px;
+    margin: 0 auto 50px auto;
+  }
+
   .latest-collections__eyebrow {
-    display: none;
+    display: block;
+    font-size: 14px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: #c5a47e;
+    margin-bottom: 12px;
+    font-weight: 600;
   }
 
   .latest-collections__heading {
-    font-size: 3.6rem;
+    font-size: 36px;
+    line-height: 1.2;
     color: var(--color-primary, #013F3E);
-    margin-bottom: 3.6rem;
+    margin: 0 0 16px 0;
     font-weight: 500;
-    text-align: center;
     letter-spacing: 0.05em;
+  }
+
+  .latest-collections__description {
+    font-size: 16px;
+    line-height: 1.6;
+    color: #555555;
+    margin: 0;
   }
 
   .latest-collections__grid {
@@ -384,6 +408,10 @@
       padding-right: 0;
     }
 
+    .latest-collections__header {
+      margin-bottom: 20px;
+    }
+
     .latest-collections__eyebrow {
       display: block;
       text-align: center;
@@ -397,10 +425,17 @@
     }
 
     .latest-collections__heading {
-      font-size: 2.8rem;
-      margin-bottom: 2rem;
-      padding-left: 2rem;
-      padding-right: 2rem;
+      font-size: 28px;
+      margin-bottom: 8px;
+      padding-left: 20px;
+      padding-right: 20px;
+    }
+
+    .latest-collections__description {
+      font-size: 13px;
+      padding-left: 20px;
+      padding-right: 20px;
+      text-align: center;
     }
 
     .latest-collections__grid {
@@ -603,6 +638,12 @@
       "id": "title",
       "label": "Heading",
       "default": "Browse Latest Jewellery Collections"
+    },
+    {
+      "type": "textarea",
+      "id": "subtitle",
+      "label": "Subtitle / Description",
+      "default": "Every world, a story. Every piece, a masterpiece."
     },
     {
       "type": "color",

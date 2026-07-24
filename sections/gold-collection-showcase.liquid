@@ -98,10 +98,15 @@
           </svg>
         </button>
 
-        <div class="gold-showcase__dots">
-          {%- for block in section.blocks -%}
-            <span class="gold-showcase__dot{% if forloop.first %} is-active{% endif %}" data-index="{{ forloop.index0 }}"></span>
-          {%- endfor -%}
+        <div class="gold-showcase__pagination-info">
+          <div class="gold-showcase__pagination-text">
+            <span class="gold-showcase__current-slide">01</span> <span class="gold-showcase__pagination-separator">/</span> <span class="gold-showcase__total-slides">0{{ section.blocks.size }}</span>
+          </div>
+          <div class="gold-showcase__progress-bar">
+            {%- for block in section.blocks -%}
+              <span class="gold-showcase__progress-segment{% if forloop.first %} is-active{% endif %}" data-index="{{ forloop.index0 }}"></span>
+            {%- endfor -%}
+          </div>
         </div>
 
         <button type="button" class="gold-showcase__nav-arrow gold-showcase__nav-arrow--right is-visible" aria-label="Next collections">
@@ -409,26 +414,57 @@
   transform: scale(0.95);
 }
 
-.gold-showcase__dots {
+.gold-showcase__pagination-info {
   display: flex;
+  flex-direction: column;
   align-items: center;
   gap: 8px;
+  width: 140px;
 }
 
-.gold-showcase__dot {
-  width: 7px;
-  height: 7px;
-  border-radius: 50%;
+.gold-showcase__pagination-text {
+  font-size: 15px;
+  font-weight: 500;
+  color: var(--text-color);
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.gold-showcase__current-slide {
+  font-weight: 700;
+}
+
+.gold-showcase__pagination-separator {
+  opacity: 0.4;
+  font-weight: 400;
+  margin: 0 2px;
+}
+
+.gold-showcase__total-slides {
+  opacity: 0.6;
+  font-weight: 400;
+}
+
+.gold-showcase__progress-bar {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  width: 100%;
+}
+
+.gold-showcase__progress-segment {
+  flex: 1;
+  height: 2px;
   background-color: var(--accent-color, #b38245);
-  opacity: 0.3;
+  opacity: 0.2;
   cursor: pointer;
-  transition: opacity 0.3s ease, transform 0.3s ease, width 0.3s ease;
+  transition: opacity 0.3s ease;
+  border-radius: 1px;
 }
 
-.gold-showcase__dot.is-active {
+.gold-showcase__progress-segment.is-active {
   opacity: 1;
-  width: 22px;
-  border-radius: 4px;
 }
 
 @media screen and (min-width: 991px) {
@@ -563,7 +599,8 @@
       const grid = container.querySelector('.gold-showcase__grid');
       const prevBtn = container.querySelector('.gold-showcase__nav-arrow--left');
       const nextBtn = container.querySelector('.gold-showcase__nav-arrow--right');
-      const dots = container.querySelectorAll('.gold-showcase__dot');
+      const dots = container.querySelectorAll('.gold-showcase__progress-segment');
+      const currentSlideText = container.querySelector('.gold-showcase__current-slide');
       const items = container.querySelectorAll('.gold-showcase__item');
 
       if (!grid) return;
@@ -607,6 +644,10 @@
               dot.classList.remove('is-active');
             }
           });
+
+          if (currentSlideText) {
+            currentSlideText.textContent = ('0' + (activeIndex + 1)).slice(-2);
+          }
         }
       }
 
