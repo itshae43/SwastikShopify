@@ -59,7 +59,7 @@
           {% if section.settings.contact_address != blank %}
             <li class="footer__contact-item footer__contact-item--address">
               <div class="footer__contact-card">
-                <div class="footer__contact-card-top">
+                <a href="https://www.google.com/maps/place/Swastik+Jewels/@28.6504041,77.1913016,17z" target="_blank" rel="noopener noreferrer" class="footer__contact-card-top">
                   <div class="footer__contact-icon-wrapper">
                     <svg class="footer__contact-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                       <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
@@ -70,7 +70,7 @@
                     <span class="footer__contact-label">Our Store</span>
                     <span class="footer__contact-value">{{ section.settings.contact_address | escape }}</span>
                   </div>
-                </div>
+                </a>
                 <a href="https://www.google.com/maps/place/Swastik+Jewels/@28.6504041,77.1913016,17z" target="_blank" rel="noopener noreferrer" class="footer__contact-button-directions">
                   <svg class="footer__btn-icon-pin" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                     <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
@@ -491,25 +491,18 @@
     display: flex;
     align-items: flex-start;
     gap: 1rem;
+    color: inherit;
+    text-decoration: none;
+    transition: color 0.25s ease;
+  }
+  .footer__contact-card-top:hover {
+    color: var(--footer-accent);
+  }
+  .footer__contact-card-top:hover .footer__contact-icon {
+    transform: scale(1.1);
   }
   .footer__contact-button-directions {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.6rem;
-    color: var(--footer-accent);
-    text-decoration: none;
-    font-weight: 600;
-    transition: opacity 0.25s ease;
-  }
-  .footer__contact-button-directions:hover {
-    opacity: 0.8;
-  }
-  .footer__btn-icon-pin {
     display: none;
-  }
-  .footer__btn-icon-arrow {
-    width: 1.6rem;
-    height: 1.6rem;
   }
   /* Footer Bottom Details */
   .footer-bottom-wrapper {
@@ -539,15 +532,14 @@
   }
 
   .footer__bottom-logo {
+    display: none;
     height: 40px;
     width: auto;
     object-fit: contain;
   }
 
   .footer__bottom-center {
-    display: flex;
-    align-items: center;
-    gap: 1.5rem;
+    display: none;
   }
 
   .footer__bottom-link {
@@ -982,6 +974,7 @@
       align-items: center;
     }
     .footer__bottom-logo {
+      display: block;
       height: 36px;
     }
     .footer__copyright {
@@ -991,10 +984,7 @@
       text-align: center;
     }
     .footer__bottom-center {
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 0.8rem 1.2rem;
-      font-size: 1.15rem;
+      display: none;
     }
     .footer__bottom-right {
       flex-direction: column;
