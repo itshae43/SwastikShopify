@@ -65,7 +65,7 @@
       ],
       "settings": {
         "autoplay": true,
-        "autoplay_speed": 3,
+        "autoplay_speed": 5,
         "hero_size": "adapt",
         "hero_height": 650,
         "overlay_opacity": 10
