@@ -480,7 +480,7 @@
     width: 100%;
   }
   .pp-main-image-wrap {
-    background-color: var(--pp-beige);
+    background-color: #FFFFFF;
     border-radius: var(--pp-radius-img);
     position: relative;
     aspect-ratio: 1/1; /* Keeps it square */
@@ -1134,7 +1134,7 @@
       aspect-ratio: 1 / 1 !important;
       max-height: none !important;
       border-radius: 20px !important;
-      background: linear-gradient(145deg, #FAF8F5 0%, #F5EFE6 100%) !important;
+      background: #FFFFFF !important;
       border: 1px solid #EAE0D5 !important;
       box-shadow: 0 8px 25px rgba(0, 0, 0, 0.05) !important;
       margin: 0 auto !important;
@@ -1928,24 +1928,20 @@
     /* Main image takes remaining space */
     .pp-main-image-wrap {
       flex: 1;
-      max-width: none;
+      max-width: 540px;
       max-height: 540px;
       border-radius: 20px;
-      background: linear-gradient(145deg, #FAF8F5 0%, #F5EFE6 100%);
+      background: #FFFFFF;
       border: 1px solid #EAE0D5;
       box-shadow: 0 10px 30px rgba(0, 0, 0, 0.04);
       position: relative;
       overflow: hidden;
       aspect-ratio: 1 / 1;
-      margin: 0;
+      margin: 0 auto;
     }
 
     .pp-main-img-container img {
-      transition: transform 0.45s cubic-bezier(0.16, 1, 0.3, 1);
-    }
-
-    .pp-main-image-wrap:hover .pp-main-img-container img {
-      transform: scale(1.06);
+      /* No hover scale transition needed */
     }
 
     .pp-nav-btn {
