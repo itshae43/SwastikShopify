@@ -22,12 +22,18 @@
                   </svg>
                 </div>
                 <div class="footer__contact-text-group">
-                  <span class="footer__contact-label">CALL US</span>
+                  <span class="footer__contact-label">Call Us</span>
                   <span class="footer__contact-value">{{ section.settings.contact_phone | escape }}</span>
+                </div>
+                <div class="footer__contact-chevron-right">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                    <polyline points="9 18 15 12 9 6"></polyline>
+                  </svg>
                 </div>
               </a>
             </li>
           {% endif %}
+
           {% if section.settings.contact_email != blank %}
             <li class="footer__contact-item footer__contact-item--email">
               <a href="mailto:{{ section.settings.contact_email }}" class="footer__contact-link">
@@ -38,30 +44,49 @@
                   </svg>
                 </div>
                 <div class="footer__contact-text-group">
-                  <span class="footer__contact-label">EMAIL US</span>
+                  <span class="footer__contact-label">Email Us</span>
                   <span class="footer__contact-value">{{ section.settings.contact_email | escape }}</span>
+                </div>
+                <div class="footer__contact-chevron-right">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                    <polyline points="9 18 15 12 9 6"></polyline>
+                  </svg>
                 </div>
               </a>
             </li>
           {% endif %}
+
           {% if section.settings.contact_address != blank %}
             <li class="footer__contact-item footer__contact-item--address">
-              <a href="https://www.google.com/maps/place/Swastik+Jewels/@28.6504041,77.1913016,17z" target="_blank" rel="noopener noreferrer" class="footer__contact-link">
-                <div class="footer__contact-icon-wrapper">
-                  <svg class="footer__contact-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <div class="footer__contact-card">
+                <div class="footer__contact-card-top">
+                  <div class="footer__contact-icon-wrapper">
+                    <svg class="footer__contact-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                      <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+                      <circle cx="12" cy="10" r="3"></circle>
+                    </svg>
+                  </div>
+                  <div class="footer__contact-text-group">
+                    <span class="footer__contact-label">Our Store</span>
+                    <span class="footer__contact-value">{{ section.settings.contact_address | escape }}</span>
+                  </div>
+                </div>
+                <a href="https://www.google.com/maps/place/Swastik+Jewels/@28.6504041,77.1913016,17z" target="_blank" rel="noopener noreferrer" class="footer__contact-button-directions">
+                  <svg class="footer__btn-icon-pin" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                     <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
                     <circle cx="12" cy="10" r="3"></circle>
                   </svg>
-                </div>
-                <div class="footer__contact-text-group">
-                  <span class="footer__contact-label">BOUTIQUE STORE</span>
-                  <span class="footer__contact-value">{{ section.settings.contact_address | escape }}</span>
-                  <span class="footer__contact-action">Get Directions &rarr;</span>
-                </div>
-              </a>
+                  <span>GET DIRECTIONS</span>
+                  <svg class="footer__btn-icon-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="5" y1="12" x2="19" y2="12"></line>
+                    <polyline points="12 5 19 12 12 19"></polyline>
+                  </svg>
+                </a>
+              </div>
             </li>
           {% endif %}
         </ul>
+
         <div class="footer__social-icons">
           {% if section.settings.social_facebook_link != blank %}
             <a href="{{ section.settings.social_facebook_link }}" class="footer__social-link" aria-label="Facebook">
@@ -153,7 +178,7 @@
       <!-- Col 4: Menu 3 -->
       <div class="footer__col footer__col--accordion">
         <button class="footer__heading footer__heading--accordion" type="button" aria-expanded="false">
-          <span>{{ section.settings.help_menu_title | default: "HELP" }}</span>
+          <span>{{ section.settings.help_menu_title | default: "HELP & SUPPORT" }}</span>
           <div class="footer__accordion-chevron-bg">
             <svg class="footer__accordion-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
               <polyline points="6 9 12 15 18 9"></polyline>
@@ -410,6 +435,9 @@
   }
 
   /* Inline Contact Info */
+  .footer__contact-chevron-right {
+    display: none;
+  }
   .footer__contact-list-inline {
     list-style-type: none !important;
     padding-left: 0;
@@ -454,6 +482,35 @@
     transform: scale(1.1);
   }
 
+  .footer__contact-card {
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+  }
+  .footer__contact-card-top {
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+  }
+  .footer__contact-button-directions {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    color: var(--footer-accent);
+    text-decoration: none;
+    font-weight: 600;
+    transition: opacity 0.25s ease;
+  }
+  .footer__contact-button-directions:hover {
+    opacity: 0.8;
+  }
+  .footer__btn-icon-pin {
+    display: none;
+  }
+  .footer__btn-icon-arrow {
+    width: 1.6rem;
+    height: 1.6rem;
+  }
   /* Footer Bottom Details */
   .footer-bottom-wrapper {
     background-color: #013F3E;
@@ -565,7 +622,7 @@
     .footer__grid {
       display: flex;
       flex-direction: column;
-      gap: 1.8rem;
+      gap: 0;
       padding-bottom: 2.5rem;
     }
 
@@ -576,67 +633,121 @@
       gap: 1.8rem;
       padding-bottom: 2rem;
       border-bottom: 1px solid color-mix(in srgb, var(--footer-text) 12%, transparent);
+      margin-bottom: 1.6rem;
     }
     .footer__logo {
-      font-size: 2.4rem;
+      font-family: 'Cormorant Garamond', 'Playfair Display', serif;
+      font-size: 3rem;
+      font-weight: 600;
+      color: #C29C5A;
       text-align: center;
+      margin-bottom: 0.5rem;
     }
     .footer__description {
       text-align: center;
       font-size: 1.35rem;
       line-height: 1.65;
+      color: rgba(1, 63, 62, 0.85);
       max-width: 100%;
+      margin-bottom: 1.5rem;
     }
     .footer__contact-list-inline {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 1.2rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.8rem;
       width: 100%;
       max-width: 450px;
       margin-top: 0.5rem;
     }
     .footer__contact-item--phone,
-    .footer__contact-item--email {
-      grid-column: span 1;
-    }
+    .footer__contact-item--email,
     .footer__contact-item--address {
-      grid-column: 1 / -1;
+      width: 100%;
     }
 
-    .footer__contact-link {
+    .footer__contact-link,
+    .footer__contact-card {
       display: flex;
-      height: 100%;
+      align-items: center;
+      width: 100%;
       box-sizing: border-box;
-      background: linear-gradient(145deg, rgba(212, 175, 55, 0.08) 0%, rgba(1, 63, 62, 0.03) 100%);
-      border: 1.5px solid rgba(212, 175, 55, 0.28);
-      border-radius: 14px;
+      background-color: #FFFFFF;
+      border: 1px solid rgba(1, 63, 62, 0.15);
+      border-radius: 12px;
       text-decoration: none;
       color: inherit;
+      padding: 1.2rem 1.6rem;
+      gap: 1.2rem;
       transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.02);
+      box-shadow: none;
+      position: relative;
     }
     
     .footer__contact-item--phone .footer__contact-link,
     .footer__contact-item--email .footer__contact-link {
-      padding: 1.4rem 1rem;
-      flex-direction: column;
-      align-items: center;
-      text-align: center;
-      gap: 0.8rem;
-    }
-
-    .footer__contact-item--address .footer__contact-link {
-      padding: 1.4rem 1.6rem;
+      padding: 1.2rem 1.6rem;
       flex-direction: row;
-      align-items: flex-start;
+      align-items: center;
       text-align: left;
       gap: 1.2rem;
     }
 
+    .footer__contact-item--address .footer__contact-card {
+      padding: 1.6rem;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 1.2rem;
+    }
+
+    .footer__contact-card-top {
+      display: flex;
+      align-items: center;
+      gap: 1.2rem;
+      width: 100%;
+    }
+
+    .footer__contact-button-directions {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      box-sizing: border-box;
+      background-color: #FFFFFF;
+      border: 1px solid #C29C5A;
+      border-radius: 8px;
+      padding: 0.9rem 1.4rem;
+      color: #C29C5A;
+      font-size: 1.15rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-decoration: none;
+      position: relative;
+      transition: all 0.25s ease;
+    }
+
+    .footer__contact-button-directions:active,
     .footer__contact-link:active {
-      background: linear-gradient(145deg, rgba(212, 175, 55, 0.18) 0%, rgba(1, 63, 62, 0.08) 100%);
-      border-color: var(--footer-accent);
+      background-color: #FFFFFF;
+      border-color: #C29C5A;
       transform: scale(0.98);
+    }
+
+    .footer__btn-icon-pin {
+      display: block;
+      width: 1.5rem;
+      height: 1.5rem;
+      margin-right: 0.6rem;
+      color: #C29C5A;
+      flex-shrink: 0;
+    }
+    .footer__btn-icon-arrow {
+      display: block;
+      width: 1.5rem;
+      height: 1.5rem;
+      color: #C29C5A;
+      position: absolute;
+      right: 1.4rem;
+      flex-shrink: 0;
     }
 
     .footer__contact-icon-wrapper {
@@ -644,90 +755,118 @@
       width: 4rem;
       height: 4rem;
       border-radius: 50%;
-      background-color: rgba(212, 175, 55, 0.15);
-      border: 1px solid rgba(212, 175, 55, 0.35);
+      background-color: #013F3E;
+      border: none;
       align-items: center;
       justify-content: center;
       flex-shrink: 0;
+      transition: background-color 0.3s ease;
     }
     .footer__contact-icon {
       width: 2rem;
       height: 2rem;
       margin: 0;
-      color: var(--footer-accent);
+      color: #FFFFFF;
     }
 
     .footer__contact-text-group {
       display: flex;
       flex-direction: column;
-      gap: 0.3rem;
+      gap: 0.2rem;
       width: 100%;
+      text-align: left;
+      align-items: flex-start;
     }
     .footer__contact-item--phone .footer__contact-text-group,
     .footer__contact-item--email .footer__contact-text-group {
-      align-items: center;
+      align-items: flex-start;
     }
 
     .footer__contact-label {
       display: block;
-      font-size: 1.05rem;
-      font-weight: 700;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      color: var(--footer-accent);
+      font-size: 1.15rem;
+      font-weight: 500;
+      color: rgba(1, 63, 62, 0.7);
+      text-transform: none;
+      letter-spacing: normal;
     }
 
     .footer__contact-value {
       display: block;
-      font-size: 1.25rem;
-      font-weight: 500;
-      color: color-mix(in srgb, var(--footer-text) 90%, transparent);
-      line-height: 1.4;
+      font-size: 1.3rem;
+      font-weight: 700;
+      color: #013F3E;
+      line-height: 1.3;
       word-break: break-word;
     }
 
     .footer__contact-action {
       display: inline-flex;
       align-items: center;
-      margin-top: 0.4rem;
+      margin-top: 0.1rem;
       font-size: 1.2rem;
       font-weight: 600;
-      color: var(--footer-accent);
+      color: #C29C5A;
       letter-spacing: 0.02em;
+    }
+
+    .footer__contact-chevron-right {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 1.8rem;
+      height: 1.8rem;
+      color: #C29C5A;
+      flex-shrink: 0;
+      margin-left: auto;
+    }
+    .footer__contact-chevron-right svg {
+      width: 1.6rem;
+      height: 1.6rem;
     }
 
     .footer__social-icons {
       justify-content: center;
       gap: 1.6rem;
-      margin-top: 0.6rem;
+      margin-top: 1rem;
     }
     .footer__social-link {
-      width: 4.4rem;
-      height: 4.4rem;
-      border: 1.5px solid var(--footer-accent);
-      background-color: rgba(212, 175, 55, 0.1);
-      color: var(--footer-accent);
-      box-shadow: 0 2px 10px rgba(212, 175, 55, 0.12);
+      width: 4rem;
+      height: 4rem;
+      border: none;
+      background-color: #013F3E;
+      color: #FFFFFF;
+      border-radius: 50%;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+      box-shadow: none;
+    }
+    .footer__social-link:hover {
+      background-color: #013F3E;
+      opacity: 0.9;
+      transform: translateY(-2px);
     }
     .footer__social-link svg {
-      width: 2rem;
-      height: 2rem;
+      width: 1.8rem;
+      height: 1.8rem;
     }
 
     /* Accordion Columns on Mobile */
     .footer__col--accordion {
       gap: 0;
-      margin-bottom: 0.8rem;
-      border: 1.5px solid rgba(212, 175, 55, 0.22);
-      border-radius: 12px;
-      background-color: color-mix(in srgb, var(--footer-text) 3%, transparent);
+      margin-bottom: 0;
+      border: none;
+      border-bottom: 1px solid rgba(1, 63, 62, 0.15);
+      border-radius: 0;
+      background-color: transparent;
       overflow: hidden;
-      transition: border-color 0.3s ease, background-color 0.3s ease;
+      transition: border-color 0.3s ease;
     }
     .footer__col--accordion.is-open {
-      border-color: var(--footer-accent);
-      border-left: 4px solid var(--footer-accent);
-      background-color: color-mix(in srgb, var(--footer-accent) 6%, transparent);
+      background-color: transparent;
+      border-color: rgba(1, 63, 62, 0.15);
     }
 
     .footer__heading--accordion {
@@ -735,18 +874,19 @@
       align-items: center;
       justify-content: space-between;
       width: 100%;
-      padding: 1.5rem 1.6rem;
+      padding: 1.4rem 0;
       cursor: pointer;
       -webkit-tap-highlight-color: transparent;
     }
     .footer__heading--accordion span {
-      font-size: 1.4rem;
-      font-weight: 700;
+      font-size: 1.25rem;
+      font-weight: 600;
       letter-spacing: 0.08em;
-      color: color-mix(in srgb, var(--footer-text) 95%, transparent);
+      text-transform: uppercase;
+      color: #013F3E;
     }
     .footer__col--accordion.is-open .footer__heading--accordion span {
-      color: var(--footer-accent);
+      color: #013F3E;
     }
 
     .footer__heading::after {
@@ -755,28 +895,29 @@
 
     .footer__accordion-chevron-bg {
       display: flex;
-      width: 2.8rem;
-      height: 2.8rem;
-      border-radius: 50%;
-      background-color: rgba(212, 175, 55, 0.15);
+      width: 2rem;
+      height: 2rem;
+      background: none !important;
+      border: none !important;
       align-items: center;
       justify-content: center;
       flex-shrink: 0;
-      transition: background-color 0.3s ease, transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     }
     .footer__col--accordion.is-open .footer__accordion-chevron-bg {
-      background-color: var(--footer-accent);
       transform: rotate(180deg);
+      background: none !important;
     }
     .footer__accordion-chevron {
       display: block;
-      width: 1.6rem;
-      height: 1.6rem;
-      color: var(--footer-accent);
+      width: 1.4rem;
+      height: 1.4rem;
+      color: #C29C5A;
+      stroke-width: 1.5 !important;
       transition: color 0.3s ease;
     }
     .footer__col--accordion.is-open .footer__accordion-chevron {
-      color: #013F3E;
+      color: #C29C5A;
     }
     
     .footer__accordion-content {
@@ -784,32 +925,44 @@
       opacity: 0;
       overflow: hidden;
       transition: max-height 0.35s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.25s ease, padding 0.35s ease;
-      padding: 0 1.6rem;
+      padding: 0;
     }
     .footer__col--accordion.is-open .footer__accordion-content {
       max-height: 350px;
       opacity: 1;
-      padding-top: 0.5rem;
-      padding-bottom: 1.8rem;
+      padding-top: 0.2rem;
+      padding-bottom: 1.4rem;
     }
     .footer__links-list {
       margin-top: 0;
-      gap: 1.2rem;
+      gap: 0.8rem;
     }
     .footer__link {
-      font-size: 1.35rem;
-      padding: 0.4rem 0;
+      font-size: 1.25rem;
+      padding: 0.3rem 0;
+    }
+    .footer__col--accordion .footer__link {
+      color: #013F3E;
+      opacity: 0.85;
+    }
+    .footer__col--accordion .footer__link:hover {
+      color: #C29C5A;
+      opacity: 1;
     }
     .footer__link::before {
-      content: "◆";
-      font-size: 0.8rem;
-      color: var(--footer-accent);
-      margin-right: 1rem;
-      transform: none;
-      border: none;
-      width: auto;
-      height: auto;
+      content: "";
+      display: inline-block;
+      width: 8px;
+      height: 1.5px;
+      background-color: #C29C5A;
+      margin-right: 0.8rem;
       opacity: 0.9;
+      transition: width 0.25s ease;
+      border: none;
+      transform: none;
+    }
+    .footer__col--accordion .footer__link:hover::before {
+      width: 14px;
     }
 
     /* Footer Bottom on Mobile */
@@ -879,7 +1032,7 @@
       "type": "textarea",
       "id": "brand_description",
       "label": "Brand Description",
-      "default": "Crafting timeless elegance since 1985. Your trusted partner for luxury jewelry."
+      "default": "Designed to enhance every moment with elegance."
     },
     {
       "type": "url",
@@ -927,7 +1080,7 @@
       "type": "text",
       "id": "help_menu_title",
       "label": "Menu 3 Title",
-      "default": "HELP"
+      "default": "HELP & SUPPORT"
     },
     {
       "type": "link_list",
