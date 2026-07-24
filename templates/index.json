@@ -657,11 +657,12 @@
         "testimonial_4"
       ],
       "settings": {
+        "layout_style": "centered",
         "show_rating_badge": true,
         "rating_badge_text": "4.9/5",
-        "subheading": "",
-        "title": "Trusted by\n4,800+\nHappy Customers",
-        "trust_copy": "98% of our customers\nrecommend us",
+        "subheading": "REAL STORIES, REAL TRUST",
+        "title": "Loved By Thousands",
+        "trust_copy": "Over 4,800+ customers trust Swastik Jewels for life's most special moments.",
         "stat_1_value": "",
         "stat_1_label": "",
         "stat_2_value": "",
