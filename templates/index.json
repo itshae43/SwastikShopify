@@ -64,7 +64,7 @@
         "slide_4LQDeb"
       ],
       "settings": {
-        "autoplay": false,
+        "autoplay": true,
         "autoplay_speed": 3,
         "hero_size": "adapt",
         "hero_height": 650,
@@ -129,6 +129,7 @@
         "raw_reverie"
       ],
       "settings": {
+        "eyebrow": "OUR SIGNATURE REALMS",
         "title": "Three Worlds of Beauty",
         "bg_color": "#fdfcfa",
         "padding_top": 60,
@@ -670,7 +671,9 @@
         "stat_4_label": "",
         "bg_color": "#fdfbf7",
         "text_color": "#013f3e",
-        "accent_color": "#d4af37"
+        "accent_color": "#d4af37",
+        "autoplay": true,
+        "autoplay_speed": 6
       }
     }
   },
