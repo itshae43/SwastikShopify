@@ -64,8 +64,8 @@
         "slide_4LQDeb"
       ],
       "settings": {
-        "autoplay": false,
-        "autoplay_speed": 3,
+        "autoplay": true,
+        "autoplay_speed": 5,
         "hero_size": "adapt",
         "hero_height": 650,
         "overlay_opacity": 10
@@ -129,9 +129,10 @@
         "raw_reverie"
       ],
       "settings": {
+        "eyebrow": "",
         "title": "Three Worlds of Beauty",
         "bg_color": "#fdfcfa",
-        "padding_top": 60,
+        "padding_top": 64,
         "padding_bottom": 60,
         "button_label": "Browse Collections",
         "button_link": "",
@@ -155,6 +156,7 @@
           "type": "card",
           "settings": {
             "image": "shopify://shop_images/new_2.png",
+            "image_mobile": "shopify://shop_images/latest_ear_ring_flipped_version.png",
             "link": "shopify://collections/everyday-sparkle"
           }
         },
@@ -182,7 +184,7 @@
       "settings": {
         "subheading": "DISCOVER",
         "title": "Diamonds that stay with you",
-        "description": "Explore collections for every celebration, every memory, and every you.",
+        "description": "Explore collections for every memory, and every YOU.",
         "bg_color": "#fdfcfa"
       }
     },
@@ -670,7 +672,9 @@
         "stat_4_label": "",
         "bg_color": "#fdfbf7",
         "text_color": "#013f3e",
-        "accent_color": "#d4af37"
+        "accent_color": "#d4af37",
+        "autoplay": true,
+        "autoplay_speed": 6
       }
     }
   },
