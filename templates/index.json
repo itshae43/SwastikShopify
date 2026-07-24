@@ -149,6 +149,7 @@
           "type": "card",
           "settings": {
             "image": "shopify://shop_images/new.png",
+            "image_mobile": "shopify://shop_images/new_15.png",
             "link": "shopify://collections/forever-classics"
           }
         },
@@ -156,6 +157,7 @@
           "type": "card",
           "settings": {
             "image": "shopify://shop_images/new_2.png",
+            "image_mobile": "shopify://shop_images/new_13.png",
             "link": "shopify://collections/everyday-sparkle"
           }
         },
@@ -163,6 +165,7 @@
           "type": "card",
           "settings": {
             "image": "shopify://shop_images/new_1_93f59d24-716e-411c-8468-c757322e5509.png",
+            "image_mobile": "shopify://shop_images/new_14.png",
             "link": "shopify://collections/close-to-heart"
           }
         },
@@ -170,6 +173,7 @@
           "type": "card",
           "settings": {
             "image": "shopify://shop_images/new_3.png",
+            "image_mobile": "shopify://shop_images/new_12.png",
             "link": "shopify://collections/eternal-promises"
           }
         }
