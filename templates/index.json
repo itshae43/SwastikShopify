@@ -131,9 +131,8 @@
       "settings": {
         "eyebrow": "",
         "title": "Three Worlds of Beauty",
-        "subtitle": "Every world, a story. Every piece, a masterpiece.",
         "bg_color": "#fdfcfa",
-        "padding_top": 120,
+        "padding_top": 64,
         "padding_bottom": 60,
         "button_label": "Browse Collections",
         "button_link": "",
@@ -186,7 +185,9 @@
         "subheading": "DISCOVER",
         "title": "Diamonds that stay with you",
         "description": "Explore collections for every memory, and every YOU.",
-        "bg_color": "#fdfcfa"
+        "bg_color": "#fdfcfa",
+        "padding_top": 80,
+        "padding_bottom": 80
       }
     },
     "gold_collection_showcase": {
@@ -496,6 +497,15 @@
     "for_every_you": {
       "type": "for-every-you",
       "blocks": {
+        "slide_2": {
+          "type": "slide",
+          "settings": {
+            "image": "shopify://shop_images/b19_daily_1.png",
+            "title": "",
+            "subtitle": "",
+            "link": "shopify://collections/daily-wear"
+          }
+        },
         "slide_5": {
           "type": "slide",
           "settings": {
@@ -523,15 +533,6 @@
             "link": "shopify://collections/festive-wear"
           }
         },
-        "slide_2": {
-          "type": "slide",
-          "settings": {
-            "image": "shopify://shop_images/b19_daily_1.png",
-            "title": "",
-            "subtitle": "",
-            "link": "shopify://collections/daily-wear"
-          }
-        },
         "slide_4": {
           "type": "slide",
           "settings": {
@@ -543,10 +544,10 @@
         }
       },
       "block_order": [
+        "slide_2",
         "slide_5",
         "slide_1",
         "slide_3",
-        "slide_2",
         "slide_4"
       ],
       "settings": {
@@ -672,7 +673,7 @@
         "stat_3_label": "",
         "stat_4_value": "",
         "stat_4_label": "",
-        "bg_color": "#f4eee6",
+        "bg_color": "#fdfbf7",
         "text_color": "#013f3e",
         "accent_color": "#d4af37",
         "autoplay": true,
