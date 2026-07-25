@@ -10,9 +10,6 @@
       <!-- Gallery -->
       <div class="pp-gallery">
         <div class="pp-main-image-wrap">
-          <button class="pp-wishlist-btn" type="button" aria-label="Add to Wishlist">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
-          </button>
 
           <button class="pp-nav-btn pp-nav-prev" aria-label="Previous">
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg>
@@ -31,7 +28,7 @@
           </button>
           
           <button class="pp-fullscreen-btn" aria-label="Fullscreen">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#222222" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="11" y1="8" x2="11" y2="14"/><line x1="8" y1="11" x2="14" y2="11"/></svg>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"/></svg>
           </button>
         </div>
         
@@ -134,10 +131,13 @@
 
             <div class="pp-desc-section">
               <div class="pp-desc-content" id="pp-desc-content">
-                <span class="pp-desc-short">{{ product.description | strip_html | default: 'Handcrafted in 18K BIS Hallmarked Gold with VS-certified natural diamonds. Designed for timeless elegance and everyday luxury.' }}</span>
-                <span class="pp-desc-full" style="display:none;">{{ product.description | strip_html | default: 'Handcrafted in 18K BIS Hallmarked Gold with VS-certified natural diamonds. Designed for timeless elegance and everyday luxury. Every diamond is ethically sourced and expertly set by master craftsmen. Perfect for weddings, anniversaries, celebrations, and daily luxury wear. Comes with lifetime maintenance, insured shipping, and authenticity certificate.' }}</span>
+                {%- if product.description != blank -%}
+                  {{ product.description }}
+                {%- else -%}
+                  <p>Handcrafted in 18K BIS Hallmarked Gold with VS-certified natural diamonds. Designed for timeless elegance and everyday luxury. Every diamond is ethically sourced and expertly set by master craftsmen. Perfect for weddings, anniversaries, celebrations, and daily luxury wear. Comes with lifetime maintenance, insured shipping, and authenticity certificate.</p>
+                {%- endif -%}
               </div>
-              <button type="button" class="pp-read-more-btn" id="pp-read-more-btn" aria-expanded="false">
+              <button type="button" class="pp-read-more-btn" id="pp-read-more-btn" aria-expanded="false" style="display: none;">
                 <span class="pp-read-more-text">Read More</span>
                 <svg class="pp-read-more-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 9l7 7 7-7"/></svg>
               </button>
@@ -509,12 +509,6 @@
   .pp-main-img-container { width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; padding: 0; }
   /* #pp-main-image styled below in zoom overlay section */
 
-  .pp-wishlist-btn {
-    position: absolute; top: 18px; right: 18px; width: 44px; height: 44px; border-radius: 50%;
-    background: #ffffff; border: 1px solid rgba(0, 0, 0, 0.06); box-shadow: 0 4px 14px rgba(0, 0, 0, 0.08);
-    display: flex; align-items: center; justify-content: center; cursor: pointer; z-index: 5; color: #222222; transition: all 0.25s ease;
-  }
-  .pp-wishlist-btn:hover { transform: scale(1.08); color: #E53E3E; box-shadow: 0 6px 18px rgba(229, 62, 62, 0.15); }
 
   .pp-nav-btn {
     position: absolute; top: 50%; transform: translateY(-50%); width: 42px; height: 42px; border-radius: 50%;
@@ -549,7 +543,7 @@
     overflow: hidden; display: flex; align-items: center; justify-content: center; transition: all 0.2s ease; padding: 0;
   }
   .pp-thumb-img img, .pp-thumb-img svg { width: 100%; height: 100%; object-fit: cover; }
-  .pp-thumb-item.is-active .pp-thumb-img { border-color: var(--pp-primary); box-shadow: 0 0 0 2px var(--pp-primary); }
+  .pp-thumb-item.is-active .pp-thumb-img { border-color: #C89234 !important; box-shadow: 0 6px 16px rgba(200, 146, 52, 0.28) !important; transform: scale(1.02); }
 
   /* ==========================================================================
      4. RIGHT COLUMN: EXACT LUXURY TYPOGRAPHY & SPACING SCALE
@@ -646,14 +640,18 @@
     padding-bottom: 28px;
     border-bottom: 1px solid var(--pp-border);
   }
-  .pp-desc-short {
+  .pp-desc-content {
     display: -webkit-box;
-    -webkit-line-clamp: 3;
+    -webkit-line-clamp: 2;
     -webkit-box-orient: vertical;
     overflow: hidden;
+    transition: all 0.3s ease;
   }
-  @media screen and (max-width: 767px) {
-    .pp-desc-short { -webkit-line-clamp: 2; }
+  .pp-desc-content.is-expanded {
+    display: block !important;
+    -webkit-line-clamp: unset !important;
+    max-height: none !important;
+    overflow: visible !important;
   }
   .pp-read-more-btn {
     background: none;
@@ -698,6 +696,7 @@
     background: #FFFFFF; border: 1.5px solid #DED8CE; border-radius: 10px;
     padding: 12px 24px; font-family: var(--pp-font-sans); font-size: 14px; font-weight: 500; line-height: 1.5;
     color: #333333; cursor: pointer; transition: all 0.25s ease; box-shadow: 0 2px 6px rgba(0, 0, 0, 0.02);
+    user-select: none; -webkit-user-select: none;
   }
   .pp-opt-btn:hover { border-color: var(--pp-primary); color: var(--pp-primary); transform: translateY(-2px); }
   .pp-opt-btn.is-active {
@@ -837,52 +836,44 @@
   
   #pp-main-image { width: 100%; height: 100%; object-fit: cover; cursor: zoom-in !important; transition: transform 0.35s cubic-bezier(0.25, 0.46, 0.45, 0.94); }
 
-  /* Zoom Overlay: Four Rounded Corner Way & Luxury Fullscreen Specifications */
+  /* Zoom Overlay: Four Rounded Corner Way & Luxury Frosted Champagne Backdrop */
   .pp-zoom-overlay {
     position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
-    background: rgba(1, 15, 15, 0.92); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+    background: rgba(250, 247, 240, 0.96); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
     z-index: 99999; display: flex; align-items: center; justify-content: center;
     opacity: 0; pointer-events: none; transition: opacity 0.35s ease; padding: 20px;
   }
   .pp-zoom-overlay.is-active { opacity: 1; pointer-events: auto; }
   
   .pp-zoom-close {
-    position: absolute; top: 24px; right: 24px; width: 48px; height: 48px; border-radius: 50%;
-    background: #FFFFFF; border: none; color: #013F3E; cursor: pointer; display: flex; align-items: center; justify-content: center;
-    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.4); z-index: 100000; transition: all 0.25s ease;
+    position: fixed !important; top: max(24px, env(safe-area-inset-top, 24px)) !important; right: max(24px, env(safe-area-inset-right, 24px)) !important; width: 48px; height: 48px; border-radius: 50%;
+    background: #FFFFFF; border: 1px solid rgba(0, 0, 0, 0.08); color: #013F3E; cursor: pointer; display: flex; align-items: center; justify-content: center;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08); z-index: 1000000 !important; transition: all 0.25s ease;
   }
-  .pp-zoom-close:hover { background: #E53E3E; color: #FFFFFF; transform: scale(1.1) rotate(90deg); }
+  .pp-zoom-close:hover { background: #E53E3E; color: #FFFFFF; border-color: #E53E3E; transform: scale(1.1) rotate(90deg); }
   
-  /* Four Rounded Corner Way in Full Screen Mode */
+  /* Four Rounded Corner Way in Full Screen Mode without empty box padding */
   #pp-zoom-img {
-    max-width: 88vw !important;
-    max-height: 84vh !important;
+    width: auto !important;
+    height: auto !important;
+    max-width: 90vw !important;
+    max-height: 86vh !important;
     object-fit: contain !important;
     border-radius: 24px !important;
-    box-shadow: 0 35px 100px rgba(0, 0, 0, 0.8) !important;
-    border: 2px solid rgba(255, 255, 255, 0.2) !important;
-    background: #FAF7F0 !important;
+    box-shadow: 0 24px 70px rgba(1, 63, 62, 0.12) !important;
+    border: 1px solid rgba(200, 146, 52, 0.2) !important;
+    background: transparent !important;
     transform: scale(0.92);
     transition: transform 0.35s cubic-bezier(0.2, 0.8, 0.2, 1) !important;
     cursor: default !important;
+    margin: auto !important;
   }
   .pp-zoom-overlay.is-active #pp-zoom-img { transform: scale(1) !important; }
 
-  /* Full Screen Navigation Arrows */
-  .pp-zoom-nav {
-    position: absolute; top: 50%; transform: translateY(-50%); width: 52px; height: 52px; border-radius: 50%;
-    background: #FFFFFF; border: none; box-shadow: 0 8px 30px rgba(0,0,0,0.35); display: flex; align-items: center; justify-content: center;
-    cursor: pointer; z-index: 100000; color: #013F3E; transition: all 0.25s ease;
-  }
-  .pp-zoom-nav:hover { background: #013F3E; color: #FFFFFF; transform: translateY(-50%) scale(1.1); }
-  .pp-zoom-prev { left: 32px; }
-  .pp-zoom-next { right: 32px; }
   @media screen and (max-width: 767px) {
-    .pp-zoom-nav { width: 42px; height: 42px; }
-    .pp-zoom-prev { left: 12px; }
-    .pp-zoom-next { right: 12px; }
-    .pp-zoom-close { top: 16px; right: 16px; width: 42px; height: 42px; }
-    #pp-zoom-img { border-radius: 16px !important; max-width: 94vw !important; max-height: 80vh !important; }
+    .pp-zoom-overlay { padding: max(20px, env(safe-area-inset-top, 20px)) 16px max(20px, env(safe-area-inset-bottom, 20px)) !important; box-sizing: border-box !important; }
+    .pp-zoom-close { position: fixed !important; top: max(16px, env(safe-area-inset-top, 16px)) !important; right: max(16px, env(safe-area-inset-right, 16px)) !important; width: 44px !important; height: 44px !important; z-index: 1000000 !important; box-shadow: 0 4px 16px rgba(0,0,0,0.15) !important; }
+    #pp-zoom-img { border-radius: 16px !important; max-width: 95vw !important; max-height: 82vh !important; width: auto !important; height: auto !important; object-fit: contain !important; margin: auto !important; }
   }
 
   /* Responsive Mobile Tweaks */
@@ -945,7 +936,6 @@
     .pp-nav-btn { width: 36px; height: 36px; box-shadow: 0 2px 8px rgba(0,0,0,0.12); }
     .pp-nav-prev { left: 10px; }
     .pp-nav-next { right: 10px; }
-    .pp-wishlist-btn { top: 12px; right: 12px; width: 38px; height: 38px; }
     .pp-fullscreen-btn { bottom: 12px; right: 12px; width: 36px; height: 36px; }
     
     /* Hide desktop thumbnail carousel arrows on mobile so thumbnails center perfectly without getting squeezed! */
@@ -958,48 +948,49 @@
 {% endstylesheet %}
 
 <script>
-document.addEventListener('DOMContentLoaded', () => {
+(function() {
   // ==========================================
-  // LUXURY INSTANT GALLERY & FULLSCREEN ZOOM
+  // BULLETPROOF LUXURY GALLERY & ZOOM CONTROLLER
+  // Uses Event Delegation and strips srcset to guarantee instant image swaps!
   // ==========================================
-  const thumbs = document.querySelectorAll('.pp-thumb-item');
-  const mainImg = document.getElementById('pp-main-image');
-  const prevBtn = document.querySelector('.pp-nav-prev');
-  const nextBtn = document.querySelector('.pp-nav-next');
-  const zoomBtn = document.querySelector('.pp-fullscreen-btn');
-  const zoomOverlay = document.getElementById('pp-zoom-overlay');
-  const zoomClose = document.getElementById('pp-zoom-close');
-  const zoomImg = document.getElementById('pp-zoom-img');
-  const zoomPrev = document.getElementById('pp-zoom-prev');
-  const zoomNext = document.getElementById('pp-zoom-next');
-  const thumbWrapper = document.querySelector('.pp-thumbnails-wrapper');
-
-  let activeIndex = 0;
+  window.ppActiveIndex = 0;
 
   function setMainImage(index) {
+    const thumbs = Array.from(document.querySelectorAll('.pp-thumb-item'));
+    const mainImg = document.getElementById('pp-main-image');
+    const zoomImg = document.getElementById('pp-zoom-img');
+    const thumbWrapper = document.querySelector('.pp-thumbnails-wrapper');
+
     if (!thumbs.length || !mainImg) return;
-    activeIndex = (index + thumbs.length) % thumbs.length;
+    
+    // Normalize index to wrap around cleanly
+    window.ppActiveIndex = (index + thumbs.length) % thumbs.length;
     
     // Update active class on thumbnails
     thumbs.forEach(t => t.classList.remove('is-active'));
-    thumbs[activeIndex].classList.add('is-active');
+    thumbs[window.ppActiveIndex].classList.add('is-active');
     
-    // Instant image swap without opacity timeouts that cause flickering or delay
-    const newSrc = thumbs[activeIndex].getAttribute('data-image');
-    if (newSrc && mainImg.src !== newSrc) {
-      mainImg.style.opacity = 0.5;
+    // Extract new image source from thumbnail data-image
+    const newSrc = thumbs[window.ppActiveIndex].getAttribute('data-image');
+    if (newSrc) {
+      // Remove srcset and sizes so browser doesn't override or ignore .src assignment!
+      mainImg.removeAttribute('srcset');
+      mainImg.removeAttribute('sizes');
+      mainImg.setAttribute('src', newSrc);
       mainImg.src = newSrc;
-      requestAnimationFrame(() => {
-        mainImg.style.opacity = 1;
-      });
-    }
-    if (zoomImg && zoomOverlay && zoomOverlay.classList.contains('is-active')) {
-      zoomImg.src = newSrc;
+      
+      if (zoomImg) {
+        zoomImg.removeAttribute('srcset');
+        zoomImg.removeAttribute('sizes');
+        let zoomSrc = newSrc.replace('width=800', 'width=1600').replace('width=1000', 'width=1600').replace('width=180', 'width=1600');
+        zoomImg.setAttribute('src', zoomSrc);
+        zoomImg.src = zoomSrc;
+      }
     }
 
-    // Smoothly center the active thumbnail in the horizontal carousel
-    if (thumbWrapper) {
-      const thumbEl = thumbs[activeIndex];
+    // Smoothly scroll horizontal carousel to center the active thumbnail
+    if (thumbWrapper && thumbs[window.ppActiveIndex]) {
+      const thumbEl = thumbs[window.ppActiveIndex];
       const wrapWidth = thumbWrapper.clientWidth;
       const thumbWidth = thumbEl.clientWidth;
       const thumbLeft = thumbEl.offsetLeft;
@@ -1010,350 +1001,190 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
-  // Thumbnail click events
-  thumbs.forEach((t, i) => {
-    t.addEventListener('click', (e) => {
-      e.stopPropagation();
-      setMainImage(i);
-    });
-  });
-
-  // Main gallery arrow navigation
-  if (prevBtn) {
-    prevBtn.addEventListener('click', (e) => {
-      e.stopPropagation();
-      setMainImage(activeIndex - 1);
-    });
-  }
-  if (nextBtn) {
-    nextBtn.addEventListener('click', (e) => {
-      e.stopPropagation();
-      setMainImage(activeIndex + 1);
-    });
-  }
-  if (mainImg) mainImg.style.transition = 'opacity 0.2s ease-in-out, transform 0.35s cubic-bezier(0.25, 0.46, 0.45, 0.94)';
-
-  // Open Fullscreen Zoom Modal (Four Rounded Corner Way)
   function openZoomModal() {
+    const zoomOverlay = document.getElementById('pp-zoom-overlay');
+    const zoomImg = document.getElementById('pp-zoom-img');
+    const mainImg = document.getElementById('pp-main-image');
+    const thumbs = Array.from(document.querySelectorAll('.pp-thumb-item'));
+
     if (!zoomOverlay || !zoomImg || !mainImg) return;
-    let src = thumbs.length ? thumbs[activeIndex].getAttribute('data-image') : mainImg.src;
-    src = src.replace('width=800', 'width=1600').replace('width=1000', 'width=1600').replace('width=180', 'width=1600');
-    zoomImg.src = src;
+    
+    let src = thumbs.length && thumbs[window.ppActiveIndex] ? thumbs[window.ppActiveIndex].getAttribute('data-image') : mainImg.src;
+    if (src) {
+      src = src.replace('width=800', 'width=1600').replace('width=1000', 'width=1600').replace('width=180', 'width=1600');
+      zoomImg.removeAttribute('srcset');
+      zoomImg.removeAttribute('sizes');
+      zoomImg.setAttribute('src', src);
+      zoomImg.src = src;
+    }
     zoomOverlay.classList.add('is-active');
     document.body.style.overflow = 'hidden';
   }
 
   function closeZoomModal() {
+    const zoomOverlay = document.getElementById('pp-zoom-overlay');
     if (!zoomOverlay) return;
     zoomOverlay.classList.remove('is-active');
     document.body.style.overflow = '';
   }
 
-  if (zoomBtn) {
-    zoomBtn.addEventListener('click', (e) => {
+  // Use Event Delegation on document so clicks work 100% reliably even after Shopify DOM updates!
+  document.addEventListener('click', function(e) {
+    // 1. Thumbnail click
+    const thumbEl = e.target.closest('.pp-thumb-item');
+    if (thumbEl) {
+      e.preventDefault();
+      e.stopPropagation();
+      const allThumbs = Array.from(document.querySelectorAll('.pp-thumb-item'));
+      const idx = allThumbs.indexOf(thumbEl);
+      if (idx !== -1) setMainImage(idx);
+      return;
+    }
+
+    // 2. Previous Arrow (Main Gallery or Fullscreen Zoom)
+    if (e.target.closest('.pp-nav-prev') || e.target.closest('#pp-zoom-prev')) {
+      e.preventDefault();
+      e.stopPropagation();
+      setMainImage(window.ppActiveIndex - 1);
+      return;
+    }
+
+    // 3. Next Arrow (Main Gallery or Fullscreen Zoom)
+    if (e.target.closest('.pp-nav-next') || e.target.closest('#pp-zoom-next')) {
+      e.preventDefault();
+      e.stopPropagation();
+      setMainImage(window.ppActiveIndex + 1);
+      return;
+    }
+
+    // 4. Open Zoom Modal (Clicking [+] button or Main Image)
+    if (e.target.closest('.pp-fullscreen-btn') || e.target.closest('#pp-main-image')) {
+      e.preventDefault();
       e.stopPropagation();
       openZoomModal();
-    });
-  }
-  if (mainImg) {
-    mainImg.addEventListener('click', (e) => {
+      return;
+    }
+
+    // 5. Close Zoom Modal (Clicking X or dark background overlay)
+    if (e.target.closest('.pp-zoom-close') || (e.target.classList && e.target.classList.contains('pp-zoom-overlay'))) {
+      e.preventDefault();
       e.stopPropagation();
-      openZoomModal();
-    });
-  }
-  if (zoomClose) {
-    zoomClose.addEventListener('click', closeZoomModal);
-  }
-  if (zoomOverlay) {
-    zoomOverlay.addEventListener('click', (e) => {
-      if (e.target === zoomOverlay) closeZoomModal();
-    });
-  }
-  if (zoomPrev) {
-    zoomPrev.addEventListener('click', (e) => {
+      closeZoomModal();
+      return;
+    }
+
+    // 6. Thumbnail Carousel Scroll Arrows
+    if (e.target.closest('.pp-thumb-nav-prev')) {
+      e.preventDefault();
       e.stopPropagation();
-      setMainImage(activeIndex - 1);
-    });
-  }
-  if (zoomNext) {
-    zoomNext.addEventListener('click', (e) => {
+      const wrap = document.querySelector('.pp-thumbnails-wrapper');
+      if (wrap) wrap.scrollBy({ left: -220, behavior: 'smooth' });
+      return;
+    }
+    if (e.target.closest('.pp-thumb-nav-next')) {
+      e.preventDefault();
       e.stopPropagation();
-      setMainImage(activeIndex + 1);
-    });
-  }
-  document.addEventListener('keydown', (e) => {
+      const wrap = document.querySelector('.pp-thumbnails-wrapper');
+      if (wrap) wrap.scrollBy({ left: 220, behavior: 'smooth' });
+      return;
+    }
+
+    // 7. Read More Toggle
+    const readMoreBtn = e.target.closest('#pp-read-more-btn');
+    if (readMoreBtn) {
+      e.preventDefault();
+      const descBox = document.getElementById('pp-desc-content');
+      const readMoreText = document.querySelector('.pp-read-more-text');
+      const readMoreIcon = document.querySelector('.pp-read-more-icon');
+      if (descBox) {
+        const isExpanded = readMoreBtn.getAttribute('aria-expanded') === 'true';
+        if (isExpanded) {
+          descBox.classList.remove('is-expanded');
+          if (readMoreText) readMoreText.textContent = 'Read More';
+          if (readMoreIcon) readMoreIcon.style.transform = 'rotate(0deg)';
+          readMoreBtn.setAttribute('aria-expanded', 'false');
+        } else {
+          descBox.classList.add('is-expanded');
+          if (readMoreText) readMoreText.textContent = 'Read Less';
+          if (readMoreIcon) readMoreIcon.style.transform = 'rotate(180deg)';
+          readMoreBtn.setAttribute('aria-expanded', 'true');
+        }
+      }
+      return;
+    }
+
+    // 8. Variant / Option Selection Button
+    const optBtn = e.target.closest('.pp-opt-btn');
+    if (optBtn) {
+      e.preventDefault();
+      const group = optBtn.closest('.pp-option-values') || optBtn.closest('.pp-option-group');
+      if (group) {
+        group.querySelectorAll('.pp-opt-btn').forEach(b => b.classList.remove('is-active'));
+        optBtn.classList.add('is-active');
+      }
+      // If product has variants JSON, match selected options and update price/sku/hidden input
+      const variantsJsonEl = document.getElementById('pp-variants-json');
+      if (variantsJsonEl) {
+        try {
+          const variants = JSON.parse(variantsJsonEl.textContent || '[]');
+          const activeBtns = Array.from(document.querySelectorAll('.pp-option-group .pp-opt-btn.is-active'));
+          const selectedVals = activeBtns.map(b => b.getAttribute('data-value') || b.textContent.trim());
+          const matched = variants.find(v => {
+            return v.options && v.options.every((val, idx) => val === selectedVals[idx] || !selectedVals[idx]);
+          });
+          if (matched) {
+            const variantIdInput = document.getElementById('pp-variant-id');
+            if (variantIdInput) variantIdInput.value = matched.id;
+            const priceEl = document.getElementById('pp-price');
+            if (priceEl && matched.price) {
+              priceEl.innerHTML = (matched.price / 100).toLocaleString('en-IN', { style: 'currency', currency: 'INR', maximumFractionDigits: 0 }).replace('INR', '₹');
+            }
+            const skuEl = document.getElementById('pp-sku');
+            if (skuEl && matched.sku) skuEl.textContent = matched.sku;
+          }
+        } catch (err) {
+          console.error('Error parsing variants JSON:', err);
+        }
+      }
+      return;
+    }
+  });
+
+  // Keyboard navigation for full screen modal
+  document.addEventListener('keydown', function(e) {
+    const zoomOverlay = document.getElementById('pp-zoom-overlay');
     if (e.key === 'Escape' && zoomOverlay && zoomOverlay.classList.contains('is-active')) {
       closeZoomModal();
     }
-    if (e.key === 'ArrowLeft') setMainImage(activeIndex - 1);
-    if (e.key === 'ArrowRight') setMainImage(activeIndex + 1);
+    if (e.key === 'ArrowLeft') setMainImage(window.ppActiveIndex - 1);
+    if (e.key === 'ArrowRight') setMainImage(window.ppActiveIndex + 1);
   });
 
-  // Thumbnail Carousel Arrows
-  const thumbPrev = document.querySelector('.pp-thumb-nav-prev');
-  const thumbNext = document.querySelector('.pp-thumb-nav-next');
-  const thumbWrapper = document.querySelector('.pp-thumbnails-wrapper');
-  if(thumbPrev && thumbWrapper) {
-    thumbPrev.addEventListener('click', () => {
-      thumbWrapper.scrollBy({ left: -200, behavior: 'smooth' });
-    });
-  }
-  if(thumbNext && thumbWrapper) {
-    thumbNext.addEventListener('click', () => {
-      thumbWrapper.scrollBy({ left: 200, behavior: 'smooth' });
-    });
-  }
-
-  // Read More Toggle
-  const readMoreBtn = document.getElementById('pp-read-more-btn');
-  const descShort = document.querySelector('.pp-desc-short');
-  const descFull = document.querySelector('.pp-desc-full');
-  const readMoreText = document.querySelector('.pp-read-more-text');
-  const readMoreIcon = document.querySelector('.pp-read-more-icon');
-  if(readMoreBtn && descShort && descFull) {
-    readMoreBtn.addEventListener('click', () => {
-      const isExpanded = readMoreBtn.getAttribute('aria-expanded') === 'true';
-      if(isExpanded) {
-        descShort.style.display = 'inline';
-        descFull.style.display = 'none';
-        if(readMoreText) readMoreText.textContent = 'Read More';
-        if(readMoreIcon) readMoreIcon.style.transform = 'rotate(0deg)';
-        readMoreBtn.setAttribute('aria-expanded', 'false');
+  // Initialize Read More button visibility: Only show if description exceeds clamped height (2 lines)
+  function initReadMore() {
+    const descBox = document.getElementById('pp-desc-content');
+    const readMoreBtnEl = document.getElementById('pp-read-more-btn');
+    if (descBox && readMoreBtnEl) {
+      if (descBox.scrollHeight > descBox.clientHeight + 4) {
+        readMoreBtnEl.style.display = 'inline-flex';
       } else {
-        descShort.style.display = 'none';
-        descFull.style.display = 'inline';
-        if(readMoreText) readMoreText.textContent = 'Read Less';
-        if(readMoreIcon) readMoreIcon.style.transform = 'rotate(180deg)';
-        readMoreBtn.setAttribute('aria-expanded', 'true');
-      }
-    });
-  }
-
-  // Accordions
-  const accHeaders = document.querySelectorAll('.pp-acc-header, .pp-full-accordion-header');
-  accHeaders.forEach(h => {
-    h.addEventListener('click', () => {
-      const item = h.parentElement;
-      const isOpen = item.classList.contains('is-open');
-      const content = item.querySelector('.pp-acc-content, .pp-full-accordion-content');
-      const chevron = item.querySelector('.pp-acc-chevron');
-      
-      document.querySelectorAll('.pp-acc-item, .pp-full-accordion-item').forEach(i => {
-        i.classList.remove('is-open');
-        const c = i.querySelector('.pp-acc-content, .pp-full-accordion-content');
-        if(c) c.style.display = 'none';
-      });
-      
-      if (!isOpen) {
-        item.classList.add('is-open');
-        h.setAttribute('aria-expanded', 'true');
-        if(content) content.style.display = 'block';
-      } else {
-        h.setAttribute('aria-expanded', 'false');
-        if(content) content.style.display = 'none';
-      }
-    });
-  });
-
-  // Variant Picking
-  const variantsJsonEl = document.getElementById('pp-variants-json');
-  let variants = [];
-  try {
-    if(variantsJsonEl) variants = JSON.parse(variantsJsonEl.textContent);
-  } catch(e){}
-
-  const formatMoney = (cents) => '₹' + (cents/100).toLocaleString('en-IN', {minimumFractionDigits: 0, maximumFractionDigits: 0});
-
-  const optGroups = document.querySelectorAll('.pp-option-group');
-  optGroups.forEach(group => {
-    const btns = group.querySelectorAll('.pp-opt-btn');
-    btns.forEach(btn => {
-      btn.addEventListener('click', () => {
-        btns.forEach(b => b.classList.remove('is-active'));
-        btn.classList.add('is-active');
-        
-        // Find matching variant
-        const selectedOptions = Array.from(optGroups).map(g => {
-          const activeBtn = g.querySelector('.is-active');
-          return activeBtn ? activeBtn.getAttribute('data-value') : null;
-        });
-
-        const currentVariant = variants.find(v => {
-          return v.options && v.options.every((opt, i) => opt === selectedOptions[i]);
-        });
-
-        if(currentVariant) {
-          const idInput = document.getElementById('pp-variant-id');
-          if(idInput) idInput.value = currentVariant.id;
-
-          const skuEl = document.getElementById('pp-sku');
-          if(skuEl) skuEl.textContent = currentVariant.sku || '';
-
-          if (currentVariant.featured_image) {
-            const variantImgUrl = currentVariant.featured_image.src.split('?')[0];
-            const thumbItems = document.querySelectorAll('.pp-thumb-item');
-            const matchIndex = Array.from(thumbItems).findIndex(t => {
-               const thumbSrc = t.getAttribute('data-image');
-               return thumbSrc && thumbSrc.includes(variantImgUrl);
-            });
-            if (matchIndex !== -1) {
-              setMainImage(matchIndex);
-            } else if (mainImg) {
-              mainImg.style.opacity = 0;
-              setTimeout(() => {
-                mainImg.src = currentVariant.featured_image.src;
-                mainImg.style.opacity = 1;
-              }, 150);
-            }
-          }
-
-          const priceEl = document.getElementById('pp-price');
-          if(priceEl) priceEl.textContent = formatMoney(currentVariant.price);
-
-          const compPriceEl = document.getElementById('pp-compare-price');
-          const discountEl = document.querySelector('.pp-price-discount');
-          if(compPriceEl) {
-             if(currentVariant.compare_at_price > currentVariant.price) {
-               compPriceEl.textContent = formatMoney(currentVariant.compare_at_price);
-               compPriceEl.style.display = 'inline';
-               if(discountEl) {
-                 const diff = currentVariant.compare_at_price - currentVariant.price;
-                 const pct = Math.round((diff / currentVariant.compare_at_price) * 100);
-                 discountEl.textContent = pct + '% OFF';
-                 discountEl.style.display = 'inline';
-               }
-             } else {
-               compPriceEl.style.display = 'none';
-               if(discountEl) discountEl.style.display = 'none';
-             }
-          }
-          
-          if(history.replaceState) {
-            const url = window.location.protocol + '//' + window.location.host + window.location.pathname + '?variant=' + currentVariant.id;
-            window.history.replaceState({path: url}, '', url);
-          }
-        }
-      });
-    });
-  });
-
-  // Qty
-  const qtyInput = document.querySelector('.pp-qty-val');
-  const qtyDec = document.querySelector('.pp-qty-btn.dec');
-  const qtyInc = document.querySelector('.pp-qty-btn.inc');
-
-  if(qtyDec && qtyInc && qtyInput) {
-    qtyDec.addEventListener('click', () => {
-      let val = parseInt(qtyInput.value) || 1;
-      if(val > 1) qtyInput.value = val - 1;
-    });
-    qtyInc.addEventListener('click', () => {
-      let val = parseInt(qtyInput.value) || 1;
-      qtyInput.value = val + 1;
-    });
-  }
-
-  // Add to Cart
-  const form = document.getElementById('pp-product-form');
-  const btnAdd = document.querySelector('.pp-btn-add');
-  if(form && btnAdd) {
-    form.addEventListener('submit', (e) => {
-      e.preventDefault();
-      const origHtml = btnAdd.innerHTML;
-      btnAdd.innerHTML = 'Adding...';
-      fetch((window.Shopify?.routes?.root || '/') + 'cart/add.js', {
-        method: 'POST',
-        body: new FormData(form)
-      })
-      .then(() => {
-        btnAdd.innerHTML = 'Added!';
-        if(window.openCartDrawer) window.openCartDrawer();
-        setTimeout(() => btnAdd.innerHTML = origHtml, 2000);
-      })
-      .catch(() => {
-        btnAdd.innerHTML = 'Error';
-        setTimeout(() => btnAdd.innerHTML = origHtml, 2000);
-      });
-    });
-  }
-
-  // Buy Now
-  const btnBuy = document.getElementById('pp-buy-now');
-  if(form && btnBuy) {
-    btnBuy.addEventListener('click', (e) => {
-      e.preventDefault();
-      btnBuy.textContent = 'Processing...';
-      fetch((window.Shopify?.routes?.root || '/') + 'cart/add.js', {
-        method: 'POST',
-        body: new FormData(form)
-      })
-      .then(() => {
-        window.location.href = '/checkout';
-      })
-      .catch(() => {
-        btnBuy.textContent = 'Error';
-        setTimeout(() => btnBuy.textContent = 'Buy Now', 2000);
-    });
-  }
-
-  // Product Recommendations & Carousel Navigation
-  class ProductRecommendations extends HTMLElement {
-    constructor() { super(); }
-    connectedCallback() {
-      const handleIntersection = (entries, observer) => {
-        if (!entries[0].isIntersecting) return;
-        observer.unobserve(this);
-        if (this.dataset.url) {
-          fetch(this.dataset.url)
-            .then(response => response.text())
-            .then(text => {
-              const html = document.createElement('div');
-              html.innerHTML = text;
-              const recommendations = html.querySelector('product-recommendations');
-              if (recommendations && recommendations.innerHTML.trim().length) {
-                this.innerHTML = recommendations.innerHTML;
-              }
-              this.initCarousel();
-            })
-            .catch(e => { console.error(e); this.initCarousel(); });
-        } else {
-          this.initCarousel();
-        }
-      };
-      new IntersectionObserver(handleIntersection.bind(this), {rootMargin: '0px 0px 200px 0px'}).observe(this);
-      this.initCarousel();
-    }
-    initCarousel() {
-      const grid = this.querySelector('.pp-related-grid');
-      const prev = this.querySelector('.pp-rel-prev');
-      const next = this.querySelector('.pp-rel-next');
-      if (grid && prev && next) {
-        prev.addEventListener('click', () => {
-          grid.scrollBy({ left: -320, behavior: 'smooth' });
-        });
-        next.addEventListener('click', () => {
-          grid.scrollBy({ left: 320, behavior: 'smooth' });
-        });
+        readMoreBtnEl.style.display = 'none';
       }
     }
   }
-  if (!customElements.get('product-recommendations')) {
-    customElements.define('product-recommendations', ProductRecommendations);
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initReadMore);
+  } else {
+    setTimeout(initReadMore, 100);
   }
-});
+})();
 </script>
 
 <div class="pp-zoom-overlay" id="pp-zoom-overlay" role="dialog" aria-modal="true" aria-label="Fullscreen Zoom Gallery">
   <button class="pp-zoom-close" id="pp-zoom-close" aria-label="Close Zoom">
     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6L6 18M6 6l12 12"/></svg>
   </button>
-  <button class="pp-zoom-nav pp-zoom-prev" id="pp-zoom-prev" aria-label="Previous Zoom Image">
-    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg>
-  </button>
   <img id="pp-zoom-img" src="" alt="Zoomed Luxury Jewelry" width="1600" height="1600">
-  <button class="pp-zoom-nav pp-zoom-next" id="pp-zoom-next" aria-label="Next Zoom Image">
-    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg>
-  </button>
 </div>
 
 <!-- Zoom logic integrated into unified gallery controller above -->
