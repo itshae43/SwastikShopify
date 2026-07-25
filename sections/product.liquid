@@ -431,7 +431,7 @@
   .pp-breadcrumb-item {
     display: inline-flex;
     align-items: center;
-    flex-wrap: wrap;
+    flex-wrap: nowrap !important;
   }
   .pp-breadcrumb-link {
     color: var(--pp-text-muted);
@@ -446,7 +446,7 @@
     text-decoration: underline;
   }
   .pp-home-icon { color: var(--pp-accent); display: flex; align-items: center; }
-  .pp-breadcrumb-separator { display: inline-flex; align-items: center; color: #CCCCCC; margin-right: 10px; }
+  .pp-breadcrumb-separator { display: inline-flex; align-items: center; color: #CCCCCC; margin-right: 10px; flex-shrink: 0; }
   .pp-breadcrumb-current { color: var(--pp-primary); font-weight: 600; word-break: break-word; }
 
   /* ==========================================================================
@@ -507,7 +507,7 @@
     margin: 0 auto;
   }
   .pp-main-img-container { width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; padding: 0; }
-  #pp-main-image { width: 100%; height: 100%; object-fit: cover; transition: transform 0.35s cubic-bezier(0.25, 0.46, 0.45, 0.94); }
+  /* #pp-main-image styled below in zoom overlay section */
 
   .pp-wishlist-btn {
     position: absolute; top: 18px; right: 18px; width: 44px; height: 44px; border-radius: 50%;
@@ -835,18 +835,105 @@
   .pp-related-item-title { font-family: var(--pp-font-sans); font-size: 15px; font-weight: 600; color: var(--pp-primary); margin: 0; line-height: 1.4; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; min-height: 42px; }
   .pp-related-price { font-family: var(--pp-font-sans); font-weight: 700; color: #013F3E; font-size: 16px; }
   
-  /* Zoom Overlay */
-  .pp-zoom-overlay { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(0, 0, 0, 0.85); backdrop-filter: blur(8px); z-index: 9999; display: flex; align-items: center; justify-content: center; opacity: 0; pointer-events: none; transition: opacity 0.3s ease; }
+  #pp-main-image { width: 100%; height: 100%; object-fit: cover; cursor: zoom-in !important; transition: transform 0.35s cubic-bezier(0.25, 0.46, 0.45, 0.94); }
+
+  /* Zoom Overlay: Four Rounded Corner Way & Luxury Fullscreen Specifications */
+  .pp-zoom-overlay {
+    position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+    background: rgba(1, 15, 15, 0.92); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+    z-index: 99999; display: flex; align-items: center; justify-content: center;
+    opacity: 0; pointer-events: none; transition: opacity 0.35s ease; padding: 20px;
+  }
   .pp-zoom-overlay.is-active { opacity: 1; pointer-events: auto; }
-  .pp-zoom-close { position: absolute; top: 24px; right: 24px; width: 44px; height: 44px; border-radius: 50%; background: #ffffff; border: none; color: #222; cursor: pointer; display: flex; align-items: center; justify-content: center; z-index: 10000; }
-  #pp-zoom-img { max-width: 90vw; max-height: 90vh; object-fit: contain; transform: scale(0.95); transition: transform 0.3s ease; }
-  .pp-zoom-overlay.is-active #pp-zoom-img { transform: scale(1); }
+  
+  .pp-zoom-close {
+    position: absolute; top: 24px; right: 24px; width: 48px; height: 48px; border-radius: 50%;
+    background: #FFFFFF; border: none; color: #013F3E; cursor: pointer; display: flex; align-items: center; justify-content: center;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.4); z-index: 100000; transition: all 0.25s ease;
+  }
+  .pp-zoom-close:hover { background: #E53E3E; color: #FFFFFF; transform: scale(1.1) rotate(90deg); }
+  
+  /* Four Rounded Corner Way in Full Screen Mode */
+  #pp-zoom-img {
+    max-width: 88vw !important;
+    max-height: 84vh !important;
+    object-fit: contain !important;
+    border-radius: 24px !important;
+    box-shadow: 0 35px 100px rgba(0, 0, 0, 0.8) !important;
+    border: 2px solid rgba(255, 255, 255, 0.2) !important;
+    background: #FAF7F0 !important;
+    transform: scale(0.92);
+    transition: transform 0.35s cubic-bezier(0.2, 0.8, 0.2, 1) !important;
+    cursor: default !important;
+  }
+  .pp-zoom-overlay.is-active #pp-zoom-img { transform: scale(1) !important; }
+
+  /* Full Screen Navigation Arrows */
+  .pp-zoom-nav {
+    position: absolute; top: 50%; transform: translateY(-50%); width: 52px; height: 52px; border-radius: 50%;
+    background: #FFFFFF; border: none; box-shadow: 0 8px 30px rgba(0,0,0,0.35); display: flex; align-items: center; justify-content: center;
+    cursor: pointer; z-index: 100000; color: #013F3E; transition: all 0.25s ease;
+  }
+  .pp-zoom-nav:hover { background: #013F3E; color: #FFFFFF; transform: translateY(-50%) scale(1.1); }
+  .pp-zoom-prev { left: 32px; }
+  .pp-zoom-next { right: 32px; }
+  @media screen and (max-width: 767px) {
+    .pp-zoom-nav { width: 42px; height: 42px; }
+    .pp-zoom-prev { left: 12px; }
+    .pp-zoom-next { right: 12px; }
+    .pp-zoom-close { top: 16px; right: 16px; width: 42px; height: 42px; }
+    #pp-zoom-img { border-radius: 16px !important; max-width: 94vw !important; max-height: 80vh !important; }
+  }
 
   /* Responsive Mobile Tweaks */
   @media screen and (max-width: 767px) {
-    .pp-container { gap: 24px; padding: 0 16px; margin-bottom: 36px; }
-    .pp-title { font-size: 28px; line-height: 1.25; margin-bottom: 12px; }
-    .pp-price-current { font-size: 26px; }
+    .pp-container { gap: 20px; padding: 0 16px; margin-bottom: 36px; }
+    
+    /* Perfect Mobile Typography: Smaller, proportional font sizes so long titles never overflow or get cut off! */
+    .pp-title { font-size: 23px !important; line-height: 1.32 !important; margin-bottom: 10px !important; word-wrap: break-word !important; overflow-wrap: break-word !important; letter-spacing: 0.01em !important; }
+    .pp-price-current { font-size: 23px !important; font-weight: 700 !important; }
+    
+    /* Luxury Mobile Breadcrumb UI: Single line nowrap with intelligent ellipsis truncation so long titles never push separators onto line 2 or cut off first letters! */
+    .pp-breadcrumb-list {
+      font-size: 11.5px !important;
+      gap: 6px !important;
+      flex-wrap: nowrap !important;
+      overflow-x: auto !important;
+      white-space: nowrap !important;
+      padding: 4px 0 !important;
+      width: 100% !important;
+      display: flex !important;
+      align-items: center !important;
+      scrollbar-width: none;
+      -ms-overflow-style: none;
+    }
+    .pp-breadcrumb-list::-webkit-scrollbar { display: none; }
+    .pp-breadcrumb-item {
+      display: inline-flex !important;
+      align-items: center !important;
+      flex-shrink: 0 !important;
+      white-space: nowrap !important;
+      flex-wrap: nowrap !important;
+    }
+    .pp-breadcrumb-link {
+      font-size: 11.5px !important;
+      max-width: 110px !important;
+      overflow: hidden !important;
+      text-overflow: ellipsis !important;
+      white-space: nowrap !important;
+      display: inline-block !important;
+      vertical-align: middle !important;
+    }
+    .pp-breadcrumb-current {
+      font-size: 11.5px !important;
+      max-width: 135px !important;
+      overflow: hidden !important;
+      text-overflow: ellipsis !important;
+      white-space: nowrap !important;
+      display: inline-block !important;
+      vertical-align: middle !important;
+    }
+    .pp-breadcrumb-separator { margin-right: 6px !important; margin-left: 2px !important; display: inline-flex !important; align-items: center !important; flex-shrink: 0 !important; }
         .pp-actions-row { flex-direction: column !important; gap: 14px !important; }
     .pp-btn-add, .pp-btn-buy { min-height: 56px !important; height: 56px !important; font-size: 16px !important; border-radius: 8px !important; width: 100% !important; }
     .pp-bottom-card { padding: 22px 16px; border-radius: 16px; }
@@ -872,35 +959,135 @@
 
 <script>
 document.addEventListener('DOMContentLoaded', () => {
-  // Gallery
+  // ==========================================
+  // LUXURY INSTANT GALLERY & FULLSCREEN ZOOM
+  // ==========================================
   const thumbs = document.querySelectorAll('.pp-thumb-item');
   const mainImg = document.getElementById('pp-main-image');
   const prevBtn = document.querySelector('.pp-nav-prev');
   const nextBtn = document.querySelector('.pp-nav-next');
+  const zoomBtn = document.querySelector('.pp-fullscreen-btn');
+  const zoomOverlay = document.getElementById('pp-zoom-overlay');
+  const zoomClose = document.getElementById('pp-zoom-close');
+  const zoomImg = document.getElementById('pp-zoom-img');
+  const zoomPrev = document.getElementById('pp-zoom-prev');
+  const zoomNext = document.getElementById('pp-zoom-next');
+  const thumbWrapper = document.querySelector('.pp-thumbnails-wrapper');
+
   let activeIndex = 0;
 
   function setMainImage(index) {
-    if(!thumbs.length) return;
+    if (!thumbs.length || !mainImg) return;
     activeIndex = (index + thumbs.length) % thumbs.length;
+    
+    // Update active class on thumbnails
     thumbs.forEach(t => t.classList.remove('is-active'));
     thumbs[activeIndex].classList.add('is-active');
     
-    if(mainImg) {
-      mainImg.style.opacity = 0;
-      setTimeout(() => {
-        mainImg.src = thumbs[activeIndex].getAttribute('data-image');
+    // Instant image swap without opacity timeouts that cause flickering or delay
+    const newSrc = thumbs[activeIndex].getAttribute('data-image');
+    if (newSrc && mainImg.src !== newSrc) {
+      mainImg.style.opacity = 0.5;
+      mainImg.src = newSrc;
+      requestAnimationFrame(() => {
         mainImg.style.opacity = 1;
-      }, 150);
+      });
+    }
+    if (zoomImg && zoomOverlay && zoomOverlay.classList.contains('is-active')) {
+      zoomImg.src = newSrc;
+    }
+
+    // Smoothly center the active thumbnail in the horizontal carousel
+    if (thumbWrapper) {
+      const thumbEl = thumbs[activeIndex];
+      const wrapWidth = thumbWrapper.clientWidth;
+      const thumbWidth = thumbEl.clientWidth;
+      const thumbLeft = thumbEl.offsetLeft;
+      thumbWrapper.scrollTo({
+        left: thumbLeft - (wrapWidth / 2) + (thumbWidth / 2),
+        behavior: 'smooth'
+      });
     }
   }
 
+  // Thumbnail click events
   thumbs.forEach((t, i) => {
-    t.addEventListener('click', () => setMainImage(i));
+    t.addEventListener('click', (e) => {
+      e.stopPropagation();
+      setMainImage(i);
+    });
   });
 
-  if(prevBtn) prevBtn.addEventListener('click', () => setMainImage(activeIndex - 1));
-  if(nextBtn) nextBtn.addEventListener('click', () => setMainImage(activeIndex + 1));
-  if(mainImg) mainImg.style.transition = 'opacity 0.2s ease-in-out';
+  // Main gallery arrow navigation
+  if (prevBtn) {
+    prevBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      setMainImage(activeIndex - 1);
+    });
+  }
+  if (nextBtn) {
+    nextBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      setMainImage(activeIndex + 1);
+    });
+  }
+  if (mainImg) mainImg.style.transition = 'opacity 0.2s ease-in-out, transform 0.35s cubic-bezier(0.25, 0.46, 0.45, 0.94)';
+
+  // Open Fullscreen Zoom Modal (Four Rounded Corner Way)
+  function openZoomModal() {
+    if (!zoomOverlay || !zoomImg || !mainImg) return;
+    let src = thumbs.length ? thumbs[activeIndex].getAttribute('data-image') : mainImg.src;
+    src = src.replace('width=800', 'width=1600').replace('width=1000', 'width=1600').replace('width=180', 'width=1600');
+    zoomImg.src = src;
+    zoomOverlay.classList.add('is-active');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeZoomModal() {
+    if (!zoomOverlay) return;
+    zoomOverlay.classList.remove('is-active');
+    document.body.style.overflow = '';
+  }
+
+  if (zoomBtn) {
+    zoomBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      openZoomModal();
+    });
+  }
+  if (mainImg) {
+    mainImg.addEventListener('click', (e) => {
+      e.stopPropagation();
+      openZoomModal();
+    });
+  }
+  if (zoomClose) {
+    zoomClose.addEventListener('click', closeZoomModal);
+  }
+  if (zoomOverlay) {
+    zoomOverlay.addEventListener('click', (e) => {
+      if (e.target === zoomOverlay) closeZoomModal();
+    });
+  }
+  if (zoomPrev) {
+    zoomPrev.addEventListener('click', (e) => {
+      e.stopPropagation();
+      setMainImage(activeIndex - 1);
+    });
+  }
+  if (zoomNext) {
+    zoomNext.addEventListener('click', (e) => {
+      e.stopPropagation();
+      setMainImage(activeIndex + 1);
+    });
+  }
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && zoomOverlay && zoomOverlay.classList.contains('is-active')) {
+      closeZoomModal();
+    }
+    if (e.key === 'ArrowLeft') setMainImage(activeIndex - 1);
+    if (e.key === 'ArrowRight') setMainImage(activeIndex + 1);
+  });
 
   // Thumbnail Carousel Arrows
   const thumbPrev = document.querySelector('.pp-thumb-nav-prev');
@@ -1156,42 +1343,20 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 </script>
 
-<div class="pp-zoom-overlay" id="pp-zoom-overlay">
+<div class="pp-zoom-overlay" id="pp-zoom-overlay" role="dialog" aria-modal="true" aria-label="Fullscreen Zoom Gallery">
   <button class="pp-zoom-close" id="pp-zoom-close" aria-label="Close Zoom">
-    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6L6 18M6 6l12 12"/></svg>
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6L6 18M6 6l12 12"/></svg>
   </button>
-  <img id="pp-zoom-img" src="" alt="Zoomed Image" width="1600" height="1600">
+  <button class="pp-zoom-nav pp-zoom-prev" id="pp-zoom-prev" aria-label="Previous Zoom Image">
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg>
+  </button>
+  <img id="pp-zoom-img" src="" alt="Zoomed Luxury Jewelry" width="1600" height="1600">
+  <button class="pp-zoom-nav pp-zoom-next" id="pp-zoom-next" aria-label="Next Zoom Image">
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg>
+  </button>
 </div>
 
-<script>
-document.addEventListener('DOMContentLoaded', () => {
-  const zoomBtn = document.querySelector('.pp-fullscreen-btn');
-  const zoomOverlay = document.getElementById('pp-zoom-overlay');
-  const zoomClose = document.getElementById('pp-zoom-close');
-  const zoomImg = document.getElementById('pp-zoom-img');
-  const mainImg = document.getElementById('pp-main-image');
-
-  if(zoomBtn && zoomOverlay && zoomClose && zoomImg && mainImg) {
-    zoomBtn.addEventListener('click', () => {
-      let src = mainImg.src;
-      // Change to a higher resolution if needed
-      src = src.replace('width=800', 'width=1600');
-      zoomImg.src = src;
-      zoomOverlay.classList.add('is-active');
-    });
-
-    zoomClose.addEventListener('click', () => {
-      zoomOverlay.classList.remove('is-active');
-    });
-
-    zoomOverlay.addEventListener('click', (e) => {
-      if(e.target === zoomOverlay) {
-        zoomOverlay.classList.remove('is-active');
-      }
-    });
-  }
-});
-</script>
+<!-- Zoom logic integrated into unified gallery controller above -->
 
 {% schema %}
 {
