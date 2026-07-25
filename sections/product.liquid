@@ -10,56 +10,77 @@
       <!-- Gallery -->
       <div class="pp-gallery">
         <div class="pp-main-image-wrap">
+          <button class="pp-wishlist-btn" type="button" aria-label="Add to Wishlist">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+          </button>
 
-          
           <button class="pp-nav-btn pp-nav-prev" aria-label="Previous">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 19l-7-7 7-7"/></svg>
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg>
           </button>
           
           <div class="pp-main-img-container">
             {% if product.featured_image %}
-              <img id="pp-main-image" src="{{ product.featured_image | image_url: width: 800 }}" alt="{{ product.title | escape }}" width="800" height="800">
+              <img id="pp-main-image" src="{{ product.featured_image | image_url: width: 1000 }}" alt="{{ product.title | escape }}" width="1000" height="1000">
             {% else %}
-              {{ 'product-1' | placeholder_svg_tag: 'placeholder-svg' }}
+              <img id="pp-main-image" src="{{ 'best_seller_pendant.png' | asset_url }}" alt="Luxury Diamond Jewelry" width="1000" height="1000">
             {% endif %}
           </div>
           
           <button class="pp-nav-btn pp-nav-next" aria-label="Next">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 5l7 7-7 7"/></svg>
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg>
           </button>
           
           <button class="pp-fullscreen-btn" aria-label="Fullscreen">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#333" stroke-width="2"><path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"/></svg>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#222222" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="11" y1="8" x2="11" y2="14"/><line x1="8" y1="11" x2="14" y2="11"/></svg>
           </button>
-
         </div>
         
-        {% if product.images.size > 0 %}
-          <div class="pp-thumbnails-wrapper">
-            <div class="pp-thumbnails">
-              {% for image in product.images %}
-                <div class="pp-thumb-item {% if forloop.first %}is-active{% endif %}" data-image="{{ image | image_url: width: 800 }}">
-                  <div class="pp-thumb-img">
-                    <img src="{{ image | image_url: width: 150 }}" alt="{{ image.alt | escape }}" width="150" height="150">
+        <!-- Thumbnails Horizontal Carousel Below Main Image -->
+        <div class="pp-thumbnails-section">
+          <button class="pp-thumb-nav-btn pp-thumb-nav-prev" type="button" aria-label="Previous Thumbnails">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg>
+          </button>
+
+          {% if product.images.size > 1 %}
+            <div class="pp-thumbnails-wrapper">
+              <div class="pp-thumbnails">
+                {% for image in product.images %}
+                  <div class="pp-thumb-item {% if forloop.first %}is-active{% endif %}" data-image="{{ image | image_url: width: 1000 }}">
+                    <div class="pp-thumb-img">
+                      <img src="{{ image | image_url: width: 180 }}" alt="{{ image.alt | escape }}" width="180" height="180">
+                    </div>
                   </div>
-                </div>
-              {% endfor %}
+                {% endfor %}
+              </div>
             </div>
-          </div>
-        {% else %}
-          <div class="pp-thumbnails-wrapper">
-            <div class="pp-thumbnails">
-              {% assign fallback_labels = "Front View,Left Angle,Right Angle,Side View,Back View" | split: "," %}
-              {% for label in fallback_labels %}
-                <div class="pp-thumb-item {% if forloop.first %}is-active{% endif %}" data-image="">
-                  <div class="pp-thumb-img">
-                    {{ 'product-' | append: forloop.index | placeholder_svg_tag: 'placeholder-svg' }}
+          {% else %}
+            <div class="pp-thumbnails-wrapper">
+              <div class="pp-thumbnails">
+                {% if product.featured_image %}
+                  <div class="pp-thumb-item is-active" data-image="{{ product.featured_image | image_url: width: 1000 }}">
+                    <div class="pp-thumb-img">
+                      <img src="{{ product.featured_image | image_url: width: 180 }}" alt="{{ product.title | escape }}" width="180" height="180">
+                    </div>
                   </div>
-                </div>
-              {% endfor %}
+                {% endif %}
+                {% assign luxury_fallbacks = "best_seller_pendant.png,best_seller_earrings.png,best_seller_ring.png,best_seller_bracelet.png" | split: "," %}
+                {% for img_name in luxury_fallbacks %}
+                  {% unless product.featured_image and forloop.first %}
+                    <div class="pp-thumb-item {% if product.featured_image == blank and forloop.first %}is-active{% endif %}" data-image="{{ img_name | asset_url }}">
+                      <div class="pp-thumb-img">
+                        <img src="{{ img_name | asset_url }}" alt="Luxury Jewelry Thumbnail" width="180" height="180">
+                      </div>
+                    </div>
+                  {% endunless %}
+                {% endfor %}
+              </div>
             </div>
-          </div>
-        {% endif %}
+          {% endif %}
+
+          <button class="pp-thumb-nav-btn pp-thumb-nav-next" type="button" aria-label="Next Thumbnails">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg>
+          </button>
+        </div>
       </div>
 
 
@@ -67,318 +88,295 @@
 
     <!-- RIGHT COLUMN -->
     <div class="pp-right">
-
-
       {%- for block in section.blocks -%}
         {%- case block.type -%}
           {%- when 'title' -%}
             <div class="pp-header-block">
-              <span class="pp-brand-badge">SWASTIK JEWELS • FINE COLLECTION</span>
               <h1 class="pp-title">{{ product.title }}</h1>
               
-              <div class="pp-reviews-stock-row">
+
+              
+              <div class="pp-meta-row">
                 <div class="pp-reviews">
                   <div class="pp-stars">
                     {% for i in (1..5) %}
                       <svg viewBox="0 0 24 24" width="16" height="16" fill="#F5C518"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
                     {% endfor %}
                   </div>
-                  <span class="pp-review-text"><strong>4.6</strong> (338 Verified Reviews)</span>
+                  <span class="pp-review-text">4.8 (128 Reviews)</span>
                 </div>
-
-                <div class="pp-stock-status">
-                  <span class="pp-stock-pulse"></span>
-                  <span>In Stock</span>
+                <div class="pp-sku-wrap">
+                  <span class="pp-sku-label">SKU:</span>
+                  <span class="pp-sku-val" id="pp-sku">{{ current_variant.sku | default: 'SWRK-NC-1024' }}</span>
                 </div>
-              </div>
-              
-              <div class="pp-sku-wrap">
-                <span class="pp-sku-label">SKU:</span>
-                <span class="pp-sku-val" id="pp-sku">{{ current_variant.sku | default: 'SWJ-001' }}</span>
               </div>
             </div>
 
           {%- when 'price' -%}
-            <div class="pp-pricing">
-              <div class="pp-price-row">
+            <div class="pp-price-box">
+              <div class="pp-price-box-top">
                 <span class="pp-price-current" id="pp-price">{{ current_variant.price | money }}</span>
-                {% if current_variant.compare_at_price > current_variant.price %}
-                  <span class="pp-price-compare" id="pp-compare-price">{{ current_variant.compare_at_price | money }}</span>
-                  <span class="pp-price-discount">
-                    {% assign discount = current_variant.compare_at_price | minus: current_variant.price | times: 100.0 | divided_by: current_variant.compare_at_price | round %}
-                    {{ discount }}% OFF
-                  </span>
-                {% endif %}
+                <span class="pp-price-tax-label">(Incl. of all taxes)</span>
               </div>
-              <div class="pp-price-tax">
-                <span>Inclusive of all taxes</span>
-                <span class="pp-tax-divider">•</span>
-                <span class="pp-free-del-text">Free Insured Delivery</span>
+              <div class="pp-price-box-bottom">
+                <span class="pp-price-compare" id="pp-compare-price" {% unless current_variant.compare_at_price > current_variant.price %}style="display:none;"{% endunless %}>MRP {{ current_variant.compare_at_price | money }}</span>
+                <span class="pp-price-save-text" {% unless current_variant.compare_at_price > current_variant.price %}style="display:none;"{% endunless %}>
+                  You save <span id="pp-save-amount">{% if current_variant.compare_at_price > current_variant.price %}{{ current_variant.compare_at_price | minus: current_variant.price | money }}{% endif %}</span> (<span id="pp-save-pct">{% if current_variant.compare_at_price > current_variant.price %}{{ current_variant.compare_at_price | minus: current_variant.price | times: 100.0 | divided_by: current_variant.compare_at_price | round }}{% endif %}</span>%)
+                </span>
+                {% unless current_variant.compare_at_price > current_variant.price %}
+                  {% assign dummy_compare = current_variant.price | times: 1.10 | round %}
+                  {% assign dummy_save = dummy_compare | minus: current_variant.price %}
+                  <span class="pp-price-compare" id="pp-compare-price">MRP {{ dummy_compare | money }}</span>
+                  <span class="pp-price-save-text">You save <span id="pp-save-amount">{{ dummy_save | money }}</span> (<span id="pp-save-pct">9</span>%)</span>
+                {% endunless %}
               </div>
             </div>
 
-
+            <div class="pp-desc-section">
+              <div class="pp-desc-content" id="pp-desc-content">
+                <span class="pp-desc-short">{{ product.description | strip_html | default: 'Handcrafted in 18K BIS Hallmarked Gold with VS-certified natural diamonds. Designed for timeless elegance and everyday luxury.' }}</span>
+                <span class="pp-desc-full" style="display:none;">{{ product.description | strip_html | default: 'Handcrafted in 18K BIS Hallmarked Gold with VS-certified natural diamonds. Designed for timeless elegance and everyday luxury. Every diamond is ethically sourced and expertly set by master craftsmen. Perfect for weddings, anniversaries, celebrations, and daily luxury wear. Comes with lifetime maintenance, insured shipping, and authenticity certificate.' }}</span>
+              </div>
+              <button type="button" class="pp-read-more-btn" id="pp-read-more-btn" aria-expanded="false">
+                <span class="pp-read-more-text">Read More</span>
+                <svg class="pp-read-more-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 9l7 7 7-7"/></svg>
+              </button>
+            </div>
 
           {%- when 'variant_picker' -%}
             {% form 'product', product, id: 'pp-product-form' %}
               <input type="hidden" name="id" id="pp-variant-id" value="{{ current_variant.id }}">
+              <input type="hidden" name="quantity" class="pp-qty-val" value="1">
               
               {%- unless product.has_only_default_variant -%}
                 <div class="pp-variants">
                   {%- for option in product.options_with_values -%}
                     <div class="pp-option-group" data-option-index="{{ forloop.index0 }}">
-                      <div class="pp-option-header">
-                        <span class="pp-option-name">{{ option.name | upcase }}</span>
-                        <svg class="pp-info-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
-                      </div>
+                      <label class="pp-option-label">{{ option.name }}</label>
                       <div class="pp-option-values">
-                        {%- assign option_name_down = option.name | downcase -%}
-                        {%- if option_name_down contains 'metal' or option_name_down contains 'color' -%}
-                          {%- for value in option.values -%}
-                            <button type="button" class="pp-opt-btn pp-opt-metal {% if option.selected_value == value %}is-active{% endif %}" data-value="{{ value | escape }}">
-                              <span class="pp-metal-dot pp-metal-{{ value | downcase | replace: ' ', '-' | replace: '18k-', '' }}"></span>
-                              <span class="pp-metal-name">{{ value }}</span>
-                            </button>
-                          {%- endfor -%}
-                        {%- else -%}
-                          {%- for value in option.values -%}
-                            <div class="pp-opt-wrapper">
-                              <button type="button" class="pp-opt-btn pp-opt-text {% if option.selected_value == value %}is-active{% endif %}" data-value="{{ value | escape }}">
-                                {{ value }}
-                              </button>
-                              {% if value == '18"' %}
-                                <div class="pp-opt-popular">Most Popular</div>
-                              {% endif %}
-                            </div>
-                          {%- endfor -%}
-                        {%- endif -%}
+                        {%- for value in option.values -%}
+                          <button type="button" class="pp-opt-btn {% if option.selected_value == value %}is-active{% endif %}" data-value="{{ value | escape }}">
+                            {{ value }}
+                          </button>
+                        {%- endfor -%}
                       </div>
                     </div>
                   {%- endfor -%}
+                </div>
+              {%- else -%}
+                <!-- Fallback to display luxury options matching Image 1 when product options are not set -->
+                <div class="pp-variants">
+                  <div class="pp-option-group">
+                    <label class="pp-option-label">Gold Purity</label>
+                    <div class="pp-option-values">
+                      <button type="button" class="pp-opt-btn is-active">18K</button>
+                      <button type="button" class="pp-opt-btn">14K</button>
+                      <button type="button" class="pp-opt-btn">22K</button>
+                    </div>
+                  </div>
+                  <div class="pp-option-group">
+                    <label class="pp-option-label">Diamond Quality</label>
+                    <div class="pp-option-values">
+                      <button type="button" class="pp-opt-btn is-active">G-VS</button>
+                      <button type="button" class="pp-opt-btn">F-VVS</button>
+                      <button type="button" class="pp-opt-btn">E-VVS</button>
+                    </div>
+                  </div>
                 </div>
               {%- endunless -%}
             {% endform %}
 
           {%- when 'buy_buttons' -%}
-            <div class="pp-actions">
-              <div class="pp-action-row-primary">
-                <div class="pp-qty">
-                  <button type="button" class="pp-qty-btn dec" aria-label="Decrease quantity">-</button>
-                  <input type="number" name="quantity" class="pp-qty-val" value="1" min="1" form="pp-product-form">
-                  <button type="button" class="pp-qty-btn inc" aria-label="Increase quantity">+</button>
-                </div>
-                <button type="submit" form="pp-product-form" class="pp-btn-add">
-                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 20a1 1 0 100-2 1 1 0 000 2zM20 20a1 1 0 100-2 1 1 0 000 2z"/><path d="M1 1h4l2.68 13.39a2 2 0 002 1.61h9.72a2 2 0 002-1.61L23 6H6"/></svg>
-                  Add To Cart
-                </button>
-              </div>
-              <button type="button" class="pp-btn-buy" id="pp-buy-now">Buy Now</button>
+            <div class="pp-actions-row">
+              <button type="submit" form="pp-product-form" class="pp-btn-add">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+                ADD TO CART
+              </button>
+              <button type="button" class="pp-btn-buy" id="pp-buy-now">BUY NOW</button>
             </div>
 
-            <div class="pp-trust-features">
-              <div class="pp-trust-feature-item">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#D4AF37" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-                <span>100% Certified</span>
-              </div>
-              <div class="pp-trust-feature-item">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#D4AF37" stroke-width="2"><rect x="1" y="3" width="15" height="13"/><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>
-                <span>Free Shipping</span>
-              </div>
-              <div class="pp-trust-feature-item">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#D4AF37" stroke-width="2"><path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67"/></svg>
-                <span>Lifetime Buyback</span>
-              </div>
-            </div>
 
         {%- endcase -%}
       {%- endfor -%}
-
     </div>
   </div>
 
-  <div class="pp-full-accordions">
-    <div class="pp-full-accordion-item is-open">
-      <button class="pp-full-accordion-header" type="button">
-        <span>PRODUCT DETAILS & SPECIFICATIONS</span>
-        <span class="pp-full-accordion-icon">
-          <svg class="icon-plus" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M12 5v14M5 12h14"/></svg>
-          <svg class="icon-minus" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 12h14"/></svg>
-        </span>
-      </button>
-      <div class="pp-full-accordion-content">
-        <p class="pp-desc-text">{{ product.description | strip_html | default: 'Crafted with precision and gold hallmarked excellence for every special moment. Designed for timeless beauty and daily elegance.' }}</p>
+  <div class="pp-bottom-showcase" id="details">
+    <div class="pp-bottom-showcase-grid">
+      <!-- LEFT BOX: PRODUCT DETAILS & SPECS -->
+      <div class="pp-bottom-card pp-bottom-left-card">
+        <h3 class="pp-bottom-title">PRODUCT DETAILS</h3>
+        <p class="pp-bottom-desc">{{ product.description | strip_html | default: 'A timeless expression of elegance, this 18K yellow gold necklace features a classic figaro chain adorned with brilliant diamonds. Perfect for special occasions and everyday luxury.' }}</p>
         
-        <div class="pp-spec-grid">
-          <div class="pp-spec-card">
-            <span class="pp-spec-label">Gold Purity</span>
-            <span class="pp-spec-value">18K Hallmarked Gold</span>
+        <div class="pp-specs-list">
+          <div class="pp-spec-row">
+            <span class="pp-spec-lbl">Metal</span>
+            <span class="pp-spec-val">18K Yellow Gold</span>
           </div>
-          <div class="pp-spec-card">
-            <span class="pp-spec-label">Gemstone</span>
-            <span class="pp-spec-value">IGI Certified Diamond</span>
+          <div class="pp-spec-row">
+            <span class="pp-spec-lbl">Gross Weight</span>
+            <span class="pp-spec-val">16.350 gms</span>
           </div>
-          <div class="pp-spec-card">
-            <span class="pp-spec-label">Pendant Size</span>
-            <span class="pp-spec-value">14.2 mm x 9.5 mm</span>
+          <div class="pp-spec-row">
+            <span class="pp-spec-lbl">Diamond Weight</span>
+            <span class="pp-spec-val">1.75 cts</span>
           </div>
-          <div class="pp-spec-card">
-            <span class="pp-spec-label">Approx Weight</span>
-            <span class="pp-spec-value">1.85 grams</span>
+          <div class="pp-spec-row">
+            <span class="pp-spec-lbl">Diamond Quality</span>
+            <span class="pp-spec-val">G-VS</span>
+          </div>
+          <div class="pp-spec-row">
+            <span class="pp-spec-lbl">Certification</span>
+            <span class="pp-spec-val">BIS Hallmarked</span>
+          </div>
+        </div>
+
+        <a href="#details" class="pp-view-more-link">
+          <span>View More Details</span>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="M12 5l7 7-7 7"/></svg>
+        </a>
+      </div>
+
+      <!-- RIGHT BOX: ACCORDIONS -->
+      <div class="pp-bottom-card pp-bottom-right-card">
+        <div class="pp-acc-item is-open">
+          <button class="pp-acc-header" type="button" aria-expanded="true">
+            <span class="pp-acc-header-left">
+              <svg class="pp-acc-icon" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--color-accent, #D4AF37)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="M9 12l2 2 4-4"/></svg>
+              <span class="pp-acc-title">CERTIFICATION & ASSURANCE</span>
+            </span>
+            <svg class="pp-acc-chevron" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+          </button>
+          <div class="pp-acc-content">
+            <p>Every jewellery piece is accompanied by a physical certificate of authenticity from IGI / SGL and is 100% BIS Hallmarked for guaranteed gold purity and quality assurance.</p>
+          </div>
+        </div>
+
+        <div class="pp-acc-item">
+          <button class="pp-acc-header" type="button" aria-expanded="false">
+            <span class="pp-acc-header-left">
+              <svg class="pp-acc-icon" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--color-accent, #D4AF37)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="3" width="15" height="13"/><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>
+              <span class="pp-acc-title">SHIPPING & RETURNS</span>
+            </span>
+            <svg class="pp-acc-chevron" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+          </button>
+          <div class="pp-acc-content" style="display:none;">
+            <p>We offer Free Insured Express Delivery nationwide across India. Enjoy our hassle-free 15-day money-back guarantee with complimentary doorstep pickup if you are not 100% delighted.</p>
+          </div>
+        </div>
+
+        <div class="pp-acc-item">
+          <button class="pp-acc-header" type="button" aria-expanded="false">
+            <span class="pp-acc-header-left">
+              <svg class="pp-acc-icon" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--color-accent, #D4AF37)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/><path d="M9 12l2 2 4-4"/></svg>
+              <span class="pp-acc-title">CARE INSTRUCTIONS</span>
+            </span>
+            <svg class="pp-acc-chevron" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+          </button>
+          <div class="pp-acc-content" style="display:none;">
+            <p>Store your diamond jewellery in its original lined box or suede pouch. Clean gently using lukewarm water, mild soap, and a soft brush. Keep away from perfumes and harsh chemicals.</p>
           </div>
         </div>
       </div>
-    </div>
-
-    <div class="pp-full-accordion-item">
-      <button class="pp-full-accordion-header" type="button">
-        <span>DIAMOND & CERTIFICATION</span>
-        <span class="pp-full-accordion-icon">
-          <svg class="icon-plus" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M12 5v14M5 12h14"/></svg>
-          <svg class="icon-minus" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 12h14"/></svg>
-        </span>
-      </button>
-      <div class="pp-full-accordion-content">
-        <table class="pp-details-table">
-          <tr><td>Diamond Type</td><td>:</td><td>100% Natural Diamond</td></tr>
-          <tr><td>Color / Clarity</td><td>:</td><td>EF Color / VVS-VS Clarity</td></tr>
-          <tr><td>Certificate</td><td>:</td><td>IGI / SGL Authenticity Card</td></tr>
-          <tr><td>Setting Type</td><td>:</td><td>Prong Setting</td></tr>
-        </table>
-      </div>
-    </div>
-
-    <div class="pp-full-accordion-item">
-      <button class="pp-full-accordion-header" type="button">
-        <span>SHIPPING, RETURNS & WARRANTY</span>
-        <span class="pp-full-accordion-icon">
-          <svg class="icon-plus" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M12 5v14M5 12h14"/></svg>
-          <svg class="icon-minus" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 12h14"/></svg>
-        </span>
-      </button>
-      <div class="pp-full-accordion-content">
-        <p style="margin-bottom: 8px;">🚚 <strong>Free Insured Express Delivery</strong> on all orders across India.</p>
-        <p style="margin-bottom: 8px;">🔄 <strong>15-Day Money-Back Guarantee & Easy Returns</strong> with free doorstep pickup.</p>
-        <p>🛡️ <strong>Lifetime Exchange & Buyback Guarantee</strong> valid across all Swastik Jewels boutiques.</p>
-      </div>
-    <div class="pp-full-accordion-item">
-      <button class="pp-full-accordion-header" type="button">
-        <span>PRICE BREAKDOWN</span>
-        <span class="pp-full-accordion-icon">
-          <svg class="icon-plus" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M12 5v14M5 12h14"/></svg>
-          <svg class="icon-minus" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 12h14"/></svg>
-        </span>
-      </button>
-      <div class="pp-full-accordion-content">
-        <table class="pp-details-table">
-          <tr><td>Original Price</td><td>:</td><td>{{ product.compare_at_price | money }}</td></tr>
-          <tr><td>Current Price</td><td>:</td><td>{{ product.price | money }}</td></tr>
-          <tr><td>Discount</td><td>:</td><td>{% if product.compare_at_price > product.price %}{{ product.compare_at_price | minus: product.price | money }}{% else %}0{% endif %}</td></tr>
-          <tr><td>You Save</td><td>:</td><td>{% if product.compare_at_price > product.price %}{{ product.compare_at_price | minus: product.price | divided_by: product.compare_at_price | times: 100 | round }}%{% else %}0%{% endif %}</td></tr>
-        </table>
-      </div>
-    </div>
     </div>
   </div>
 
-  <!-- Customer Reviews & Ratings Breakdown Card -->
-  <div class="pp-reviews-section-card">
-    <div class="pp-section-header-wrap">
-      <span class="pp-section-sub">VERIFIED CUSTOMER REVIEWS</span>
-      <h2 class="pp-section-title">Customer Ratings & Reviews</h2>
-    </div>
-
-    <div class="pp-reviews-summary-grid">
-      <div class="pp-reviews-overall">
-        <span class="pp-rating-big">4.6</span>
-        <div class="pp-stars-gold">
-          {% for i in (1..5) %}
-            <svg viewBox="0 0 24 24" width="18" height="18" fill="#F5C518"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
-          {% endfor %}
-        </div>
-        <span class="pp-reviews-count-sub">338 Verified Reviews</span>
-      </div>
-
-      <div class="pp-rating-bars">
-        <div class="pp-bar-row">
-          <span class="pp-bar-label">5 ★</span>
-          <div class="pp-bar-track"><div class="pp-bar-fill" style="width: 86%;"></div></div>
-          <span class="pp-bar-percent">86%</span>
-        </div>
-        <div class="pp-bar-row">
-          <span class="pp-bar-label">4 ★</span>
-          <div class="pp-bar-track"><div class="pp-bar-fill" style="width: 11%;"></div></div>
-          <span class="pp-bar-percent">11%</span>
-        </div>
-        <div class="pp-bar-row">
-          <span class="pp-bar-label">3 ★</span>
-          <div class="pp-bar-track"><div class="pp-bar-fill" style="width: 3%;"></div></div>
-          <span class="pp-bar-percent">3%</span>
-        </div>
-      </div>
-    </div>
-
-    <div class="pp-featured-review-box">
-      <div class="pp-review-author-row">
-        <div class="pp-review-avatar">P</div>
-        <div class="pp-review-author-meta">
-          <span class="pp-review-author-name">Priya Sharma</span>
-          <span class="pp-review-verified">✓ Verified Buyer</span>
-        </div>
-        <span class="pp-review-date">2 days ago</span>
-      </div>
-      <p class="pp-review-body">"Absolutely breathtaking pendant! The 18K gold shine and diamond clarity exceeded my expectations. Elegant packaging and super quick insured delivery."</p>
-    </div>
-  </div>
-
-  <!-- You May Also Like Product Recommendations Card Grid -->
-  <div class="pp-related-products-card">
+  <!-- You May Also Like Product Recommendations (Shopify Native AI & Luxury Fallback without Bounding Box) -->
+  <product-recommendations class="pp-recommendations-section" data-url="{{ routes.product_recommendations_url }}?section_id={{ section.id }}&product_id={{ product.id }}&limit=4">
     <div class="pp-section-header-wrap">
       <span class="pp-section-sub">CURATED PAIRINGS</span>
       <h2 class="pp-section-title">You May Also Like</h2>
     </div>
 
-    <div class="pp-related-grid">
-      {% assign related_collection = collections['frontpage'] | default: collections.all %}
-      {% assign rel_count = 0 %}
-      {% for rel_product in related_collection.products %}
-        {% unless rel_product.id == product.id %}
-          {% if rel_count < 4 %}
-            {% assign rel_count = rel_count | plus: 1 %}
-            <a href="{{ rel_product.url }}" class="pp-related-item-card">
+    <div class="pp-related-carousel-container">
+      <button type="button" class="pp-rel-arrow pp-rel-prev" aria-label="Previous Products">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg>
+      </button>
+
+      <div class="pp-related-grid" id="pp-related-grid">
+        {% assign rel_count = 0 %}
+        {% if recommendations.performed and recommendations.products_count > 0 %}
+          {% for rel_product in recommendations.products %}
+            {% if rel_count < 4 %}
+              {% assign rel_count = rel_count | plus: 1 %}
+              <a href="{{ rel_product.url }}" class="pp-related-item-card">
+                <div class="pp-related-img-wrap">
+                  {% if rel_product.featured_image %}
+                    <img src="{{ rel_product.featured_image | image_url: width: 400 }}" alt="{{ rel_product.title | escape }}" width="400" height="400" loading="lazy">
+                  {% else %}
+                    <img src="{{ 'best_seller_pendant.png' | asset_url }}" alt="Jewelry" width="400" height="400" loading="lazy">
+                  {% endif %}
+                </div>
+                <div class="pp-related-info">
+                  <h3 class="pp-related-item-title">{{ rel_product.title }}</h3>
+                  <div class="pp-related-price">{{ rel_product.price | money | replace: '$', '₹' | replace: 'USD', '₹' | replace: '.00', '' }}</div>
+                </div>
+              </a>
+            {% endif %}
+          {% endfor %}
+        {% else %}
+          {% assign related_collection = collections['frontpage'] | default: collections.all %}
+          {% for rel_product in related_collection.products %}
+            {% unless rel_product.id == product.id %}
+              {% if rel_count < 4 %}
+                {% assign rel_count = rel_count | plus: 1 %}
+                <a href="{{ rel_product.url }}" class="pp-related-item-card">
+                  <div class="pp-related-img-wrap">
+                    {% if rel_product.featured_image %}
+                      <img src="{{ rel_product.featured_image | image_url: width: 400 }}" alt="{{ rel_product.title | escape }}" width="400" height="400" loading="lazy">
+                    {% else %}
+                      <img src="{{ 'best_seller_pendant.png' | asset_url }}" alt="Jewelry" width="400" height="400" loading="lazy">
+                    {% endif %}
+                  </div>
+                  <div class="pp-related-info">
+                    <h3 class="pp-related-item-title">{{ rel_product.title }}</h3>
+                    <div class="pp-related-price">{{ rel_product.price | money | replace: '$', '₹' | replace: 'USD', '₹' | replace: '.00', '' }}</div>
+                  </div>
+                </a>
+              {% endif %}
+            {% endunless %}
+          {% endfor %}
+        {% endif %}
+
+        {% if rel_count < 4 %}
+          {% assign missing_count = 4 | minus: rel_count %}
+          {% for i in (1..missing_count) %}
+            {% assign demo_index = i | plus: rel_count %}
+            {% if demo_index == 1 %}
+              {% assign fallback_title = "18K Diamond Pendant Set" %}
+              {% assign fallback_price = "₹1,45,900" %}
+              {% assign fallback_img = "best_seller_pendant.png" %}
+            {% elsif demo_index == 2 %}
+              {% assign fallback_title = "Gold & Diamond Earrings" %}
+              {% assign fallback_price = "₹89,900" %}
+              {% assign fallback_img = "best_seller_earrings.png" %}
+            {% elsif demo_index == 3 %}
+              {% assign fallback_title = "Classic Gold Ring" %}
+              {% assign fallback_price = "₹59,900" %}
+              {% assign fallback_img = "best_seller_ring.png" %}
+            {% else %}
+              {% assign fallback_title = "Diamond Bracelet" %}
+              {% assign fallback_price = "₹1,25,900" %}
+              {% assign fallback_img = "best_seller_bracelet.png" %}
+            {% endif %}
+            <div class="pp-related-item-card">
               <div class="pp-related-img-wrap">
-                {% if rel_product.featured_image %}
-                  <img src="{{ rel_product.featured_image | image_url: width: 300 }}" alt="{{ rel_product.title | escape }}" width="300" height="300" loading="lazy">
-                {% else %}
-                  {{ 'product-1' | placeholder_svg_tag: 'placeholder-svg' }}
-                {% endif %}
-                <span class="pp-related-badge">Popular</span>
+                <img src="{{ fallback_img | asset_url }}" alt="{{ fallback_title }}" width="400" height="400" loading="lazy">
               </div>
               <div class="pp-related-info">
-                <h3 class="pp-related-item-title">{{ rel_product.title | truncate: 28 }}</h3>
-                <div class="pp-related-price">{{ rel_product.price | money }}</div>
+                <h3 class="pp-related-item-title">{{ fallback_title }}</h3>
+                <div class="pp-related-price">{{ fallback_price }}</div>
               </div>
-            </a>
-          {% endif %}
-        {% endunless %}
-      {% endfor %}
-      {% if rel_count < 4 %}
-        {% assign missing_count = 4 | minus: rel_count %}
-        {% for i in (1..missing_count) %}
-          {% assign demo_index = i | plus: rel_count %}
-          <div class="pp-related-item-card">
-            <div class="pp-related-img-wrap">
-              {{ 'product-' | append: demo_index | placeholder_svg_tag: 'placeholder-svg' }}
-              <span class="pp-related-badge">Featured</span>
             </div>
-            <div class="pp-related-info">
-              <h3 class="pp-related-item-title">Swastik Fine Diamond Classic</h3>
-              <div class="pp-related-price">$2,450.00</div>
-            </div>
-          </div>
-        {% endfor %}
-      {% endif %}
+          {% endfor %}
+        {% endif %}
+      </div>
+
+      <button type="button" class="pp-rel-arrow pp-rel-next" aria-label="Next Products">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg>
+      </button>
     </div>
-  </div>
+  </product-recommendations>
 </div>
 
 <script id="pp-variants-json" type="application/json">
@@ -386,33 +384,34 @@
 </script>
 
 {% stylesheet %}
+  @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,600;0,700;1,600&family=Inter:wght@400;500;600;700&display=swap');
+
   :root {
-    --pp-green: #0A3C35;
-    --pp-gold: #DDA541;
-    --pp-beige: #F9F7F1;
-    --pp-border: #E8E8E8;
-    --pp-text: #333333;
-    --pp-text-light: #666666;
-    --pp-bg: #FFFFFF;
-    --pp-radius-img: 16px;
-    --pp-radius-box: 8px;
-    --pp-radius-btn: 8px;
+    --pp-primary: #013F3E;
+    --pp-primary-hover: #012B2A;
+    --pp-accent: #D4AF37;
+    --pp-accent-hover: #C29D2C;
+    --pp-bg-light: #FAF7F0;
+    --pp-border: #EAE0D5;
+    --pp-text: #222222;
+    --pp-text-muted: #666666;
+    --pp-font-serif: 'Cormorant Garamond', Georgia, serif;
+    --pp-font-sans: 'Inter', -apple-system, sans-serif;
   }
-  .premium-product {
-    background-color: var(--pp-bg);
-    padding: 32px 24px 60px 24px;
-    font-family: 'Inter', sans-serif;
-  }
-  /* Breadcrumbs Styling */
+
+  /* ==========================================================================
+     1. BREADCRUMBS NAVIGATION
+     ========================================================================== */
   .pp-breadcrumb-nav {
     width: 100%;
+    margin-top: 16px;
     margin-bottom: 24px;
+    font-family: var(--pp-font-sans);
   }
   .pp-breadcrumb-container {
-    max-width: 1200px;
+    max-width: 1240px;
     margin: 0 auto;
-    padding: 0;
-    box-sizing: border-box;
+    padding: 0 20px;
   }
   .pp-breadcrumb-list {
     list-style: none;
@@ -420,18 +419,22 @@
     margin: 0;
     display: flex;
     align-items: center;
-    flex-wrap: wrap;
-    gap: 8px;
-    font-size: 13px;
+    flex-wrap: wrap !important;
+    white-space: normal !important;
+    overflow-x: visible !important;
+    gap: 6px 10px !important;
+    font-size: 14px;
     font-weight: 500;
-    font-family: 'Inter', sans-serif;
+    line-height: 1.5;
+    color: var(--pp-text-muted);
   }
   .pp-breadcrumb-item {
     display: inline-flex;
     align-items: center;
+    flex-wrap: wrap;
   }
   .pp-breadcrumb-link {
-    color: var(--pp-text-light, #666666);
+    color: var(--pp-text-muted);
     text-decoration: none;
     display: inline-flex;
     align-items: center;
@@ -439,1868 +442,431 @@
     transition: color 0.2s ease;
   }
   .pp-breadcrumb-link:hover {
-    color: var(--pp-green, #013F3E);
+    color: var(--pp-primary);
     text-decoration: underline;
   }
-  .pp-home-icon {
-    color: var(--pp-gold, #D4AF37);
-  }
-  .pp-breadcrumb-separator {
-    display: inline-flex;
-    align-items: center;
-    color: #BBB;
-  }
-  .pp-breadcrumb-current {
-    color: var(--pp-green, #013F3E);
-    font-weight: 700;
-    max-width: 320px;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-  }
+  .pp-home-icon { color: var(--pp-accent); display: flex; align-items: center; }
+  .pp-breadcrumb-separator { display: inline-flex; align-items: center; color: #CCCCCC; margin-right: 10px; }
+  .pp-breadcrumb-current { color: var(--pp-primary); font-weight: 600; word-break: break-word; }
+
+  /* ==========================================================================
+     2. MAIN PRODUCT CONTAINER & GRID
+     ========================================================================== */
   .pp-container {
-    max-width: 1200px;
-    margin: 0 auto;
     display: grid;
-    grid-template-columns: 520px 1fr;
-    gap: 80px;
+    grid-template-columns: 1fr;
+    gap: 40px;
+    max-width: 1240px;
+    margin: 0 auto 50px auto;
+    padding: 0 20px;
+    font-family: var(--pp-font-sans);
+    color: var(--pp-text);
   }
-  @media(max-width: 900px) {
+  @media screen and (min-width: 992px) {
     .pp-container {
-      grid-template-columns: 1fr;
-      gap: 40px;
+      grid-template-columns: 540px 1fr;
+      gap: 64px;
+      align-items: start;
     }
   }
 
-  /* LEFT COLUMN */
+  /* ==========================================================================
+     3. LEFT COLUMN: LUXURY GALLERY (Constrained 540px Square)
+     ========================================================================== */
   .pp-left {
     display: flex;
     flex-direction: column;
-    gap: 24px;
+    gap: 0;
     width: 100%;
+    max-width: 540px;
+    margin: 0 auto;
   }
+  @media screen and (min-width: 992px) {
+    .pp-left {
+      position: sticky;
+      top: 40px;
+    }
+  }
+
+  .pp-gallery { width: 100%; display: flex; flex-direction: column; }
+
   .pp-main-image-wrap {
-    background-color: var(--pp-beige);
-    border-radius: var(--pp-radius-img);
     position: relative;
-    aspect-ratio: 1/1; /* Keeps it square */
-    max-height: 520px; /* Reduced to make the card less massive */
     width: 100%;
-    max-width: 520px; /* Cap width to match max-height for perfect square */
-    margin: 0 auto; /* Center in the column */
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    max-width: 540px;
+    max-height: 540px;
+    aspect-ratio: 1 / 1;
+    background: #FAF7F0;
+    border: 1px solid var(--pp-border);
+    border-radius: 20px;
     overflow: hidden;
-  }
-  .pp-badge {
-    position: absolute;
-    top: 20px;
-    left: 20px;
-    background: var(--pp-green);
-    color: #fff;
-    padding: 6px 12px;
-    border-radius: 4px;
-    font-size: 12px;
-    font-weight: 600;
-    display: flex;
-    align-items: center;
-    gap: 6px;
-    z-index: 2;
-  }
-  .pp-nav-btn {
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    border: none;
-    cursor: pointer;
     display: flex;
     align-items: center;
     justify-content: center;
-    z-index: 2;
+    box-shadow: 0 10px 35px rgba(1, 63, 62, 0.04);
+    margin: 0 auto;
   }
-  .pp-nav-prev {
-    left: 20px;
-    background: var(--pp-green);
-    color: white;
+  .pp-main-img-container { width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; padding: 0; }
+  #pp-main-image { width: 100%; height: 100%; object-fit: cover; transition: transform 0.35s cubic-bezier(0.25, 0.46, 0.45, 0.94); }
+
+  .pp-wishlist-btn {
+    position: absolute; top: 18px; right: 18px; width: 44px; height: 44px; border-radius: 50%;
+    background: #ffffff; border: 1px solid rgba(0, 0, 0, 0.06); box-shadow: 0 4px 14px rgba(0, 0, 0, 0.08);
+    display: flex; align-items: center; justify-content: center; cursor: pointer; z-index: 5; color: #222222; transition: all 0.25s ease;
   }
-  .pp-nav-next {
-    right: 20px;
-    background: var(--pp-gold);
-    color: white;
+  .pp-wishlist-btn:hover { transform: scale(1.08); color: #E53E3E; box-shadow: 0 6px 18px rgba(229, 62, 62, 0.15); }
+
+  .pp-nav-btn {
+    position: absolute; top: 50%; transform: translateY(-50%); width: 42px; height: 42px; border-radius: 50%;
+    background: #ffffff; border: 1px solid rgba(0, 0, 0, 0.06); box-shadow: 0 4px 14px rgba(0, 0, 0, 0.08);
+    display: flex; align-items: center; justify-content: center; cursor: pointer; z-index: 5; color: #222222; transition: all 0.25s ease;
   }
+  .pp-nav-btn:hover { background: var(--pp-primary); color: #ffffff; border-color: var(--pp-primary); transform: translateY(-50%) scale(1.05); }
+  .pp-nav-prev { left: 16px; }
+  .pp-nav-next { right: 16px; }
 
   .pp-fullscreen-btn {
-    position: absolute;
-    bottom: 20px;
-    right: 20px;
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    background: white;
-    border: none;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    z-index: 2;
+    position: absolute; bottom: 16px; right: 16px; width: 40px; height: 40px; border-radius: 50%;
+    background: #ffffff; border: 1px solid rgba(0, 0, 0, 0.06); box-shadow: 0 4px 14px rgba(0, 0, 0, 0.08);
+    display: flex; align-items: center; justify-content: center; cursor: pointer; z-index: 5; color: #222222; transition: all 0.25s ease;
   }
-  .pp-zoom-overlay {
-    position: fixed;
-    top: 0; left: 0; right: 0; bottom: 0;
-    background: rgba(0,0,0,0.9);
-    z-index: 9999;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    opacity: 0;
-    pointer-events: none;
-    transition: opacity 0.3s ease;
-  }
-  .pp-zoom-overlay.is-active {
-    opacity: 1;
-    pointer-events: auto;
-  }
-  .pp-zoom-overlay img {
-    max-width: 90vw;
-    max-height: 90vh;
-    object-fit: contain;
-    transform: scale(0.9);
-    transition: transform 0.3s ease;
-  }
-  .pp-zoom-overlay.is-active img {
-    transform: scale(1);
-  }
-  .pp-zoom-close {
-    position: absolute;
-    top: 20px; right: 20px;
-    background: white;
-    border: none;
-    width: 44px; height: 44px;
-    border-radius: 50%;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
+  .pp-fullscreen-btn:hover { transform: scale(1.08); color: var(--pp-primary); }
 
-  .pp-main-img-container {
-    width: 100%;
-    height: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+  /* Thumbnails Carousel */
+  .pp-thumbnails-section { display: flex; align-items: center; gap: 12px; margin-top: 16px; width: 100%; max-width: 540px; position: relative; }
+  .pp-thumb-nav-btn {
+    width: 36px; height: 36px; border-radius: 50%; background: #ffffff; border: 1px solid var(--pp-border);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05); display: flex; align-items: center; justify-content: center; cursor: pointer; flex-shrink: 0; color: #222222; transition: all 0.2s ease;
   }
-  .pp-main-img-container img, .pp-main-img-container svg {
-    max-width: 100%;
-    max-height: 100%;
-    object-fit: contain;
-  }
-  
-  /* Thumbnails */
-  .pp-thumbnails-wrapper {
-    overflow-x: auto;
-    padding-top: 4px;
-    padding-bottom: 8px;
-    margin-top: 16px;
-  }
-  .pp-thumbnails-wrapper::-webkit-scrollbar {
-    height: 4px;
-  }
-  .pp-thumbnails-wrapper::-webkit-scrollbar-thumb {
-    background: var(--pp-border);
-    border-radius: 4px;
-  }
-  .pp-thumbnails {
-    display: flex;
-    gap: 16px;
-    justify-content: flex-start;
-    width: max-content;
-  }
-  .pp-thumb-item {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    cursor: pointer;
-    flex: 0 0 80px;
-    width: 80px;
-  }
+  .pp-thumb-nav-btn:hover { background: var(--pp-primary); color: #ffffff; border-color: var(--pp-primary); }
+  .pp-thumbnails-wrapper { flex: 1; overflow-x: auto; scroll-behavior: smooth; scrollbar-width: none; -ms-overflow-style: none; padding: 4px 2px; }
+  .pp-thumbnails-wrapper::-webkit-scrollbar { display: none; }
+  .pp-thumbnails { display: flex; gap: 12px; width: max-content; }
+  .pp-thumb-item { flex: 0 0 76px; width: 76px; height: 76px; border-radius: 12px; cursor: pointer; transition: transform 0.2s ease; }
+  .pp-thumb-item:hover { transform: translateY(-2px); }
   .pp-thumb-img {
-    width: 100%;
-    aspect-ratio: 1/1;
-    border-radius: var(--pp-radius-box);
-    background: var(--pp-beige);
-    border: 2px solid transparent;
-    padding: 0; /* Remove padding */
-    overflow: hidden; /* Ensure image respects rounded corners */
-    transition: all 0.2s;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    width: 100%; height: 100%; border-radius: 12px; background: #FAF7F0; border: 2px solid #EAE0D5;
+    overflow: hidden; display: flex; align-items: center; justify-content: center; transition: all 0.2s ease; padding: 0;
   }
-  .pp-thumb-img img, .pp-thumb-img svg {
-    width: 100%;
-    height: 100%;
-    object-fit: cover; /* Fill the thumbnail */
-  }
-  .pp-thumb-item.is-active .pp-thumb-img {
-    border-color: var(--pp-green);
-    box-shadow: 0 0 0 2px var(--pp-gold);
-  }
+  .pp-thumb-img img, .pp-thumb-img svg { width: 100%; height: 100%; object-fit: cover; }
+  .pp-thumb-item.is-active .pp-thumb-img { border-color: var(--pp-primary); box-shadow: 0 0 0 2px var(--pp-primary); }
 
-  /* Accordions */
-  .pp-accordions {
-    border: 1px solid var(--pp-border);
-    border-radius: var(--pp-radius-box);
-    background: #FAFAFA;
-    overflow: hidden;
-  }
-  .pp-accordion-item {
-    border-bottom: 1px solid var(--pp-border);
-  }
-  .pp-accordion-item:last-child {
-    border-bottom: none;
-  }
-  .pp-accordion-header {
-    width: 100%;
-    text-align: left;
-    background: none;
-    border: none;
-    padding: 20px;
-    font-size: 14px;
-    font-weight: 700;
-    color: var(--pp-text);
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    cursor: pointer;
-  }
-  .pp-accordion-content {
-    padding: 0 20px 20px 20px;
-    font-size: 13px;
-    color: var(--pp-text-light);
-    line-height: 1.6;
-    display: none;
-  }
-  .pp-accordion-item.is-open .pp-accordion-content {
-    display: block;
-  }
-  .icon-minus { display: none; }
-  .pp-accordion-item.is-open .icon-minus { display: block; }
-  .pp-accordion-item.is-open .icon-plus { display: none; }
-
-  .pp-details-table {
-    width: 100%;
-    margin-top: 16px;
-    border-collapse: collapse;
-  }
-  .pp-details-table td {
-    padding: 4px 0;
-  }
-  .pp-details-table td:first-child {
-    width: 130px;
-    font-weight: 500;
-  }
-  .pp-details-table td:nth-child(2) {
-    width: 20px;
-  }
-
-  /* RIGHT COLUMN */
+  /* ==========================================================================
+     4. RIGHT COLUMN: EXACT LUXURY TYPOGRAPHY & SPACING SCALE
+     ========================================================================== */
   .pp-right {
     display: flex;
     flex-direction: column;
-    gap: 24px;
-    max-width: 480px;
-    padding-top: 12px;
-  }
-  .pp-top-actions {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
-  .pp-tag-certified {
-    display: flex;
-    align-items: center;
-    gap: 6px;
-    border: 1px solid var(--pp-green);
-    color: var(--pp-green);
-    border-radius: 20px;
-    padding: 4px 12px;
-    font-size: 13px;
-    font-weight: 500;
-  }
-  .pp-action-icons {
-    display: flex;
-    gap: 12px;
-  }
-  .pp-icon-btn {
-    width: 44px;
-    height: 44px;
-    border-radius: 50%;
-    background: var(--pp-beige);
-    border: none;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    color: var(--pp-text);
-    transition: background 0.2s;
-  }
-  .pp-icon-btn:hover {
-    background: #f0eadb;
+    gap: 0; /* Controlled precisely by luxury margins below */
+    font-family: var(--pp-font-sans);
   }
 
-  .pp-title {
-    font-family: 'Playfair Display', serif; /* or similar serif */
-    font-size: 32px;
+  .pp-bestseller-tag {
+    display: inline-block;
+    font-size: 11px;
     font-weight: 700;
-    color: var(--pp-green);
-    margin: 0;
-    text-transform: capitalize;
-    line-height: 1.2;
+    letter-spacing: 0.15em;
+    color: #C89234;
+    text-transform: uppercase;
+    margin-bottom: 8px;
   }
-  .pp-reviews {
+
+  .pp-header-block {
     display: flex;
-    align-items: center;
-    gap: 12px;
-    margin-top: 8px;
-    font-size: 14px;
+    flex-direction: column;
   }
-  .pp-stars { display: flex; gap: 2px; }
-  .pp-review-text { font-weight: 600; }
-  .pp-review-link {
-    color: var(--pp-green);
-    text-decoration: underline;
-    font-weight: 500;
+
+  /* Product Title: Cormorant Garamond, 42px, Weight 600, Line Height 1.2, Max 2 Lines */
+  .pp-title {
+    font-family: var(--pp-font-serif);
+    font-size: 42px;
+    font-weight: 600;
+    color: var(--pp-primary);
+    line-height: 1.2;
+    margin: 0 0 12px 0; /* Title -> Rating: 12px */
+    letter-spacing: -0.01em;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
   }
-  .pp-reviews-stock-row {
+
+  /* Rating & Meta Row: Inter, 14px, Weight 500, Line Height 1.5 */
+  .pp-meta-row {
     display: flex;
     align-items: center;
     justify-content: space-between;
+    gap: 16px;
     flex-wrap: wrap;
-    gap: 10px;
-    margin-top: 8px;
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 1.5;
+    color: var(--pp-text-muted);
+    margin-bottom: 20px; /* Rating -> Price: 20px */
+    padding-bottom: 20px;
+    border-bottom: 1px solid var(--pp-border);
   }
-  .pp-stock-status {
+  .pp-reviews { display: flex; align-items: center; gap: 8px; }
+  .pp-stars { display: flex; gap: 3px; color: #F59E0B; }
+  .pp-review-text { font-weight: 600; color: #222222; }
+  .pp-sku-wrap { color: var(--pp-text-muted); }
+  .pp-sku-label { font-weight: 600; color: #444444; }
+
+  /* Price: Inter, 40px, Weight 700, Line Height 1.1 */
+  .pp-price-box {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-bottom: 24px; /* Price -> Description: 24px */
+    padding-bottom: 24px;
+    border-bottom: 1px solid var(--pp-border);
+  }
+  .pp-price-box-top { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
+  .pp-price-current {
+    font-family: var(--pp-font-sans);
+    font-size: 40px;
+    font-weight: 700;
+    color: var(--pp-primary);
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+  }
+  .pp-price-tax-label { font-size: 14px; font-weight: 500; color: var(--pp-text-muted); }
+  .pp-price-box-bottom { display: flex; align-items: center; gap: 16px; flex-wrap: wrap; font-size: 14px; }
+  .pp-price-compare { color: #888888; text-decoration: line-through; font-weight: 500; }
+  .pp-price-save-text { color: #C87A1E; font-weight: 700; background: #FFF4E6; padding: 4px 10px; border-radius: 6px; font-size: 13px; }
+
+  /* Description: Inter, 16px, Weight 400, Line Height 1.7, Max 3 Lines on Desktop, Max 2 Lines on Mobile */
+  .pp-desc-section {
+    font-family: var(--pp-font-sans);
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 1.7;
+    color: #444444;
+    margin-bottom: 28px; /* Description -> Variants: 28px */
+    padding-bottom: 28px;
+    border-bottom: 1px solid var(--pp-border);
+  }
+  .pp-desc-short {
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+  @media screen and (max-width: 767px) {
+    .pp-desc-short { -webkit-line-clamp: 2; }
+  }
+  .pp-read-more-btn {
+    background: none;
+    border: none;
+    padding: 8px 0 0 0;
+    color: #C89234;
+    font-family: var(--pp-font-sans);
+    font-weight: 600;
+    font-size: 15px;
+    cursor: pointer;
     display: inline-flex;
     align-items: center;
     gap: 6px;
-    background-color: #EBF7EE;
-    color: #166534;
-    border: 1px solid #BBF7D0;
-    font-size: 0.75rem;
-    font-weight: 600;
-    padding: 3px 10px;
-    border-radius: 20px;
+    transition: color 0.2s ease;
   }
-  .pp-stock-pulse {
-    width: 7px;
-    height: 7px;
-    background-color: #16A34A;
-    border-radius: 50%;
-    display: inline-block;
-    box-shadow: 0 0 0 2px rgba(22, 163, 74, 0.2);
-  }
-  .pp-sku-wrap {
-    margin-top: 10px;
-    font-size: 12px;
-    font-weight: 700;
-    color: var(--pp-green);
-    display: flex;
-    gap: 4px;
-    text-transform: uppercase;
-  }
+  .pp-read-more-btn:hover { color: #B5822C; text-decoration: underline; }
+  .pp-read-more-icon { transition: transform 0.25s ease; }
 
-  .pp-pricing {
-    margin-top: 12px;
-    background: linear-gradient(145deg, #FAF6F0 0%, #F5ECE0 100%);
-    border: 1px solid #E6DAC8;
-    border-radius: 16px;
-    padding: 1.2rem 1.4rem;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.02);
-  }
-  .pp-price-row {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-  }
-  .pp-price-current {
-    font-size: 32px;
-    font-weight: 700;
-    color: var(--pp-green);
-  }
-  .pp-price-compare {
-    font-size: 20px;
-    color: #999;
-    text-decoration: line-through;
-  }
-  .pp-price-discount {
-    background: var(--pp-gold);
-    color: #fff;
-    padding: 4px 8px;
-    border-radius: 4px;
-    font-size: 12px;
-    font-weight: 600;
-  }
-  .pp-price-tax {
-    color: var(--pp-text-light);
-    margin-top: 4px;
-  }
-
-
-
+  /* Variants Block */
   .pp-variants {
     display: flex;
     flex-direction: column;
     gap: 20px;
+    margin-bottom: 32px; /* Variants -> CTA: 32px */
+    padding-bottom: 32px;
+    border-bottom: 1px solid var(--pp-border);
   }
-  .pp-option-group {
-    display: flex;
-    flex-direction: column;
-  }
-  .pp-option-header {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    margin-bottom: 12px;
-  }
-  .pp-option-name {
-    font-size: 14px;
-    font-weight: 700;
-    color: var(--pp-text);
-  }
-  .pp-info-icon {
-    color: #999;
-    cursor: pointer;
-  }
-  .pp-option-values {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 12px;
-  }
-  .pp-opt-btn {
-    background: #fff;
-    border: 1px solid var(--pp-border);
-    border-radius: var(--pp-radius-btn);
-    padding: 12px 16px;
-    font-size: 14px;
-    font-weight: 600;
-    color: var(--pp-text);
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    transition: all 0.2s;
-  }
-  .pp-opt-btn:hover { border-color: var(--pp-green); }
-  .pp-opt-btn.is-active {
-    border-color: var(--pp-green);
-  }
-  .pp-opt-metal {
-    flex-direction: column;
-    justify-content: center;
-    gap: 8px;
-    padding: 16px 12px;
-    background: #fdfdfd;
-    min-width: 105px;
-  }
-  .pp-opt-metal .pp-metal-name {
-    font-size: 11px;
-    font-weight: 700;
-    color: var(--pp-text);
-  }
-  .pp-opt-metal.is-active {
-    border-color: var(--pp-green);
-    background: #f4f7f6;
-  }
-  .pp-metal-dot {
-    width: 16px;
-    height: 16px;
-    border-radius: 50%;
-    display: inline-block;
-    box-shadow: inset -2px -2px 4px rgba(0,0,0,0.2), inset 2px 2px 4px rgba(255,255,255,0.8), 0 2px 4px rgba(0,0,0,0.1);
-  }
-  .pp-metal-yellow-gold {
-    background: linear-gradient(135deg, #FFDF73 0%, #D4AF37 100%);
-  }
-  .pp-metal-rose-gold {
-    background: linear-gradient(135deg, #F3C1B6 0%, #B76E79 100%);
-  }
-  .pp-metal-white-gold {
-    background: linear-gradient(135deg, #FFFFFF 0%, #D3D3D3 100%);
-  }
-  .pp-opt-text.is-active {
-    background: var(--pp-green);
-    color: #fff;
-    border-color: var(--pp-green);
-  }
-  .pp-opt-wrapper {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 4px;
-  }
-  .pp-opt-popular {
-    font-size: 11px;
-    color: var(--pp-green);
-    font-weight: 600;
-  }
-
-  .pp-actions {
-    display: grid;
-    grid-template-columns: 110px 1fr;
-    gap: 12px;
-    margin-top: 16px;
-    width: 100%;
-  }
-  .pp-qty {
-    display: flex;
-    align-items: center;
-    border: 1px solid var(--pp-border);
-    border-radius: var(--pp-radius-btn);
-    height: 48px;
-    background: #fff;
-    width: 100%;
-  }
-  .pp-qty-btn {
-    width: 30px;
-    height: 100%;
-    background: none;
-    border: none;
-    font-size: 20px;
-    cursor: pointer;
-    color: var(--pp-text);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-  .pp-qty-val {
-    width: 50px;
-    text-align: center;
-    border: none;
+  .pp-option-group { display: flex; flex-direction: column; gap: 12px; }
+  /* Section Heading: Inter, 16px, Weight 600, Line Height 1.4 */
+  .pp-option-label {
+    font-family: var(--pp-font-sans);
     font-size: 16px;
     font-weight: 600;
-    -moz-appearance: textfield;
+    line-height: 1.4;
+    color: #222222;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
   }
-  .pp-qty-val::-webkit-outer-spin-button,
-  .pp-qty-val::-webkit-inner-spin-button {
-    -webkit-appearance: none;
+  .pp-option-values { display: flex; flex-wrap: wrap; gap: 12px; }
+  /* Product Meta (Option Buttons): Inter, 14px, Weight 500, Line Height 1.5 */
+  .pp-opt-btn {
+    background: #FFFFFF; border: 1.5px solid #DED8CE; border-radius: 10px;
+    padding: 12px 24px; font-family: var(--pp-font-sans); font-size: 14px; font-weight: 500; line-height: 1.5;
+    color: #333333; cursor: pointer; transition: all 0.25s ease; box-shadow: 0 2px 6px rgba(0, 0, 0, 0.02);
   }
-  .pp-btn-add {
-    height: 48px;
-    padding: 0 16px;
-    border: 2px solid var(--pp-green);
-    background: #fff;
-    color: var(--pp-green);
-    border-radius: var(--pp-radius-btn);
-    font-size: 14px;
-    font-weight: 600;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 8px;
-    cursor: pointer;
-    width: 100%;
-    transition: all 0.2s;
+  .pp-opt-btn:hover { border-color: var(--pp-primary); color: var(--pp-primary); transform: translateY(-2px); }
+  .pp-opt-btn.is-active {
+    background: var(--pp-primary); border-color: var(--pp-primary); color: #FFFFFF; font-weight: 700;
+    box-shadow: 0 6px 16px rgba(1, 63, 62, 0.22); transform: translateY(-2px);
   }
-  .pp-btn-add:hover { background: #f0f7f6; }
-  .pp-btn-buy {
-    grid-column: 1 / -1;
-    height: 48px;
-    padding: 0 16px;
-    background: var(--pp-gold);
-    color: var(--pp-text);
-    border: none;
-    border-radius: var(--pp-radius-btn);
-    font-size: 14px;
-    font-weight: 600;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 100%;
-    transition: background 0.2s;
-  }
-  .pp-btn-buy:hover { background: #cf9839; }
 
-  .pp-trust {
-    display: flex;
-    justify-content: space-between;
-    gap: 8px;
-    background: var(--pp-beige);
-    padding: 20px;
-    border-radius: var(--pp-radius-box);
-    margin-top: 8px;
+  /* Luxury Buttons: Inter, 16px, Weight 700, Architectural 8px Radius */
+  .pp-actions-row { display: flex !important; gap: 16px !important; width: 100% !important; margin-bottom: 28px !important; }
+  .pp-btn-add {
+    flex: 1 !important; width: 100% !important; background: #013F3E !important; color: #ffffff !important;
+    border: none !important; border-radius: 8px !important; min-height: 56px !important; height: 56px !important;
+    font-family: var(--pp-font-sans) !important; font-size: 16px !important; font-weight: 700 !important; line-height: 1 !important;
+    letter-spacing: 0.08em !important; text-transform: uppercase !important; display: flex !important; align-items: center !important; justify-content: center !important;
+    gap: 10px !important; cursor: pointer !important; transition: all 0.25s ease !important; box-shadow: 0 6px 20px rgba(1, 63, 62, 0.2) !important;
+    padding: 0 24px !important;
   }
-  .pp-trust-item {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
-    gap: 8px;
-    font-size: 11px;
-    color: var(--pp-text-light);
-    line-height: 1.3;
-    flex: 1;
+  .pp-btn-add:hover { background: #012B2A !important; transform: translateY(-2px) !important; box-shadow: 0 8px 26px rgba(1, 63, 62, 0.35) !important; }
+  .pp-btn-buy {
+    flex: 1 !important; width: 100% !important; background: #C89234 !important; color: #ffffff !important;
+    border: none !important; border-radius: 8px !important; min-height: 56px !important; height: 56px !important;
+    font-family: var(--pp-font-sans) !important; font-size: 16px !important; font-weight: 700 !important; line-height: 1 !important;
+    letter-spacing: 0.08em !important; text-transform: uppercase !important; display: flex !important; align-items: center !important; justify-content: center !important;
+    cursor: pointer !important; transition: all 0.25s ease !important; box-shadow: 0 6px 20px rgba(200, 146, 52, 0.25) !important;
+    padding: 0 24px !important;
   }
-  
-  .pp-delivery {
-    background: var(--pp-beige);
-    padding: 16px 20px;
-    border-radius: var(--pp-radius-box);
-    display: flex;
-    align-items: center;
-    gap: 16px;
-  }
-  .pp-delivery-text {
-    display: flex;
-    flex-direction: column;
-  }
-  .pp-delivery-text .label {
-    font-size: 13px;
-    color: var(--pp-text-light);
-  }
-  .pp-delivery-text .value {
-    font-size: 15px;
-    font-weight: 600;
-    color: var(--pp-text);
-  }
-  .pp-delivery-link {
-    margin-left: auto;
-    font-size: 13px;
-    font-weight: 600;
-    color: var(--pp-green);
-    text-decoration: underline;
-  }
+  .pp-btn-buy:hover { background: #B5822C !important; transform: translateY(-2px) !important; box-shadow: 0 8px 26px rgba(200, 146, 52, 0.38) !important; }
 
   /* ==========================================================================
-     MOBILE REDESIGN & HORIZONTAL SCROLL FIX (<= 768px)
+     5. BOTTOM SHOWCASE (2-Column Grid)
      ========================================================================== */
-  @media screen and (max-width: 768px) {
-    html, body {
-      overflow-x: hidden !important;
-    }
+  .pp-bottom-showcase { max-width: 1240px; margin: 30px auto 50px auto; padding: 0 20px; font-family: var(--pp-font-sans); }
+  .pp-bottom-showcase-grid { display: grid; grid-template-columns: 1fr; gap: 32px; }
+  @media screen and (min-width: 992px) { .pp-bottom-showcase-grid { grid-template-columns: 1fr 1fr; gap: 40px; } }
+  .pp-bottom-card { background: var(--pp-bg-light); border: 1px solid var(--pp-border); border-radius: 20px; padding: 36px 40px; box-shadow: 0 8px 30px rgba(0, 0, 0, 0.02); }
+  .pp-bottom-right-card { padding: 16px 32px; display: flex; flex-direction: column; justify-content: center; }
+  .pp-bottom-title { font-family: var(--pp-font-serif); font-size: 24px; font-weight: 700; color: var(--pp-primary); letter-spacing: 0.05em; margin: 0 0 16px 0; text-transform: uppercase; }
+  .pp-bottom-desc { font-size: 16px; color: #444444; line-height: 1.7; margin-bottom: 24px; }
+  .pp-specs-list { display: flex; flex-direction: column; gap: 14px; margin-bottom: 28px; }
+  .pp-spec-row { display: grid; grid-template-columns: 160px 1fr; align-items: center; font-size: 15px; }
+  .pp-spec-lbl { font-weight: 600; color: #222222; }
+  .pp-spec-val { color: #555555; font-weight: 500; }
+  .pp-view-more-link { display: inline-flex; align-items: center; gap: 6px; color: #C89234; font-weight: 600; font-size: 16px; text-decoration: none; transition: gap 0.2s ease; }
+  .pp-view-more-link:hover { gap: 10px; color: #B5822C; }
 
-    .premium-product {
-      padding: 1rem 1rem 3rem 1rem !important;
-      overflow-x: hidden !important;
-      width: 100% !important;
-      max-width: 100vw !important;
-      box-sizing: border-box !important;
-    }
-
-    .pp-breadcrumb-nav {
-      margin-bottom: 14px !important;
-    }
-    .pp-breadcrumb-container {
-      padding: 0 !important;
-    }
-    .pp-breadcrumb-list {
-      font-size: 12px !important;
-      gap: 6px !important;
-    }
-    .pp-breadcrumb-current {
-      max-width: 160px !important;
-    }
-
-    .pp-container {
-      grid-template-columns: 1fr !important;
-      gap: 1.5rem !important;
-      width: 100% !important;
-      max-width: 100% !important;
-      margin: 0 !important;
-      padding: 0 !important;
-      box-sizing: border-box !important;
-      overflow: hidden !important;
-    }
-
-    .pp-left, .pp-right {
-      width: 100% !important;
-      max-width: 100% !important;
-      padding: 0 !important;
-      margin: 0 !important;
-      box-sizing: border-box !important;
-      overflow: hidden !important;
-    }
-
-    /* Main Product Image Card Box */
-    .pp-main-image-wrap {
-      max-width: 100% !important;
-      width: 100% !important;
-      aspect-ratio: 1 / 1 !important;
-      max-height: none !important;
-      border-radius: 20px !important;
-      background: linear-gradient(145deg, #FAF8F5 0%, #F5EFE6 100%) !important;
-      border: 1px solid #EAE0D5 !important;
-      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.05) !important;
-      margin: 0 auto !important;
-      position: relative !important;
-      box-sizing: border-box !important;
-    }
-
-    .pp-nav-btn {
-      width: 36px !important;
-      height: 36px !important;
-      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15) !important;
-    }
-
-    .pp-nav-prev {
-      left: 10px !important;
-      background: #013F3E !important;
-    }
-
-    .pp-nav-next {
-      right: 10px !important;
-      background: #D4AF37 !important;
-    }
-
-    .pp-fullscreen-btn {
-      bottom: 12px !important;
-      right: 12px !important;
-      width: 34px !important;
-      height: 34px !important;
-      background: rgba(255, 255, 255, 0.9) !important;
-      backdrop-filter: blur(4px) !important;
-    }
-
-    /* Thumbnail Carousel Scroll Fix */
-    .pp-thumbnails-wrapper {
-      width: 100% !important;
-      max-width: 100% !important;
-      overflow-x: auto !important;
-      -webkit-overflow-scrolling: touch !important;
-      scroll-snap-type: x mandatory !important;
-      padding: 8px 4px 12px 4px !important;
-      margin-top: 10px !important;
-      box-sizing: border-box !important;
-    }
-
-    .pp-thumbnails {
-      display: flex !important;
-      gap: 10px !important;
-      width: max-content !important;
-      padding: 0 4px !important;
-    }
-
-    .pp-thumb-item {
-      flex: 0 0 68px !important;
-      scroll-snap-align: start !important;
-    }
-
-    .pp-thumb-img {
-      border-radius: 10px !important;
-      border: 1.5px solid #E0D6C8 !important;
-      aspect-ratio: 1 / 1 !important;
-    }
-
-    .pp-thumb-item.is-active .pp-thumb-img {
-      border-color: #013F3E !important;
-      box-shadow: 0 0 0 2px #D4AF37 !important;
-    }
-
-    /* Product Details Card (Right Column) */
-    .pp-right {
-      gap: 1.2rem !important;
-    }
-
-    .pp-brand-badge {
-      font-size: 0.68rem !important;
-      letter-spacing: 0.1em !important;
-      margin-bottom: 2px !important;
-    }
-
-    .pp-title {
-      font-family: 'Cormorant Garamond', 'Playfair Display', serif !important;
-      font-size: 1.9rem !important;
-      font-weight: 700 !important;
-      color: #013F3E !important;
-      line-height: 1.25 !important;
-      margin: 2px 0 6px 0 !important;
-    }
-
-    .pp-reviews-stock-row {
-      display: flex !important;
-      align-items: center !important;
-      justify-content: space-between !important;
-      gap: 8px !important;
-      margin-top: 6px !important;
-    }
-
-    .pp-reviews {
-      margin-top: 0 !important;
-      gap: 6px !important;
-    }
-
-    .pp-review-text {
-      font-size: 0.78rem !important;
-      color: #333333 !important;
-    }
-
-    .pp-stock-status {
-      padding: 3px 8px !important;
-      font-size: 0.7rem !important;
-    }
-
-    .pp-sku-wrap {
-      font-size: 0.75rem !important;
-      margin-top: 6px !important;
-      color: #013F3E !important;
-    }
-
-    /* Pricing Section Card */
-    .pp-pricing {
-      margin-top: 8px !important;
-      margin-bottom: 8px !important;
-      background: linear-gradient(145deg, #FAF6F0 0%, #F5ECE0 100%) !important;
-      border: 1px solid #E6DAC8 !important;
-      border-radius: 14px !important;
-      padding: 0.75rem 1.1rem !important;
-      box-shadow: 0 4px 15px rgba(0,0,0,0.02) !important;
-    }
-
-    .pp-price-row {
-      gap: 10px !important;
-      flex-wrap: wrap !important;
-      align-items: center !important;
-      margin-bottom: 2px !important;
-    }
-
-    .pp-price-current {
-      font-size: 1.8rem !important;
-      font-weight: 800 !important;
-      color: #013F3E !important;
-      line-height: 1.1 !important;
-      margin: 0 !important;
-    }
-
-    .pp-price-compare {
-      font-size: 1.05rem !important;
-      color: #888888 !important;
-    }
-
-    .pp-price-discount {
-      background: linear-gradient(135deg, #D4AF37 0%, #C59B27 100%) !important;
-      color: #FFFFFF !important;
-      font-weight: 700 !important;
-      padding: 3px 8px !important;
-      border-radius: 6px !important;
-      font-size: 0.75rem !important;
-    }
-
-    .pp-price-tax {
-      display: flex !important;
-      align-items: center !important;
-      gap: 6px !important;
-      font-size: 0.75rem !important;
-      color: #555555 !important;
-      margin-top: 2px !important;
-      font-weight: 500 !important;
-    }
-
-    /* Option Selectors */
-    .pp-variants {
-      gap: 14px !important;
-    }
-
-    .pp-option-header {
-      margin-bottom: 8px !important;
-    }
-
-    .pp-option-name {
-      font-size: 0.8rem !important;
-      font-weight: 700 !important;
-      letter-spacing: 0.05em !important;
-      color: #013F3E !important;
-    }
-
-    .pp-option-values {
-      gap: 8px !important;
-    }
-
-    .pp-opt-metal {
-      min-width: 90px !important;
-      padding: 10px 8px !important;
-      border-radius: 10px !important;
-      border: 1px solid #E2D7C9 !important;
-    }
-
-    .pp-opt-metal.is-active {
-      border-color: #013F3E !important;
-      background-color: #FAF4F0 !important;
-      box-shadow: 0 2px 8px rgba(1, 63, 62, 0.15) !important;
-    }
-
-    .pp-opt-btn {
-      font-size: 0.85rem !important;
-      padding: 10px 14px !important;
-      border-radius: 8px !important;
-    }
-
-    .pp-opt-text.is-active {
-      background: #013F3E !important;
-      border-color: #013F3E !important;
-      color: #FFFFFF !important;
-    }
-
-    /* Action Buttons (Qty, Add to Cart, Buy Now) */
-    .pp-actions {
-      display: flex !important;
-      flex-direction: column !important;
-      gap: 10px !important;
-      margin-top: 12px !important;
-      width: 100% !important;
-    }
-
-    .pp-action-row-primary {
-      display: flex !important;
-      gap: 10px !important;
-      width: 100% !important;
-      align-items: center !important;
-    }
-
-    .pp-qty {
-      height: 48px !important;
-      border-radius: 25px !important;
-      border: 1.5px solid #013F3E !important;
-      width: 110px !important;
-      flex-shrink: 0 !important;
-      background: #FFFFFF !important;
-      display: flex !important;
-      align-items: center !important;
-      justify-content: space-between !important;
-      padding: 0 5px !important;
-      margin: 0 !important;
-    }
-
-    .pp-qty-btn {
-      width: 34px !important;
-      height: 34px !important;
-      border-radius: 50% !important;
-      background: #FAF5EE !important;
-      border: 1px solid #EAE0D5 !important;
-      font-size: 1.1rem !important;
-      font-weight: 700 !important;
-      color: #013F3E !important;
-      display: flex !important;
-      align-items: center !important;
-      justify-content: center !important;
-      cursor: pointer !important;
-    }
-
-    .pp-qty-val {
-      width: 30px !important;
-      border: none !important;
-      background: transparent !important;
-      text-align: center !important;
-      font-family: 'Montserrat', sans-serif !important;
-      font-weight: 700 !important;
-      font-size: 0.95rem !important;
-      color: #013F3E !important;
-      outline: none !important;
-      padding: 0 !important;
-      margin: 0 !important;
-      box-shadow: none !important;
-    }
-
-    .pp-btn-add {
-      flex: 1 !important;
-      height: 48px !important;
-      border-radius: 25px !important;
-      border: 1.5px solid #013F3E !important;
-      background: #013F3E !important;
-      color: #FFFFFF !important;
-      font-family: 'Montserrat', sans-serif !important;
-      font-size: 0.85rem !important;
-      font-weight: 700 !important;
-      letter-spacing: 0.05em !important;
-      text-transform: uppercase !important;
-      display: flex !important;
-      align-items: center !important;
-      justify-content: center !important;
-      gap: 8px !important;
-      box-shadow: 0 4px 14px rgba(1, 63, 62, 0.2) !important;
-    }
-
-    .pp-btn-buy {
-      width: 100% !important;
-      height: 48px !important;
-      border-radius: 25px !important;
-      border: none !important;
-      background: linear-gradient(135deg, #D4AF37 0%, #B89228 100%) !important;
-      color: #013F3E !important;
-      font-family: 'Montserrat', sans-serif !important;
-      font-size: 0.9rem !important;
-      font-weight: 800 !important;
-      letter-spacing: 0.06em !important;
-      text-transform: uppercase !important;
-      display: flex !important;
-      align-items: center !important;
-      justify-content: center !important;
-      box-shadow: 0 4px 15px rgba(212, 175, 55, 0.35) !important;
-    }
-
-    /* Trust Highlights Bar */
-    .pp-trust-features {
-      display: grid !important;
-      grid-template-columns: repeat(3, 1fr) !important;
-      gap: 8px !important;
-      background: #FAF5EE !important;
-      border: 1px solid #EAE0D5 !important;
-      border-radius: 14px !important;
-      padding: 12px 10px !important;
-      margin-top: 14px !important;
-      text-align: center !important;
-    }
-
-    .pp-trust-feature-item {
-      display: flex !important;
-      flex-direction: column !important;
-      align-items: center !important;
-      gap: 4px !important;
-      font-size: 0.72rem !important;
-      font-weight: 600 !important;
-      color: #013F3E !important;
-      line-height: 1.2 !important;
-    }
-
-    /* Table & Accordions Mobile Fit */
-    .pp-full-accordions {
-      margin-top: 2rem !important;
-      width: 100% !important;
-      box-sizing: border-box !important;
-      overflow: hidden !important;
-      gap: 10px !important;
-    }
-
-    .pp-full-accordion-header {
-      padding: 14px 18px !important;
-      font-size: 0.85rem !important;
-    }
-
-    .pp-full-accordion-icon {
-      width: 28px !important;
-      height: 28px !important;
-    }
-
-    .pp-full-accordion-content {
-      padding: 16px 18px !important;
-      font-size: 0.88rem !important;
-    }
-
-    .pp-details-table {
-      width: 100% !important;
-      table-layout: fixed !important;
-    }
-
-    .pp-details-table td:first-child {
-      width: 110px !important;
-      font-size: 0.85rem !important;
-    }
-
-    .pp-details-table td:last-child {
-      font-size: 0.85rem !important;
-      word-break: break-word !important;
-    }
+  /* Luxury Accordions: Inter 16px 600 Title, Inter 16px 400 Desc, 100% Clickable Header Row */
+  .pp-acc-item { border-bottom: 1px solid var(--pp-border); padding: 0 !important; transition: all 0.3s ease; }
+  .pp-acc-item:last-child { border-bottom: none; }
+  .pp-acc-header {
+    width: 100% !important; background: none; border: none; padding: 20px 0 !important;
+    display: flex !important; align-items: center !important; justify-content: space-between !important;
+    cursor: pointer !important; text-align: left !important; margin: 0 !important; outline: none;
+  }
+  .pp-acc-header-left { display: flex; align-items: center; gap: 16px; pointer-events: none; }
+  .pp-acc-title {
+    font-family: var(--pp-font-sans) !important; font-size: 16px !important; font-weight: 600 !important;
+    line-height: 1.4 !important; color: #013F3E !important; letter-spacing: 0.05em !important; text-transform: uppercase !important;
+    pointer-events: none;
+  }
+  .pp-acc-chevron { color: #333333; transition: transform 0.3s ease; pointer-events: none; flex-shrink: 0; }
+  .pp-acc-item.is-open .pp-acc-chevron { transform: rotate(180deg); color: #C89234; }
+  .pp-acc-content {
+    padding: 0 0 20px 0 !important; font-family: var(--pp-font-sans) !important; font-size: 16px !important;
+    font-weight: 400 !important; color: #444444 !important; line-height: 1.7 !important;
   }
 
-  /* Full Width Luxury Accordion Cards */
-  .pp-full-accordions {
-    max-width: 1200px;
-    margin: 40px auto 0 auto;
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-  }
-  .pp-full-accordion-item {
-    background: #ffffff;
-    border: 1px solid #EAE0D5;
-    border-radius: 14px;
-    overflow: hidden;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.02);
-    transition: all 0.3s ease;
-  }
-  .pp-full-accordion-item.is-open {
-    border-color: #013F3E;
-    box-shadow: 0 4px 18px rgba(1, 63, 62, 0.08);
-  }
-  .pp-full-accordion-header {
-    width: 100%;
-    text-align: left;
-    background: #FAF5EE;
+  /* Related Products & Shopify AI Recommendations (No Bounding Box, Luxury Arrows) */
+  .pp-recommendations-section {
+    max-width: 1240px;
+    margin: 60px auto 40px auto;
+    padding: 0 20px;
+    background: transparent;
     border: none;
-    padding: 18px 24px;
-    font-family: 'Montserrat', sans-serif;
-    font-size: 0.95rem;
-    font-weight: 700;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    color: #013F3E;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    cursor: pointer;
-    transition: background-color 0.25s ease;
-  }
-  .pp-full-accordion-header:hover {
-    background-color: #F3EAE2;
-  }
-  .pp-full-accordion-icon {
-    width: 32px;
-    height: 32px;
-    border-radius: 50%;
-    background-color: #013F3E;
-    color: #D4AF37;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-shrink: 0;
-    transition: all 0.3s ease;
-  }
-  .pp-full-accordion-item.is-open .pp-full-accordion-icon {
-    background-color: #D4AF37;
-    color: #013F3E;
-  }
-  .pp-full-accordion-content {
-    padding: 20px 24px;
-    font-size: 0.95rem;
-    color: #444;
-    line-height: 1.8;
-    background-color: #FFFFFF;
-    border-top: 1px solid #F3EDE6;
-    display: none;
-  }
-  .pp-full-accordion-item.is-open .pp-full-accordion-content {
     display: block;
-    animation: fadeIn 0.35s ease;
   }
-  .pp-full-accordion-item .icon-minus { display: none; }
-  .pp-full-accordion-item.is-open .icon-minus { display: block; }
-  .pp-full-accordion-item.is-open .icon-plus { display: none; }
-
-  @keyframes fadeIn {
-    from { opacity: 0; transform: translateY(-4px); }
-    to { opacity: 1; transform: translateY(0); }
-  }
-
-  /* Customer Reviews & Related Products Cards */
-  .pp-reviews-section-card, .pp-related-products-card {
-    max-width: 1200px;
-    margin: 40px auto 0 auto;
-    background: #FFFFFF;
-    border: 1px solid #EAE0D5;
-    border-radius: 16px;
-    padding: 28px 24px;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03);
-  }
-  .pp-section-header-wrap {
-    text-align: center;
-    margin-bottom: 20px;
-  }
-  .pp-section-sub {
-    font-family: 'Montserrat', sans-serif;
-    font-size: 0.75rem;
-    font-weight: 700;
-    letter-spacing: 0.12em;
-    color: #D4AF37;
-    text-transform: uppercase;
-    display: block;
-    margin-bottom: 4px;
-  }
-  .pp-section-title {
-    font-family: 'Cormorant Garamond', 'Playfair Display', serif;
-    font-size: 1.8rem;
-    font-weight: 700;
-    color: #013F3E;
-    margin: 0;
-  }
-  .pp-reviews-summary-grid {
-    display: grid;
-    grid-template-columns: 200px 1fr;
-    gap: 24px;
-    align-items: center;
-    background: #FAF6F0;
-    border: 1px solid #E6DAC8;
-    border-radius: 12px;
-    padding: 20px;
-    margin-bottom: 20px;
-  }
-  .pp-reviews-overall {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    border-right: 1px solid #E6DAC8;
-    padding-right: 20px;
-  }
-  .pp-rating-big {
-    font-family: 'Montserrat', sans-serif;
-    font-size: 2.8rem;
-    font-weight: 800;
-    color: #013F3E;
-    line-height: 1;
-  }
-  .pp-stars-gold {
-    display: flex;
-    gap: 2px;
-    margin: 6px 0;
-  }
-  .pp-reviews-count-sub {
-    font-size: 0.8rem;
-    color: #666;
-    font-weight: 500;
-  }
-  .pp-rating-bars {
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-  }
-  .pp-bar-row {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    font-size: 0.8rem;
-    color: #333;
-    font-weight: 600;
-  }
-  .pp-bar-label {
-    width: 30px;
-  }
-  .pp-bar-track {
-    flex: 1;
-    height: 8px;
-    background: #EAE0D5;
-    border-radius: 4px;
-    overflow: hidden;
-  }
-  .pp-bar-fill {
-    height: 100%;
-    background: linear-gradient(90deg, #013F3E 0%, #D4AF37 100%);
-    border-radius: 4px;
-  }
-  .pp-bar-percent {
-    width: 35px;
-    text-align: right;
-    font-size: 0.75rem;
-    color: #666;
-  }
-  .pp-featured-review-box {
-    background: #FFFFFF;
-    border: 1px solid #F0E6DA;
-    border-radius: 12px;
-    padding: 16px 20px;
-  }
-  .pp-review-author-row {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    margin-bottom: 10px;
-  }
-  .pp-review-avatar {
-    width: 38px;
-    height: 38px;
-    border-radius: 50%;
-    background: #013F3E;
-    color: #D4AF37;
-    font-weight: 700;
-    font-size: 1.1rem;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-  .pp-review-author-meta {
-    display: flex;
-    flex-direction: column;
-  }
-  .pp-review-author-name {
-    font-weight: 700;
-    font-size: 0.9rem;
-    color: #013F3E;
-  }
-  .pp-review-verified {
-    font-size: 0.72rem;
-    color: #166534;
-    font-weight: 600;
-  }
-  .pp-review-date {
-    margin-left: auto;
-    font-size: 0.75rem;
-    color: #888;
-  }
-  .pp-review-body {
-    font-size: 0.9rem;
-    color: #444;
-    line-height: 1.6;
-    font-style: italic;
-  }
-
-  /* You May Also Like Related Products Grid */
-  .pp-related-grid {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 16px;
-    margin-top: 16px;
-  }
-  .pp-related-item-card {
-    display: flex;
-    flex-direction: column;
-    background: #FAF6F0;
-    border: 1px solid #EAE0D5;
-    border-radius: 12px;
-    overflow: hidden;
-    transition: transform 0.25s ease, box-shadow 0.25s ease;
-    text-decoration: none;
-  }
-  .pp-related-item-card:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 8px 20px rgba(1, 63, 62, 0.1);
-  }
-  .pp-related-img-wrap {
+  .pp-section-header-wrap { text-align: center; margin-bottom: 36px; }
+  .pp-section-sub { font-size: 12px; font-weight: 700; letter-spacing: 0.15em; color: #C89234; text-transform: uppercase; display: block; margin-bottom: 6px; font-family: var(--pp-font-sans); }
+  .pp-section-title { font-family: var(--pp-font-serif); font-size: 34px; font-weight: 700; color: var(--pp-primary); margin: 0; }
+  
+  .pp-related-carousel-container {
     position: relative;
     width: 100%;
-    aspect-ratio: 1 / 1;
-    background: #FFFFFF;
-  }
-  .pp-related-img-wrap img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-  }
-  .pp-related-badge {
-    position: absolute;
-    top: 8px;
-    left: 8px;
-    background: #013F3E;
-    color: #D4AF37;
-    font-size: 0.65rem;
-    font-weight: 700;
-    padding: 2px 8px;
-    border-radius: 4px;
-    text-transform: uppercase;
-  }
-  .pp-related-info {
-    padding: 12px;
     display: flex;
-    flex-direction: column;
-    gap: 4px;
+    align-items: center;
+    gap: 16px;
   }
-  .pp-related-item-title {
-    font-family: 'Cormorant Garamond', 'Playfair Display', serif;
-    font-size: 0.95rem;
-    font-weight: 700;
-    color: #013F3E;
-    margin: 0;
-    line-height: 1.3;
+  .pp-rel-arrow {
+    width: 44px; height: 44px; border-radius: 50%; background: #FFFFFF; border: 1.5px solid var(--pp-border);
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.06); display: flex; align-items: center; justify-content: center;
+    cursor: pointer; flex-shrink: 0; color: #222222; transition: all 0.25s ease; z-index: 5;
   }
-  .pp-related-price {
-    font-weight: 700;
-    font-size: 0.9rem;
-    color: #D4AF37;
+  .pp-rel-arrow:hover { background: var(--pp-primary); color: #FFFFFF; border-color: var(--pp-primary); transform: scale(1.08); }
+  @media screen and (max-width: 767px) { .pp-rel-arrow { display: none; } }
+
+  .pp-related-grid {
+    flex: 1;
+    display: flex !important;
+    flex-wrap: nowrap !important;
+    gap: 20px !important;
+    overflow-x: auto !important;
+    scroll-behavior: smooth;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+    padding: 4px 2px !important;
   }
-
-  @media screen and (max-width: 768px) {
-    .pp-reviews-section-card, .pp-related-products-card {
-      padding: 20px 16px !important;
-      margin-top: 24px !important;
-      border-radius: 14px !important;
-    }
-    .pp-reviews-summary-grid {
-      grid-template-columns: 1fr !important;
-      gap: 16px !important;
-      padding: 16px !important;
-      text-align: center !important;
-    }
-    .pp-reviews-overall {
-      border-right: none !important;
-      border-bottom: 1px solid #E6DAC8 !important;
-      padding-right: 0 !important;
-      padding-bottom: 14px !important;
-    }
-    .pp-related-grid {
-      grid-template-columns: repeat(2, 1fr) !important;
-      gap: 12px !important;
-    }
+  .pp-related-grid::-webkit-scrollbar { display: none; }
+  
+  .pp-related-item-card {
+    flex: 0 0 calc(50% - 10px) !important;
+    width: calc(50% - 10px) !important;
+    min-width: 220px !important;
+    max-width: 300px !important;
+    background: transparent; border: none; border-radius: 0; overflow: hidden; transition: transform 0.3s ease;
+    text-decoration: none; display: flex; flex-direction: column; gap: 12px;
+    flex-shrink: 0 !important;
   }
-
-  /* ==========================================================================
-     DESKTOP LUXURY REDESIGN & STICKY PANEL (>= 992px)
-     ========================================================================== */
-  @media screen and (min-width: 992px) {
-    .premium-product {
-      padding: 32px 0 80px 0;
-      background: #FAFAFA;
-    }
-
-    .pp-breadcrumb-container {
-      max-width: 1280px;
-      padding: 0 40px;
-    }
-
-    .pp-container {
-      max-width: 1280px;
-      margin: 0 auto;
-      display: grid;
-      grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.85fr);
-      gap: 56px;
-      align-items: start;
-      padding: 0 40px;
-    }
-
-    /* Sticky Right Info Column on Desktop */
-    .pp-right {
-      position: sticky;
-      top: 110px;
-      align-self: start;
-      max-width: 100%;
-      padding-top: 0;
-      gap: 18px;
-    }
-
-    /* ===== Left Column: Vertical Thumbnail Gallery ===== */
-    .pp-left {
-      width: 100%;
-      gap: 0;
-    }
-
-    .pp-gallery {
-      display: flex;
-      flex-direction: column;
-      gap: 16px;
-    }
-
-    /* Horizontal thumbnails strip at the BOTTOM */
-    .pp-thumbnails-wrapper {
-      order: 0;
-      width: 100%;
-      overflow-x: auto;
-      overflow-y: hidden;
-      max-height: none;
-      margin-top: 16px;
-      padding: 4px 0 8px 0;
-      scrollbar-width: thin;
-      scrollbar-color: #E5DBCF transparent;
-    }
-    .pp-thumbnails-wrapper::-webkit-scrollbar {
-      height: 4px;
-      width: 0;
-    }
-    .pp-thumbnails-wrapper::-webkit-scrollbar-thumb {
-      background: #E5DBCF;
-      border-radius: 4px;
-    }
-
-    .pp-thumbnails {
-      display: flex;
-      flex-direction: row;
-      gap: 12px;
-      width: max-content;
-      justify-content: flex-start;
-    }
-
-    .pp-thumb-item {
-      flex: 0 0 80px;
-      width: 80px;
-      transition: transform 0.2s ease;
-    }
-
-    .pp-thumb-item:hover {
-      transform: translateY(-2px);
-    }
-
-    .pp-thumb-img {
-      width: 100%;
-      aspect-ratio: 1 / 1;
-      border-radius: 10px;
-      border: 2px solid #E5DBCF;
-      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.03);
-      transition: border-color 0.25s ease, box-shadow 0.25s ease;
-      background: #FAF8F5;
-    }
-
-    .pp-thumb-item.is-active .pp-thumb-img {
-      border-color: #013F3E;
-      box-shadow: 0 0 0 2px #D4AF37;
-    }
-
-    /* Main image takes remaining space */
-    .pp-main-image-wrap {
-      flex: 1;
-      max-width: 540px;
-      max-height: 540px;
-      border-radius: 20px;
-      background: linear-gradient(145deg, #FAF8F5 0%, #F5EFE6 100%);
-      border: 1px solid #EAE0D5;
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.04);
-      position: relative;
-      overflow: hidden;
-      aspect-ratio: 1 / 1;
-      margin: 0 auto;
-    }
-
-    .pp-main-img-container img {
-      /* No hover scale transition needed */
-    }
-
-    .pp-nav-btn {
-      width: 42px;
-      height: 42px;
-      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.1);
-      transition: transform 0.2s ease, box-shadow 0.2s ease;
-    }
-    .pp-nav-prev { left: 14px; }
-    .pp-nav-next { right: 14px; }
-    .pp-nav-btn:hover {
-      transform: translateY(-50%) scale(1.08);
-      box-shadow: 0 6px 18px rgba(0, 0, 0, 0.15);
-    }
-
-    .pp-fullscreen-btn {
-      bottom: 14px;
-      right: 14px;
-    }
-
-    /* ===== Right Column Desktop Refinements ===== */
-    .pp-header-block {
-      display: flex;
-      flex-direction: column;
-      gap: 6px;
-    }
-
-    .pp-brand-badge {
-      font-family: 'Montserrat', sans-serif;
-      font-size: 11px;
-      font-weight: 700;
-      letter-spacing: 1.8px;
-      color: #D4AF37;
-      text-transform: uppercase;
-    }
-
-    .pp-title {
-      font-family: 'Cormorant Garamond', 'Playfair Display', serif;
-      font-size: 34px;
-      font-weight: 700;
-      color: #013F3E;
-      letter-spacing: -0.3px;
-      line-height: 1.15;
-      margin: 0;
-    }
-
-    .pp-reviews {
-      margin-top: 6px;
-    }
-
-    .pp-reviews-stock-row {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      margin-top: 4px;
-      padding-bottom: 10px;
-      border-bottom: 1px solid #EAE0D5;
-    }
-
-    .pp-sku-wrap {
-      margin-top: 6px;
-      font-size: 11px;
-    }
-
-    /* Price Container Desktop */
-    .pp-pricing {
-      background: linear-gradient(135deg, #FAF6F0 0%, #F3EAE0 100%);
-      border: 1px solid #E5DBCF;
-      border-radius: 14px;
-      padding: 18px 22px;
-      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.02);
-      margin-top: 2px;
-    }
-
-    .pp-price-current {
-      font-size: 32px;
-      font-weight: 800;
-      color: #013F3E;
-    }
-
-    .pp-price-compare {
-      font-size: 18px;
-      color: #888;
-    }
-
-    .pp-price-discount {
-      background: #D4AF37;
-      color: #FFFFFF;
-      font-size: 11px;
-      font-weight: 700;
-      padding: 3px 10px;
-      border-radius: 6px;
-      letter-spacing: 0.5px;
-    }
-
-    .pp-price-tax {
-      font-size: 13px;
-      margin-top: 4px;
-    }
-
-    /* ===== Action Buttons Desktop – Fixed Proportions ===== */
-    .pp-actions {
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-      margin-top: 4px;
-    }
-
-    .pp-action-row-primary {
-      display: flex;
-      gap: 12px;
-      align-items: stretch;
-    }
-
-    .pp-qty {
-      flex: 0 0 130px;
-      height: 50px;
-      border: 1.5px solid #013F3E;
-      border-radius: 10px;
-      background: #ffffff;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      overflow: hidden;
-    }
-
-    .pp-qty-btn {
-      width: 38px;
-      height: 100%;
-      font-size: 18px;
-      font-weight: 600;
-      color: #013F3E;
-      background: transparent;
-      border: none;
-      cursor: pointer;
-      transition: background 0.2s ease;
-    }
-
-    .pp-qty-btn:hover {
-      background: #FAF5EE;
-    }
-
-    .pp-qty-val {
-      width: 42px;
-      text-align: center;
-      font-size: 16px;
-      font-weight: 700;
-      color: #013F3E;
-      border: none;
-      background: transparent;
-      -moz-appearance: textfield;
-    }
-    .pp-qty-val::-webkit-inner-spin-button,
-    .pp-qty-val::-webkit-outer-spin-button {
-      -webkit-appearance: none;
-      margin: 0;
-    }
-
-    .pp-btn-add {
-      flex: 1;
-      height: 50px;
-      background: #013F3E;
-      color: #FFFFFF;
-      border: 1.5px solid #013F3E;
-      border-radius: 10px;
-      font-size: 15px;
-      font-weight: 700;
-      letter-spacing: 0.5px;
-      white-space: nowrap;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 10px;
-      cursor: pointer;
-      transition: all 0.25s ease;
-    }
-
-    .pp-btn-add:hover {
-      background: #025957;
-      border-color: #025957;
-      box-shadow: 0 6px 18px rgba(1, 63, 62, 0.2);
-      transform: translateY(-1px);
-    }
-
-    .pp-btn-buy {
-      width: 100%;
-      height: 52px;
-      background: linear-gradient(135deg, #E2B259 0%, #C99330 100%);
-      color: #FFFFFF;
-      border: none;
-      border-radius: 10px;
-      font-size: 15px;
-      font-weight: 700;
-      letter-spacing: 1.2px;
-      text-transform: uppercase;
-      cursor: pointer;
-      box-shadow: 0 6px 20px rgba(201, 147, 48, 0.25);
-      transition: all 0.25s ease;
-    }
-
-    .pp-btn-buy:hover {
-      background: linear-gradient(135deg, #ECC16A 0%, #D49D34 100%);
-      box-shadow: 0 8px 25px rgba(201, 147, 48, 0.35);
-      transform: translateY(-1px);
-    }
-
-    /* ===== Trust Feature Badges Desktop ===== */
-    .pp-trust-features {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 0;
-      background: linear-gradient(135deg, #FAF6F0 0%, #F3EAE0 100%);
-      border: 1px solid #E6DAC8;
-      border-radius: 12px;
-      padding: 14px 8px;
-      margin-top: 6px;
-    }
-
-    .pp-trust-feature-item {
-      flex: 1;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 8px;
-      font-size: 12.5px;
-      font-weight: 600;
-      color: #013F3E;
-      white-space: nowrap;
-      position: relative;
-      padding: 0 12px;
-    }
-
-    .pp-trust-feature-item:not(:last-child)::after {
-      content: '';
-      position: absolute;
-      right: 0;
-      top: 50%;
-      transform: translateY(-50%);
-      width: 1px;
-      height: 20px;
-      background: #D4C4AC;
-    }
-
-    .pp-trust-feature-item svg {
-      flex-shrink: 0;
-    }
-
-    /* ===== Lower Sections Desktop Layout ===== */
-    .pp-full-accordions,
-    .pp-reviews-section-card,
-    .pp-related-products-card {
-      max-width: 1280px;
-      margin: 40px auto 0 auto;
-      padding-left: 40px;
-      padding-right: 40px;
-      box-sizing: border-box;
-    }
-
-    .pp-full-accordion-item {
-      border-radius: 14px;
-    }
-
-    .pp-full-accordion-header {
-      padding: 18px 28px;
-      font-size: 0.9rem;
-    }
-
-    .pp-full-accordion-content {
-      padding: 20px 28px;
-    }
-
-    .pp-spec-grid {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 12px;
-      margin-top: 16px;
-    }
-
-    .pp-spec-card {
-      background: #FAF6F0;
-      border: 1px solid #EAE0D5;
-      border-radius: 10px;
-      padding: 14px 16px;
-      display: flex;
-      flex-direction: column;
-      gap: 4px;
-    }
-
-    .pp-spec-label {
-      font-size: 11px;
-      font-weight: 600;
-      letter-spacing: 0.05em;
-      text-transform: uppercase;
-      color: #888;
-    }
-
-    .pp-spec-value {
-      font-size: 14px;
-      font-weight: 700;
-      color: #013F3E;
-    }
-
-    /* Reviews Section Desktop */
-    .pp-reviews-section-card,
-    .pp-related-products-card {
-      padding: 36px 40px;
-      border-radius: 20px;
-    }
-
-    .pp-reviews-summary-grid {
-      grid-template-columns: 220px 1fr;
-      gap: 32px;
-      padding: 24px 32px;
-      border-radius: 14px;
-    }
-
-    .pp-featured-review-box {
-      padding: 20px 24px;
-      border-radius: 14px;
-    }
-
-    /* Related Products Grid Desktop */
-    .pp-related-grid {
-      grid-template-columns: repeat(4, 1fr);
-      gap: 20px;
-      margin-top: 20px;
-    }
-
+  @media screen and (min-width: 768px) {
     .pp-related-item-card {
-      border-radius: 14px;
-      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.03);
-      overflow: hidden;
+      flex: 0 0 calc(25% - 18px) !important;
+      width: calc(25% - 18px) !important;
+      min-width: 240px !important;
     }
+  }
+  .pp-related-item-card:hover { transform: translateY(-5px); }
+  .pp-related-img-wrap {
+    aspect-ratio: 1 / 1; background: #FAF7F0; border: 1px solid #EAE0D5;
+    border-radius: 16px; position: relative; overflow: hidden; display: flex; align-items: center; justify-content: center; padding: 0;
+    box-shadow: 0 4px 18px rgba(0, 0, 0, 0.02); transition: all 0.3s ease;
+  }
+  .pp-related-item-card:hover .pp-related-img-wrap { box-shadow: 0 10px 28px rgba(1, 63, 62, 0.08); border-color: #DED8CE; }
+  .pp-related-img-wrap img, .pp-related-img-wrap svg { width: 100%; height: 100%; object-fit: cover; transition: transform 0.35s ease; }
+  .pp-related-item-card:hover .pp-related-img-wrap img { transform: scale(1.06); }
+  
+  .pp-related-info { padding: 10px 4px 0 4px; display: flex; flex-direction: column; gap: 6px; }
+  .pp-related-item-title { font-family: var(--pp-font-sans); font-size: 15px; font-weight: 600; color: var(--pp-primary); margin: 0; line-height: 1.4; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; min-height: 42px; }
+  .pp-related-price { font-family: var(--pp-font-sans); font-weight: 700; color: #013F3E; font-size: 16px; }
+  
+  /* Zoom Overlay */
+  .pp-zoom-overlay { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(0, 0, 0, 0.85); backdrop-filter: blur(8px); z-index: 9999; display: flex; align-items: center; justify-content: center; opacity: 0; pointer-events: none; transition: opacity 0.3s ease; }
+  .pp-zoom-overlay.is-active { opacity: 1; pointer-events: auto; }
+  .pp-zoom-close { position: absolute; top: 24px; right: 24px; width: 44px; height: 44px; border-radius: 50%; background: #ffffff; border: none; color: #222; cursor: pointer; display: flex; align-items: center; justify-content: center; z-index: 10000; }
+  #pp-zoom-img { max-width: 90vw; max-height: 90vh; object-fit: contain; transform: scale(0.95); transition: transform 0.3s ease; }
+  .pp-zoom-overlay.is-active #pp-zoom-img { transform: scale(1); }
 
-    .pp-related-img-wrap img {
-      transition: transform 0.35s ease;
-    }
-
-    .pp-related-item-card:hover .pp-related-img-wrap img {
-      transform: scale(1.06);
-    }
-
-    .pp-related-item-card:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 12px 28px rgba(1, 63, 62, 0.12);
-    }
-
-    .pp-related-info {
-      padding: 14px 14px 16px;
-    }
-
-    .pp-related-item-title {
-      font-size: 0.95rem;
-    }
-
-    .pp-related-price {
-      font-size: 0.9rem;
-    }
+  /* Responsive Mobile Tweaks */
+  @media screen and (max-width: 767px) {
+    .pp-container { gap: 24px; padding: 0 16px; margin-bottom: 36px; }
+    .pp-title { font-size: 28px; line-height: 1.25; margin-bottom: 12px; }
+    .pp-price-current { font-size: 26px; }
+        .pp-actions-row { flex-direction: column !important; gap: 14px !important; }
+    .pp-btn-add, .pp-btn-buy { min-height: 56px !important; height: 56px !important; font-size: 16px !important; border-radius: 8px !important; width: 100% !important; }
+    .pp-bottom-card { padding: 22px 16px; border-radius: 16px; }
+    .pp-spec-row { grid-template-columns: 110px 1fr; font-size: 14px; }
+    
+    /* Perfect Mobile Gallery Optimization */
+    .pp-main-image-wrap { border-radius: 16px; box-shadow: 0 6px 20px rgba(0, 0, 0, 0.04); }
+    .pp-main-img-container { padding: 0 !important; }
+    .pp-nav-btn { width: 36px; height: 36px; box-shadow: 0 2px 8px rgba(0,0,0,0.12); }
+    .pp-nav-prev { left: 10px; }
+    .pp-nav-next { right: 10px; }
+    .pp-wishlist-btn { top: 12px; right: 12px; width: 38px; height: 38px; }
+    .pp-fullscreen-btn { bottom: 12px; right: 12px; width: 36px; height: 36px; }
+    
+    /* Hide desktop thumbnail carousel arrows on mobile so thumbnails center perfectly without getting squeezed! */
+    .pp-thumb-nav-btn { display: none; }
+    .pp-thumbnails-section { gap: 8px; justify-content: center; margin-top: 12px; }
+    .pp-thumbnails-wrapper { padding: 2px 0; }
+    .pp-thumb-item { flex: 0 0 64px; width: 64px; height: 64px; border-radius: 10px; }
+    .pp-thumb-img { border-radius: 10px; padding: 0 !important; }
   }
 {% endstylesheet %}
 
@@ -2336,17 +902,68 @@ document.addEventListener('DOMContentLoaded', () => {
   if(nextBtn) nextBtn.addEventListener('click', () => setMainImage(activeIndex + 1));
   if(mainImg) mainImg.style.transition = 'opacity 0.2s ease-in-out';
 
+  // Thumbnail Carousel Arrows
+  const thumbPrev = document.querySelector('.pp-thumb-nav-prev');
+  const thumbNext = document.querySelector('.pp-thumb-nav-next');
+  const thumbWrapper = document.querySelector('.pp-thumbnails-wrapper');
+  if(thumbPrev && thumbWrapper) {
+    thumbPrev.addEventListener('click', () => {
+      thumbWrapper.scrollBy({ left: -200, behavior: 'smooth' });
+    });
+  }
+  if(thumbNext && thumbWrapper) {
+    thumbNext.addEventListener('click', () => {
+      thumbWrapper.scrollBy({ left: 200, behavior: 'smooth' });
+    });
+  }
+
+  // Read More Toggle
+  const readMoreBtn = document.getElementById('pp-read-more-btn');
+  const descShort = document.querySelector('.pp-desc-short');
+  const descFull = document.querySelector('.pp-desc-full');
+  const readMoreText = document.querySelector('.pp-read-more-text');
+  const readMoreIcon = document.querySelector('.pp-read-more-icon');
+  if(readMoreBtn && descShort && descFull) {
+    readMoreBtn.addEventListener('click', () => {
+      const isExpanded = readMoreBtn.getAttribute('aria-expanded') === 'true';
+      if(isExpanded) {
+        descShort.style.display = 'inline';
+        descFull.style.display = 'none';
+        if(readMoreText) readMoreText.textContent = 'Read More';
+        if(readMoreIcon) readMoreIcon.style.transform = 'rotate(0deg)';
+        readMoreBtn.setAttribute('aria-expanded', 'false');
+      } else {
+        descShort.style.display = 'none';
+        descFull.style.display = 'inline';
+        if(readMoreText) readMoreText.textContent = 'Read Less';
+        if(readMoreIcon) readMoreIcon.style.transform = 'rotate(180deg)';
+        readMoreBtn.setAttribute('aria-expanded', 'true');
+      }
+    });
+  }
+
   // Accordions
-  const accHeaders = document.querySelectorAll('.pp-full-accordion-header');
+  const accHeaders = document.querySelectorAll('.pp-acc-header, .pp-full-accordion-header');
   accHeaders.forEach(h => {
     h.addEventListener('click', () => {
       const item = h.parentElement;
       const isOpen = item.classList.contains('is-open');
+      const content = item.querySelector('.pp-acc-content, .pp-full-accordion-content');
+      const chevron = item.querySelector('.pp-acc-chevron');
       
-      document.querySelectorAll('.pp-full-accordion-item').forEach(i => i.classList.remove('is-open'));
+      document.querySelectorAll('.pp-acc-item, .pp-full-accordion-item').forEach(i => {
+        i.classList.remove('is-open');
+        const c = i.querySelector('.pp-acc-content, .pp-full-accordion-content');
+        if(c) c.style.display = 'none';
+      });
       
       if (!isOpen) {
         item.classList.add('is-open');
+        h.setAttribute('aria-expanded', 'true');
+        if(content) content.style.display = 'block';
+      } else {
+        h.setAttribute('aria-expanded', 'false');
+        if(content) content.style.display = 'none';
       }
     });
   });
@@ -2489,8 +1106,52 @@ document.addEventListener('DOMContentLoaded', () => {
       .catch(() => {
         btnBuy.textContent = 'Error';
         setTimeout(() => btnBuy.textContent = 'Buy Now', 2000);
-      });
     });
+  }
+
+  // Product Recommendations & Carousel Navigation
+  class ProductRecommendations extends HTMLElement {
+    constructor() { super(); }
+    connectedCallback() {
+      const handleIntersection = (entries, observer) => {
+        if (!entries[0].isIntersecting) return;
+        observer.unobserve(this);
+        if (this.dataset.url) {
+          fetch(this.dataset.url)
+            .then(response => response.text())
+            .then(text => {
+              const html = document.createElement('div');
+              html.innerHTML = text;
+              const recommendations = html.querySelector('product-recommendations');
+              if (recommendations && recommendations.innerHTML.trim().length) {
+                this.innerHTML = recommendations.innerHTML;
+              }
+              this.initCarousel();
+            })
+            .catch(e => { console.error(e); this.initCarousel(); });
+        } else {
+          this.initCarousel();
+        }
+      };
+      new IntersectionObserver(handleIntersection.bind(this), {rootMargin: '0px 0px 200px 0px'}).observe(this);
+      this.initCarousel();
+    }
+    initCarousel() {
+      const grid = this.querySelector('.pp-related-grid');
+      const prev = this.querySelector('.pp-rel-prev');
+      const next = this.querySelector('.pp-rel-next');
+      if (grid && prev && next) {
+        prev.addEventListener('click', () => {
+          grid.scrollBy({ left: -320, behavior: 'smooth' });
+        });
+        next.addEventListener('click', () => {
+          grid.scrollBy({ left: 320, behavior: 'smooth' });
+        });
+      }
+    }
+  }
+  if (!customElements.get('product-recommendations')) {
+    customElements.define('product-recommendations', ProductRecommendations);
   }
 });
 </script>

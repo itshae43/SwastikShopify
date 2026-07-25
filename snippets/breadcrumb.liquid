@@ -21,42 +21,41 @@
         </a>
       </li>
 
-      <li class="pp-breadcrumb-separator" aria-hidden="true">
-        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M9 18l6-6-6-6"/></svg>
-      </li>
-
       {%- if collection -%}
         <li class="pp-breadcrumb-item">
+          <span class="pp-breadcrumb-separator" aria-hidden="true">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M9 18l6-6-6-6"/></svg>
+          </span>
           <a href="{{ collection.url }}" class="pp-breadcrumb-link">{{ collection.title }}</a>
-        </li>
-        <li class="pp-breadcrumb-separator" aria-hidden="true">
-          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M9 18l6-6-6-6"/></svg>
         </li>
       {%- elsif product and product.collections.first -%}
         <li class="pp-breadcrumb-item">
+          <span class="pp-breadcrumb-separator" aria-hidden="true">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M9 18l6-6-6-6"/></svg>
+          </span>
           <a href="{{ product.collections.first.url }}" class="pp-breadcrumb-link">{{ product.collections.first.title }}</a>
-        </li>
-        <li class="pp-breadcrumb-separator" aria-hidden="true">
-          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M9 18l6-6-6-6"/></svg>
         </li>
       {%- elsif product and product.type != blank -%}
         <li class="pp-breadcrumb-item">
+          <span class="pp-breadcrumb-separator" aria-hidden="true">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M9 18l6-6-6-6"/></svg>
+          </span>
           <a href="/collections/all?filter.p.product_type={{ product.type | url_encode }}" class="pp-breadcrumb-link">{{ product.type }}</a>
-        </li>
-        <li class="pp-breadcrumb-separator" aria-hidden="true">
-          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M9 18l6-6-6-6"/></svg>
         </li>
       {%- else -%}
         <li class="pp-breadcrumb-item">
+          <span class="pp-breadcrumb-separator" aria-hidden="true">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M9 18l6-6-6-6"/></svg>
+          </span>
           <a href="/collections/all" class="pp-breadcrumb-link">Jewellery</a>
-        </li>
-        <li class="pp-breadcrumb-separator" aria-hidden="true">
-          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M9 18l6-6-6-6"/></svg>
         </li>
       {%- endif -%}
 
       {%- if product -%}
         <li class="pp-breadcrumb-item is-active" aria-current="page">
+          <span class="pp-breadcrumb-separator" aria-hidden="true">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M9 18l6-6-6-6"/></svg>
+          </span>
           <span class="pp-breadcrumb-current" title="{{ product.title | escape }}">{{ product.title }}</span>
         </li>
       {%- endif -%}
