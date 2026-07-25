@@ -129,20 +129,6 @@
               </div>
             </div>
 
-            <div class="pp-desc-section">
-              <div class="pp-desc-content" id="pp-desc-content">
-                {%- if product.description != blank -%}
-                  {{ product.description }}
-                {%- else -%}
-                  <p>Handcrafted in 18K BIS Hallmarked Gold with VS-certified natural diamonds. Designed for timeless elegance and everyday luxury. Every diamond is ethically sourced and expertly set by master craftsmen. Perfect for weddings, anniversaries, celebrations, and daily luxury wear. Comes with lifetime maintenance, insured shipping, and authenticity certificate.</p>
-                {%- endif -%}
-              </div>
-              <button type="button" class="pp-read-more-btn" id="pp-read-more-btn" aria-expanded="false" style="display: none;">
-                <span class="pp-read-more-text">Read More</span>
-                <svg class="pp-read-more-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 9l7 7 7-7"/></svg>
-              </button>
-            </div>
-
           {%- when 'variant_picker' -%}
             {% form 'product', product, id: 'pp-product-form' %}
               <input type="hidden" name="id" id="pp-variant-id" value="{{ current_variant.id }}">
@@ -206,7 +192,13 @@
       <!-- LEFT BOX: PRODUCT DETAILS & SPECS -->
       <div class="pp-bottom-card pp-bottom-left-card">
         <h3 class="pp-bottom-title">PRODUCT DETAILS</h3>
-        <p class="pp-bottom-desc">{{ product.description | strip_html | default: 'A timeless expression of elegance, this 18K yellow gold necklace features a classic figaro chain adorned with brilliant diamonds. Perfect for special occasions and everyday luxury.' }}</p>
+        <div class="pp-bottom-desc">
+          {%- if product.description != blank -%}
+            {{ product.description }}
+          {%- else -%}
+            <p>A timeless expression of elegance, this 18K yellow gold necklace features a classic figaro chain adorned with brilliant diamonds. Perfect for special occasions and everyday luxury.</p>
+          {%- endif -%}
+        </div>
         
         <div class="pp-specs-list">
           <div class="pp-spec-row">
@@ -260,7 +252,7 @@
             </span>
             <svg class="pp-acc-chevron" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
           </button>
-          <div class="pp-acc-content" style="display:none;">
+          <div class="pp-acc-content">
             <p>We offer Free Insured Express Delivery nationwide across India. Enjoy our hassle-free 15-day money-back guarantee with complimentary doorstep pickup if you are not 100% delighted.</p>
           </div>
         </div>
@@ -273,7 +265,7 @@
             </span>
             <svg class="pp-acc-chevron" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
           </button>
-          <div class="pp-acc-content" style="display:none;">
+          <div class="pp-acc-content">
             <p>Store your diamond jewellery in its original lined box or suede pouch. Clean gently using lukewarm water, mild soap, and a soft brush. Keep away from perfumes and harsh chemicals.</p>
           </div>
         </div>
@@ -629,47 +621,6 @@
   .pp-price-compare { color: #888888; text-decoration: line-through; font-weight: 500; }
   .pp-price-save-text { color: #C87A1E; font-weight: 700; background: #FFF4E6; padding: 4px 10px; border-radius: 6px; font-size: 13px; }
 
-  /* Description: Inter, 16px, Weight 400, Line Height 1.7, Max 3 Lines on Desktop, Max 2 Lines on Mobile */
-  .pp-desc-section {
-    font-family: var(--pp-font-sans);
-    font-size: 16px;
-    font-weight: 400;
-    line-height: 1.7;
-    color: #444444;
-    margin-bottom: 28px; /* Description -> Variants: 28px */
-    padding-bottom: 28px;
-    border-bottom: 1px solid var(--pp-border);
-  }
-  .pp-desc-content {
-    display: -webkit-box;
-    -webkit-line-clamp: 2;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
-    transition: all 0.3s ease;
-  }
-  .pp-desc-content.is-expanded {
-    display: block !important;
-    -webkit-line-clamp: unset !important;
-    max-height: none !important;
-    overflow: visible !important;
-  }
-  .pp-read-more-btn {
-    background: none;
-    border: none;
-    padding: 8px 0 0 0;
-    color: #C89234;
-    font-family: var(--pp-font-sans);
-    font-weight: 600;
-    font-size: 15px;
-    cursor: pointer;
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-    transition: color 0.2s ease;
-  }
-  .pp-read-more-btn:hover { color: #B5822C; text-decoration: underline; }
-  .pp-read-more-icon { transition: transform 0.25s ease; }
-
   /* Variants Block */
   .pp-variants {
     display: flex;
@@ -749,6 +700,7 @@
     width: 100% !important; background: none; border: none; padding: 20px 0 !important;
     display: flex !important; align-items: center !important; justify-content: space-between !important;
     cursor: pointer !important; text-align: left !important; margin: 0 !important; outline: none;
+    user-select: none; -webkit-user-select: none;
   }
   .pp-acc-header-left { display: flex; align-items: center; gap: 16px; pointer-events: none; }
   .pp-acc-title {
@@ -759,8 +711,12 @@
   .pp-acc-chevron { color: #333333; transition: transform 0.3s ease; pointer-events: none; flex-shrink: 0; }
   .pp-acc-item.is-open .pp-acc-chevron { transform: rotate(180deg); color: #C89234; }
   .pp-acc-content {
+    display: none;
     padding: 0 0 20px 0 !important; font-family: var(--pp-font-sans) !important; font-size: 16px !important;
     font-weight: 400 !important; color: #444444 !important; line-height: 1.7 !important;
+  }
+  .pp-acc-item.is-open .pp-acc-content {
+    display: block !important;
   }
 
   /* Related Products & Shopify AI Recommendations (No Bounding Box, Luxury Arrows) */
@@ -1089,25 +1045,19 @@
       return;
     }
 
-    // 7. Read More Toggle
-    const readMoreBtn = e.target.closest('#pp-read-more-btn');
-    if (readMoreBtn) {
+    // 7. Accordion Dropdown Toggle
+    const accHeader = e.target.closest('.pp-acc-header');
+    if (accHeader) {
       e.preventDefault();
-      const descBox = document.getElementById('pp-desc-content');
-      const readMoreText = document.querySelector('.pp-read-more-text');
-      const readMoreIcon = document.querySelector('.pp-read-more-icon');
-      if (descBox) {
-        const isExpanded = readMoreBtn.getAttribute('aria-expanded') === 'true';
-        if (isExpanded) {
-          descBox.classList.remove('is-expanded');
-          if (readMoreText) readMoreText.textContent = 'Read More';
-          if (readMoreIcon) readMoreIcon.style.transform = 'rotate(0deg)';
-          readMoreBtn.setAttribute('aria-expanded', 'false');
+      const item = accHeader.closest('.pp-acc-item');
+      if (item) {
+        const isOpen = item.classList.contains('is-open');
+        if (isOpen) {
+          item.classList.remove('is-open');
+          accHeader.setAttribute('aria-expanded', 'false');
         } else {
-          descBox.classList.add('is-expanded');
-          if (readMoreText) readMoreText.textContent = 'Read Less';
-          if (readMoreIcon) readMoreIcon.style.transform = 'rotate(180deg)';
-          readMoreBtn.setAttribute('aria-expanded', 'true');
+          item.classList.add('is-open');
+          accHeader.setAttribute('aria-expanded', 'true');
         }
       }
       return;
@@ -1159,24 +1109,6 @@
     if (e.key === 'ArrowLeft') setMainImage(window.ppActiveIndex - 1);
     if (e.key === 'ArrowRight') setMainImage(window.ppActiveIndex + 1);
   });
-
-  // Initialize Read More button visibility: Only show if description exceeds clamped height (2 lines)
-  function initReadMore() {
-    const descBox = document.getElementById('pp-desc-content');
-    const readMoreBtnEl = document.getElementById('pp-read-more-btn');
-    if (descBox && readMoreBtnEl) {
-      if (descBox.scrollHeight > descBox.clientHeight + 4) {
-        readMoreBtnEl.style.display = 'inline-flex';
-      } else {
-        readMoreBtnEl.style.display = 'none';
-      }
-    }
-  }
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', initReadMore);
-  } else {
-    setTimeout(initReadMore, 100);
-  }
 })();
 </script>
 
