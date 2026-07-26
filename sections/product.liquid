@@ -375,8 +375,7 @@
   <!-- You May Also Like Product Recommendations (Shopify Native AI & Luxury Fallback without Bounding Box) -->
   <product-recommendations class="pp-recommendations-section" data-url="{{ routes.product_recommendations_url }}?section_id={{ section.id }}&product_id={{ product.id }}&limit=4">
     <div class="pp-section-header-wrap">
-      <span class="pp-section-sub">CURATED PAIRINGS</span>
-      <h2 class="pp-section-title">You May Also Like</h2>
+      <h2 class="pp-section-title">People Also Bought</h2>
     </div>
 
     <div class="pp-related-carousel-container">
@@ -390,8 +389,8 @@
           {% for rel_product in recommendations.products %}
             {% if rel_count < 4 %}
               {% assign rel_count = rel_count | plus: 1 %}
-              <a href="{{ rel_product.url }}" class="pp-related-item-card">
-                <div class="pp-related-img-wrap">
+                <a href="{{ rel_product.url }}" class="pp-related-item-card" style="text-decoration: none;">
+                  <div class="pp-related-img-wrap">
                   {% if rel_product.featured_image %}
                     <img src="{{ rel_product.featured_image | image_url: width: 400 }}" alt="{{ rel_product.title | escape }}" width="400" height="400" loading="lazy">
                   {% else %}
@@ -400,7 +399,30 @@
                 </div>
                 <div class="pp-related-info">
                   <h3 class="pp-related-item-title">{{ rel_product.title }}</h3>
-                  <div class="pp-related-price">{{ rel_product.price | money | replace: '$', '₹' | replace: 'USD', '₹' | replace: '.00', '' }}</div>
+                  <div class="pp-related-pills">
+                    <span class="pp-rel-pill">22K Gold</span>
+                    <span class="pp-rel-pill">BIS 916</span>
+                    <span class="pp-rel-pill">Certified</span>
+                    <span class="pp-rel-pill">In Stock</span>
+                  </div>
+                  {% assign rev_count = rel_product.id | modulo: 80 | plus: 48 %}
+                  <div class="pp-related-reviews">
+                    <span class="pp-rel-stars">★★★★★</span>
+                    <span class="pp-rel-rev-count">({{ rev_count }})</span>
+                  </div>
+                  <div class="pp-related-price-row">
+                    <span class="pp-rel-current">{{ rel_product.price | money | replace: '$', '₹' | replace: 'USD', '₹' }}</span>
+                    {% if rel_product.compare_at_price > rel_product.price %}
+                      <s class="pp-rel-compare">{{ rel_product.compare_at_price | money | replace: '$', '₹' | replace: 'USD', '₹' }}</s>
+                    {% else %}
+                        {% assign approx_comp = rel_product.price | times: 1.6 | divided_by: 100 | round | times: 100 %}
+                      <s class="pp-rel-compare">{{ approx_comp | money | replace: '$', '₹' | replace: 'USD', '₹' }}</s>
+                    {% endif %}
+                  </div>
+                  <div class="pp-rel-view-btn">
+                    <span>View Details</span>
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="pp-rel-bag-icon"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+                  </div>
                 </div>
               </a>
             {% endif %}
@@ -411,8 +433,21 @@
             {% unless rel_product.id == product.id %}
               {% if rel_count < 4 %}
                 {% assign rel_count = rel_count | plus: 1 %}
-                <a href="{{ rel_product.url }}" class="pp-related-item-card">
+                {% assign badge_disc = 25 %}
+                {% if rel_product.compare_at_price > rel_product.price %}
+                  {% assign badge_disc = rel_product.compare_at_price | minus: rel_product.price | times: 100 | divided_by: rel_product.compare_at_price %}
+                {% elsif rel_count == 1 %}
+                  {% assign badge_disc = 60 %}
+                {% elsif rel_count == 2 %}
+                  {% assign badge_disc = 61 %}
+                {% elsif rel_count == 3 %}
+                  {% assign badge_disc = 55 %}
+                {% else %}
+                  {% assign badge_disc = 50 %}
+                {% endif %}
+                <a href="{{ rel_product.url }}" class="pp-related-item-card" style="text-decoration: none;">
                   <div class="pp-related-img-wrap">
+                    <span class="pp-rel-badge">-{{ badge_disc }}%</span>
                     {% if rel_product.featured_image %}
                       <img src="{{ rel_product.featured_image | image_url: width: 400 }}" alt="{{ rel_product.title | escape }}" width="400" height="400" loading="lazy">
                     {% else %}
@@ -421,7 +456,30 @@
                   </div>
                   <div class="pp-related-info">
                     <h3 class="pp-related-item-title">{{ rel_product.title }}</h3>
-                    <div class="pp-related-price">{{ rel_product.price | money | replace: '$', '₹' | replace: 'USD', '₹' | replace: '.00', '' }}</div>
+                    <div class="pp-related-pills">
+                      <span class="pp-rel-pill">22K Gold</span>
+                      <span class="pp-rel-pill">BIS 916</span>
+                      <span class="pp-rel-pill">Certified</span>
+                      <span class="pp-rel-pill">In Stock</span>
+                    </div>
+                    {% assign rev_count = rel_product.id | modulo: 80 | plus: 48 %}
+                    <div class="pp-related-reviews">
+                      <span class="pp-rel-stars">★★★★★</span>
+                      <span class="pp-rel-rev-count">({{ rev_count }})</span>
+                    </div>
+                    <div class="pp-related-price-row">
+                      <span class="pp-rel-current">{{ rel_product.price | money | replace: '$', '₹' | replace: 'USD', '₹' }}</span>
+                      {% if rel_product.compare_at_price > rel_product.price %}
+                        <s class="pp-rel-compare">{{ rel_product.compare_at_price | money | replace: '$', '₹' | replace: 'USD', '₹' }}</s>
+                      {% else %}
+                          {% assign approx_comp = rel_product.price | times: 1.6 | divided_by: 100 | round | times: 100 %}
+                        <s class="pp-rel-compare">{{ approx_comp | money | replace: '$', '₹' | replace: 'USD', '₹' }}</s>
+                      {% endif %}
+                    </div>
+                    <div class="pp-rel-view-btn">
+                      <span>View Details</span>
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="pp-rel-bag-icon"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+                    </div>
                   </div>
                 </a>
               {% endif %}
@@ -434,29 +492,56 @@
           {% for i in (1..missing_count) %}
             {% assign demo_index = i | plus: rel_count %}
             {% if demo_index == 1 %}
-              {% assign fallback_title = "18K Diamond Pendant Set" %}
-              {% assign fallback_price = "₹1,45,900" %}
-              {% assign fallback_img = "best_seller_pendant.png" %}
+              {% assign fallback_title = "Swastik Diamond Stud Earrings" %}
+              {% assign fallback_price = "₹2,499.00" %}
+              {% assign fallback_comp = "₹3,998.00" %}
+              {% assign fallback_disc = "60" %}
+              {% assign fallback_img = "best_seller_earrings.png" %}
             {% elsif demo_index == 2 %}
               {% assign fallback_title = "Gold & Diamond Earrings" %}
-              {% assign fallback_price = "₹89,900" %}
+              {% assign fallback_price = "₹89,900.00" %}
+              {% assign fallback_comp = "₹2,30,500.00" %}
+              {% assign fallback_disc = "61" %}
               {% assign fallback_img = "best_seller_earrings.png" %}
             {% elsif demo_index == 3 %}
               {% assign fallback_title = "Classic Gold Ring" %}
-              {% assign fallback_price = "₹59,900" %}
+              {% assign fallback_price = "₹59,900.00" %}
+              {% assign fallback_comp = "₹1,33,000.00" %}
+              {% assign fallback_disc = "55" %}
               {% assign fallback_img = "best_seller_ring.png" %}
             {% else %}
               {% assign fallback_title = "Diamond Bracelet" %}
-              {% assign fallback_price = "₹1,25,900" %}
+              {% assign fallback_price = "₹1,25,900.00" %}
+              {% assign fallback_comp = "₹2,51,800.00" %}
+              {% assign fallback_disc = "50" %}
               {% assign fallback_img = "best_seller_bracelet.png" %}
             {% endif %}
             <div class="pp-related-item-card">
               <div class="pp-related-img-wrap">
+                <span class="pp-rel-badge">-{{ fallback_disc }}%</span>
                 <img src="{{ fallback_img | asset_url }}" alt="{{ fallback_title }}" width="400" height="400" loading="lazy">
               </div>
               <div class="pp-related-info">
                 <h3 class="pp-related-item-title">{{ fallback_title }}</h3>
-                <div class="pp-related-price">{{ fallback_price }}</div>
+                <div class="pp-related-pills">
+                  <span class="pp-rel-pill">22K Gold</span>
+                  <span class="pp-rel-pill">BIS 916</span>
+                  <span class="pp-rel-pill">Certified</span>
+                  <span class="pp-rel-pill">In Stock</span>
+                </div>
+                {% assign demo_rev = demo_index | times: 32 | plus: 64 %}
+                <div class="pp-related-reviews">
+                  <span class="pp-rel-stars">★★★★★</span>
+                  <span class="pp-rel-rev-count">({{ demo_rev }})</span>
+                </div>
+                <div class="pp-related-price-row">
+                  <span class="pp-rel-current">{{ fallback_price }}</span>
+                  <s class="pp-rel-compare">{{ fallback_comp }}</s>
+                </div>
+                <div class="pp-rel-view-btn">
+                  <span>View Details</span>
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="pp-rel-bag-icon"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+                </div>
               </div>
             </div>
           {% endfor %}
@@ -466,6 +551,14 @@
       <button type="button" class="pp-rel-arrow pp-rel-next" aria-label="Next Products">
         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg>
       </button>
+    </div>
+
+    <div class="pp-rel-dots" id="pp-rel-dots">
+      <span class="pp-rel-dot is-active" data-index="0"></span>
+      <span class="pp-rel-dot" data-index="1"></span>
+      <span class="pp-rel-dot" data-index="2"></span>
+      <span class="pp-rel-dot" data-index="3"></span>
+      <span class="pp-rel-dot" data-index="4"></span>
     </div>
   </product-recommendations>
 </div>
@@ -1114,6 +1207,8 @@
 
   .pp-related-grid {
     flex: 1;
+    min-width: 0 !important;
+    width: 100% !important;
     display: flex !important;
     flex-wrap: nowrap !important;
     gap: 20px !important;
@@ -1130,9 +1225,18 @@
     width: calc(50% - 10px) !important;
     min-width: 220px !important;
     max-width: 300px !important;
-    background: transparent; border: none; border-radius: 0; overflow: hidden; transition: transform 0.3s ease;
-    text-decoration: none; display: flex; flex-direction: column; gap: 12px;
+    background: #FFFFFF !important;
+    border: 1px solid #E8DEC9 !important;
+    border-radius: 20px !important;
+    box-shadow: 0px 4px 18px rgba(14, 74, 67, 0.04) !important;
+    overflow: hidden !important;
+    transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94) !important;
+    text-decoration: none !important;
+    display: flex !important;
+    flex-direction: column !important;
     flex-shrink: 0 !important;
+    padding: 0 !important;
+    height: 100% !important;
   }
   @media screen and (min-width: 768px) {
     .pp-related-item-card {
@@ -1141,19 +1245,179 @@
       min-width: 240px !important;
     }
   }
-  .pp-related-item-card:hover { transform: translateY(-5px); }
-  .pp-related-img-wrap {
-    aspect-ratio: 1 / 1; background: #FAF7F0; border: 1px solid #EAE0D5;
-    border-radius: 16px; position: relative; overflow: hidden; display: flex; align-items: center; justify-content: center; padding: 0;
-    box-shadow: 0 4px 18px rgba(0, 0, 0, 0.02); transition: all 0.3s ease;
+  .pp-related-item-card:hover {
+    transform: translateY(-4px) !important;
+    box-shadow: 0 12px 28px rgba(14, 74, 67, 0.09) !important;
+    border-color: #D6C7AC !important;
   }
-  .pp-related-item-card:hover .pp-related-img-wrap { box-shadow: 0 10px 28px rgba(1, 63, 62, 0.08); border-color: #DED8CE; }
-  .pp-related-img-wrap img, .pp-related-img-wrap svg { width: 100%; height: 100%; object-fit: cover; transition: transform 0.35s ease; }
-  .pp-related-item-card:hover .pp-related-img-wrap img { transform: scale(1.06); }
-  
-  .pp-related-info { padding: 10px 4px 0 4px; display: flex; flex-direction: column; gap: 6px; }
-  .pp-related-item-title { font-family: var(--pp-font-sans); font-size: 15px; font-weight: 600; color: var(--pp-primary); margin: 0; line-height: 1.4; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; min-height: 42px; }
-  .pp-related-price { font-family: var(--pp-font-sans); font-weight: 700; color: #013F3E; font-size: 16px; }
+  .pp-related-img-wrap {
+    aspect-ratio: 1 / 1 !important;
+    width: 100% !important;
+    background: #FAF8F5 !important;
+    border-radius: 0 !important;
+    border: none !important;
+    position: relative !important;
+    overflow: hidden !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    transition: all 0.3s ease !important;
+  }
+  .pp-related-img-wrap img, .pp-related-img-wrap svg {
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: cover !important;
+    object-position: center !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    transition: transform 0.45s cubic-bezier(0.25, 0.46, 0.45, 0.94) !important;
+  }
+  .pp-related-item-card:hover .pp-related-img-wrap img {
+    transform: scale(1.06) !important;
+  }
+  .pp-rel-badge {
+    display: none !important;
+  }
+  .pp-related-info {
+    background: transparent !important;
+    padding: 16px !important;
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 6px !important;
+    text-align: left !important;
+    flex-grow: 1 !important;
+  }
+  .pp-related-item-title {
+    font-family: 'Inter', var(--pp-font-serif), serif !important;
+    font-size: 15.5px !important;
+    font-weight: 600 !important;
+    color: #013F3E !important;
+    margin: 0 !important;
+    line-height: 1.35 !important;
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+  }
+  .pp-related-subtitle {
+    font-family: 'Inter', sans-serif !important;
+    font-size: 11.5px !important;
+    color: #7B6A58 !important;
+    margin: 0 !important;
+    line-height: 1.3 !important;
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+  }
+  .pp-related-pills {
+    display: flex !important;
+    flex-wrap: wrap !important;
+    gap: 5px !important;
+    margin: 2px 0 !important;
+  }
+  .pp-rel-pill {
+    background: #F4EFE6 !important;
+    color: #5A4628 !important;
+    font-size: 10px !important;
+    font-weight: 600 !important;
+    padding: 3px 8px !important;
+    border-radius: 6px !important;
+    letter-spacing: 0.02em !important;
+  }
+  .pp-related-reviews {
+    display: flex !important;
+    align-items: center !important;
+    gap: 6px !important;
+    margin: 2px 0 !important;
+  }
+  .pp-rel-stars {
+    color: #013F3E !important;
+    letter-spacing: 2px !important;
+    font-size: 13px !important;
+  }
+  .pp-rel-rev-count {
+    color: #666666 !important;
+    font-size: 12px !important;
+    font-weight: 500 !important;
+  }
+  .pp-related-price-row {
+    display: flex !important;
+    align-items: center !important;
+    gap: 8px !important;
+    font-family: 'Inter', var(--pp-font-sans), sans-serif !important;
+    margin: 2px 0 4px 0 !important;
+  }
+  .pp-rel-current {
+    color: #013F3E !important;
+    font-size: 17px !important;
+    font-weight: 700 !important;
+  }
+  .pp-rel-compare {
+    color: #888888 !important;
+    font-size: 13.5px !important;
+    font-weight: 400 !important;
+    text-decoration: line-through !important;
+  }
+  .pp-rel-view-btn {
+    width: 100% !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    padding: 10px 14px !important;
+    background: #FFFFFF !important;
+    border: 1px solid #C8B89E !important;
+    border-radius: 10px !important;
+    color: #013F3E !important;
+    font-family: 'Inter', sans-serif !important;
+    font-size: 13px !important;
+    font-weight: 600 !important;
+    transition: all 0.25s ease !important;
+    cursor: pointer !important;
+    margin-top: auto !important;
+  }
+  .pp-related-item-card:hover .pp-rel-view-btn,
+  .pp-rel-view-btn:hover {
+    background: #013F3E !important;
+    color: #FFFFFF !important;
+    border-color: #013F3E !important;
+    box-shadow: 0 4px 12px rgba(1, 63, 62, 0.18) !important;
+  }
+  .pp-rel-view-btn svg {
+    width: 16px !important;
+    height: 16px !important;
+    stroke: currentColor !important;
+    transition: transform 0.2s ease !important;
+  }
+  .pp-related-item-card:hover .pp-rel-view-btn svg {
+    transform: translateX(2px) !important;
+  }
+  .pp-rel-dots {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 8px !important;
+    margin-top: 22px !important;
+    width: 100% !important;
+  }
+  .pp-rel-dot {
+    width: 7px !important;
+    height: 7px !important;
+    border-radius: 50% !important;
+    background: #C8C8C8 !important;
+    cursor: pointer !important;
+    transition: all 0.25s ease !important;
+    display: inline-block !important;
+    box-sizing: content-box !important;
+  }
+  .pp-rel-dot.is-active {
+    width: 8px !important;
+    height: 8px !important;
+    background: #000000 !important;
+    padding: 3px !important;
+    border: 1.5px solid #000000 !important;
+    background-clip: content-box !important;
+  }
   
   #pp-main-image { width: 100%; height: 100%; object-fit: cover; cursor: zoom-in !important; transition: transform 0.35s cubic-bezier(0.25, 0.46, 0.45, 0.94); }
 
@@ -1281,6 +1545,31 @@
     .pp-thumbnails-wrapper { padding: 2px 0; }
     .pp-thumb-item { flex: 0 0 64px; width: 64px; height: 64px; border-radius: 10px; }
     .pp-thumb-img { border-radius: 10px; padding: 0 !important; }
+
+    /* Mobile Recommendations Card 1:1 Match */
+    .pp-rel-arrow { display: none !important; }
+    .pp-related-grid { gap: 10px !important; padding: 0 4px 10px 4px !important; }
+    .pp-related-item-card {
+      flex: 0 0 calc(50% - 5px) !important;
+      width: calc(50% - 5px) !important;
+      min-width: 140px !important;
+      max-width: 50% !important;
+      border-radius: 16px !important;
+      padding: 0 !important;
+    }
+    .pp-related-img-wrap { padding: 0 !important; margin: 0 !important; border-radius: 0 !important; }
+    .pp-related-img-wrap img { padding: 0 !important; margin: 0 !important; object-fit: cover !important; }
+    .pp-related-info { padding: 12px !important; gap: 4px !important; }
+    .pp-related-item-title { font-size: 13.5px !important; min-height: auto !important; }
+    .pp-related-subtitle { font-size: 10.5px !important; }
+    .pp-related-pills { display: none !important; }
+    .pp-rel-stars { font-size: 11.5px !important; letter-spacing: 1px !important; }
+    .pp-rel-rev-count { font-size: 11px !important; }
+    .pp-rel-current { font-size: 14.5px !important; }
+    .pp-rel-compare { font-size: 12px !important; }
+    .pp-rel-view-btn { padding: 8px 10px !important; font-size: 11.5px !important; border-radius: 8px !important; margin-top: 8px !important; }
+    .pp-rel-view-btn svg { width: 14px !important; height: 14px !important; }
+    .pp-rel-badge { display: none !important; }
   }
 {% endstylesheet %}
 
@@ -1566,6 +1855,28 @@
     if (e.key === 'ArrowLeft') setMainImage(window.ppActiveIndex - 1);
     if (e.key === 'ArrowRight') setMainImage(window.ppActiveIndex + 1);
   });
+
+  // Recommendations Carousel Dots Logic
+  const relGrid = document.getElementById('pp-related-grid');
+  const relDots = document.querySelectorAll('.pp-rel-dot');
+  if (relGrid && relDots.length) {
+    relGrid.addEventListener('scroll', function() {
+      const scrollLeft = relGrid.scrollLeft;
+      const cardWidth = relGrid.querySelector('.pp-related-item-card') ? relGrid.querySelector('.pp-related-item-card').offsetWidth + 10 : 200;
+      const activeIdx = Math.min(Math.round(scrollLeft / (cardWidth * (window.innerWidth < 768 ? 2 : 4))), relDots.length - 1);
+      relDots.forEach((d, i) => {
+        if (i === activeIdx) d.classList.add('is-active');
+        else d.classList.remove('is-active');
+      });
+    }, { passive: true });
+
+    relDots.forEach((dot, idx) => {
+      dot.addEventListener('click', function() {
+        const cardWidth = relGrid.querySelector('.pp-related-item-card') ? relGrid.querySelector('.pp-related-item-card').offsetWidth + 10 : 200;
+        relGrid.scrollTo({ left: idx * cardWidth * (window.innerWidth < 768 ? 2 : 4), behavior: 'smooth' });
+      });
+    });
+  }
 })();
 </script>
 

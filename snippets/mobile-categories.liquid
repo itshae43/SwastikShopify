@@ -24,21 +24,39 @@
   </div>
 
   <div class="mobile-categories-overlay__search">
-    <form action="{{ routes.search_url }}" method="get" role="search">
+    <form action="{{ routes.search_url }}" method="get" role="search" id="MobileCategorySearchForm" class="mobile-search-form">
       <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
         <circle cx="11" cy="11" r="8"></circle>
         <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
       </svg>
-      <input type="search" name="q" placeholder="Search for jewellery" value="{{ search.terms | escape }}">
+      <input type="search" name="q" id="MobileCategorySearchInput" placeholder="Search rings, jhumkas, diamonds..." value="{{ search.terms | escape }}" autocomplete="off" autocorrect="off">
+      <button type="button" id="MobileCategorySearchClear" class="search-clear-btn" style="display: none;" aria-label="Clear search">✕</button>
       <input type="hidden" name="options[prefix]" value="last">
     </form>
+
+    <!-- Trending Searches Bar -->
+    <div class="mobile-trending-bar">
+      <span class="trending-title">Trending:</span>
+      <div class="trending-pills">
+        <button type="button" class="trending-pill js-quick-search-term" data-term="Need Inspiration">✨ Need Inspiration</button>
+        <button type="button" class="trending-pill js-quick-search-term" data-term="Bridal">👑 Bridal</button>
+        <button type="button" class="trending-pill js-quick-search-term" data-term="Lab Grown">💎 Lab Grown</button>
+        <button type="button" class="trending-pill js-quick-search-term" data-term="Jhumkas">🌟 Jhumkas</button>
+        <button type="button" class="trending-pill js-quick-search-term" data-term="Daily Wear">☀️ Daily Wear</button>
+      </div>
+    </div>
+
+    <!-- Live Predictive Search Results Container -->
+    <div id="MobileCategorySearchResults" class="mobile-live-search-container" style="display: none;">
+      <div class="live-search-loading">Searching Swastik Jewels...</div>
+    </div>
   </div>
 
-  <div class="mobile-categories-overlay__grid">
+  <div class="mobile-categories-overlay__grid" id="MobileCategoriesGrid">
     <!-- Category: Rings -->
     <button class="mobile-category-card js-open-category-sheet" data-category="rings" style="background-color: #E8F0E9;">
       <div class="mobile-category-card__image">
-        <img src="https://cdn.shopify.com/s/files/1/0805/0121/1413/files/engagement_ring_icon.png" alt="Rings" loading="lazy" width="100" height="100">
+        <img src="{{ 'rings_category.png' | asset_url }}" alt="Rings" loading="lazy" width="100" height="100" onerror="this.src='{{ 'ring_placeholder.png' | asset_url }}'">
       </div>
       <div class="mobile-category-card__footer">
         <span class="mobile-category-card__title">Rings</span>
@@ -53,7 +71,7 @@
     <!-- Category: Earrings -->
     <button class="mobile-category-card js-open-category-sheet" data-category="earrings" style="background-color: #F8EFE6;">
       <div class="mobile-category-card__image">
-        <img src="https://cdn.shopify.com/s/files/1/0805/0121/1413/files/engagement_ring_icon.png" alt="Earrings" loading="lazy" width="100" height="100" style="filter: hue-rotate(45deg);">
+        <img src="{{ 'earrings_category.png' | asset_url }}" alt="Earrings" loading="lazy" width="100" height="100" onerror="this.src='{{ 'earring_placeholder.png' | asset_url }}'">
       </div>
       <div class="mobile-category-card__footer">
         <span class="mobile-category-card__title">Earrings</span>
@@ -68,7 +86,7 @@
     <!-- Category: Bracelets & Bangles -->
     <button class="mobile-category-card js-open-category-sheet" data-category="bracelets" style="background-color: #FCE8E9;">
       <div class="mobile-category-card__image">
-        <img src="https://cdn.shopify.com/s/files/1/0805/0121/1413/files/engagement_ring_icon.png" alt="Bracelets & Bangles" loading="lazy" width="100" height="100" style="filter: hue-rotate(90deg);">
+        <img src="{{ 'bangle_placeholder.png' | asset_url }}" alt="Bracelets & Bangles" loading="lazy" width="100" height="100" onerror="this.src='{{ 'best_seller_bracelet.png' | asset_url }}'">
       </div>
       <div class="mobile-category-card__footer">
         <span class="mobile-category-card__title">Bracelets & Bangles</span>
@@ -83,7 +101,7 @@
     <!-- Category: Necklaces -->
     <button class="mobile-category-card js-open-category-sheet" data-category="necklaces" style="background-color: #EEF3ED;">
       <div class="mobile-category-card__image">
-        <img src="https://cdn.shopify.com/s/files/1/0805/0121/1413/files/engagement_ring_icon.png" alt="Necklaces" loading="lazy" width="100" height="100" style="filter: hue-rotate(135deg);">
+        <img src="{{ 'necklace_placeholder.png' | asset_url }}" alt="Necklaces" loading="lazy" width="100" height="100" onerror="this.src='{{ 'tennis_category.png' | asset_url }}'">
       </div>
       <div class="mobile-category-card__footer">
         <span class="mobile-category-card__title">Necklaces</span>
@@ -98,7 +116,7 @@
     <!-- Category: Pendants -->
     <button class="mobile-category-card js-open-category-sheet" data-category="pendants" style="background-color: #FAF4F0;">
       <div class="mobile-category-card__image">
-        <img src="https://cdn.shopify.com/s/files/1/0805/0121/1413/files/engagement_ring_icon.png" alt="Pendants" loading="lazy" width="100" height="100" style="filter: hue-rotate(180deg);">
+        <img src="{{ 'pendants_category.png' | asset_url }}" alt="Pendants" loading="lazy" width="100" height="100" onerror="this.src='{{ 'pendant_placeholder.png' | asset_url }}'">
       </div>
       <div class="mobile-category-card__footer">
         <span class="mobile-category-card__title">Pendants</span>
@@ -113,7 +131,7 @@
     <!-- Category: Solitaires -->
     <button class="mobile-category-card js-open-category-sheet" data-category="solitaires" style="background-color: #F8ECE0;">
       <div class="mobile-category-card__image">
-        <img src="https://cdn.shopify.com/s/files/1/0805/0121/1413/files/engagement_ring_icon.png" alt="Solitaires" loading="lazy" width="100" height="100" style="filter: hue-rotate(225deg);">
+        <img src="{{ 'best_seller_ring.png' | asset_url }}" alt="Solitaires" loading="lazy" width="100" height="100" onerror="this.src='{{ 'ring_placeholder.png' | asset_url }}'">
       </div>
       <div class="mobile-category-card__footer">
         <span class="mobile-category-card__title">Solitaires</span>
@@ -128,7 +146,7 @@
     <!-- Category: Diamonds -->
     <button class="mobile-category-card js-open-category-sheet" data-category="diamonds" style="background-color: #E2EFE7;">
       <div class="mobile-category-card__image">
-        <img src="https://cdn.shopify.com/s/files/1/0805/0121/1413/files/engagement_ring_icon.png" alt="Diamonds" loading="lazy" width="100" height="100" style="filter: hue-rotate(270deg);">
+        <img src="{{ 'tennis_category.png' | asset_url }}" alt="Diamonds" loading="lazy" width="100" height="100" onerror="this.src='{{ 'necklace_placeholder.png' | asset_url }}'">
       </div>
       <div class="mobile-category-card__footer">
         <span class="mobile-category-card__title">Diamonds</span>
@@ -262,7 +280,12 @@
 }
 
 .mobile-categories-overlay__search {
-  padding: 1.5rem;
+  padding: 1.2rem 1.5rem 0.5rem 1.5rem;
+  position: sticky;
+  top: 50px;
+  background: #FFF;
+  z-index: 10;
+  border-bottom: 1px solid #F0F0F0;
 }
 
 .mobile-categories-overlay__search form {
@@ -272,12 +295,143 @@
 
 .mobile-categories-overlay__search input {
   width: 100%;
-  padding: 1rem 1rem 1rem 3rem;
-  border: 1px solid #E0E0E0;
+  padding: 0.85rem 2.5rem 0.85rem 2.8rem;
+  border: 1.5px solid #E0E0E0;
+  border-radius: 50px;
+  background-color: #F9F9F9;
+  font-size: 0.95rem;
+  color: #222;
+  transition: all 0.2s ease;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.03);
+}
+
+.mobile-categories-overlay__search input:focus {
+  outline: none;
+  border-color: #D4AF37;
+  background-color: #FFF;
+  box-shadow: 0 4px 12px rgba(212, 175, 55, 0.15);
+}
+
+.search-clear-btn {
+  position: absolute;
+  right: 0.8rem;
+  top: 50%;
+  transform: translateY(-50%);
+  background: #EEE;
+  border: none;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  font-size: 12px;
+  color: #666;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+/* Trending Bar */
+.mobile-trending-bar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 0.8rem;
+  padding-bottom: 0.8rem;
+  overflow-x: auto;
+  white-space: nowrap;
+  scrollbar-width: none;
+}
+.mobile-trending-bar::-webkit-scrollbar {
+  display: none;
+}
+.trending-title {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: #777;
+}
+.trending-pill {
+  background: #FAF4F0;
+  border: 1px solid #EBDAD0;
+  border-radius: 20px;
+  padding: 4px 12px;
+  font-size: 0.8rem;
+  color: #4A3B32;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+.trending-pill:active, .trending-pill:hover {
+  background: #D4AF37;
+  color: #FFF;
+  border-color: #D4AF37;
+}
+
+/* Live Search Container */
+.mobile-live-search-container {
+  padding: 1rem 0 2rem 0;
+  max-height: calc(100vh - 180px);
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+}
+.live-search-loading {
+  text-align: center;
+  padding: 2rem;
+  color: #888;
+  font-size: 0.9rem;
+}
+.live-search-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 0;
+  border-bottom: 1px solid #F5F5F5;
+  text-decoration: none;
+  color: inherit;
+}
+.live-search-item__img {
+  width: 50px;
+  height: 50px;
   border-radius: 8px;
-  background-color: #FFFFFF;
-  font-size: 1rem;
-  color: #333;
+  object-fit: cover;
+  background: #F9F9F9;
+}
+.live-search-item__info {
+  flex: 1;
+}
+.live-search-item__title {
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: #222;
+  margin-bottom: 3px;
+  line-height: 1.3;
+}
+.live-search-item__price {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #D4AF37;
+}
+.live-search-item__compare-price {
+  font-size: 0.75rem;
+  color: #999;
+  text-decoration: line-through;
+  margin-left: 6px;
+}
+mark.search-highlight {
+  background: rgba(255, 223, 0, 0.4);
+  color: inherit;
+  padding: 0 2px;
+  border-radius: 2px;
+}
+.live-search-view-all {
+  display: block;
+  text-align: center;
+  padding: 12px;
+  margin-top: 15px;
+  background: #222;
+  color: #FFF;
+  border-radius: 25px;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 0.9rem;
 }
 
 .mobile-categories-overlay__search .search-icon {
@@ -641,10 +795,10 @@ document.addEventListener('DOMContentLoaded', () => {
     rings: {
       title: "Shop Rings By",
       style: [
-        { name: "Engagement Rings", iconUrl: "https://cdn.shopify.com/s/files/1/0805/0121/1413/files/engagement_ring_icon.png" },
-        { name: "Couple Bands", iconUrl: "https://cdn.shopify.com/s/files/1/0805/0121/1413/files/couple_bands_icon.png" },
-        { name: "Casual Rings", iconUrl: "https://cdn.shopify.com/s/files/1/0805/0121/1413/files/casual_rings_icon.png" },
-        { name: "Eternity Rings", iconUrl: "https://cdn.shopify.com/s/files/1/0805/0121/1413/files/eternity_rings_icon.png" }
+        { name: "Engagement Rings", iconUrl: "{{ 'rings_category.png' | asset_url }}" },
+        { name: "Couple Bands", iconUrl: "{{ 'ring_placeholder.png' | asset_url }}" },
+        { name: "Casual Rings", iconUrl: "{{ 'best_seller_ring.png' | asset_url }}" },
+        { name: "Eternity Rings", iconUrl: "{{ 'rings_category.png' | asset_url }}" }
       ],
       price: [
         { name: "Under ₹10,000" },
@@ -663,10 +817,10 @@ document.addEventListener('DOMContentLoaded', () => {
     earrings: {
       title: "Shop Earrings By",
       style: [
-        { name: "Studs", iconUrl: "https://cdn.shopify.com/s/files/1/0805/0121/1413/files/engagement_ring_icon.png" },
-        { name: "Drops", iconUrl: "https://cdn.shopify.com/s/files/1/0805/0121/1413/files/engagement_ring_icon.png" },
-        { name: "Hoops", iconUrl: "https://cdn.shopify.com/s/files/1/0805/0121/1413/files/engagement_ring_icon.png" },
-        { name: "Jhumkas", iconUrl: "https://cdn.shopify.com/s/files/1/0805/0121/1413/files/engagement_ring_icon.png" }
+        { name: "Studs", iconUrl: "{{ 'earrings_category.png' | asset_url }}" },
+        { name: "Drops", iconUrl: "{{ 'earring_placeholder.png' | asset_url }}" },
+        { name: "Hoops", iconUrl: "{{ 'best_seller_earrings.png' | asset_url }}" },
+        { name: "Jhumkas", iconUrl: "{{ 'earrings_category.png' | asset_url }}" }
       ],
       price: [
         { name: "Under ₹10,000" },
@@ -684,8 +838,8 @@ document.addEventListener('DOMContentLoaded', () => {
   const defaultCategoryData = {
     title: "Shop Category By",
     style: [
-      { name: "Trending", iconUrl: "https://cdn.shopify.com/s/files/1/0805/0121/1413/files/engagement_ring_icon.png" },
-      { name: "New Arrivals", iconUrl: "https://cdn.shopify.com/s/files/1/0805/0121/1413/files/engagement_ring_icon.png" }
+      { name: "Trending", iconUrl: "{{ 'ring_placeholder.png' | asset_url }}" },
+      { name: "New Arrivals", iconUrl: "{{ 'best_seller_ring.png' | asset_url }}" }
     ],
     price: [ { name: "Under ₹20,000" }, { name: "Above ₹20,000" } ],
     metal: [ { name: "Gold", color: "#F3E5AB" } ]
@@ -789,9 +943,96 @@ document.addEventListener('DOMContentLoaded', () => {
       genderTabs.forEach(t => t.classList.remove('active'));
       tab.classList.add('active');
       currentGender = tab.getAttribute('data-gender');
-      // In a real app, this would filter the renderSheetContent data.
       renderSheetContent(); 
     });
   });
+
+  // 3. Live Predictive Search & Trending Pills Logic
+  const searchInput = document.getElementById('MobileCategorySearchInput');
+  const searchClear = document.getElementById('MobileCategorySearchClear');
+  const searchResults = document.getElementById('MobileCategorySearchResults');
+  const categoriesGrid = document.getElementById('MobileCategoriesGrid');
+  const trendingPills = document.querySelectorAll('.js-quick-search-term');
+  let searchTimeout;
+
+  function performPredictiveSearch(query) {
+    if (!query || query.trim().length < 2) {
+      if (searchResults) searchResults.style.display = 'none';
+      if (categoriesGrid) categoriesGrid.style.display = 'grid';
+      if (searchClear) searchClear.style.display = 'none';
+      return;
+    }
+
+    if (searchClear) searchClear.style.display = 'flex';
+    if (categoriesGrid) categoriesGrid.style.display = 'none';
+    if (searchResults) {
+      searchResults.style.display = 'block';
+      searchResults.innerHTML = '<div class="live-search-loading">Searching Swastik Jewels...</div>';
+    }
+
+    fetch(`{{ routes.search_url }}/suggest.json?q=${encodeURIComponent(query)}&resources[type]=product&resources[limit]=8`)
+      .then(response => response.json())
+      .then(data => {
+        const products = data.resources && data.resources.results && data.resources.results.products ? data.resources.results.products : [];
+        if (products.length === 0) {
+          searchResults.innerHTML = `<div class="live-search-loading">No jewelry found for "${query}". Try searching "rings", "diamonds", or "jhumkas".</div>`;
+          return;
+        }
+
+        const regex = new RegExp(`(${query.trim().replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&')})`, 'gi');
+        let html = '';
+        products.forEach(product => {
+          const highlightedTitle = product.title.replace(regex, '<mark class="search-highlight">$1</mark>');
+          const imgUrl = product.image ? product.image : '{{ "ring_placeholder.png" | asset_url }}';
+          const priceFormatted = product.price ? '₹' + (parseFloat(product.price) / 100).toLocaleString('en-IN') : '';
+          const compareFormatted = product.compare_at_price && parseFloat(product.compare_at_price) > parseFloat(product.price) ? '₹' + (parseFloat(product.compare_at_price) / 100).toLocaleString('en-IN') : '';
+
+          html += `
+            <a href="${product.url}" class="live-search-item">
+              <img src="${imgUrl}" alt="${product.title}" class="live-search-item__img" onerror="this.src='{{ 'ring_placeholder.png' | asset_url }}'">
+              <div class="live-search-item__info">
+                <div class="live-search-item__title">${highlightedTitle}</div>
+                <div>
+                  <span class="live-search-item__price">${priceFormatted || 'View Price'}</span>
+                  ${compareFormatted ? `<span class="live-search-item__compare-price">${compareFormatted}</span>` : ''}
+                </div>
+              </div>
+            </a>
+          `;
+        });
+
+        html += `<a href="{{ routes.search_url }}?q=${encodeURIComponent(query)}" class="live-search-view-all">View all results for "${query}" ↗</a>`;
+        searchResults.innerHTML = html;
+      })
+      .catch(err => {
+        searchResults.innerHTML = `<div class="live-search-loading">Error loading suggestions. Please hit enter to search.</div>`;
+      });
+  }
+
+  if (searchInput) {
+    searchInput.addEventListener('input', (e) => {
+      clearTimeout(searchTimeout);
+      const val = e.target.value;
+      searchTimeout = setTimeout(() => performPredictiveSearch(val), 250);
+    });
+  }
+
+  if (searchClear && searchInput) {
+    searchClear.addEventListener('click', () => {
+      searchInput.value = '';
+      performPredictiveSearch('');
+      searchInput.focus();
+    });
+  }
+
+  if (trendingPills.length > 0 && searchInput) {
+    trendingPills.forEach(pill => {
+      pill.addEventListener('click', () => {
+        const term = pill.getAttribute('data-term');
+        searchInput.value = term;
+        performPredictiveSearch(term);
+      });
+    });
+  }
 });
 </script>

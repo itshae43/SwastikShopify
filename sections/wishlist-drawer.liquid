@@ -30,7 +30,7 @@
     left: 0;
     width: 100vw;
     height: 100vh;
-    z-index: 9999;
+    z-index: 1000000 !important;
     display: flex;
     justify-content: flex-end;
     visibility: hidden;
@@ -314,6 +314,7 @@
     document.getElementById('WishlistDrawer').classList.add('is-open');
     document.body.style.overflow = 'hidden';
     document.body.classList.add('drawer-open');
+    document.body.classList.add('body-lock');
     renderWishlistDrawer();
   };
 
@@ -321,6 +322,7 @@
     document.getElementById('WishlistDrawer').classList.remove('is-open');
     document.body.style.overflow = '';
     document.body.classList.remove('drawer-open');
+    document.body.classList.remove('body-lock');
   };
 </script>
 

@@ -325,27 +325,6 @@
         </button>
       </div>
 
-      <!-- Live Gold Rate Banner -->
-      <div class="mobile-drawer-gold-rate">
-        <span class="gold-rate-pulse"></span>
-        <span class="gold-rate-label">LIVE RATE</span>
-        <span class="gold-rate-val">{{ section.settings.gold_price | default: "Gold 15,620/g" }}</span>
-      </div>
-
-      <!-- Search Bar -->
-      <div class="mobile-drawer-search">
-        <form action="{{ routes.search_url }}" method="get" role="search" style="position: relative; width: 100%;">
-          <input type="search" name="q" class="mobile-drawer-search__input" placeholder="Search Solitaires, Diamonds, Polki..." value="{{ search.terms | escape }}">
-          <input type="hidden" name="options[prefix]" value="last">
-          <button type="submit" class="mobile-drawer-search__btn" aria-label="Search">
-            <svg viewBox="0 0 24 24" fill="none" stroke="#013F3E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width: 18px; height: 18px;">
-              <circle cx="11" cy="11" r="8"></circle>
-              <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
-            </svg>
-          </button>
-        </form>
-      </div>
-
       <!-- Drawer Nav Items (Dynamic Desktop & Detailed Swastik Categories) -->
       <nav class="mobile-menu-drawer__nav">
         <ul class="mobile-menu-list">
@@ -383,81 +362,93 @@
               </li>
             {%- endfor -%}
           {%- else -%}
-            <!-- Bespoke Swastik Categories -->
+            <!-- Bespoke Swastik Categories (Mirroring Home Page Signature Sections) -->
             <li class="mobile-menu-item mobile-menu-item--has-sub">
               <button type="button" class="mobile-menu-trigger" aria-expanded="false">
-                <span class="mobile-menu-title">SOLITAIRES</span>
+                <span class="mobile-menu-title" style="color: #D4AF37;">GIFTS FOR HIM & HER</span>
                 <svg class="mobile-menu-arrow" viewBox="0 0 24 24" fill="none" stroke="#222222" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="m9 18 6-6-6-6" /></svg>
               </button>
               <ul class="mobile-submenu" style="display: none;">
-                <li><a href="{{ routes.collections_url }}/solitaires/solitaire-rings">Solitaire Rings</a></li>
-                <li><a href="{{ routes.collections_url }}/solitaires/solitaire-earrings">Solitaire Earrings</a></li>
-                <li><a href="{{ routes.collections_url }}/solitaires/solitaire-pendants">Solitaire Pendants</a></li>
-                <li><a href="{{ routes.collections_url }}/solitaires?filter.v.price.lte=50000">Under ₹50,000</a></li>
+                <li><a href="{{ routes.collections_url }}/gifting?filter.p.m.custom.recipient=her">Gift for Her</a></li>
+                <li><a href="{{ routes.collections_url }}/gifting?filter.p.m.custom.recipient=him">Gift for Him</a></li>
+                <li><a href="{{ routes.collections_url }}/gifting?filter.v.price.lte=25000">Gifts Under ₹25,000</a></li>
+                <li><a href="{{ routes.collections_url }}/gifting?filter.v.price.lte=50000">Gifts Under ₹50,000</a></li>
+                <li><a href="{{ routes.collections_url }}/gifting">Shop by Occasion</a></li>
               </ul>
             </li>
 
             <li class="mobile-menu-item mobile-menu-item--has-sub">
               <button type="button" class="mobile-menu-trigger" aria-expanded="false">
-                <span class="mobile-menu-title">DIAMONDS</span>
+                <span class="mobile-menu-title">FOR EVERY YOU</span>
+                <svg class="mobile-menu-arrow" viewBox="0 0 24 24" fill="none" stroke="#222222" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="m9 18 6-6-6-6" /></svg>
+              </button>
+              <ul class="mobile-submenu" style="display: none;">
+                <li><a href="{{ routes.collections_url }}/everyday-luxe">Everyday Luxe</a></li>
+                <li><a href="{{ routes.collections_url }}/for-every-you">Work & Office Wear</a></li>
+                <li><a href="{{ routes.collections_url }}/party-wear">Party & Celebration</a></li>
+                <li><a href="{{ routes.collections_url }}/minimalist">Modern Minimalist</a></li>
+              </ul>
+            </li>
+
+            <li class="mobile-menu-item mobile-menu-item--has-sub">
+              <button type="button" class="mobile-menu-trigger" aria-expanded="false">
+                <span class="mobile-menu-title">BRIDAL & ROYAL HERITAGE</span>
+                <svg class="mobile-menu-arrow" viewBox="0 0 24 24" fill="none" stroke="#222222" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="m9 18 6-6-6-6" /></svg>
+              </button>
+              <ul class="mobile-submenu" style="display: none;">
+                <li><a href="{{ routes.collections_url }}/polki/royal-chokers">Royal Heritage Chokers</a></li>
+                <li><a href="{{ routes.collections_url }}/polki/kundan-polki">Kundan & Meenakari</a></li>
+                <li><a href="{{ routes.collections_url }}/bridal">Bridal Jadau Edit</a></li>
+                <li><a href="{{ routes.collections_url }}/polki/uncut-diamond-sets">Uncut Diamond Sets</a></li>
+              </ul>
+            </li>
+
+            <li class="mobile-menu-item mobile-menu-item--has-sub">
+              <button type="button" class="mobile-menu-trigger" aria-expanded="false">
+                <span class="mobile-menu-title">LATEST & BEST SELLERS</span>
+                <svg class="mobile-menu-arrow" viewBox="0 0 24 24" fill="none" stroke="#222222" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="m9 18 6-6-6-6" /></svg>
+              </button>
+              <ul class="mobile-submenu" style="display: none;">
+                <li><a href="{{ routes.collections_url }}/new-arrivals">New Arrivals</a></li>
+                <li><a href="{{ routes.collections_url }}/best-sellers">Best Sellers</a></li>
+                <li><a href="{{ routes.collections_url }}/gold-showcase">Gold Collection Showcase</a></li>
+                <li><a href="{{ routes.collections_url }}/quick-ship">Ships in 3 Days</a></li>
+              </ul>
+            </li>
+
+            <li class="mobile-menu-item mobile-menu-item--has-sub">
+              <button type="button" class="mobile-menu-trigger" aria-expanded="false">
+                <span class="mobile-menu-title">DIAMONDS & SOLITAIRES</span>
                 <svg class="mobile-menu-arrow" viewBox="0 0 24 24" fill="none" stroke="#222222" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="m9 18 6-6-6-6" /></svg>
               </button>
               <ul class="mobile-submenu" style="display: none;">
                 <li><a href="{{ routes.collections_url }}/diamonds/natural-diamonds">Natural Diamonds</a></li>
                 <li><a href="{{ routes.collections_url }}/diamonds/lab-grown-diamonds">Lab Grown Diamonds</a></li>
+                <li><a href="{{ routes.collections_url }}/solitaires">Solitaire Rings & Pendants</a></li>
                 <li><a href="{{ routes.collections_url }}/diamonds/diamond-bangles">Diamond Bangles & Bracelets</a></li>
               </ul>
             </li>
 
-            <li class="mobile-menu-item mobile-menu-item--has-sub">
-              <button type="button" class="mobile-menu-trigger" aria-expanded="false">
-                <span class="mobile-menu-title">POLKI & HERITAGE</span>
-                <svg class="mobile-menu-arrow" viewBox="0 0 24 24" fill="none" stroke="#222222" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="m9 18 6-6-6-6" /></svg>
-              </button>
-              <ul class="mobile-submenu" style="display: none;">
-                <li><a href="{{ routes.collections_url }}/polki/uncut-diamond-sets">Uncut Diamond Sets</a></li>
-                <li><a href="{{ routes.collections_url }}/polki/kundan-polki">Kundan & Meenakari</a></li>
-                <li><a href="{{ routes.collections_url }}/polki/royal-chokers">Royal Heritage Chokers</a></li>
-              </ul>
-            </li>
-
             <li class="mobile-menu-item">
-              <a href="{{ routes.collections_url }}/quick-ship" class="mobile-menu-link">
-                <span class="mobile-menu-title" style="color: #D4AF37; font-weight: 600;">SHIPS IN 3 DAYS</span>
-              </a>
-            </li>
-
-            <li class="mobile-menu-item mobile-menu-item--has-sub">
-              <button type="button" class="mobile-menu-trigger" aria-expanded="false">
-                <span class="mobile-menu-title">COLLECTIONS</span>
-                <svg class="mobile-menu-arrow" viewBox="0 0 24 24" fill="none" stroke="#222222" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="m9 18 6-6-6-6" /></svg>
-              </button>
-              <ul class="mobile-submenu" style="display: none;">
-                <li><a href="{{ routes.collections_url }}/bridal">Bridal Collection</a></li>
-                <li><a href="{{ routes.collections_url }}/everyday-luxe">Everyday Luxe</a></li>
-                <li><a href="{{ routes.collections_url }}/for-every-you">For Every You</a></li>
-              </ul>
-            </li>
-
-            <li class="mobile-menu-item">
-              <a href="{{ routes.collections_url }}/gifting" class="mobile-menu-link">
-                <span class="mobile-menu-title">GIFTING</span>
-              </a>
-            </li>
-
-            <li class="mobile-menu-item">
-              <a href="/pages/stores" class="mobile-menu-link">
-                <span class="mobile-menu-title">STORES & EXPERIENCE CENTERS</span>
-              </a>
-            </li>
-
-            <li class="mobile-menu-item">
-              <a href="/pages/franchise-enquiry" class="mobile-menu-link">
-                <span class="mobile-menu-title">FRANCHISE ENQUIRY</span>
+              <a href="{{ routes.collections_url }}/all" class="mobile-menu-link">
+                <span class="mobile-menu-title">MADE FOR EVERY BOND</span>
               </a>
             </li>
           {%- endif -%}
         </ul>
+
+        <!-- Secondary / Utility Navigation (The Bottom Ones - Clean 2-Column Grid) -->
+        <div class="mobile-menu-utility-section">
+          <div class="mobile-utility-divider">CLIENT SERVICES & HERITAGE</div>
+          <div class="mobile-utility-grid">
+            <a href="/pages/stores" class="mobile-utility-link">Stores & Experience</a>
+            <a href="/pages/expert-consultation" class="mobile-utility-link">VIP Consultation</a>
+            <a href="/pages/contact-us?subject=NRI+Assistance" class="mobile-utility-link">NRI & International</a>
+            <a href="/pages/franchise-enquiry" class="mobile-utility-link">Franchise Enquiry</a>
+            <a href="/pages/about-us" class="mobile-utility-link">Our Story & Heritage</a>
+            <a href="/pages/faq" class="mobile-utility-link">Customer Support</a>
+          </div>
+        </div>
       </nav>
 
       <!-- Bespoke Drawer Footer -->
@@ -1318,7 +1309,7 @@
     left: 0;
     width: 100%;
     height: 100%;
-    z-index: 1000;
+    z-index: 1000000 !important;
     visibility: hidden;
     transition: visibility 0.35s ease;
   }
@@ -1333,9 +1324,9 @@
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(0, 0, 0, 0.4);
-    backdrop-filter: blur(4px);
-    -webkit-backdrop-filter: blur(4px);
+    background-color: rgba(1, 39, 38, 0.45);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
     opacity: 0;
     transition: opacity 0.35s ease;
   }
@@ -1356,12 +1347,13 @@
     color: #111111;
     display: flex;
     flex-direction: column;
-    box-shadow: 4px 0 25px rgba(0, 0, 0, 0.12);
+    box-shadow: 4px 0 30px rgba(0, 0, 0, 0.15);
     transform: translateX(-100%);
-    transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
     box-sizing: border-box;
     overflow-y: auto;
     -webkit-overflow-scrolling: touch;
+    padding-bottom: env(safe-area-inset-bottom, 20px);
   }
 
   .mobile-menu-drawer--open .mobile-menu-drawer__content,
@@ -1412,15 +1404,15 @@
     justify-content: space-between;
     align-items: center;
     width: 100%;
-    padding: 1.6rem 2.0rem;
+    padding: 1.15rem 1.6rem;
     background: none;
     border: none;
     text-decoration: none;
-    color: #222222;
+    color: #013F3E;
     font-family: 'Montserrat', sans-serif;
-    font-size: 1.25rem;
-    font-weight: 500;
-    letter-spacing: 0.08em;
+    font-size: 0.96rem;
+    font-weight: 600;
+    letter-spacing: 0.06em;
     cursor: pointer;
     text-align: left;
     transition: background-color 0.15s ease, color 0.15s ease;
@@ -1431,8 +1423,8 @@
     color: #D4AF37;
   }
   .mobile-menu-arrow {
-    width: 16px;
-    height: 16px;
+    width: 15px;
+    height: 15px;
     stroke: #666666;
     transition: transform 0.25s ease, stroke 0.15s ease;
   }
@@ -1445,16 +1437,17 @@
   .mobile-submenu {
     list-style: none;
     margin: 0;
-    padding: 0.6rem 0 1.2rem 3.0rem;
+    padding: 0.4rem 0 0.9rem 2.4rem;
     background-color: #FAFAFA;
     border-top: 1px solid #F0F0F0;
   }
   .mobile-submenu a {
     display: block;
-    padding: 0.9rem 0;
+    padding: 0.65rem 0;
     color: #555555;
     font-family: 'Montserrat', sans-serif;
-    font-size: 1.15rem;
+    font-size: 0.88rem;
+    font-weight: 500;
     text-decoration: none;
     transition: color 0.15s ease;
   }
@@ -1463,95 +1456,54 @@
     color: #D4AF37;
   }
 
-  /* Live Gold Rate Banner inside Bespoke Mobile Drawer */
-  .mobile-drawer-gold-rate {
-    display: flex;
-    align-items: center;
-    gap: 0.8rem;
-    background: #FAF7F0;
-    border: 1px solid rgba(212, 175, 55, 0.4);
-    border-radius: 8px;
-    padding: 0.8rem 1.4rem;
-    margin: 1.2rem 1.6rem 0.8rem;
-  }
-  .gold-rate-pulse {
-    width: 8px;
-    height: 8px;
-    background-color: #25D366;
-    border-radius: 50%;
-    box-shadow: 0 0 8px #25D366;
-    animation: goldPulse 2s infinite;
-    flex-shrink: 0;
-  }
-  @keyframes goldPulse {
-    0% { transform: scale(0.95); opacity: 0.8; }
-    50% { transform: scale(1.2); opacity: 1; }
-    100% { transform: scale(0.95); opacity: 0.8; }
-  }
-  .gold-rate-label {
-    font-family: 'Montserrat', sans-serif;
-    font-size: 0.9rem;
-    font-weight: 700;
-    letter-spacing: 0.08em;
-    color: #013F3E;
-  }
-  .gold-rate-val {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 1.3rem;
-    font-weight: 700;
-    color: #B58E2E;
-    margin-left: auto;
-  }
-
-  /* Bespoke Mobile Drawer Search Bar */
-  .mobile-drawer-search {
-    padding: 0.6rem 1.6rem 1.0rem;
-    border-bottom: 1px solid #EEEEEE;
-  }
-  .mobile-drawer-search__input {
-    width: 100%;
-    height: 40px;
+  /* Secondary / Utility Navigation Styling (Clean 2-Column Grid) */
+  .mobile-menu-utility-section {
     background-color: #FBF9F5;
-    border: 1px solid #E5E0D5;
-    border-radius: 20px;
-    padding: 0 3.6rem 0 1.4rem;
-    color: #111111;
+    border-top: 1px solid rgba(1, 63, 62, 0.08);
+    margin-top: 0.8rem;
+  }
+  .mobile-utility-divider {
+    padding: 1.2rem 1.6rem 0.8rem;
     font-family: 'Montserrat', sans-serif;
-    font-size: 1.1rem;
-    box-sizing: border-box;
-    outline: none;
-    transition: border-color 0.2s ease, background-color 0.2s ease;
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.15em;
+    color: #013F3E;
+    text-transform: uppercase;
+    opacity: 0.75;
   }
-  .mobile-drawer-search__input::placeholder {
-    color: #888888;
+  .mobile-utility-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.75rem 1rem;
+    padding: 0 1.6rem 1.4rem;
   }
-  .mobile-drawer-search__input:focus {
-    border-color: #D4AF37;
-    background-color: #FFFFFF;
+  .mobile-utility-link {
+    text-decoration: none;
+    color: #555555;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 0.84rem;
+    font-weight: 500;
+    line-height: 1.35;
+    transition: color 0.2s ease;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
-  .mobile-drawer-search__btn {
-    position: absolute;
-    right: 0.6rem;
-    top: 50%;
-    transform: translateY(-50%);
-    background: transparent;
-    border: none;
-    cursor: pointer;
-    padding: 0.6rem;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+  .mobile-utility-link:hover,
+  .mobile-utility-link:active {
+    color: #D4AF37;
   }
 
   /* Drawer Footer */
   .mobile-menu-drawer__footer {
-    padding: 1.8rem 1.6rem 2.2rem;
+    padding: 1.2rem 1.6rem 1.6rem;
     border-top: 1px solid #EEEEEE;
     background-color: #FFFFFF;
     margin-top: auto;
     display: flex;
     flex-direction: column;
-    gap: 1.4rem;
+    gap: 1.1rem;
   }
   .mobile-drawer-currency-btn {
     background: none;
@@ -1559,28 +1511,28 @@
     padding: 0;
     color: #444444;
     font-family: 'Montserrat', sans-serif;
-    font-size: 1.15rem;
+    font-size: 0.9rem;
     font-weight: 500;
     display: flex;
     align-items: center;
-    gap: 0.4rem;
+    gap: 0.35rem;
     cursor: pointer;
   }
 
   .mobile-drawer-actions {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 1.0rem;
+    gap: 0.8rem;
     width: 100%;
   }
   .mobile-btn {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    height: 44px;
-    border-radius: 22px;
+    height: 42px;
+    border-radius: 21px;
     font-family: 'Montserrat', sans-serif;
-    font-size: 1.0rem;
+    font-size: 0.86rem;
     font-weight: 600;
     letter-spacing: 0.04em;
     text-decoration: none;
@@ -1712,6 +1664,15 @@
       opacity: 1 !important;
       pointer-events: auto !important;
       font-family: 'Montserrat', var(--font-primary--family), sans-serif !important;
+      transition: opacity 0.3s ease, visibility 0.3s ease, transform 0.3s cubic-bezier(0.16, 1, 0.3, 1) !important;
+    }
+
+    body.body-lock .mobile-bottom-nav,
+    body.drawer-open .mobile-bottom-nav {
+      opacity: 0 !important;
+      visibility: hidden !important;
+      pointer-events: none !important;
+      transform: translateY(100%) !important;
     }
     
     .mobile-bottom-nav__item {
@@ -1854,6 +1815,7 @@
       drawer.classList.add('mobile-menu-drawer--open');
       drawer.setAttribute('aria-hidden', 'false');
       body.classList.add('body-lock');
+      body.classList.add('drawer-open');
     });
 
     function closeDrawer() {
@@ -1861,6 +1823,7 @@
       drawer.classList.remove('mobile-menu-drawer--open');
       drawer.setAttribute('aria-hidden', 'true');
       body.classList.remove('body-lock');
+      body.classList.remove('drawer-open');
     }
 
     if (closeBtn) closeBtn.addEventListener('click', closeDrawer);

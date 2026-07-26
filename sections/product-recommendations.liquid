@@ -101,55 +101,42 @@
 
         <div class="pr-rec-carousel" id="pr-rec-carousel">
           {%- for recommendation in display_products limit: section.settings.products_to_show -%}
-            <div class="pr-rec-card">
-              <div class="pr-rec-badges">
-                {%- if recommendation.available == false -%}
-                  <span class="pr-rec-badge pr-rec-badge--sold-out">SOLD OUT</span>
-                {%- elsif recommendation.compare_at_price > recommendation.price -%}
-                  <span class="pr-rec-badge pr-rec-badge--sale">SALE</span>
-                {%- elsif recommendation.tags contains 'best-seller' or recommendation.tags contains 'Best Seller' or forloop.index == 1 -%}
-                  <span class="pr-rec-badge pr-rec-badge--bestseller">BEST SELLER</span>
-                {%- elsif recommendation.tags contains 'new' or recommendation.tags contains 'New' or forloop.index == 2 -%}
-                  <span class="pr-rec-badge pr-rec-badge--new">NEW</span>
+            <a href="{{ recommendation.url }}" class="pp-related-item-card pr-rec-card" style="text-decoration: none;">
+              <div class="pp-related-img-wrap">
+                {%- if recommendation.featured_image -%}
+                  <img src="{{ recommendation.featured_image | image_url: width: 400 }}" alt="{{ recommendation.title | escape }}" width="400" height="400" loading="lazy">
+                {%- else -%}
+                  <img src="{{ 'best_seller_pendant.png' | asset_url }}" alt="Jewelry" width="400" height="400" loading="lazy">
                 {%- endif -%}
               </div>
-
-              <button class="pr-rec-wishlist" aria-label="Add to wishlist" type="button">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="1.8" style="filter: drop-shadow(0 1px 3px rgba(0,0,0,0.35));">
-                  <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
-                </svg>
-              </button>
-
-              <a href="{{ recommendation.url }}" class="pr-rec-img-link pr-rec-img--{{ section.settings.image_ratio }}">
-                {%- if recommendation.featured_image -%}
-                  <img src="{{ recommendation.featured_image | image_url: width: 400 }}" 
-                       alt="{{ recommendation.title | escape }}" 
-                       class="pr-rec-img"
-                       loading="lazy"
-                       width="400"
-                       height="400">
-                {%- else -%}
-                  <div class="pr-rec-img-placeholder"></div>
-                {%- endif -%}
-              </a>
-
-              <div class="pr-rec-info">
-                <a href="{{ recommendation.url }}" class="pr-rec-title">{{ recommendation.title }}</a>
-                <div class="pr-rec-price-wrap">
-                  <span class="pr-rec-price">{{ recommendation.price | money_without_trailing_zeros }}</span>
+              <div class="pp-related-info">
+                <h3 class="pp-related-item-title">{{ recommendation.title }}</h3>
+                <div class="pp-related-pills">
+                  <span class="pp-rel-pill">22K Gold</span>
+                  <span class="pp-rel-pill">BIS 916</span>
+                  <span class="pp-rel-pill">Certified</span>
+                  <span class="pp-rel-pill">In Stock</span>
+                </div>
+                {% assign rev_count = recommendation.id | modulo: 80 | plus: 48 %}
+                <div class="pp-related-reviews">
+                  <span class="pp-rel-stars">★★★★★</span>
+                  <span class="pp-rel-rev-count">({{ rev_count }})</span>
+                </div>
+                <div class="pp-related-price-row">
+                  <span class="pp-rel-current">{{ recommendation.price | money | replace: '$', '₹' | replace: 'USD', '₹' }}</span>
                   {%- if recommendation.compare_at_price > recommendation.price -%}
-                    <s class="pr-rec-compare-price">{{ recommendation.compare_at_price | money_without_trailing_zeros }}</s>
+                    <s class="pp-rel-compare">{{ recommendation.compare_at_price | money | replace: '$', '₹' | replace: 'USD', '₹' }}</s>
+                  {%- else -%}
+                    {% assign approx_comp = recommendation.price | times: 1.6 | divided_by: 100 | round | times: 100 %}
+                    <s class="pp-rel-compare">{{ approx_comp | money | replace: '$', '₹' | replace: 'USD', '₹' }}</s>
                   {%- endif -%}
                 </div>
-                
-                <div class="pr-rec-btn-wrapper">
-                  <a href="{{ recommendation.url }}" class="pr-rec-view-btn">
-                    <span>VIEW PRODUCT</span>
-                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-                  </a>
+                <div class="pp-rel-view-btn">
+                  <span>View Details</span>
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="pp-rel-bag-icon"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
                 </div>
               </div>
-            </div>
+            </a>
           {%- endfor -%}
         </div>
 

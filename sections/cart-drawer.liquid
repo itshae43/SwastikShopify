@@ -45,7 +45,7 @@
     left: 0;
     width: 100vw;
     height: 100vh;
-    z-index: 9999;
+    z-index: 1000000 !important;
     display: flex;
     justify-content: flex-end;
     visibility: hidden;
@@ -456,6 +456,7 @@
     document.getElementById('CartDrawer').classList.add('is-open');
     document.body.style.overflow = 'hidden'; // Prevent background scrolling
     document.body.classList.add('drawer-open');
+    document.body.classList.add('body-lock');
     fetchCart();
   };
 
@@ -463,6 +464,7 @@
     document.getElementById('CartDrawer').classList.remove('is-open');
     document.body.style.overflow = '';
     document.body.classList.remove('drawer-open');
+    document.body.classList.remove('body-lock');
   };
 </script>
 
