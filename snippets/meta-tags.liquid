@@ -6,12 +6,13 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 
+{%- assign store_name = 'SWASTIK | JEWELS' -%}
 {% comment %} Mobile Web App & Theme Color Meta Tags {% endcomment %}
 <meta name="theme-color" content="#012726">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-title" content="{{ shop.name | escape }}">
-<meta name="application-name" content="{{ shop.name | escape }}">
+<meta name="apple-mobile-web-app-title" content="{{ store_name | escape }}">
+<meta name="application-name" content="{{ store_name | escape }}">
 <meta name="msapplication-TileColor" content="#012726">
 
 {% comment %} Favicons for Web, Desktop, iOS, Android, and Web Manifest {% endcomment %}
@@ -26,10 +27,12 @@
 <link rel="manifest" href="{{ 'site.webmanifest' | asset_url }}">
 
 {%- liquid
-  assign og_title = page_title | default: shop.name
+  assign og_title = page_title | default: store_name
+  assign og_title = og_title | replace: shop.name, store_name
   assign og_url = canonical_url | default: request.origin
   assign og_type = 'website'
-  assign og_description = page_description | default: shop.description | default: shop.name
+  assign og_description = page_description | default: shop.description | default: store_name
+  assign og_description = og_description | replace: shop.name, store_name
 
   if request.page_type == 'product'
     assign og_type = 'product'
@@ -42,7 +45,7 @@
 
 <meta
   property="og:site_name"
-  content="{{ shop.name }}"
+  content="{{ store_name }}"
 >
 <meta
   property="og:url"
@@ -109,10 +112,14 @@
 >
 
 <title>
-  {{ page_title }}
-  {%- if current_tags %} &ndash; tagged "{{ current_tags | join: ', ' }}"{% endif -%}
-  {%- if current_page != 1 %} &ndash; Page {{ current_page }}{% endif -%}
-  {%- unless page_title contains shop.name %} &ndash; {{ shop.name }}{% endunless -%}
+  {%- if request.page_type == 'index' -%}
+    {{ store_name }}
+  {%- else -%}
+    {{ page_title | replace: shop.name, store_name }}
+    {%- if current_tags %} &ndash; tagged "{{ current_tags | join: ', ' }}"{% endif -%}
+    {%- if current_page != 1 %} &ndash; Page {{ current_page }}{% endif -%}
+    {%- unless page_title contains store_name or page_title contains shop.name %} &ndash; {{ store_name }}{% endunless -%}
+  {%- endif -%}
 </title>
 
 <link
