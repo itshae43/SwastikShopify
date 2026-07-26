@@ -140,7 +140,12 @@
                     <div class="pp-option-group" data-option-index="{{ forloop.index0 }}">
                       <label class="pp-option-label">{{ option.name }}</label>
                       <div class="pp-option-values">
-                        {%- for value in option.values -%}
+                        {%- assign opt_vals = option.values -%}
+                        {%- assign name_dc = option.name | downcase -%}
+                        {%- if name_dc contains 'purity' or name_dc contains 'gold' or name_dc contains 'carat' or name_dc contains 'karat' -%}
+                          {%- assign opt_vals = option.values | sort_natural -%}
+                        {%- endif -%}
+                        {%- for value in opt_vals -%}
                           <button type="button" class="pp-opt-btn {% if option.selected_value == value %}is-active{% endif %}" data-value="{{ value | escape }}">
                             {{ value }}
                           </button>
@@ -155,8 +160,8 @@
                   <div class="pp-option-group">
                     <label class="pp-option-label">Gold Purity</label>
                     <div class="pp-option-values">
-                      <button type="button" class="pp-opt-btn is-active">18K</button>
                       <button type="button" class="pp-opt-btn">14K</button>
+                      <button type="button" class="pp-opt-btn is-active">18K</button>
                       <button type="button" class="pp-opt-btn">22K</button>
                     </div>
                   </div>
@@ -203,53 +208,156 @@
 
   <div class="pp-bottom-showcase" id="details">
     <div class="pp-bottom-showcase-grid">
-      <!-- UNIFIED ACCORDIONS SHOWCASE CARD -->
-      <div class="pp-bottom-card pp-accordions-card">
-        <!-- 1. PRODUCT DETAILS (Default Open) -->
-        <div class="pp-acc-item is-open">
-          <button class="pp-acc-header" type="button" aria-expanded="true">
-            <span class="pp-acc-header-left">
-              <svg class="pp-acc-icon" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--color-accent, #D4AF37)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3h12l4 6-10 12L2 9l4-6z"/><path d="M11 3l4 6-4 12"/><path d="M13 3l-4 6 4 12"/><path d="M2 9h20"/></svg>
-              <span class="pp-acc-title">PRODUCT DETAILS</span>
-            </span>
-            <svg class="pp-acc-chevron" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+      
+      <!-- 1. ABOUT THIS JEWELLERY CARD (Clean & Compact) -->
+      <div class="pp-bottom-card pp-about-card">
+        <div class="pp-about-header">
+          <span class="pp-about-title">ABOUT THIS JEWELLERY</span>
+        </div>
+        <div class="pp-about-content">
+          <div class="pp-about-desc">
+            {%- if product.description != blank -%}
+              <div class="pp-about-short">{{ product.description }}</div>
+            {%- else -%}
+              <p class="pp-about-short">An elegant teardrop pendant perfect for any occasion. Handcrafted in 18K yellow gold and adorned with naturally brilliant diamonds, every detail is designed to celebrate love and beauty.</p>
+            {%- endif -%}
+            <p class="pp-about-more" style="display: none;">Each masterpiece is individually inspected by master gemologists to ensure exceptional brilliance, fire, and structural durability. Designed to sit comfortably for everyday wear while making an extraordinary statement of luxury that lasts a lifetime.</p>
+          </div>
+          <div class="pp-about-btn-wrap">
+            <button type="button" class="pp-read-more-btn" id="pp-read-more-toggle">
+              <span class="pp-rm-text">Read more</span>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- 2. SEGMENTED CONTROL & INFORMATION CARD (Figma Spec 1:1) -->
+      <div class="pp-tabs-card pp-segmented-section">
+        <!-- Top Segmented Control (Height 60px, Inset 4px, Radius 18px) -->
+        <div class="pp-segmented-control">
+          <button type="button" class="pp-tab-btn pp-segment-btn is-active" data-target="tab-details">
+            <svg class="pp-tab-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3h12l4 6-10 12L2 9l4-6z"/><path d="M11 3l4 6-4 12"/><path d="M13 3l-4 6 4 12"/><path d="M2 9h20"/></svg>
+            <span class="pp-segment-text">Product Details</span>
           </button>
-          <div class="pp-acc-content">
-            <div class="pp-bottom-desc">
-              {%- if product.description != blank -%}
-                {{ product.description }}
-              {%- else -%}
-                <p>A timeless expression of elegance, this 18K yellow gold necklace features a classic figaro chain adorned with brilliant diamonds. Perfect for special occasions and everyday luxury.</p>
-              {%- endif -%}
+          <button type="button" class="pp-tab-btn pp-segment-btn" data-target="tab-price">
+            <svg class="pp-tab-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"/><line x1="7" y1="7" x2="7.01" y2="7"/></svg>
+            <span class="pp-segment-text">Price Breakdown</span>
+          </button>
+        </div>
+
+        <!-- Card Below: Tab 1 (Product Details) -->
+        <div class="pp-info-card pp-tab-body is-active" id="tab-details">
+          <div class="pp-table-row">
+            <div class="pp-row-left">
+              <svg class="pp-row-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#C89B3C" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg>
+              <span class="pp-row-label">Metal</span>
             </div>
-            
-            <div class="pp-specs-list">
-              <div class="pp-spec-row">
-                <span class="pp-spec-lbl">Metal</span>
-                <span class="pp-spec-val">18K Yellow Gold</span>
-              </div>
-              <div class="pp-spec-row">
-                <span class="pp-spec-lbl">Gross Weight</span>
-                <span class="pp-spec-val">16.350 gms</span>
-              </div>
-              <div class="pp-spec-row">
-                <span class="pp-spec-lbl">Diamond Weight</span>
-                <span class="pp-spec-val">1.75 cts</span>
-              </div>
-              <div class="pp-spec-row">
-                <span class="pp-spec-lbl">Diamond Quality</span>
-                <span class="pp-spec-val">G-VS</span>
-              </div>
-              <div class="pp-spec-row">
-                <span class="pp-spec-lbl">Certification</span>
-                <span class="pp-spec-val">BIS Hallmarked</span>
-              </div>
+            <span class="pp-row-value">18K Yellow Gold</span>
+          </div>
+          <div class="pp-row-divider"></div>
+
+          <div class="pp-table-row">
+            <div class="pp-row-left">
+              <svg class="pp-row-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#C89B3C" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M16 16l3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1z"/><path d="M2 16l3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1z"/><path d="M7 21h10"/><path d="M12 3v18"/><path d="M3 7h2c2 0 5-1 7-2 2 1 5 2 7 2h2"/></svg>
+              <span class="pp-row-label">Gross Weight</span>
             </div>
+            <span class="pp-row-value">16.350 gms</span>
+          </div>
+          <div class="pp-row-divider"></div>
+
+          <div class="pp-table-row">
+            <div class="pp-row-left">
+              <svg class="pp-row-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#C89B3C" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3h12l4 6-10 12L2 9l4-6z"/><path d="M11 3l4 6-4 12"/><path d="M13 3l-4 6 4 12"/><path d="M2 9h20"/></svg>
+              <span class="pp-row-label">Diamond Weight</span>
+            </div>
+            <span class="pp-row-value">1.75 cts</span>
+          </div>
+          <div class="pp-row-divider"></div>
+
+          <div class="pp-table-row">
+            <div class="pp-row-left">
+              <svg class="pp-row-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#C89B3C" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><path d="M11 8v6"/><path d="M8 11h6"/></svg>
+              <span class="pp-row-label">Diamond Quality</span>
+            </div>
+            <span class="pp-row-value">G–VS</span>
+          </div>
+          <div class="pp-row-divider"></div>
+
+          <div class="pp-table-row">
+            <div class="pp-row-left">
+              <svg class="pp-row-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#C89B3C" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="M9 12l2 2 4-4"/></svg>
+              <span class="pp-row-label">Certification</span>
+            </div>
+            <span class="pp-row-value">BIS Hallmarked</span>
+          </div>
+          <div class="pp-row-divider"></div>
+
+          <!-- Trust Banner -->
+          <div class="pp-trust-banner">
+            <svg class="pp-tb-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#0E4A43" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="M9 12l2 2 4-4"/></svg>
+            <span class="pp-tb-text">All our jewellery is made with conflict-free diamonds and certified for your peace of mind.</span>
           </div>
         </div>
 
-        <!-- 2. CERTIFICATION & ASSURANCE -->
-        <div class="pp-acc-item">
+        <!-- Card Below: Tab 2 (Price Breakdown) -->
+        <div class="pp-info-card pp-tab-body" id="tab-price" style="display: none;">
+          <div class="pp-table-row">
+            <div class="pp-row-left">
+              <svg class="pp-row-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#C89B3C" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M16 8h-6a2 2 0 1 0 0 4h4a2 2 0 1 1 0 4H8"/><path d="M12 18V6"/></svg>
+              <span class="pp-row-label">Gold Value (18K)</span>
+            </div>
+            <span class="pp-row-value">₹85,400</span>
+          </div>
+          <div class="pp-row-divider"></div>
+
+          <div class="pp-table-row">
+            <div class="pp-row-left">
+              <svg class="pp-row-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#C89B3C" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3h12l4 6-10 12L2 9l4-6z"/><path d="M11 3l4 6-4 12"/><path d="M13 3l-4 6 4 12"/><path d="M2 9h20"/></svg>
+              <span class="pp-row-label">Diamond Value (1.75 cts)</span>
+            </div>
+            <span class="pp-row-value">₹42,500</span>
+          </div>
+          <div class="pp-row-divider"></div>
+
+          <div class="pp-table-row">
+            <div class="pp-row-left">
+              <svg class="pp-row-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#C89B3C" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg>
+              <span class="pp-row-label">Making Charges</span>
+            </div>
+            <span class="pp-row-value">₹13,500</span>
+          </div>
+          <div class="pp-row-divider"></div>
+
+          <div class="pp-table-row">
+            <div class="pp-row-left">
+              <svg class="pp-row-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#C89B3C" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+              <span class="pp-row-label">GST (3%)</span>
+            </div>
+            <span class="pp-row-value">₹4,500</span>
+          </div>
+          <div class="pp-row-divider"></div>
+
+          <div class="pp-table-row pp-total-row">
+            <div class="pp-row-left">
+              <svg class="pp-row-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#C89B3C" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+              <span class="pp-row-label" style="font-weight: 600; color: #0E4A43;">Total Price</span>
+            </div>
+            <span class="pp-row-value" style="font-weight: 700; color: #0E4A43; font-size: 16px;">{{ current_variant.price | money }}</span>
+          </div>
+          <div class="pp-row-divider"></div>
+
+          <!-- Trust Banner in Price Tab too -->
+          <div class="pp-trust-banner">
+            <svg class="pp-tb-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#0E4A43" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="M9 12l2 2 4-4"/></svg>
+            <span class="pp-tb-text">All our jewellery is made with conflict-free diamonds and certified for your peace of mind.</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- 3. COLLAPSIBLE ACCORDION ITEMS (4 Distinct Cards matching Image 1 & 2) -->
+      <div class="pp-accordions-group">
+        <!-- 1. CERTIFICATION & ASSURANCE -->
+        <div class="pp-bottom-card pp-acc-item">
           <button class="pp-acc-header" type="button" aria-expanded="false">
             <span class="pp-acc-header-left">
               <svg class="pp-acc-icon" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--color-accent, #D4AF37)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="M9 12l2 2 4-4"/></svg>
@@ -262,8 +370,8 @@
           </div>
         </div>
 
-        <!-- 3. SHIPPING & RETURNS -->
-        <div class="pp-acc-item">
+        <!-- 2. SHIPPING & RETURNS -->
+        <div class="pp-bottom-card pp-acc-item">
           <button class="pp-acc-header" type="button" aria-expanded="false">
             <span class="pp-acc-header-left">
               <svg class="pp-acc-icon" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--color-accent, #D4AF37)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="3" width="15" height="13"/><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>
@@ -276,8 +384,8 @@
           </div>
         </div>
 
-        <!-- 4. CARE INSTRUCTIONS -->
-        <div class="pp-acc-item">
+        <!-- 3. CARE INSTRUCTIONS -->
+        <div class="pp-bottom-card pp-acc-item">
           <button class="pp-acc-header" type="button" aria-expanded="false">
             <span class="pp-acc-header-left">
               <svg class="pp-acc-icon" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--color-accent, #D4AF37)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/><path d="M9 12l2 2 4-4"/></svg>
@@ -289,7 +397,22 @@
             <p>Store your diamond jewellery in its original lined box or suede pouch. Clean gently using lukewarm water, mild soap, and a soft brush. Keep away from perfumes and harsh chemicals.</p>
           </div>
         </div>
+
+        <!-- 4. ETHICAL CRAFTSMANSHIP -->
+        <div class="pp-bottom-card pp-acc-item">
+          <button class="pp-acc-header" type="button" aria-expanded="false">
+            <span class="pp-acc-header-left">
+              <svg class="pp-acc-icon" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--color-accent, #D4AF37)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+              <span class="pp-acc-title">ETHICAL CRAFTSMANSHIP</span>
+            </span>
+            <svg class="pp-acc-chevron" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+          </button>
+          <div class="pp-acc-content">
+            <p>Every creation is sustainably crafted using 100% recycled gold and conflict-free diamonds sourced from ethical mines adhering to the highest global labor and environmental standards.</p>
+          </div>
+        </div>
       </div>
+      
     </div>
   </div>
 
@@ -726,67 +849,275 @@
   .pp-btn-buy:hover .pp-btn-arrow { transform: translateX(4px); }
 
   /* ==========================================================================
-     5. BOTTOM SHOWCASE (2-Column Grid)
+     5. BOTTOM SHOWCASE (Architectural Luxury Cards matching Mobile UI)
      ========================================================================== */
   .pp-bottom-showcase { max-width: 1000px; margin: 30px auto 50px auto; padding: 0 20px; font-family: var(--pp-font-sans); }
-  .pp-bottom-showcase-grid { display: block; width: 100%; }
-  .pp-bottom-card { background: var(--pp-bg-light); border: 1px solid var(--pp-border); border-radius: 20px; padding: 20px 36px; box-shadow: 0 8px 30px rgba(0, 0, 0, 0.02); }
-  .pp-accordions-card { padding: 16px 36px; }
-  .pp-bottom-desc, .pp-bottom-desc p, .pp-bottom-desc span, .pp-bottom-desc div, .pp-bottom-desc li {
-    font-family: var(--pp-font-sans) !important;
-    font-size: 16px;
-    font-weight: 400;
-    color: #333333;
-    line-height: 1.7;
-    letter-spacing: 0.005em;
+  .pp-bottom-showcase-grid { display: flex; flex-direction: column; gap: 20px; width: 100%; }
+  .pp-bottom-card { background: var(--pp-bg-light); border: 1px solid var(--pp-border); border-radius: 20px; padding: 24px 32px; box-shadow: 0 8px 30px rgba(0, 0, 0, 0.02); transition: all 0.3s ease; }
+  
+  /* 1. About Card Styling (Clean & Compact without icons or excessive spacing) */
+  .pp-about-card {
+    background: #FFFFFF !important;
+    border: 1px solid #E8DEC9 !important;
+    border-radius: 20px !important;
+    padding: 18px 20px !important;
+    box-shadow: 0px 8px 24px rgba(14, 74, 67, 0.05) !important;
   }
-  .pp-bottom-desc { margin-bottom: 24px; }
-  .pp-bottom-desc strong, .pp-bottom-desc b, .pp-bottom-desc h1, .pp-bottom-desc h2, .pp-bottom-desc h3, .pp-bottom-desc h4 {
-    font-family: var(--pp-font-sans) !important;
+  .pp-about-header {
+    margin-bottom: 10px !important;
+  }
+  .pp-about-title {
+    font-family: 'Inter', var(--pp-font-sans), sans-serif !important;
+    font-size: 16px !important;
     font-weight: 600 !important;
-    color: var(--pp-primary) !important;
+    line-height: 1.3 !important;
+    letter-spacing: 0.02em !important;
+    color: #163D39 !important;
+    text-transform: uppercase !important;
+    display: block !important;
   }
-  .pp-specs-list { display: flex; flex-direction: column; gap: 14px; margin-bottom: 12px; }
-  .pp-spec-row { display: grid; grid-template-columns: 160px 1fr; align-items: center; font-size: 15px; }
-  .pp-spec-lbl { font-weight: 600; color: #222222; }
-  .pp-spec-val { color: #555555; font-weight: 500; }
+  .pp-about-desc {
+    margin-bottom: 14px !important;
+  }
+  .pp-about-desc, .pp-about-desc p, .pp-about-desc div, .pp-about-short, .pp-about-more {
+    font-family: 'Inter', var(--pp-font-sans), sans-serif !important;
+    font-size: 14.5px !important;
+    font-weight: 400 !important;
+    line-height: 1.55 !important;
+    letter-spacing: 0 !important;
+    color: #4F5753 !important;
+    margin-top: 0 !important;
+  }
+  .pp-about-btn-wrap {
+    display: flex !important;
+    justify-content: center !important;
+    margin: 0 !important;
+    width: 100% !important;
+  }
+  .pp-read-more-btn {
+    height: 34px !important;
+    min-height: 34px !important;
+    border-radius: 999px !important;
+    background: #F8F6F2 !important;
+    border: none !important;
+    padding: 0 18px !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    cursor: pointer !important;
+    transition: all 250ms ease-out !important;
+    box-shadow: none !important;
+  }
+  .pp-read-more-btn:hover {
+    background: #F2EBDD !important;
+  }
+  .pp-read-more-btn:active {
+    background: #ECE3D0 !important;
+    transform: scale(0.98) !important;
+  }
+  .pp-rm-text {
+    font-family: 'Inter', var(--pp-font-sans), sans-serif !important;
+    font-size: 13.5px !important;
+    font-weight: 500 !important;
+    color: #0E4A43 !important;
+    line-height: 1 !important;
+  }
 
-  /* Luxury Accordions: Inter 16px 600 Title, Inter 16px 400 Desc, 100% Clickable Header Row */
-  .pp-acc-item { border-bottom: 1px solid var(--pp-border); padding: 0 !important; transition: all 0.3s ease; }
-  .pp-acc-item:last-child { border-bottom: none; }
+  /* 2. Segmented Control & Information Card Below (Figma Spec 1:1 with UX Improvement) */
+  .pp-segmented-section {
+    background: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+    padding: 0 !important;
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 20px !important;
+  }
+  .pp-segmented-control {
+    width: 100% !important;
+    height: 60px !important;
+    min-height: 60px !important;
+    background: #FFFFFF !important;
+    border: 1px solid #E8DEC9 !important;
+    border-radius: 18px !important;
+    padding: 4px !important;
+    box-shadow: none !important;
+    overflow: hidden !important;
+    display: flex !important;
+    align-items: center !important;
+    gap: 0 !important;
+  }
+  .pp-segment-btn {
+    width: 50% !important;
+    flex: 1 !important;
+    height: 100% !important;
+    background: transparent !important;
+    border: none !important;
+    border-radius: 14px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 8px !important;
+    cursor: pointer !important;
+    transition: all 220ms ease-out !important;
+    padding: 0 12px !important;
+    box-shadow: none !important;
+    user-select: none !important;
+  }
+  .pp-segment-btn:hover:not(.is-active) {
+    background: #F8F6F2 !important;
+  }
+  .pp-segment-btn.is-active {
+    background: #0E4A43 !important;
+    color: #FFFFFF !important;
+    box-shadow: none !important;
+  }
+  .pp-segment-btn .pp-tab-icon {
+    width: 18px !important;
+    height: 18px !important;
+    stroke: #0E4A43 !important;
+    stroke-width: 1.75 !important;
+    transition: stroke 220ms ease-out !important;
+    flex-shrink: 0 !important;
+  }
+  .pp-segment-btn.is-active .pp-tab-icon {
+    stroke: #FFFFFF !important;
+  }
+  .pp-segment-text {
+    font-family: 'Inter', var(--pp-font-sans), sans-serif !important;
+    font-size: 16px !important;
+    font-weight: 500 !important;
+    line-height: 20px !important;
+    color: #163D39 !important;
+    letter-spacing: 0 !important;
+    transition: color 220ms ease-out !important;
+  }
+  .pp-segment-btn.is-active .pp-segment-text {
+    color: #FFFFFF !important;
+    font-weight: 600 !important;
+  }
+
+  .pp-info-card {
+    background: #FFFFFF !important;
+    border: 1px solid #E8DEC9 !important;
+    border-radius: 20px !important;
+    padding: 24px !important;
+    box-shadow: 0px 8px 24px rgba(14, 74, 67, 0.05) !important;
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 0 !important;
+  }
+  .pp-table-row {
+    width: 100% !important;
+    height: 60px !important;
+    min-height: 60px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    padding: 0 !important;
+    margin: 0 !important;
+  }
+  .pp-row-left {
+    display: flex !important;
+    align-items: center !important;
+    gap: 12px !important;
+  }
+  .pp-row-icon {
+    width: 18px !important;
+    height: 18px !important;
+    stroke: #C89B3C !important;
+    stroke-width: 1.75 !important;
+    flex-shrink: 0 !important;
+  }
+  .pp-row-label {
+    font-family: 'Inter', var(--pp-font-sans), sans-serif !important;
+    font-size: 15px !important;
+    font-weight: 500 !important;
+    line-height: 22px !important;
+    color: #163D39 !important;
+  }
+  .pp-row-value {
+    font-family: 'Inter', var(--pp-font-sans), sans-serif !important;
+    font-size: 15px !important;
+    font-weight: 600 !important;
+    color: #2B3733 !important;
+    text-align: right !important;
+  }
+  .pp-row-divider {
+    width: 100% !important;
+    height: 1px !important;
+    background-color: #F3ECE2 !important;
+    border: none !important;
+    margin: 0 !important;
+  }
+  .pp-trust-banner {
+    background: #F8FBF8 !important;
+    border: 1px solid #DCE9E4 !important;
+    border-radius: 14px !important;
+    padding: 16px !important;
+    display: flex !important;
+    align-items: center !important;
+    gap: 12px !important;
+    margin-top: 20px !important;
+  }
+  .pp-tb-icon {
+    width: 20px !important;
+    height: 20px !important;
+    stroke: #0E4A43 !important;
+    stroke-width: 1.75 !important;
+    flex-shrink: 0 !important;
+  }
+  .pp-tb-text {
+    font-family: 'Inter', var(--pp-font-sans), sans-serif !important;
+    font-size: 14px !important;
+    font-weight: 400 !important;
+    color: #40615A !important;
+    line-height: 1.5 !important;
+    margin: 0 !important;
+  }
+
+  /* 3. Collapsible Accordions Group (4 Individual Rounded Cards) */
+  .pp-accordions-group { display: flex; flex-direction: column; gap: 14px; width: 100%; }
+  .pp-acc-item { background: var(--pp-bg-light); border: 1px solid var(--pp-border); border-radius: 16px; padding: 4px 28px !important; transition: all 0.3s ease; }
+  .pp-acc-item:hover { border-color: #D6CEC2; box-shadow: 0 4px 16px rgba(0,0,0,0.03); }
   .pp-acc-header {
-    width: 100% !important; background: none; border: none; padding: 20px 0 !important;
+    width: 100% !important; background: none; border: none; padding: 18px 0 !important;
     display: flex !important; align-items: center !important; justify-content: space-between !important;
     cursor: pointer !important; text-align: left !important; margin: 0 !important; outline: none;
     user-select: none; -webkit-user-select: none;
   }
   .pp-acc-header-left { display: flex; align-items: center; gap: 16px; pointer-events: none; }
   .pp-acc-title {
-    font-family: var(--pp-font-sans) !important; font-size: 16px !important; font-weight: 600 !important;
-    line-height: 1.4 !important; color: #013F3E !important; letter-spacing: 0.05em !important; text-transform: uppercase !important;
+    font-family: var(--pp-font-sans) !important; font-size: 15px !important; font-weight: 700 !important;
+    line-height: 1.4 !important; color: #013F3E !important; letter-spacing: 0.04em !important; text-transform: uppercase !important;
     pointer-events: none;
   }
   .pp-acc-chevron { color: #333333; transition: transform 0.3s ease; pointer-events: none; flex-shrink: 0; }
   .pp-acc-item.is-open .pp-acc-chevron { transform: rotate(180deg); color: #C89234; }
   .pp-acc-content, .pp-acc-content p, .pp-acc-content span, .pp-acc-content div, .pp-acc-content li {
-    font-family: var(--pp-font-sans) !important;
-    font-size: 16px !important;
-    font-weight: 400 !important;
-    color: #333333 !important;
-    line-height: 1.7 !important;
-    letter-spacing: 0.005em !important;
+    font-family: var(--pp-font-sans) !important; font-size: 15px !important; font-weight: 400 !important;
+    color: #333333 !important; line-height: 1.65 !important; letter-spacing: 0.005em !important;
   }
-  .pp-acc-content strong, .pp-acc-content b, .pp-acc-content h1, .pp-acc-content h2, .pp-acc-content h3, .pp-acc-content h4 {
-    font-family: var(--pp-font-sans) !important;
-    font-weight: 600 !important;
-    color: var(--pp-primary) !important;
-  }
-  .pp-acc-content {
-    display: none;
-    padding: 0 0 20px 0 !important;
-  }
-  .pp-acc-item.is-open .pp-acc-content {
-    display: block !important;
+  .pp-acc-content strong, .pp-acc-content b { font-weight: 600 !important; color: var(--pp-primary) !important; }
+  .pp-acc-content { display: none; padding: 0 0 18px 0 !important; }
+  .pp-acc-item.is-open .pp-acc-content { display: block !important; }
+
+  @media screen and (max-width: 767px) {
+    .pp-bottom-showcase { margin: 20px auto 36px auto; padding: 0 16px; }
+    .pp-bottom-showcase-grid { gap: 16px; }
+    .pp-bottom-card { padding: 16px 20px !important; border-radius: 16px; }
+    .pp-about-card { padding: 16px !important; }
+    .pp-segmented-control { height: 56px !important; min-height: 56px !important; border-radius: 16px !important; }
+    .pp-segment-btn { font-size: 14.5px !important; gap: 6px !important; border-radius: 12px !important; }
+    .pp-segment-text { font-size: 14.5px !important; }
+    .pp-info-card { padding: 20px !important; border-radius: 16px !important; }
+    .pp-table-row { height: 54px !important; min-height: 54px !important; }
+    .pp-row-label, .pp-row-value { font-size: 14px !important; }
+    .pp-trust-banner { padding: 14px !important; gap: 10px !important; margin-top: 16px !important; }
+    .pp-tb-text { font-size: 13px !important; }
+    .pp-accordions-group { gap: 12px; }
+    .pp-acc-item { padding: 2px 20px !important; border-radius: 14px; }
+    .pp-acc-title { font-size: 14px !important; }
   }
 
   /* Related Products & Shopify AI Recommendations (No Bounding Box, Luxury Arrows) */
@@ -1144,6 +1475,48 @@
         } else {
           item.classList.add('is-open');
           accHeader.setAttribute('aria-expanded', 'true');
+        }
+      }
+      return;
+    }
+
+    // 8. Tab Button Switching (Product Details <-> Price Breakdown)
+    const tabBtn = e.target.closest('.pp-tab-btn');
+    if (tabBtn) {
+      e.preventDefault();
+      const card = tabBtn.closest('.pp-tabs-card');
+      if (card) {
+        const targetId = tabBtn.getAttribute('data-target');
+        card.querySelectorAll('.pp-tab-btn').forEach(b => b.classList.remove('is-active'));
+        card.querySelectorAll('.pp-tab-body').forEach(b => {
+          b.classList.remove('is-active');
+          b.style.display = 'none';
+        });
+        tabBtn.classList.add('is-active');
+        const targetBody = card.querySelector('#' + targetId);
+        if (targetBody) {
+          targetBody.classList.add('is-active');
+          targetBody.style.display = 'block';
+        }
+      }
+      return;
+    }
+
+    // 9. Read More Toggle Button (About This Jewellery)
+    const readMoreBtn = e.target.closest('.pp-read-more-btn');
+    if (readMoreBtn) {
+      e.preventDefault();
+      const moreText = document.querySelector('.pp-about-more');
+      const textSpan = readMoreBtn.querySelector('.pp-rm-text');
+      if (moreText) {
+        if (moreText.style.display === 'none' || !moreText.style.display) {
+          moreText.style.display = 'block';
+          if (textSpan) textSpan.textContent = 'Read less';
+          readMoreBtn.classList.add('is-expanded');
+        } else {
+          moreText.style.display = 'none';
+          if (textSpan) textSpan.textContent = 'Read more';
+          readMoreBtn.classList.remove('is-expanded');
         }
       }
       return;

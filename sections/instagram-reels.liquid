@@ -258,6 +258,10 @@
 
           {% if block.settings.video != blank %}
             {{ block.settings.video | video_tag: image_size: "600x", autoplay: true, loop: true, muted: true, controls: false, class: "instagram-reel__media" }}
+          {% elsif block.settings.video_url != blank %}
+            <video class="instagram-reel__media" autoplay loop muted playsinline>
+              <source src="{{ block.settings.video_url }}" type="video/mp4">
+            </video>
           {% elsif block.settings.image != blank %}
             {{ block.settings.image | image_url: width: 600 | image_tag: class: "instagram-reel__media" }}
           {% else %}
@@ -388,6 +392,12 @@
           "id": "video",
           "label": "Shopify Hosted Video",
           "info": "Upload a vertical video (9:16 aspect ratio) for best results."
+        },
+        {
+          "type": "text",
+          "id": "video_url",
+          "label": "External / Self-hosted Video URL (MP4)",
+          "info": "Optional: Use an external or self-hosted MP4 link if Shopify-hosted video is not set."
         },
         {
           "type": "image_picker",
