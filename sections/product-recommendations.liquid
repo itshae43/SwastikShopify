@@ -4,9 +4,41 @@
   "settings": [
     {
       "type": "text",
+      "id": "subtitle",
+      "label": "Subtitle (Small header)",
+      "default": "CURATED FOR YOU"
+    },
+    {
+      "type": "text",
       "id": "heading",
       "label": "Heading",
-      "default": "You May Also Like"
+      "default": "Complete Your Look"
+    },
+    {
+      "type": "text",
+      "id": "description",
+      "label": "Description",
+      "default": "Pieces that pair beautifully with this"
+    },
+    {
+      "type": "select",
+      "id": "image_ratio",
+      "label": "Image ratio (1:1 or 4:5)",
+      "options": [
+        {
+          "value": "square",
+          "label": "Square (1:1)"
+        },
+        {
+          "value": "portrait",
+          "label": "Portrait (4:5)"
+        },
+        {
+          "value": "adapt",
+          "label": "Adapt to image"
+        }
+      ],
+      "default": "portrait"
     },
     {
       "type": "range",
@@ -14,7 +46,7 @@
       "min": 2,
       "max": 10,
       "step": 1,
-      "default": 5,
+      "default": 6,
       "label": "Maximum products to show"
     },
     {
@@ -44,28 +76,58 @@
 
   {%- if has_products -%}
     <div class="pr-recommendations-container">
-      <h2 class="pr-recommendations-title">{{ section.settings.heading | escape }}</h2>
+      {%- if section.settings.subtitle != blank -%}
+        <div class="pr-rec-subtitle">{{ section.settings.subtitle | escape }}</div>
+      {%- endif -%}
+
+      {%- if section.settings.heading != blank -%}
+        <h2 class="pr-rec-heading">{{ section.settings.heading | escape }}</h2>
+      {%- endif -%}
       
+      <div class="pr-rec-divider">
+        <span class="pr-rec-divider-line"></span>
+        <span class="pr-rec-divider-diamond">◇</span>
+        <span class="pr-rec-divider-line"></span>
+      </div>
+
+      {%- if section.settings.description != blank -%}
+        <p class="pr-rec-description">{{ section.settings.description | escape }}</p>
+      {%- endif -%}
+
       <div class="pr-rec-carousel-wrapper">
-        <button class="pr-rec-nav-btn prev" aria-label="Previous products">
+        <button class="pr-rec-nav-btn prev" aria-label="Previous products" type="button">
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg>
         </button>
 
         <div class="pr-rec-carousel" id="pr-rec-carousel">
           {%- for recommendation in display_products limit: section.settings.products_to_show -%}
             <div class="pr-rec-card">
-              <button class="pr-rec-wishlist" aria-label="Add to wishlist">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#DDA541" stroke-width="1.5">
+              <div class="pr-rec-badges">
+                {%- if recommendation.available == false -%}
+                  <span class="pr-rec-badge pr-rec-badge--sold-out">SOLD OUT</span>
+                {%- elsif recommendation.compare_at_price > recommendation.price -%}
+                  <span class="pr-rec-badge pr-rec-badge--sale">SALE</span>
+                {%- elsif recommendation.tags contains 'best-seller' or recommendation.tags contains 'Best Seller' or forloop.index == 1 -%}
+                  <span class="pr-rec-badge pr-rec-badge--bestseller">BEST SELLER</span>
+                {%- elsif recommendation.tags contains 'new' or recommendation.tags contains 'New' or forloop.index == 2 -%}
+                  <span class="pr-rec-badge pr-rec-badge--new">NEW</span>
+                {%- endif -%}
+              </div>
+
+              <button class="pr-rec-wishlist" aria-label="Add to wishlist" type="button">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="1.8" style="filter: drop-shadow(0 1px 3px rgba(0,0,0,0.35));">
                   <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
                 </svg>
               </button>
 
-              <a href="{{ recommendation.url }}" class="pr-rec-img-link">
+              <a href="{{ recommendation.url }}" class="pr-rec-img-link pr-rec-img--{{ section.settings.image_ratio }}">
                 {%- if recommendation.featured_image -%}
-                  <img src="{{ recommendation.featured_image | image_url: width: 300 }}" 
+                  <img src="{{ recommendation.featured_image | image_url: width: 400 }}" 
                        alt="{{ recommendation.title | escape }}" 
                        class="pr-rec-img"
-                       loading="lazy">
+                       loading="lazy"
+                       width="400"
+                       height="400">
                 {%- else -%}
                   <div class="pr-rec-img-placeholder"></div>
                 {%- endif -%}
@@ -73,31 +135,39 @@
 
               <div class="pr-rec-info">
                 <a href="{{ recommendation.url }}" class="pr-rec-title">{{ recommendation.title }}</a>
-                <div class="pr-rec-price">{{ recommendation.price | money_without_trailing_zeros }}</div>
+                <div class="pr-rec-price-wrap">
+                  <span class="pr-rec-price">{{ recommendation.price | money_without_trailing_zeros }}</span>
+                  {%- if recommendation.compare_at_price > recommendation.price -%}
+                    <s class="pr-rec-compare-price">{{ recommendation.compare_at_price | money_without_trailing_zeros }}</s>
+                  {%- endif -%}
+                </div>
                 
-                <div class="pr-rec-reviews">
-                  <div class="pr-rec-stars">
-                    {% for i in (1..5) %}
-                      <svg viewBox="0 0 24 24" width="10" height="10" fill="#F5C518"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
-                    {% endfor %}
-                  </div>
-                  <span class="pr-rec-rating-text">4.8</span>
-                  <span class="pr-rec-count-text">(124)</span>
+                <div class="pr-rec-btn-wrapper">
+                  <a href="{{ recommendation.url }}" class="pr-rec-view-btn">
+                    <span>VIEW PRODUCT</span>
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                  </a>
                 </div>
               </div>
             </div>
           {%- endfor -%}
         </div>
 
-        <button class="pr-rec-nav-btn next" aria-label="Next products">
+        <button class="pr-rec-nav-btn next" aria-label="Next products" type="button">
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>
         </button>
+      </div>
+
+      <div class="pr-rec-pagination-dots" id="pr-rec-dots">
+        {%- for recommendation in display_products limit: section.settings.products_to_show -%}
+          <button class="pr-rec-dot {% if forloop.first %}active{% endif %}" data-index="{{ forloop.index0 }}" aria-label="Go to slide {{ forloop.index }}" type="button"></button>
+        {%- endfor -%}
       </div>
     </div>
   {%- endif -%}
 </product-recommendations>
 
-<style>
+{% stylesheet %}
   .pr-recommendations-section {
     display: block;
     max-width: 1200px;
@@ -109,30 +179,71 @@
   .pr-recommendations-container {
     background: #FFFCF7;
     border: 1px solid #f0e6d2;
-    border-radius: 12px;
-    padding: 32px;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.02);
+    border-radius: 16px;
+    padding: 40px 24px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.02);
+    text-align: center;
   }
 
-  .pr-recommendations-title {
-    font-size: 18px;
+  .pr-rec-subtitle {
+    font-size: 11px;
     font-weight: 600;
-    color: #333;
-    margin-bottom: 24px;
-    margin-top: 0;
+    color: #DDA541;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    margin-bottom: 8px;
+  }
+
+  .pr-rec-heading {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: 32px;
+    font-weight: 600;
+    color: #0F3730;
+    margin: 0 0 12px 0;
+    line-height: 1.2;
+  }
+
+  .pr-rec-divider {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    margin: 0 auto 16px auto;
+    max-width: 220px;
+  }
+
+  .pr-rec-divider-line {
+    height: 1px;
+    background: #DDA541;
+    flex: 1;
+    opacity: 0.6;
+  }
+
+  .pr-rec-divider-diamond {
+    color: #DDA541;
+    font-size: 14px;
+    line-height: 1;
+  }
+
+  .pr-rec-description {
+    font-size: 14px;
+    color: #555;
+    margin: 0 auto 32px auto;
+    max-width: 500px;
   }
 
   .pr-rec-carousel-wrapper {
     position: relative;
     display: flex;
     align-items: center;
+    margin-bottom: 24px;
   }
 
   .pr-rec-nav-btn {
     position: absolute;
     z-index: 10;
-    width: 40px;
-    height: 40px;
+    width: 42px;
+    height: 42px;
     border-radius: 50%;
     background: #fff;
     border: 1px solid #e0e0e0;
@@ -140,8 +251,14 @@
     align-items: center;
     justify-content: center;
     cursor: pointer;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    box-shadow: 0 2px 12px rgba(0,0,0,0.08);
     color: #333;
+    transition: all 0.2s ease;
+  }
+  .pr-rec-nav-btn:hover {
+    background: #0F3730;
+    color: #fff;
+    border-color: #0F3730;
   }
   .pr-rec-nav-btn.prev { left: -20px; }
   .pr-rec-nav-btn.next { right: -20px; }
@@ -152,10 +269,10 @@
     overflow-x: auto;
     scroll-snap-type: x mandatory;
     scroll-behavior: smooth;
-    padding-bottom: 16px;
+    padding: 8px 4px 16px 4px;
+    width: 100%;
     -ms-overflow-style: none;
     scrollbar-width: none;
-    width: 100%;
   }
   .pr-rec-carousel::-webkit-scrollbar { display: none; }
 
@@ -163,109 +280,208 @@
     min-width: 220px;
     max-width: 220px;
     background: #fff;
-    border-radius: 8px;
-    border: 1px solid #f0f0f0;
+    border-radius: 12px;
+    border: 1px solid #EAE0D0;
     overflow: hidden;
     scroll-snap-align: start;
     display: flex;
     flex-direction: column;
     position: relative;
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.03);
   }
   .pr-rec-card:hover {
     transform: translateY(-4px);
-    box-shadow: 0 8px 16px rgba(0,0,0,0.06);
+    box-shadow: 0 8px 20px rgba(15,55,48,0.08);
   }
+
+  .pr-rec-badges {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    z-index: 3;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .pr-rec-badge {
+    font-size: 10px;
+    font-weight: 700;
+    padding: 4px 8px;
+    border-radius: 4px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+  .pr-rec-badge--bestseller { background: #DDA541; color: #fff; }
+  .pr-rec-badge--new { background: #0F3730; color: #fff; }
+  .pr-rec-badge--sale { background: #C0392B; color: #fff; }
+  .pr-rec-badge--sold-out { background: #666; color: #fff; }
 
   .pr-rec-wishlist {
     position: absolute;
-    top: 12px;
-    right: 12px;
-    background: none;
-    border: none;
-    cursor: pointer;
-    z-index: 2;
-    padding: 0;
+    top: 10px;
+    right: 10px;
+    z-index: 3;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.85);
+    backdrop-filter: blur(4px);
+    border: 1px solid rgba(255, 255, 255, 0.9);
     display: flex;
     align-items: center;
     justify-content: center;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    padding: 0;
+  }
+  .pr-rec-wishlist:hover {
+    background: #fff;
+    transform: scale(1.08);
   }
   .pr-rec-wishlist:hover svg {
-    fill: #fdf5e6;
+    fill: #DDA541;
+    stroke: #DDA541;
   }
 
   .pr-rec-img-link {
     display: block;
     width: 100%;
-    height: 200px;
-    background: #fafafa;
     overflow: hidden;
+    background: #F8F6F0;
   }
+  .pr-rec-img--square { aspect-ratio: 1 / 1; }
+  .pr-rec-img--portrait { aspect-ratio: 4 / 5; }
+  .pr-rec-img--adapt { aspect-ratio: auto; min-height: 200px; }
+
   .pr-rec-img {
     width: 100%;
     height: 100%;
     object-fit: cover;
+    transition: transform 0.4s ease;
   }
-  .pr-rec-img-placeholder {
-    width: 100%;
-    height: 100%;
-    background: #eee;
+  .pr-rec-card:hover .pr-rec-img {
+    transform: scale(1.04);
   }
 
   .pr-rec-info {
-    padding: 16px;
+    padding: 16px 14px 14px 14px;
     display: flex;
     flex-direction: column;
-    gap: 6px;
+    flex: 1;
+    text-align: left;
+    justify-content: space-between;
   }
+
   .pr-rec-title {
     font-size: 13px;
-    color: #555;
+    font-weight: 600;
+    color: #222;
     text-decoration: none;
-    white-space: nowrap;
+    line-height: 1.35;
+    margin-bottom: 6px;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
     overflow: hidden;
-    text-overflow: ellipsis;
+    min-height: 36px;
   }
   .pr-rec-title:hover {
     color: #DDA541;
   }
+
+  .pr-rec-price-wrap {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin-bottom: 14px;
+  }
   .pr-rec-price {
     font-size: 15px;
     font-weight: 700;
-    color: #222;
+    color: #0F3730;
+  }
+  .pr-rec-compare-price {
+    font-size: 12px;
+    color: #888;
   }
 
-  .pr-rec-reviews {
+  .pr-rec-btn-wrapper {
+    margin-top: auto;
+    width: 100%;
+  }
+
+  .pr-rec-view-btn {
     display: flex;
     align-items: center;
-    gap: 4px;
-    margin-top: 4px;
+    justify-content: center;
+    gap: 6px;
+    width: 100%;
+    padding: 8px 12px;
+    border: 1.5px solid #DDA541;
+    border-radius: 6px;
+    background: transparent;
+    color: #0F3730;
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    text-decoration: none;
+    transition: all 0.2s ease;
   }
-  .pr-rec-stars {
+  .pr-rec-view-btn:hover {
+    background: #DDA541;
+    color: #fff;
+  }
+
+  .pr-rec-pagination-dots {
     display: flex;
-    gap: 2px;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    margin-top: 12px;
   }
-  .pr-rec-rating-text {
-    font-size: 11px;
-    font-weight: 600;
-    color: #444;
-    margin-left: 2px;
+
+  .pr-rec-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #D3C5AE;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    transition: all 0.3s ease;
   }
-  .pr-rec-count-text {
-    font-size: 11px;
-    color: #999;
+  .pr-rec-dot.active {
+    width: 22px;
+    border-radius: 4px;
+    background: #DDA541;
   }
 
   @media(max-width: 768px) {
+    .pr-recommendations-container {
+      padding: 28px 16px;
+    }
+    .pr-rec-heading {
+      font-size: 26px;
+    }
     .pr-rec-nav-btn { display: none; }
     .pr-rec-card {
       min-width: 180px;
       max-width: 180px;
     }
+    .pr-rec-title {
+      font-size: 12px;
+      min-height: 32px;
+    }
+    .pr-rec-price {
+      font-size: 14px;
+    }
   }
-</style>
+{% endstylesheet %}
 
-<script>
+{% javascript %}
   class ProductRecommendations extends HTMLElement {
     constructor() {
       super();
@@ -282,8 +498,6 @@
           html.innerHTML = text;
           const recommendations = html.querySelector('.pr-recommendations-section');
 
-          // Only replace if the fetch actually returned products.
-          // Otherwise, keep the fallback collection that was rendered on load.
           if (recommendations && recommendations.querySelector('.pr-rec-card')) {
             this.innerHTML = recommendations.innerHTML;
           }
@@ -298,19 +512,55 @@
       const carousel = this.querySelector('#pr-rec-carousel');
       const prevBtn = this.querySelector('.pr-rec-nav-btn.prev');
       const nextBtn = this.querySelector('.pr-rec-nav-btn.next');
+      const dots = this.querySelectorAll('.pr-rec-dot');
 
-      if(carousel && prevBtn && nextBtn) {
+      if (!carousel) return;
+
+      const getCardWidth = () => {
+        const card = carousel.querySelector('.pr-rec-card');
+        return card ? card.offsetWidth + 16 : 220;
+      };
+
+      if (prevBtn && nextBtn) {
         nextBtn.addEventListener('click', () => {
-          carousel.scrollBy({ left: 240, behavior: 'smooth' });
+          carousel.scrollBy({ left: getCardWidth() * 2, behavior: 'smooth' });
         });
         prevBtn.addEventListener('click', () => {
-          carousel.scrollBy({ left: -240, behavior: 'smooth' });
+          carousel.scrollBy({ left: -getCardWidth() * 2, behavior: 'smooth' });
         });
+      }
+
+      if (dots.length > 0) {
+        dots.forEach((dot, index) => {
+          dot.addEventListener('click', () => {
+            carousel.scrollTo({
+              left: index * getCardWidth(),
+              behavior: 'smooth'
+            });
+          });
+        });
+
+        carousel.addEventListener('scroll', () => {
+          const scrollPos = carousel.scrollLeft;
+          const cardWidth = getCardWidth();
+          const activeIndex = Math.min(
+            Math.round(scrollPos / cardWidth),
+            dots.length - 1
+          );
+
+          dots.forEach((dot, idx) => {
+            if (idx === activeIndex) {
+              dot.classList.add('active');
+            } else {
+              dot.classList.remove('active');
+            }
+          });
+        }, { passive: true });
       }
     }
   }
   
-  if(!customElements.get('product-recommendations')) {
+  if (!customElements.get('product-recommendations')) {
     customElements.define('product-recommendations', ProductRecommendations);
   }
-</script>
+{% endjavascript %}
