@@ -173,12 +173,26 @@
             {% endform %}
 
           {%- when 'buy_buttons' -%}
-            <div class="pp-actions-row">
-              <button type="submit" form="pp-product-form" class="pp-btn-add">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
-                ADD TO CART
+            <div class="pp-actions-container">
+              <!-- ROW 1: QUANTITY + ADD TO CART -->
+              <div class="pp-actions-top-row">
+                <div class="pp-qty-widget">
+                  <button type="button" class="pp-qty-btn pp-qty-minus" aria-label="Decrease quantity">−</button>
+                  <input type="number" name="quantity" value="1" min="1" class="pp-qty-input" form="pp-product-form" readonly>
+                  <button type="button" class="pp-qty-btn pp-qty-plus" aria-label="Increase quantity">+</button>
+                </div>
+                <button type="submit" form="pp-product-form" class="pp-btn-add">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+                  <span>ADD TO CART</span>
+                </button>
+              </div>
+
+              <!-- ROW 2: BUY NOW WITH ARROW -->
+              <button type="button" class="pp-btn-buy" id="pp-buy-now">
+                <span class="pp-btn-spacer"></span>
+                <span class="pp-btn-text">BUY NOW</span>
+                <svg class="pp-btn-arrow" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
               </button>
-              <button type="button" class="pp-btn-buy" id="pp-buy-now">BUY NOW</button>
             </div>
 
 
@@ -189,50 +203,54 @@
 
   <div class="pp-bottom-showcase" id="details">
     <div class="pp-bottom-showcase-grid">
-      <!-- LEFT BOX: PRODUCT DETAILS & SPECS -->
-      <div class="pp-bottom-card pp-bottom-left-card">
-        <h3 class="pp-bottom-title">PRODUCT DETAILS</h3>
-        <div class="pp-bottom-desc">
-          {%- if product.description != blank -%}
-            {{ product.description }}
-          {%- else -%}
-            <p>A timeless expression of elegance, this 18K yellow gold necklace features a classic figaro chain adorned with brilliant diamonds. Perfect for special occasions and everyday luxury.</p>
-          {%- endif -%}
-        </div>
-        
-        <div class="pp-specs-list">
-          <div class="pp-spec-row">
-            <span class="pp-spec-lbl">Metal</span>
-            <span class="pp-spec-val">18K Yellow Gold</span>
-          </div>
-          <div class="pp-spec-row">
-            <span class="pp-spec-lbl">Gross Weight</span>
-            <span class="pp-spec-val">16.350 gms</span>
-          </div>
-          <div class="pp-spec-row">
-            <span class="pp-spec-lbl">Diamond Weight</span>
-            <span class="pp-spec-val">1.75 cts</span>
-          </div>
-          <div class="pp-spec-row">
-            <span class="pp-spec-lbl">Diamond Quality</span>
-            <span class="pp-spec-val">G-VS</span>
-          </div>
-          <div class="pp-spec-row">
-            <span class="pp-spec-lbl">Certification</span>
-            <span class="pp-spec-val">BIS Hallmarked</span>
-          </div>
-        </div>
-
-        <a href="#details" class="pp-view-more-link">
-          <span>View More Details</span>
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="M12 5l7 7-7 7"/></svg>
-        </a>
-      </div>
-
-      <!-- RIGHT BOX: ACCORDIONS -->
-      <div class="pp-bottom-card pp-bottom-right-card">
+      <!-- UNIFIED ACCORDIONS SHOWCASE CARD -->
+      <div class="pp-bottom-card pp-accordions-card">
+        <!-- 1. PRODUCT DETAILS (Default Open) -->
         <div class="pp-acc-item is-open">
           <button class="pp-acc-header" type="button" aria-expanded="true">
+            <span class="pp-acc-header-left">
+              <svg class="pp-acc-icon" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--color-accent, #D4AF37)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3h12l4 6-10 12L2 9l4-6z"/><path d="M11 3l4 6-4 12"/><path d="M13 3l-4 6 4 12"/><path d="M2 9h20"/></svg>
+              <span class="pp-acc-title">PRODUCT DETAILS</span>
+            </span>
+            <svg class="pp-acc-chevron" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+          </button>
+          <div class="pp-acc-content">
+            <div class="pp-bottom-desc">
+              {%- if product.description != blank -%}
+                {{ product.description }}
+              {%- else -%}
+                <p>A timeless expression of elegance, this 18K yellow gold necklace features a classic figaro chain adorned with brilliant diamonds. Perfect for special occasions and everyday luxury.</p>
+              {%- endif -%}
+            </div>
+            
+            <div class="pp-specs-list">
+              <div class="pp-spec-row">
+                <span class="pp-spec-lbl">Metal</span>
+                <span class="pp-spec-val">18K Yellow Gold</span>
+              </div>
+              <div class="pp-spec-row">
+                <span class="pp-spec-lbl">Gross Weight</span>
+                <span class="pp-spec-val">16.350 gms</span>
+              </div>
+              <div class="pp-spec-row">
+                <span class="pp-spec-lbl">Diamond Weight</span>
+                <span class="pp-spec-val">1.75 cts</span>
+              </div>
+              <div class="pp-spec-row">
+                <span class="pp-spec-lbl">Diamond Quality</span>
+                <span class="pp-spec-val">G-VS</span>
+              </div>
+              <div class="pp-spec-row">
+                <span class="pp-spec-lbl">Certification</span>
+                <span class="pp-spec-val">BIS Hallmarked</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 2. CERTIFICATION & ASSURANCE -->
+        <div class="pp-acc-item">
+          <button class="pp-acc-header" type="button" aria-expanded="false">
             <span class="pp-acc-header-left">
               <svg class="pp-acc-icon" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--color-accent, #D4AF37)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="M9 12l2 2 4-4"/></svg>
               <span class="pp-acc-title">CERTIFICATION & ASSURANCE</span>
@@ -244,6 +262,7 @@
           </div>
         </div>
 
+        <!-- 3. SHIPPING & RETURNS -->
         <div class="pp-acc-item">
           <button class="pp-acc-header" type="button" aria-expanded="false">
             <span class="pp-acc-header-left">
@@ -257,6 +276,7 @@
           </div>
         </div>
 
+        <!-- 4. CARE INSTRUCTIONS -->
         <div class="pp-acc-item">
           <button class="pp-acc-header" type="button" aria-expanded="false">
             <span class="pp-acc-header-left">
@@ -655,43 +675,68 @@
     box-shadow: 0 6px 16px rgba(1, 63, 62, 0.22); transform: translateY(-2px);
   }
 
-  /* Luxury Buttons: Inter, 16px, Weight 700, Architectural 8px Radius */
-  .pp-actions-row { display: flex !important; gap: 16px !important; width: 100% !important; margin-bottom: 28px !important; }
+  /* Luxury Actions & Quantity Widget: Inter, 16px, Weight 700, Architectural 10px Radius */
+  .pp-actions-container { width: 100% !important; margin-bottom: 28px !important; }
+  .pp-actions-top-row { display: flex !important; gap: 14px !important; width: 100% !important; margin-bottom: 14px !important; }
+  
+  .pp-qty-widget {
+    display: flex !important; align-items: center !important; justify-content: space-between !important;
+    width: 130px !important; min-height: 56px !important; height: 56px !important;
+    background: #FFFFFF !important; border: 1.5px solid #DED8CE !important; border-radius: 10px !important;
+    flex-shrink: 0 !important; overflow: hidden !important; box-shadow: 0 2px 6px rgba(0, 0, 0, 0.02) !important;
+  }
+  .pp-qty-btn {
+    width: 42px !important; height: 100% !important; background: none !important; border: none !important;
+    font-size: 20px !important; font-weight: 600 !important; color: #013F3E !important; cursor: pointer !important;
+    display: flex !important; align-items: center !important; justify-content: center !important;
+    transition: background 0.2s ease !important; user-select: none !important; -webkit-user-select: none !important;
+  }
+  .pp-qty-btn:hover { background: #F5F3EF !important; }
+  .pp-qty-input {
+    width: 46px !important; height: 100% !important; border: none !important;
+    border-left: 1px solid #E5E0D8 !important; border-right: 1px solid #E5E0D8 !important;
+    text-align: center !important; font-family: var(--pp-font-sans) !important; font-size: 16px !important;
+    font-weight: 600 !important; color: #111111 !important; background: none !important; pointer-events: none !important;
+  }
+  input[type="number"].pp-qty-input::-webkit-inner-spin-button,
+  input[type="number"].pp-qty-input::-webkit-outer-spin-button { -webkit-appearance: none; margin: 0; }
+  input[type="number"].pp-qty-input { -moz-appearance: textfield; }
+
   .pp-btn-add {
     flex: 1 !important; width: 100% !important; background: #013F3E !important; color: #ffffff !important;
-    border: none !important; border-radius: 8px !important; min-height: 56px !important; height: 56px !important;
+    border: none !important; border-radius: 10px !important; min-height: 56px !important; height: 56px !important;
     font-family: var(--pp-font-sans) !important; font-size: 16px !important; font-weight: 700 !important; line-height: 1 !important;
-    letter-spacing: 0.08em !important; text-transform: uppercase !important; display: flex !important; align-items: center !important; justify-content: center !important;
+    letter-spacing: 0.06em !important; text-transform: uppercase !important; display: flex !important; align-items: center !important; justify-content: center !important;
     gap: 10px !important; cursor: pointer !important; transition: all 0.25s ease !important; box-shadow: 0 6px 20px rgba(1, 63, 62, 0.2) !important;
-    padding: 0 24px !important;
+    padding: 0 20px !important;
   }
   .pp-btn-add:hover { background: #012B2A !important; transform: translateY(-2px) !important; box-shadow: 0 8px 26px rgba(1, 63, 62, 0.35) !important; }
   .pp-btn-buy {
-    flex: 1 !important; width: 100% !important; background: #C89234 !important; color: #ffffff !important;
-    border: none !important; border-radius: 8px !important; min-height: 56px !important; height: 56px !important;
+    width: 100% !important; background: #C89234 !important; color: #ffffff !important;
+    border: none !important; border-radius: 10px !important; min-height: 56px !important; height: 56px !important;
     font-family: var(--pp-font-sans) !important; font-size: 16px !important; font-weight: 700 !important; line-height: 1 !important;
-    letter-spacing: 0.08em !important; text-transform: uppercase !important; display: flex !important; align-items: center !important; justify-content: center !important;
+    letter-spacing: 0.06em !important; text-transform: uppercase !important; display: flex !important; align-items: center !important; justify-content: space-between !important;
     cursor: pointer !important; transition: all 0.25s ease !important; box-shadow: 0 6px 20px rgba(200, 146, 52, 0.25) !important;
     padding: 0 24px !important;
   }
   .pp-btn-buy:hover { background: #B5822C !important; transform: translateY(-2px) !important; box-shadow: 0 8px 26px rgba(200, 146, 52, 0.38) !important; }
+  .pp-btn-spacer { width: 20px; flex-shrink: 0; }
+  .pp-btn-text { flex: 1; text-align: center; }
+  .pp-btn-arrow { width: 20px; height: 20px; flex-shrink: 0; transition: transform 0.25s ease; }
+  .pp-btn-buy:hover .pp-btn-arrow { transform: translateX(4px); }
 
   /* ==========================================================================
      5. BOTTOM SHOWCASE (2-Column Grid)
      ========================================================================== */
-  .pp-bottom-showcase { max-width: 1240px; margin: 30px auto 50px auto; padding: 0 20px; font-family: var(--pp-font-sans); }
-  .pp-bottom-showcase-grid { display: grid; grid-template-columns: 1fr; gap: 32px; }
-  @media screen and (min-width: 992px) { .pp-bottom-showcase-grid { grid-template-columns: 1fr 1fr; gap: 40px; } }
-  .pp-bottom-card { background: var(--pp-bg-light); border: 1px solid var(--pp-border); border-radius: 20px; padding: 36px 40px; box-shadow: 0 8px 30px rgba(0, 0, 0, 0.02); }
-  .pp-bottom-right-card { padding: 16px 32px; display: flex; flex-direction: column; justify-content: center; }
-  .pp-bottom-title { font-family: var(--pp-font-serif); font-size: 24px; font-weight: 700; color: var(--pp-primary); letter-spacing: 0.05em; margin: 0 0 16px 0; text-transform: uppercase; }
+  .pp-bottom-showcase { max-width: 1000px; margin: 30px auto 50px auto; padding: 0 20px; font-family: var(--pp-font-sans); }
+  .pp-bottom-showcase-grid { display: block; width: 100%; }
+  .pp-bottom-card { background: var(--pp-bg-light); border: 1px solid var(--pp-border); border-radius: 20px; padding: 20px 36px; box-shadow: 0 8px 30px rgba(0, 0, 0, 0.02); }
+  .pp-accordions-card { padding: 16px 36px; }
   .pp-bottom-desc { font-size: 16px; color: #444444; line-height: 1.7; margin-bottom: 24px; }
-  .pp-specs-list { display: flex; flex-direction: column; gap: 14px; margin-bottom: 28px; }
+  .pp-specs-list { display: flex; flex-direction: column; gap: 14px; margin-bottom: 12px; }
   .pp-spec-row { display: grid; grid-template-columns: 160px 1fr; align-items: center; font-size: 15px; }
   .pp-spec-lbl { font-weight: 600; color: #222222; }
   .pp-spec-val { color: #555555; font-weight: 500; }
-  .pp-view-more-link { display: inline-flex; align-items: center; gap: 6px; color: #C89234; font-weight: 600; font-size: 16px; text-decoration: none; transition: gap 0.2s ease; }
-  .pp-view-more-link:hover { gap: 10px; color: #B5822C; }
 
   /* Luxury Accordions: Inter 16px 600 Title, Inter 16px 400 Desc, 100% Clickable Header Row */
   .pp-acc-item { border-bottom: 1px solid var(--pp-border); padding: 0 !important; transition: all 0.3s ease; }
@@ -881,9 +926,10 @@
       vertical-align: middle !important;
     }
     .pp-breadcrumb-separator { margin-right: 6px !important; margin-left: 2px !important; display: inline-flex !important; align-items: center !important; flex-shrink: 0 !important; }
-        .pp-actions-row { flex-direction: column !important; gap: 14px !important; }
-    .pp-btn-add, .pp-btn-buy { min-height: 56px !important; height: 56px !important; font-size: 16px !important; border-radius: 8px !important; width: 100% !important; }
-    .pp-bottom-card { padding: 22px 16px; border-radius: 16px; }
+    .pp-actions-top-row { display: flex !important; flex-direction: row !important; gap: 10px !important; }
+    .pp-qty-widget { width: 120px !important; min-height: 52px !important; height: 52px !important; }
+    .pp-btn-add, .pp-btn-buy { min-height: 52px !important; height: 52px !important; font-size: 15px !important; border-radius: 10px !important; }
+    .pp-bottom-card, .pp-accordions-card { padding: 16px 20px !important; border-radius: 16px; }
     .pp-spec-row { grid-template-columns: 110px 1fr; font-size: 14px; }
     
     /* Perfect Mobile Gallery Optimization */
@@ -1059,6 +1105,40 @@
           item.classList.add('is-open');
           accHeader.setAttribute('aria-expanded', 'true');
         }
+      }
+      return;
+    }
+
+    // Quantity Plus/Minus Buttons
+    if (e.target.closest('.pp-qty-plus')) {
+      e.preventDefault();
+      const input = document.querySelector('.pp-qty-input');
+      if (input) input.value = parseInt(input.value || 1, 10) + 1;
+      return;
+    }
+    if (e.target.closest('.pp-qty-minus')) {
+      e.preventDefault();
+      const input = document.querySelector('.pp-qty-input');
+      if (input && parseInt(input.value || 1, 10) > 1) {
+        input.value = parseInt(input.value || 1, 10) - 1;
+      }
+      return;
+    }
+
+    // Buy Now Button (Dynamic Checkout)
+    if (e.target.closest('.pp-btn-buy')) {
+      e.preventDefault();
+      const form = document.getElementById('pp-product-form');
+      if (form) {
+        let retInput = form.querySelector('input[name="return_to"]');
+        if (!retInput) {
+          retInput = document.createElement('input');
+          retInput.type = 'hidden';
+          retInput.name = 'return_to';
+          form.appendChild(retInput);
+        }
+        retInput.value = '/checkout';
+        form.submit();
       }
       return;
     }
