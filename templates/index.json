@@ -222,7 +222,7 @@
           "type": "collection",
           "settings": {
             "collection": "gold-earrings",
-            "title": "GOLD EARRINGS",
+            "title": "GOLD CHEEK PATTI",
             "image": "shopify://shop_images/latest_5.png"
           }
         },
@@ -576,28 +576,28 @@
         "reel_1": {
           "type": "reel",
           "settings": {
-            "video": "",
+            "video_url": "",
             "view_count": "2M"
           }
         },
         "reel_2": {
           "type": "reel",
           "settings": {
-            "video": "",
+            "video_url": "",
             "view_count": "773K"
           }
         },
         "reel_3": {
           "type": "reel",
           "settings": {
-            "video": "",
+            "video_url": "",
             "view_count": "63.6K"
           }
         },
         "reel_4": {
           "type": "reel",
           "settings": {
-            "video": "",
+            "video_url": "",
             "view_count": "9410"
           }
         }
