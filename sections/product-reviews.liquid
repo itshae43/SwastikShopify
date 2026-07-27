@@ -184,209 +184,54 @@
 {% endschema %}
 
 <div class="wpr-section">
-  <!-- Section Header -->
+  <!-- Section Header (Clean, Centered, No WhatsApp Button) -->
   <div class="wpr-header">
     <div class="wpr-header-ornament">
-      <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#D4AF37" stroke-width="1.5"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#D4AF37" stroke-width="1.75"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+      <span style="font-size: 11px; font-weight: 700; letter-spacing: 0.15em; color: #C89234; text-transform: uppercase; margin-left: 6px;">EXCLUSIVE REVIEWS</span>
     </div>
     <h2 class="wpr-title">{{ section.settings.heading }}</h2>
-    <p class="wpr-subtitle">{{ section.settings.subheading }}</p>
-
-    <!-- WhatsApp CTA Button -->
-    <a href="{{ section.settings.whatsapp_link | default: '#' }}" class="wpr-wa-cta" target="_blank" rel="noopener noreferrer">
-      <svg width="20" height="20" viewBox="0 0 24 24" fill="#25D366"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51a12.8 12.8 0 0 0-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413z"/></svg>
-      <span>Chat with us on WhatsApp&nbsp;&nbsp;{{ section.settings.whatsapp_number }}</span>
-    </a>
   </div>
 
-  <!-- Row 1: Marquee scrolling RIGHT (text reviews) -->
-  <div class="wpr-marquee-wrap">
-    <div class="wpr-marquee wpr-marquee-row1" id="wpr-marquee-row1">
+  <!-- Minimalistic Single Horizontal Row -->
+  <div class="wpr-track-container">
+    <div class="wpr-track" id="wpr-track-{{ section.id }}">
       {% for block in section.blocks %}
         {% if block.settings.chat_screenshot == blank %}
-          <div class="wpr-card wpr-card--{{ block.settings.card_color }}" {{ block.shopify_attributes }}>
-            <!-- Quote icon -->
-            <div class="wpr-card-quote">
-              <svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor" opacity="0.15"><path d="M6 17h3l2-4V7H5v6h3l-2 4zm8 0h3l2-4V7h-6v6h3l-2 4z"/></svg>
+          <!-- Minimal Compact Text Card -->
+          <div class="wpr-card" {{ block.shopify_attributes }}>
+            <!-- Top Row: Stars & Time -->
+            <div class="wpr-card-top">
+              <div class="wpr-card-stars">
+                {% for i in (1..5) %}
+                  {% if i <= block.settings.rating %}
+                    <svg viewBox="0 0 24 24" width="13" height="13" fill="#F5C518"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                  {% else %}
+                    <svg viewBox="0 0 24 24" width="13" height="13" fill="#E0E0E0"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                  {% endif %}
+                {% endfor %}
+              </div>
+              <span class="wpr-card-time">{{ block.settings.time }}</span>
             </div>
-            <p class="wpr-card-text">{{ block.settings.review_text }}</p>
 
+            <!-- Review Text -->
+            <p class="wpr-card-text">"{{ block.settings.review_text }}"</p>
+
+            <!-- Compact Stacked Footer (Prevents multi-line name wrapping!) -->
             <div class="wpr-card-footer">
-              <div class="wpr-card-author">
-                <span class="wpr-card-name">{{ block.settings.customer_name }}</span>
-                <span class="wpr-card-location">{{ block.settings.customer_location }}</span>
-              </div>
-              <div class="wpr-card-meta">
-                <div class="wpr-card-stars">
-                  {% for i in (1..5) %}
-                    {% if i <= block.settings.rating %}
-                      <svg viewBox="0 0 24 24" width="14" height="14" fill="#F5C518"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
-                    {% else %}
-                      <svg viewBox="0 0 24 24" width="14" height="14" fill="#E0E0E0"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
-                    {% endif %}
-                  {% endfor %}
-                </div>
-                <span class="wpr-card-time">{{ block.settings.time }}
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#53bdeb" stroke-width="2.5"><path d="M18 6L7 17l-5-5"/><path d="M22 10l-11 11"/></svg>
-                </span>
-              </div>
-            </div>
-          </div>
-        {% endif %}
-      {% endfor %}
-
-      {%- comment -%} Duplicate for seamless infinite scroll {%- endcomment -%}
-      {% for block in section.blocks %}
-        {% if block.settings.chat_screenshot == blank %}
-          <div class="wpr-card wpr-card--{{ block.settings.card_color }}" aria-hidden="true">
-            <div class="wpr-card-quote">
-              <svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor" opacity="0.15"><path d="M6 17h3l2-4V7H5v6h3l-2 4zm8 0h3l2-4V7h-6v6h3l-2 4z"/></svg>
-            </div>
-            <p class="wpr-card-text">{{ block.settings.review_text }}</p>
-
-            <div class="wpr-card-footer">
-              <div class="wpr-card-author">
-                <span class="wpr-card-name">{{ block.settings.customer_name }}</span>
-                <span class="wpr-card-location">{{ block.settings.customer_location }}</span>
-              </div>
-              <div class="wpr-card-meta">
-                <div class="wpr-card-stars">
-                  {% for i in (1..5) %}
-                    {% if i <= block.settings.rating %}
-                      <svg viewBox="0 0 24 24" width="14" height="14" fill="#F5C518"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
-                    {% else %}
-                      <svg viewBox="0 0 24 24" width="14" height="14" fill="#E0E0E0"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
-                    {% endif %}
-                  {% endfor %}
-                </div>
-                <span class="wpr-card-time">{{ block.settings.time }}
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#53bdeb" stroke-width="2.5"><path d="M18 6L7 17l-5-5"/><path d="M22 10l-11 11"/></svg>
-                </span>
-              </div>
-            </div>
-          </div>
-        {% endif %}
-      {% endfor %}
-    </div>
-  </div>
-
-  <!-- Row 2: Marquee scrolling LEFT (mix of text + screenshot reviews) -->
-  <div class="wpr-marquee-wrap">
-    <div class="wpr-marquee wpr-marquee-row2" id="wpr-marquee-row2">
-      {% for block in section.blocks %}
-        {% if block.settings.chat_screenshot != blank %}
-          <!-- Screenshot Card -->
-          <div class="wpr-card wpr-card--screenshot wpr-card--{{ block.settings.card_color }}" {{ block.shopify_attributes }}>
-            <div class="wpr-screenshot-img">
-              <img src="{{ block.settings.chat_screenshot | image_url: width: 400 }}" alt="WhatsApp Chat from {{ block.settings.customer_name }}" loading="lazy" width="400" height="400">
-            </div>
-            <div class="wpr-card-footer">
-              <div class="wpr-card-author">
-                <span class="wpr-card-name">{{ block.settings.customer_name }}</span>
-                <span class="wpr-card-location">{{ block.settings.customer_location }}</span>
-              </div>
-              <div class="wpr-card-meta">
-                <div class="wpr-card-stars">
-                  {% for i in (1..5) %}
-                    {% if i <= block.settings.rating %}
-                      <svg viewBox="0 0 24 24" width="14" height="14" fill="#F5C518"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
-                    {% else %}
-                      <svg viewBox="0 0 24 24" width="14" height="14" fill="#E0E0E0"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
-                    {% endif %}
-                  {% endfor %}
-                </div>
-                <span class="wpr-card-time">{{ block.settings.time }}
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#53bdeb" stroke-width="2.5"><path d="M18 6L7 17l-5-5"/><path d="M22 10l-11 11"/></svg>
-                </span>
-              </div>
+              <span class="wpr-card-name">{{ block.settings.customer_name }}</span>
+              <span class="wpr-card-location">{{ block.settings.customer_location }}</span>
             </div>
           </div>
         {% else %}
-          <!-- Text Card (duplicate in row 2 for fullness) -->
-          <div class="wpr-card wpr-card--{{ block.settings.card_color }}" {{ block.shopify_attributes }}>
-            <div class="wpr-card-quote">
-              <svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor" opacity="0.15"><path d="M6 17h3l2-4V7H5v6h3l-2 4zm8 0h3l2-4V7h-6v6h3l-2 4z"/></svg>
-            </div>
-            <p class="wpr-card-text">{{ block.settings.review_text }}</p>
-
-            <div class="wpr-card-footer">
-              <div class="wpr-card-author">
-                <span class="wpr-card-name">{{ block.settings.customer_name }}</span>
-                <span class="wpr-card-location">{{ block.settings.customer_location }}</span>
-              </div>
-              <div class="wpr-card-meta">
-                <div class="wpr-card-stars">
-                  {% for i in (1..5) %}
-                    {% if i <= block.settings.rating %}
-                      <svg viewBox="0 0 24 24" width="14" height="14" fill="#F5C518"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
-                    {% else %}
-                      <svg viewBox="0 0 24 24" width="14" height="14" fill="#E0E0E0"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
-                    {% endif %}
-                  {% endfor %}
-                </div>
-                <span class="wpr-card-time">{{ block.settings.time }}
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#53bdeb" stroke-width="2.5"><path d="M18 6L7 17l-5-5"/><path d="M22 10l-11 11"/></svg>
-                </span>
-              </div>
-            </div>
-          </div>
-        {% endif %}
-      {% endfor %}
-
-      {%- comment -%} Duplicate for seamless infinite scroll {%- endcomment -%}
-      {% for block in section.blocks %}
-        {% if block.settings.chat_screenshot != blank %}
-          <div class="wpr-card wpr-card--screenshot wpr-card--{{ block.settings.card_color }}" aria-hidden="true">
+          <!-- Minimal Compact Screenshot Card -->
+          <div class="wpr-card wpr-card--screenshot" {{ block.shopify_attributes }}>
             <div class="wpr-screenshot-img">
-              <img src="{{ block.settings.chat_screenshot | image_url: width: 400 }}" alt="WhatsApp Chat from {{ block.settings.customer_name }}" loading="lazy" width="400" height="400">
+              <img src="{{ block.settings.chat_screenshot | image_url: width: 400 }}" alt="Review from {{ block.settings.customer_name }}" loading="lazy" width="400" height="400">
             </div>
             <div class="wpr-card-footer">
-              <div class="wpr-card-author">
-                <span class="wpr-card-name">{{ block.settings.customer_name }}</span>
-                <span class="wpr-card-location">{{ block.settings.customer_location }}</span>
-              </div>
-              <div class="wpr-card-meta">
-                <div class="wpr-card-stars">
-                  {% for i in (1..5) %}
-                    {% if i <= block.settings.rating %}
-                      <svg viewBox="0 0 24 24" width="14" height="14" fill="#F5C518"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
-                    {% else %}
-                      <svg viewBox="0 0 24 24" width="14" height="14" fill="#E0E0E0"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
-                    {% endif %}
-                  {% endfor %}
-                </div>
-                <span class="wpr-card-time">{{ block.settings.time }}
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#53bdeb" stroke-width="2.5"><path d="M18 6L7 17l-5-5"/><path d="M22 10l-11 11"/></svg>
-                </span>
-              </div>
-            </div>
-          </div>
-        {% else %}
-          <div class="wpr-card wpr-card--{{ block.settings.card_color }}" aria-hidden="true">
-            <div class="wpr-card-quote">
-              <svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor" opacity="0.15"><path d="M6 17h3l2-4V7H5v6h3l-2 4zm8 0h3l2-4V7h-6v6h3l-2 4z"/></svg>
-            </div>
-            <p class="wpr-card-text">{{ block.settings.review_text }}</p>
-
-            <div class="wpr-card-footer">
-              <div class="wpr-card-author">
-                <span class="wpr-card-name">{{ block.settings.customer_name }}</span>
-                <span class="wpr-card-location">{{ block.settings.customer_location }}</span>
-              </div>
-              <div class="wpr-card-meta">
-                <div class="wpr-card-stars">
-                  {% for i in (1..5) %}
-                    {% if i <= block.settings.rating %}
-                      <svg viewBox="0 0 24 24" width="14" height="14" fill="#F5C518"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
-                    {% else %}
-                      <svg viewBox="0 0 24 24" width="14" height="14" fill="#E0E0E0"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
-                    {% endif %}
-                  {% endfor %}
-                </div>
-                <span class="wpr-card-time">{{ block.settings.time }}
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#53bdeb" stroke-width="2.5"><path d="M18 6L7 17l-5-5"/><path d="M22 10l-11 11"/></svg>
-                </span>
-              </div>
+              <span class="wpr-card-name">{{ block.settings.customer_name }}</span>
+              <span class="wpr-card-location">{{ block.settings.customer_location }}</span>
             </div>
           </div>
         {% endif %}
@@ -396,9 +241,9 @@
 </div>
 
 {% stylesheet %}
-  /* ===== WhatsApp-Style Product Reviews Section ===== */
+  /* ===== Minimalistic Single-Line Reviews Section ===== */
   .wpr-section {
-    padding: 60px 0 70px 0;
+    padding: 50px 0 60px 0;
     overflow: hidden;
     font-family: 'Inter', sans-serif;
     background: #FAFAFA;
@@ -407,221 +252,107 @@
   /* Header */
   .wpr-header {
     text-align: center;
-    max-width: 700px;
-    margin: 0 auto 40px auto;
-    padding: 0 24px;
+    max-width: 680px;
+    margin: 0 auto 36px auto;
+    padding: 0 20px;
   }
 
   .wpr-header-ornament {
     margin-bottom: 8px;
-    opacity: 0.7;
+    opacity: 0.75;
   }
 
   .wpr-title {
     font-family: 'Cormorant Garamond', 'Playfair Display', serif;
-    font-size: 2.6rem;
+    font-size: 2.5rem;
     font-weight: 700;
     color: #013F3E;
-    margin: 0 0 12px 0;
+    margin: 0 0 10px 0;
     line-height: 1.15;
   }
 
   .wpr-subtitle {
     font-size: 1rem;
-    color: #666;
-    margin: 0 0 24px 0;
+    color: #555555;
+    margin: 0 0 22px 0;
     line-height: 1.6;
   }
 
-  .wpr-wa-cta {
-    display: inline-flex;
-    align-items: center;
-    gap: 10px;
-    background: #FFFFFF;
-    border: 1.5px solid #25D366;
-    border-radius: 50px;
-    padding: 10px 28px;
-    font-size: 14px;
-    font-weight: 600;
-    color: #333;
-    text-decoration: none;
-    transition: all 0.25s ease;
-    box-shadow: 0 2px 10px rgba(37, 211, 102, 0.1);
-  }
-
-  .wpr-wa-cta:hover {
-    background: #25D366;
-    color: #FFFFFF;
-    box-shadow: 0 6px 20px rgba(37, 211, 102, 0.25);
-    transform: translateY(-1px);
-  }
-
-  .wpr-wa-cta:hover svg {
-    fill: #FFFFFF;
-  }
-
-  /* ===== Marquee Container ===== */
-  .wpr-marquee-wrap {
-    overflow: hidden;
+  /* ===== Horizontal Track Container ===== */
+  .wpr-track-container {
     position: relative;
-    margin-bottom: 20px;
-    padding: 4px 0;
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 16px;
   }
 
-  /* Fade edges */
-  .wpr-marquee-wrap::before,
-  .wpr-marquee-wrap::after {
-    content: '';
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    width: 80px;
-    z-index: 2;
-    pointer-events: none;
-  }
-  .wpr-marquee-wrap::before {
-    left: 0;
-    background: linear-gradient(to right, #FAFAFA 0%, transparent 100%);
-  }
-  .wpr-marquee-wrap::after {
-    right: 0;
-    background: linear-gradient(to left, #FAFAFA 0%, transparent 100%);
-  }
-
-  .wpr-marquee {
+  .wpr-track {
     display: flex;
     gap: 20px;
-    width: max-content;
-    will-change: transform;
+    overflow-x: auto;
+    padding: 8px 16px 24px 16px;
+    scrollbar-width: none; /* Firefox */
+    -webkit-overflow-scrolling: touch;
   }
 
-  /* Row 1 scrolls RIGHT */
-  .wpr-marquee-row1 {
-    animation: wpr-scroll-right 60s linear infinite;
+  .wpr-track::-webkit-scrollbar {
+    display: none; /* Chrome/Safari */
   }
 
-  /* Row 2 scrolls LEFT */
-  .wpr-marquee-row2 {
-    animation: wpr-scroll-left 65s linear infinite;
-  }
-
-  @keyframes wpr-scroll-right {
-    0% { transform: translateX(0); }
-    100% { transform: translateX(-50%); }
-  }
-
-  @keyframes wpr-scroll-left {
-    0% { transform: translateX(-50%); }
-    100% { transform: translateX(0); }
-  }
-
-  /* Pause on hover */
-  .wpr-marquee-wrap:hover .wpr-marquee {
-    animation-play-state: paused;
-  }
-
-  /* ===== Review Card ===== */
+  /* ===== Minimalistic Compact Review Card ===== */
   .wpr-card {
-    flex: 0 0 340px;
-    border-radius: 16px;
-    padding: 22px 24px 16px 24px;
+    flex: 0 0 300px;
+    background: #FFFFFF;
+    border: 1px solid #EDEDED;
+    border-radius: 14px;
+    padding: 18px 20px 16px 20px;
     display: flex;
     flex-direction: column;
     position: relative;
-    transition: transform 0.25s ease, box-shadow 0.25s ease;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
     cursor: default;
-    border: 1px solid rgba(0,0,0,0.06);
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.04);
+    margin-bottom: 12px;
+  }
+
+  /* Speech Bubble / Thinking Icon Pointer at Card Bottom */
+  .wpr-card::after {
+    content: '';
+    position: absolute;
+    bottom: -9px;
+    left: 28px;
+    width: 0;
+    height: 0;
+    border-left: 9px solid transparent;
+    border-right: 9px solid transparent;
+    border-top: 9px solid #FFFFFF;
+    z-index: 2;
+  }
+
+  .wpr-card::before {
+    content: '';
+    position: absolute;
+    bottom: -11px;
+    left: 27px;
+    width: 0;
+    height: 0;
+    border-left: 10px solid transparent;
+    border-right: 10px solid transparent;
+    border-top: 10px solid #EDEDED;
+    z-index: 1;
   }
 
   .wpr-card:hover {
     transform: translateY(-3px);
-    box-shadow: 0 8px 24px rgba(0,0,0,0.08);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+    border-color: #E0E0E0;
   }
 
-  /* Card color variants */
-  .wpr-card--green {
-    background: linear-gradient(145deg, #E8F5E9 0%, #F1F8E9 100%);
-    border-color: #C8E6C9;
-    color: #2E7D32;
-  }
-  .wpr-card--pink {
-    background: linear-gradient(145deg, #FCE4EC 0%, #F8BBD0 30%, #FCE4EC 100%);
-    border-color: #F8BBD0;
-    color: #AD1457;
-  }
-  .wpr-card--yellow {
-    background: linear-gradient(145deg, #FFF8E1 0%, #FFF3C4 100%);
-    border-color: #FFE082;
-    color: #F57F17;
-  }
-  .wpr-card--blue {
-    background: linear-gradient(145deg, #E3F2FD 0%, #BBDEFB 40%, #E3F2FD 100%);
-    border-color: #90CAF9;
-    color: #1565C0;
-  }
-  .wpr-card--peach {
-    background: linear-gradient(145deg, #FFF3E0 0%, #FFE0B2 40%, #FFF3E0 100%);
-    border-color: #FFCC80;
-    color: #E65100;
-  }
-  .wpr-card--lavender {
-    background: linear-gradient(145deg, #F3E5F5 0%, #E1BEE7 40%, #F3E5F5 100%);
-    border-color: #CE93D8;
-    color: #6A1B9A;
-  }
-
-  .wpr-card-quote {
-    position: absolute;
-    top: 16px;
-    left: 18px;
-    line-height: 1;
-  }
-
-  .wpr-card-text {
-    font-size: 14px;
-    font-style: italic;
-    line-height: 1.65;
-    color: #333;
-    margin: 8px 0 16px 0;
-    padding-top: 12px;
-    flex: 1;
-  }
-
-  /* Card Footer: Author + Stars + Time */
-  .wpr-card-footer {
+  .wpr-card-top {
     display: flex;
-    align-items: flex-end;
+    align-items: center;
     justify-content: space-between;
-    gap: 12px;
-    border-top: 1px solid rgba(0,0,0,0.06);
-    padding-top: 12px;
-    margin-top: auto;
-  }
-
-  .wpr-card-author {
-    display: flex;
-    flex-direction: column;
-    gap: 2px;
-  }
-
-  .wpr-card-name {
-    font-size: 13px;
-    font-weight: 700;
-    color: #222;
-    font-style: normal;
-  }
-
-  .wpr-card-location {
-    font-size: 11px;
-    color: #888;
-    font-style: normal;
-  }
-
-  .wpr-card-meta {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-end;
-    gap: 4px;
+    margin-bottom: 10px;
   }
 
   .wpr-card-stars {
@@ -630,25 +361,64 @@
   }
 
   .wpr-card-time {
-    font-size: 10px;
-    color: #999;
+    font-size: 11px;
+    color: #999999;
+  }
+
+  .wpr-card-text {
+    font-size: 13.5px;
+    font-style: italic;
+    line-height: 1.5;
+    color: #333333;
+    margin: 0 0 14px 0;
+    flex: 1;
+    display: -webkit-box;
+    -webkit-line-clamp: 4;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  /* Card Footer (Stacked cleanly without wrapping/splitting) */
+  .wpr-card-footer {
     display: flex;
-    align-items: center;
-    gap: 4px;
-    font-style: normal;
+    flex-direction: column;
+    gap: 2px;
+    border-top: 1px solid #F5F5F5;
+    padding-top: 12px;
+    margin-top: auto;
+  }
+
+  .wpr-card-name {
+    font-size: 13px;
+    font-weight: 600;
+    color: #111111;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: block;
+  }
+
+  .wpr-card-location {
+    font-size: 11px;
+    color: #777777;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: block;
   }
 
   /* ===== Screenshot Card ===== */
   .wpr-card--screenshot {
     padding: 0;
     overflow: hidden;
-    flex: 0 0 280px;
+    flex: 0 0 260px;
   }
 
   .wpr-screenshot-img {
     width: 100%;
     overflow: hidden;
-    border-radius: 16px 16px 0 0;
+    border-radius: 14px 14px 0 0;
   }
 
   .wpr-screenshot-img img {
@@ -664,25 +434,156 @@
     margin-top: 0;
   }
 
-  /* ===== Mobile: hide for now (desktop only) ===== */
+  /* ===== Mobile Application Guideline Sizing & Layout ===== */
   @media screen and (max-width: 768px) {
     .wpr-section {
-      display: none;
+      display: block !important;
+      padding: 36px 0 44px 0;
+    }
+
+    .wpr-header {
+      padding: 0 16px;
+      margin-bottom: 24px;
+    }
+
+    .wpr-title {
+      font-size: 2.1rem;
+      margin-bottom: 8px;
+    }
+
+    .wpr-subtitle {
+      font-size: 15px;
+      font-weight: 500;
+      color: #333333;
+      margin: 0;
+      padding: 0 6px;
+      line-height: 1.5;
+    }
+
+    .wpr-track-container {
+      padding: 0;
+    }
+
+    .wpr-track {
+      gap: 12px;
+      padding: 6px 14px 20px 14px;
+    }
+
+    /* Exactly TWO in width and COMPACT in height (not too long!) */
+    .wpr-card {
+      flex: 0 0 calc(50% - 6px);
+      width: calc(50% - 6px);
+      min-width: calc(50% - 6px);
+      max-width: calc(50% - 6px);
+      padding: 12px 12px 10px 12px;
+      border-radius: 12px;
+      margin-bottom: 10px;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+    }
+
+    .wpr-card--screenshot {
+      flex: 0 0 calc(50% - 6px);
+      width: calc(50% - 6px);
+      min-width: calc(50% - 6px);
+      max-width: calc(50% - 6px);
+    }
+
+    .wpr-screenshot-img {
+      aspect-ratio: 1 / 1;
+    }
+
+    /* Clamp text to 3 lines max so heights are never too long! */
+    .wpr-card-text {
+      font-size: 12.5px;
+      line-height: 1.4;
+      margin: 6px 0 10px 0;
+      display: -webkit-box;
+      -webkit-line-clamp: 3;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .wpr-card-name {
+      font-size: 12px;
+    }
+
+    .wpr-card-location {
+      font-size: 10px;
     }
   }
 {% endstylesheet %}
 
 {% javascript %}
-  /* Ensure marquee pauses on hover and resumes on mouse leave */
+  /* Continuous slow, readable horizontal marquee motion with touch/hover pause and drag support */
   document.addEventListener('DOMContentLoaded', function() {
-    var marquees = document.querySelectorAll('.wpr-marquee');
-    marquees.forEach(function(m) {
-      m.addEventListener('mouseenter', function() {
-        this.style.animationPlayState = 'paused';
+    var tracks = document.querySelectorAll('.wpr-track');
+    tracks.forEach(function(track) {
+      // Duplicate child cards once to create a seamless infinite loop without visual jumping
+      const children = Array.from(track.children);
+      if (children.length > 0) {
+        children.forEach(function(child) {
+          const clone = child.cloneNode(true);
+          clone.setAttribute('aria-hidden', 'true');
+          track.appendChild(clone);
+        });
+      }
+
+      let isDown = false;
+      let startX;
+      let scrollLeft;
+      let isHovered = false;
+      let isTouching = false;
+      let touchTimeout;
+
+      // Pause continuous motion when user hovers or touches so cards are 100% comfortable to read!
+      track.addEventListener('mouseenter', function() { isHovered = true; });
+      track.addEventListener('mouseleave', function() { 
+        isHovered = false; 
+        isDown = false;
+        track.style.cursor = 'default';
       });
-      m.addEventListener('mouseleave', function() {
-        this.style.animationPlayState = 'running';
+      track.addEventListener('touchstart', function() { 
+        isTouching = true; 
+        clearTimeout(touchTimeout);
+      }, { passive: true });
+      track.addEventListener('touchend', function() { 
+        clearTimeout(touchTimeout);
+        touchTimeout = setTimeout(function() { isTouching = false; }, 1200); 
+      }, { passive: true });
+
+      // Click and drag support
+      track.addEventListener('mousedown', function(e) {
+        isDown = true;
+        track.style.cursor = 'grabbing';
+        startX = e.pageX - track.offsetLeft;
+        scrollLeft = track.scrollLeft;
       });
+      track.addEventListener('mouseup', function() {
+        isDown = false;
+        track.style.cursor = 'default';
+      });
+      track.addEventListener('mousemove', function(e) {
+        if (!isDown) return;
+        e.preventDefault();
+        const x = e.pageX - track.offsetLeft;
+        const walk = (x - startX) * 1.5;
+        track.scrollLeft = scrollLeft - walk;
+      });
+
+      // Smooth, slow auto-scroll loop (~25-30px per sec, ultra readable)
+      let speed = 0.45;
+      function autoScroll() {
+        if (!isHovered && !isDown && !isTouching) {
+          track.scrollLeft += speed;
+          // When we reach halfway (the end of original cards), loop back invisibly!
+          if (track.scrollLeft >= track.scrollWidth / 2) {
+            track.scrollLeft = track.scrollLeft - (track.scrollWidth / 2);
+          }
+        }
+        requestAnimationFrame(autoScroll);
+      }
+      requestAnimationFrame(autoScroll);
     });
   });
 {% endjavascript %}

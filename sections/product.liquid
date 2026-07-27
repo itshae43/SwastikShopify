@@ -117,14 +117,9 @@
               </div>
               <div class="pp-price-box-bottom">
                 <span class="pp-price-compare" id="pp-compare-price" {% unless current_variant.compare_at_price > current_variant.price %}style="display:none;"{% endunless %}>MRP {{ current_variant.compare_at_price | money }}</span>
-                <span class="pp-price-save-text" {% unless current_variant.compare_at_price > current_variant.price %}style="display:none;"{% endunless %}>
-                  You save <span id="pp-save-amount">{% if current_variant.compare_at_price > current_variant.price %}{{ current_variant.compare_at_price | minus: current_variant.price | money }}{% endif %}</span> (<span id="pp-save-pct">{% if current_variant.compare_at_price > current_variant.price %}{{ current_variant.compare_at_price | minus: current_variant.price | times: 100.0 | divided_by: current_variant.compare_at_price | round }}{% endif %}</span>%)
-                </span>
                 {% unless current_variant.compare_at_price > current_variant.price %}
                   {% assign dummy_compare = current_variant.price | times: 1.10 | round %}
-                  {% assign dummy_save = dummy_compare | minus: current_variant.price %}
                   <span class="pp-price-compare" id="pp-compare-price">MRP {{ dummy_compare | money }}</span>
-                  <span class="pp-price-save-text">You save <span id="pp-save-amount">{{ dummy_save | money }}</span> (<span id="pp-save-pct">9</span>%)</span>
                 {% endunless %}
               </div>
             </div>
@@ -137,40 +132,67 @@
               {%- unless product.has_only_default_variant -%}
                 <div class="pp-variants">
                   {%- for option in product.options_with_values -%}
+                    {%- assign name_dc = option.name | downcase -%}
                     <div class="pp-option-group" data-option-index="{{ forloop.index0 }}">
                       <label class="pp-option-label">{{ option.name }}</label>
-                      <div class="pp-option-values">
-                        {%- assign opt_vals = option.values -%}
-                        {%- assign name_dc = option.name | downcase -%}
-                        {%- if name_dc contains 'purity' or name_dc contains 'gold' or name_dc contains 'carat' or name_dc contains 'karat' -%}
-                          {%- assign opt_vals = option.values | sort_natural -%}
-                        {%- endif -%}
-                        {%- for value in opt_vals -%}
-                          <button type="button" class="pp-opt-btn {% if option.selected_value == value %}is-active{% endif %}" data-value="{{ value | escape }}">
-                            {{ value }}
-                          </button>
-                        {%- endfor -%}
-                      </div>
+                      {%- if name_dc contains 'color' or name_dc contains 'colour' or name_dc contains 'metal' -%}
+                        <!-- Metal Color Swatches -->
+                        <div class="pp-option-values pp-swatches">
+                          {%- for value in option.values -%}
+                            {%- assign val_dc = value | downcase -%}
+                            {%- assign bg_color = '#D4AF37' -%}
+                            {%- if val_dc contains 'rose' or val_dc contains 'pink' -%}
+                              {%- assign bg_color = '#E6C2B8' -%}
+                            {%- elsif val_dc contains 'white' or val_dc contains 'silver' or val_dc contains 'platinum' -%}
+                              {%- assign bg_color = '#E5E5E5' -%}
+                            {%- endif -%}
+                            <button type="button" class="pp-opt-btn pp-swatch-btn {% if option.selected_value == value %}is-active{% endif %}" data-value="{{ value | escape }}" title="{{ value | escape }}" style="--swatch-color: {{ bg_color }};">
+                              <span class="pp-swatch-circle"></span>
+                            </button>
+                          {%- endfor -%}
+                        </div>
+                      {%- else -%}
+                        <!-- Gold Purity, Diamond Quality, or other Options (Rounded Pill Container) -->
+                        <div class="pp-option-values pp-pill-container">
+                          {%- assign opt_vals = option.values -%}
+                          {%- if name_dc contains 'purity' or name_dc contains 'gold' or name_dc contains 'carat' or name_dc contains 'karat' -%}
+                            {%- assign opt_vals = option.values | sort_natural -%}
+                          {%- endif -%}
+                          {%- for value in opt_vals -%}
+                            <button type="button" class="pp-opt-btn {% if option.selected_value == value %}is-active{% endif %}" data-value="{{ value | escape }}">
+                              {{ value }}
+                            </button>
+                          {%- endfor -%}
+                        </div>
+                      {%- endif -%}
                     </div>
                   {%- endfor -%}
                 </div>
               {%- else -%}
-                <!-- Fallback to display luxury options matching Image 1 when product options are not set -->
+                <!-- Fallback to display luxury options matching screenshot when product options are not set in local dev -->
                 <div class="pp-variants">
                   <div class="pp-option-group">
+                    <label class="pp-option-label">Metal Color</label>
+                    <div class="pp-option-values pp-swatches">
+                      <button type="button" class="pp-opt-btn pp-swatch-btn is-active" data-value="Yellow Gold" title="Yellow Gold" style="--swatch-color: #D4AF37;"><span class="pp-swatch-circle"></span></button>
+                      <button type="button" class="pp-opt-btn pp-swatch-btn" data-value="Rose Gold" title="Rose Gold" style="--swatch-color: #E6C2B8;"><span class="pp-swatch-circle"></span></button>
+                      <button type="button" class="pp-opt-btn pp-swatch-btn" data-value="White Gold" title="White Gold" style="--swatch-color: #E5E5E5;"><span class="pp-swatch-circle"></span></button>
+                    </div>
+                  </div>
+                  <div class="pp-option-group">
                     <label class="pp-option-label">Gold Purity</label>
-                    <div class="pp-option-values">
-                      <button type="button" class="pp-opt-btn">14K</button>
-                      <button type="button" class="pp-opt-btn is-active">18K</button>
-                      <button type="button" class="pp-opt-btn">22K</button>
+                    <div class="pp-option-values pp-pill-container">
+                      <button type="button" class="pp-opt-btn" data-value="14K">14K</button>
+                      <button type="button" class="pp-opt-btn is-active" data-value="18K">18K</button>
+                      <button type="button" class="pp-opt-btn" data-value="22K">22K</button>
                     </div>
                   </div>
                   <div class="pp-option-group">
                     <label class="pp-option-label">Diamond Quality</label>
-                    <div class="pp-option-values">
-                      <button type="button" class="pp-opt-btn is-active">G-VS</button>
-                      <button type="button" class="pp-opt-btn">F-VVS</button>
-                      <button type="button" class="pp-opt-btn">E-VVS</button>
+                    <div class="pp-option-values pp-pill-container">
+                      <button type="button" class="pp-opt-btn is-active" data-value="G-VS">G-VS</button>
+                      <button type="button" class="pp-opt-btn" data-value="F-VVS">F-VVS</button>
+                      <button type="button" class="pp-opt-btn" data-value="E-VVS">E-VVS</button>
                     </div>
                   </div>
                 </div>
@@ -301,11 +323,9 @@
             <span class="pp-row-label">GST (3%)</span>
             <span class="pp-row-value">₹4,500</span>
           </div>
-          <div class="pp-row-divider"></div>
-
           <div class="pp-table-row pp-total-row">
-            <span class="pp-row-label" style="font-weight: 600; color: #0E4A43;">Total Price</span>
-            <span class="pp-row-value" style="font-weight: 700; color: #0E4A43; font-size: 16px;">{{ current_variant.price | money }}</span>
+            <span class="pp-row-label">TOTAL PRICE</span>
+            <span class="pp-row-value">{{ current_variant.price | money }}</span>
           </div>
         </div>
       </div>
@@ -822,29 +842,75 @@
     padding-bottom: 32px;
     border-bottom: 1px solid var(--pp-border);
   }
-  .pp-option-group { display: flex; flex-direction: column; gap: 12px; }
-  /* Section Heading: Inter, 16px, Weight 600, Line Height 1.4 */
+  .pp-option-group { display: flex; flex-direction: column; gap: 10px; margin-bottom: 6px; }
   .pp-option-label {
     font-family: var(--pp-font-sans);
-    font-size: 16px;
-    font-weight: 600;
+    font-size: 11px;
+    font-weight: 700;
     line-height: 1.4;
-    color: #222222;
+    color: #111111;
     text-transform: uppercase;
-    letter-spacing: 0.04em;
+    letter-spacing: 0.08em;
   }
   .pp-option-values { display: flex; flex-wrap: wrap; gap: 12px; }
-  /* Product Meta (Option Buttons): Inter, 14px, Weight 500, Line Height 1.5 */
-  .pp-opt-btn {
-    background: #FFFFFF; border: 1.5px solid #DED8CE; border-radius: 10px;
-    padding: 12px 24px; font-family: var(--pp-font-sans); font-size: 14px; font-weight: 500; line-height: 1.5;
-    color: #333333; cursor: pointer; transition: all 0.25s ease; box-shadow: 0 2px 6px rgba(0, 0, 0, 0.02);
-    user-select: none; -webkit-user-select: none;
+  
+  /* Color Swatches (Round circles with double border ring when active) */
+  .pp-swatches { display: flex !important; align-items: center !important; gap: 14px !important; }
+  button.pp-opt-btn.pp-swatch-btn {
+    width: 32px !important; height: 32px !important; min-width: 32px !important; min-height: 32px !important;
+    border-radius: 50% !important; padding: 3px !important; margin: 0 !important;
+    background: transparent !important; border: 2px solid transparent !important; cursor: pointer !important;
+    display: inline-flex !important; align-items: center !important; justify-content: center !important;
+    transition: all 0.25s ease !important; box-shadow: none !important; color: transparent !important;
   }
-  .pp-opt-btn:hover { border-color: var(--pp-primary); color: var(--pp-primary); transform: translateY(-2px); }
-  .pp-opt-btn.is-active {
+  button.pp-opt-btn.pp-swatch-btn:hover { transform: scale(1.1) !important; border-color: #E0D5C1 !important; background: transparent !important; }
+  button.pp-opt-btn.pp-swatch-btn.is-active {
+    border-color: #D4AF37 !important; /* Gold ring around selected swatch */
+    background: transparent !important; box-shadow: 0 0 0 1px #D4AF37 !important; transform: none !important; color: transparent !important;
+  }
+  .pp-swatch-circle {
+    width: 100% !important; height: 100% !important; border-radius: 50% !important;
+    background: var(--swatch-color, #D4AF37) !important;
+    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.2), 0 1px 3px rgba(0, 0, 0, 0.1) !important;
+    display: block !important; flex-shrink: 0 !important; margin: 0 !important; padding: 0 !important;
+  }
+
+  /* Pill Box Container (Outer rounded border box) */
+  .pp-pill-container {
+    display: flex; flex-wrap: wrap; gap: 8px;
+    background: #FFFFFF; border: 1px solid #EAEAEA; border-radius: 12px;
+    padding: 6px; width: fit-content; max-width: 100%;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.02);
+  }
+  .pp-opt-btn:not(.pp-swatch-btn) {
+    background: transparent; border: 1px solid #EAEAEA; border-radius: 8px;
+    padding: 10px 20px; font-family: var(--pp-font-sans); font-size: 13.5px; font-weight: 600; line-height: 1.4;
+    color: #222222; cursor: pointer; transition: all 0.2s ease;
+    user-select: none; -webkit-user-select: none; text-align: center; box-shadow: none;
+  }
+  .pp-opt-btn:not(.pp-swatch-btn):hover { border-color: var(--pp-primary); color: var(--pp-primary); background: #FAFAFA; transform: translateY(-1px); }
+  .pp-opt-btn:not(.pp-swatch-btn).is-active {
     background: var(--pp-primary); border-color: var(--pp-primary); color: #FFFFFF; font-weight: 700;
-    box-shadow: 0 6px 16px rgba(1, 63, 62, 0.22); transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(1, 63, 62, 0.2); transform: translateY(-1px);
+  }
+
+  @media screen and (max-width: 767px) {
+    .pp-pill-container {
+      display: grid !important;
+      grid-template-columns: repeat(3, 1fr) !important;
+      width: 100% !important;
+      gap: 6px !important;
+      padding: 6px !important;
+      border-radius: 12px !important;
+    }
+    .pp-opt-btn:not(.pp-swatch-btn) {
+      width: 100% !important;
+      padding: 10px 4px !important;
+      font-size: 13px !important;
+      border-radius: 8px !important;
+      text-align: center !important;
+    }
+    button.pp-opt-btn.pp-swatch-btn { width: 34px !important; height: 34px !important; min-width: 34px !important; min-height: 34px !important; }
   }
 
   /* Luxury Actions & Quantity Widget: Inter, 16px, Weight 700, Architectural 10px Radius */
@@ -1086,6 +1152,28 @@
     border: none !important;
     margin: 0 !important;
   }
+  .pp-table-row.pp-total-row {
+    background-color: #EFF5F3 !important;
+    border-radius: 12px !important;
+    padding: 0 18px !important;
+    margin-top: 14px !important;
+    height: 54px !important;
+    min-height: 54px !important;
+    border: none !important;
+    box-shadow: none !important;
+  }
+  .pp-table-row.pp-total-row .pp-row-label {
+    font-weight: 700 !important;
+    color: #0E4A43 !important;
+    font-size: 13.5px !important;
+    letter-spacing: 0.04em !important;
+    text-transform: uppercase !important;
+  }
+  .pp-table-row.pp-total-row .pp-row-value {
+    font-weight: 700 !important;
+    color: #0E4A43 !important;
+    font-size: 16.5px !important;
+  }
 
   /* 3. Collapsible Accordions Group (4 Individual Compact Rounded Cards - Figma Spec 1:1) */
   .pp-accordions-group { display: flex; flex-direction: column; gap: 12px; width: 100%; }
@@ -1169,12 +1257,15 @@
     .pp-info-card { padding: 20px !important; border-radius: 16px !important; }
     .pp-table-row { height: 54px !important; min-height: 54px !important; }
     .pp-row-label, .pp-row-value { font-size: 14px !important; }
+    .pp-table-row.pp-total-row { height: 50px !important; min-height: 50px !important; padding: 0 14px !important; margin-top: 12px !important; border-radius: 10px !important; }
+    .pp-table-row.pp-total-row .pp-row-label { font-size: 13px !important; }
+    .pp-table-row.pp-total-row .pp-row-value { font-size: 15.5px !important; }
     .pp-accordions-group { gap: 10px !important; }
     .pp-acc-item { padding: 0 16px !important; border-radius: 14px !important; }
     .pp-acc-header { height: 52px !important; min-height: 52px !important; }
-    .pp-acc-title { font-size: 13.5px !important; }
+    .pp-acc-title { font-size: 15px !important; }
     .pp-acc-icon { width: 18px !important; height: 18px !important; }
-    .pp-acc-content { font-size: 13.5px !important; padding: 0 0 16px 0 !important; }
+    .pp-acc-content { font-size: 15px !important; padding: 0 0 16px 0 !important; }
   }
 
   /* Related Products & Shopify AI Recommendations (No Bounding Box, Luxury Arrows) */
@@ -1223,8 +1314,8 @@
   .pp-related-item-card {
     flex: 0 0 calc(50% - 10px) !important;
     width: calc(50% - 10px) !important;
-    min-width: 220px !important;
-    max-width: 300px !important;
+    min-width: calc(50% - 10px) !important;
+    max-width: calc(50% - 10px) !important;
     background: #FFFFFF !important;
     border: 1px solid #E8DEC9 !important;
     border-radius: 20px !important;
@@ -1534,6 +1625,7 @@
     /* Perfect Mobile Gallery Optimization */
     .pp-main-image-wrap { border-radius: 16px; box-shadow: 0 6px 20px rgba(0, 0, 0, 0.04); }
     .pp-main-img-container { padding: 0 !important; }
+    #pp-main-image { cursor: default !important; }
     .pp-nav-btn { width: 36px; height: 36px; box-shadow: 0 2px 8px rgba(0,0,0,0.12); }
     .pp-nav-prev { left: 10px; }
     .pp-nav-next { right: 10px; }
@@ -1684,9 +1776,16 @@
     }
 
     // 4. Open Zoom Modal (Clicking [+] button or Main Image)
-    if (e.target.closest('.pp-fullscreen-btn') || e.target.closest('#pp-main-image')) {
+    const isFullscreenBtn = e.target.closest('.pp-fullscreen-btn');
+    const isMainImage = e.target.closest('#pp-main-image');
+    if (isFullscreenBtn || isMainImage) {
       e.preventDefault();
       e.stopPropagation();
+      // On mobile devices (< 768px), disable general tap-to-zoom on the main image area.
+      // Only tapping the explicit Fullscreen button (.pp-fullscreen-btn) triggers zoom!
+      if (isMainImage && !isFullscreenBtn && window.innerWidth < 768) {
+        return;
+      }
       openZoomModal();
       return;
     }
@@ -1855,6 +1954,33 @@
     if (e.key === 'ArrowLeft') setMainImage(window.ppActiveIndex - 1);
     if (e.key === 'ArrowRight') setMainImage(window.ppActiveIndex + 1);
   });
+
+  // Touch swipe navigation for mobile gallery
+  const mainImageWrap = document.querySelector('.pp-main-image-wrap');
+  if (mainImageWrap) {
+    let touchStartX = 0;
+    let touchStartY = 0;
+    mainImageWrap.addEventListener('touchstart', function(e) {
+      if (e.touches && e.touches.length === 1) {
+        touchStartX = e.touches[0].clientX;
+        touchStartY = e.touches[0].clientY;
+      }
+    }, { passive: true });
+    mainImageWrap.addEventListener('touchend', function(e) {
+      if (!e.changedTouches || e.changedTouches.length === 0) return;
+      const touchEndX = e.changedTouches[0].clientX;
+      const touchEndY = e.changedTouches[0].clientY;
+      const diffX = touchEndX - touchStartX;
+      const diffY = touchEndY - touchStartY;
+      if (Math.abs(diffX) > Math.abs(diffY) && Math.abs(diffX) > 40) {
+        if (diffX < 0) {
+          setMainImage(window.ppActiveIndex + 1);
+        } else {
+          setMainImage(window.ppActiveIndex - 1);
+        }
+      }
+    }, { passive: true });
+  }
 
   // Recommendations Carousel Dots Logic
   const relGrid = document.getElementById('pp-related-grid');

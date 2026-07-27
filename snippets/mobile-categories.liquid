@@ -1,977 +1,838 @@
 {% comment %}
-  Mobile Categories Full-Screen Overlay & Bottom Sheet
+  Mobile Categories Luxury Side Drawer (Like Burger Menu)
+  - 85% width side sheet with dark backdrop overlay (no full screen mode)
+  - Fixed search input padding & icon alignment
+  - Sleek Cartier/Tiffany style luxury text capsule tabs (removed cluttered blurry photo circles)
+  - Unified luxury card subcategories with diamond craftsmanship bullets
+  - Complete image interceptor for Shopify sample images (product-1.png to product-6.png)
 {% endcomment %}
 
-<!-- Full Screen Categories Overlay -->
-<div class="mobile-categories-overlay" id="MobileCategoriesOverlay" aria-hidden="true">
-  <div class="mobile-categories-overlay__header">
-    <button type="button" class="mobile-categories-overlay__back" id="MobileCategoriesClose" aria-label="Close categories">
-      <svg viewBox="0 0 24 24" fill="none" stroke="#00352A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width: 28px; height: 28px;">
-        <line x1="19" y1="12" x2="5" y2="12"></line>
-        <polyline points="12 19 5 12 12 5"></polyline>
-      </svg>
-    </button>
-    <div class="mobile-categories-overlay__title">
-      <h2>Categories</h2>
-      <div class="ornament">
-        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <line x1="0" y1="12" x2="8" y2="12" stroke="#D4AF37" stroke-width="1"></line>
-          <path d="M12 9l1.5 2.5L16 12l-2.5 1.5L12 16l-1.5-2.5L8 12l2.5-1.5L12 9z" fill="#D4AF37"></path>
-          <line x1="16" y1="12" x2="24" y2="12" stroke="#D4AF37" stroke-width="1"></line>
+<!-- Mobile Categories Luxury Side Drawer -->
+<div class="mobile-categories-drawer" id="MobileCategoriesOverlay" aria-hidden="true">
+  <div class="mobile-categories-drawer__backdrop" id="MobileCategoriesBackdrop"></div>
+  <div class="mobile-categories-drawer__content">
+    
+    <!-- Header -->
+    <div class="mobile-categories-drawer__header">
+      <div class="mobile-categories-drawer__title-wrap">
+        <h2>Categories</h2>
+        <div class="ornament">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <line x1="0" y1="12" x2="8" y2="12" stroke="#D4AF37" stroke-width="1"></line>
+            <path d="M12 9l1.5 2.5L16 12l-2.5 1.5L12 16l-1.5-2.5L8 12l2.5-1.5L12 9z" fill="#D4AF37"></path>
+            <line x1="16" y1="12" x2="24" y2="12" stroke="#D4AF37" stroke-width="1"></line>
+          </svg>
+        </div>
+      </div>
+      <button type="button" class="mobile-categories-drawer__close" id="MobileCategoriesClose" aria-label="Close categories">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#00352A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width: 24px; height: 24px;">
+          <line x1="18" y1="6" x2="6" y2="18"></line>
+          <line x1="6" y1="6" x2="18" y2="18"></line>
         </svg>
-      </div>
+      </button>
     </div>
-  </div>
 
-  <div class="mobile-categories-overlay__search">
-    <form action="{{ routes.search_url }}" method="get" role="search" id="MobileCategorySearchForm" class="mobile-search-form">
-      <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-        <circle cx="11" cy="11" r="8"></circle>
-        <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
-      </svg>
-      <input type="search" name="q" id="MobileCategorySearchInput" placeholder="Search rings, jhumkas, diamonds..." value="{{ search.terms | escape }}" autocomplete="off" autocorrect="off">
-      <button type="button" id="MobileCategorySearchClear" class="search-clear-btn" style="display: none;" aria-label="Clear search">✕</button>
-      <input type="hidden" name="options[prefix]" value="last">
-    </form>
-
-    <!-- Trending Searches Bar -->
-    <div class="mobile-trending-bar">
-      <span class="trending-title">Trending:</span>
-      <div class="trending-pills">
-        <button type="button" class="trending-pill js-quick-search-term" data-term="Need Inspiration">✨ Need Inspiration</button>
-        <button type="button" class="trending-pill js-quick-search-term" data-term="Bridal">👑 Bridal</button>
-        <button type="button" class="trending-pill js-quick-search-term" data-term="Lab Grown">💎 Lab Grown</button>
-        <button type="button" class="trending-pill js-quick-search-term" data-term="Jhumkas">🌟 Jhumkas</button>
-        <button type="button" class="trending-pill js-quick-search-term" data-term="Daily Wear">☀️ Daily Wear</button>
-      </div>
+    <!-- Search Section (Fixed padding & alignment so icon never overlaps!) -->
+    <div class="mobile-categories-drawer__search">
+      <form action="{{ routes.search_url }}" method="get" role="search" id="MobileCategorySearchForm" class="mobile-search-form">
+        <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="11" cy="11" r="8"></circle>
+          <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+        </svg>
+        <input type="search" name="q" id="MobileCategorySearchInput" placeholder="Search rings, earrings, diamonds..." value="{{ search.terms | escape }}" autocomplete="off" autocorrect="off">
+        <button type="button" id="MobileCategorySearchClear" class="search-clear-btn" style="display: none;" aria-label="Clear search">✕</button>
+        <input type="hidden" name="options[prefix]" value="last">
+      </form>
     </div>
 
     <!-- Live Predictive Search Results Container -->
-    <div id="MobileCategorySearchResults" class="mobile-live-search-container" style="display: none;">
-      <div class="live-search-loading">Searching Swastik Jewels...</div>
+    <div id="MobileCategorySearchResults" class="mobile-live-search-container" style="display: none;"></div>
+
+    <!-- Top Category Tabs Bar (Sleek Cartier/Tiffany Style Luxury Text Capsules) -->
+    <div class="mobile-categories-drawer__tabs-bar" id="MobileCategoriesTabsBar">
+      <button type="button" class="category-tab-pill active" data-category="rings">Rings</button>
+      <button type="button" class="category-tab-pill" data-category="earrings">Earrings</button>
+      <button type="button" class="category-tab-pill" data-category="bracelets">Bracelets & Bangles</button>
+      <button type="button" class="category-tab-pill" data-category="necklaces">Necklaces</button>
+      <button type="button" class="category-tab-pill" data-category="pendants">Pendants</button>
+      <button type="button" class="category-tab-pill" data-category="solitaires">Solitaires</button>
+      <button type="button" class="category-tab-pill" data-category="diamonds">Diamonds</button>
     </div>
-  </div>
 
-  <div class="mobile-categories-overlay__grid" id="MobileCategoriesGrid">
-    <!-- Category: Rings -->
-    <button class="mobile-category-card js-open-category-sheet" data-category="rings" style="background-color: #E8F0E9;">
-      <div class="mobile-category-card__image">
-        <img src="{{ 'rings_category.png' | asset_url }}" alt="Rings" loading="lazy" width="100" height="100" onerror="this.src='{{ 'ring_placeholder.png' | asset_url }}'">
-      </div>
-      <div class="mobile-category-card__footer">
-        <span class="mobile-category-card__title">Rings</span>
-        <div class="mobile-category-card__arrow">
-          <svg viewBox="0 0 24 24" fill="none" stroke="#D4AF37" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <polyline points="9 18 15 12 9 6"></polyline>
-          </svg>
-        </div>
-      </div>
-    </button>
-
-    <!-- Category: Earrings -->
-    <button class="mobile-category-card js-open-category-sheet" data-category="earrings" style="background-color: #F8EFE6;">
-      <div class="mobile-category-card__image">
-        <img src="{{ 'earrings_category.png' | asset_url }}" alt="Earrings" loading="lazy" width="100" height="100" onerror="this.src='{{ 'earring_placeholder.png' | asset_url }}'">
-      </div>
-      <div class="mobile-category-card__footer">
-        <span class="mobile-category-card__title">Earrings</span>
-        <div class="mobile-category-card__arrow">
-          <svg viewBox="0 0 24 24" fill="none" stroke="#D4AF37" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <polyline points="9 18 15 12 9 6"></polyline>
-          </svg>
-        </div>
-      </div>
-    </button>
-
-    <!-- Category: Bracelets & Bangles -->
-    <button class="mobile-category-card js-open-category-sheet" data-category="bracelets" style="background-color: #FCE8E9;">
-      <div class="mobile-category-card__image">
-        <img src="{{ 'bangle_placeholder.png' | asset_url }}" alt="Bracelets & Bangles" loading="lazy" width="100" height="100" onerror="this.src='{{ 'best_seller_bracelet.png' | asset_url }}'">
-      </div>
-      <div class="mobile-category-card__footer">
-        <span class="mobile-category-card__title">Bracelets & Bangles</span>
-        <div class="mobile-category-card__arrow">
-          <svg viewBox="0 0 24 24" fill="none" stroke="#D4AF37" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <polyline points="9 18 15 12 9 6"></polyline>
-          </svg>
-        </div>
-      </div>
-    </button>
-
-    <!-- Category: Necklaces -->
-    <button class="mobile-category-card js-open-category-sheet" data-category="necklaces" style="background-color: #EEF3ED;">
-      <div class="mobile-category-card__image">
-        <img src="{{ 'necklace_placeholder.png' | asset_url }}" alt="Necklaces" loading="lazy" width="100" height="100" onerror="this.src='{{ 'tennis_category.png' | asset_url }}'">
-      </div>
-      <div class="mobile-category-card__footer">
-        <span class="mobile-category-card__title">Necklaces</span>
-        <div class="mobile-category-card__arrow">
-          <svg viewBox="0 0 24 24" fill="none" stroke="#D4AF37" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <polyline points="9 18 15 12 9 6"></polyline>
-          </svg>
-        </div>
-      </div>
-    </button>
-
-    <!-- Category: Pendants -->
-    <button class="mobile-category-card js-open-category-sheet" data-category="pendants" style="background-color: #FAF4F0;">
-      <div class="mobile-category-card__image">
-        <img src="{{ 'pendants_category.png' | asset_url }}" alt="Pendants" loading="lazy" width="100" height="100" onerror="this.src='{{ 'pendant_placeholder.png' | asset_url }}'">
-      </div>
-      <div class="mobile-category-card__footer">
-        <span class="mobile-category-card__title">Pendants</span>
-        <div class="mobile-category-card__arrow">
-          <svg viewBox="0 0 24 24" fill="none" stroke="#D4AF37" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <polyline points="9 18 15 12 9 6"></polyline>
-          </svg>
-        </div>
-      </div>
-    </button>
-
-    <!-- Category: Solitaires -->
-    <button class="mobile-category-card js-open-category-sheet" data-category="solitaires" style="background-color: #F8ECE0;">
-      <div class="mobile-category-card__image">
-        <img src="{{ 'best_seller_ring.png' | asset_url }}" alt="Solitaires" loading="lazy" width="100" height="100" onerror="this.src='{{ 'ring_placeholder.png' | asset_url }}'">
-      </div>
-      <div class="mobile-category-card__footer">
-        <span class="mobile-category-card__title">Solitaires</span>
-        <div class="mobile-category-card__arrow">
-          <svg viewBox="0 0 24 24" fill="none" stroke="#D4AF37" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <polyline points="9 18 15 12 9 6"></polyline>
-          </svg>
-        </div>
-      </div>
-    </button>
-
-    <!-- Category: Diamonds -->
-    <button class="mobile-category-card js-open-category-sheet" data-category="diamonds" style="background-color: #E2EFE7;">
-      <div class="mobile-category-card__image">
-        <img src="{{ 'tennis_category.png' | asset_url }}" alt="Diamonds" loading="lazy" width="100" height="100" onerror="this.src='{{ 'necklace_placeholder.png' | asset_url }}'">
-      </div>
-      <div class="mobile-category-card__footer">
-        <span class="mobile-category-card__title">Diamonds</span>
-        <div class="mobile-category-card__arrow">
-          <svg viewBox="0 0 24 24" fill="none" stroke="#D4AF37" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <polyline points="9 18 15 12 9 6"></polyline>
-          </svg>
-        </div>
-      </div>
-    </button>
-
-    <!-- Category: More Jewellery -->
-    <a href="{{ routes.collections_url }}" class="mobile-category-card" style="background-color: #F9F5F1;">
-      <div class="mobile-category-card__image mobile-category-card__image--more">
-        <div class="more-dots">
-          <span></span><span></span><span></span>
-        </div>
-      </div>
-      <div class="mobile-category-card__footer">
-        <span class="mobile-category-card__title">More Jewellery</span>
-      </div>
-    </a>
-  </div>
-</div>
-
-<!-- Category Bottom Sheet -->
-<div class="category-bottom-sheet-overlay" id="CategoryBottomSheetOverlay" aria-hidden="true"></div>
-<div class="category-bottom-sheet" id="CategoryBottomSheet" aria-hidden="true">
-  <div class="category-bottom-sheet__drag-handle"></div>
-  
-  <div class="category-bottom-sheet__header">
-    <div class="category-bottom-sheet__title-wrap">
-      <h3 id="CategorySheetTitle">Shop Rings By</h3>
-      <div class="ornament">
-        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <line x1="0" y1="12" x2="8" y2="12" stroke="#D4AF37" stroke-width="1"></line>
-          <circle cx="12" cy="12" r="3" stroke="#D4AF37" stroke-width="1.5"></circle>
-          <line x1="16" y1="12" x2="24" y2="12" stroke="#D4AF37" stroke-width="1"></line>
-        </svg>
-      </div>
+    <!-- Dynamic Category Content Area (Subcategories + Real Products Grid!) -->
+    <div class="mobile-categories-drawer__body" id="MobileCategoriesBody">
+      <!-- Populated by JS when tab is clicked -->
     </div>
-    <button type="button" class="category-bottom-sheet__close" id="CategorySheetClose" aria-label="Close sheet">
-      <svg viewBox="0 0 24 24" fill="none" stroke="#00352A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width: 24px; height: 24px;">
-        <line x1="18" y1="6" x2="6" y2="18"></line>
-        <line x1="6" y1="6" x2="18" y2="18"></line>
-      </svg>
-    </button>
-  </div>
 
-  <div class="category-bottom-sheet__filters">
-    <div class="gender-toggle">
-      <button class="gender-tab active" data-gender="all">All</button>
-      <button class="gender-tab" data-gender="women">Women's</button>
-      <button class="gender-tab" data-gender="men">Men's</button>
-    </div>
-  </div>
-
-  <div class="category-bottom-sheet__tabs">
-    <button class="sheet-tab active" data-tab="style">STYLE</button>
-    <button class="sheet-tab" data-tab="price">PRICE</button>
-    <button class="sheet-tab" data-tab="metal">METAL</button>
-  </div>
-
-  <!-- Dynamic Content Container -->
-  <div class="category-bottom-sheet__content" id="CategorySheetContent">
-    <!-- Populated by JS -->
   </div>
 </div>
 
 <style>
-/* Full Screen Overlay */
-.mobile-categories-overlay {
+/* Luxury Side Drawer Styling - 85% Width (Like Burger Menu) */
+.mobile-categories-drawer {
   position: fixed;
   top: 0;
   left: 0;
-  width: 100vw;
-  height: 100vh;
-  background-color: #FAFAFA;
-  z-index: 105;
-  transform: translateX(-100%);
-  transition: transform 0.3s ease-in-out;
-  display: flex;
-  flex-direction: column;
-  overflow-y: auto;
-  padding-bottom: 80px; /* Space for bottom nav */
+  width: 100%;
+  height: 100%;
+  z-index: 1000000 !important;
+  visibility: hidden;
+  transition: visibility 0.35s ease;
 }
 
-.mobile-categories-overlay.open {
+.mobile-categories-drawer.open {
+  visibility: visible;
+}
+
+.mobile-categories-drawer__backdrop {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(1, 39, 38, 0.45);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  opacity: 0;
+  transition: opacity 0.35s ease;
+}
+
+.mobile-categories-drawer.open .mobile-categories-drawer__backdrop {
+  opacity: 1;
+}
+
+.mobile-categories-drawer__content {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 85%;
+  max-width: 380px;
+  height: 100%;
+  background-color: #FFFFFF;
+  color: #111111;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 4px 0 30px rgba(0, 0, 0, 0.15);
+  transform: translateX(-100%);
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  box-sizing: border-box;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  padding-bottom: env(safe-area-inset-bottom, 20px);
+}
+
+.mobile-categories-drawer.open .mobile-categories-drawer__content {
   transform: translateX(0);
 }
 
-.mobile-categories-overlay__header {
+/* Header */
+.mobile-categories-drawer__header {
   display: flex;
   align-items: center;
-  padding: 1rem 1.5rem;
-  position: relative;
-  background-color: #FAFAFA;
-  border-bottom: 1px solid #f0f0f0;
-}
-
-.mobile-categories-overlay__back {
-  background: none;
-  border: none;
-  padding: 0;
-  cursor: pointer;
-  position: absolute;
-  left: 1.5rem;
-}
-
-.mobile-categories-overlay__title {
-  flex: 1;
-  text-align: center;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-.mobile-categories-overlay__title h2 {
-  font-family: var(--font-heading-family), serif;
-  font-size: 1.8rem;
-  color: #00352A;
-  margin: 0 0 0.2rem 0;
-  font-weight: 500;
-}
-
-.mobile-categories-overlay__title .ornament {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 60px;
-}
-
-.mobile-categories-overlay__search {
-  padding: 1.2rem 1.5rem 0.5rem 1.5rem;
-  position: sticky;
-  top: 50px;
-  background: #FFF;
-  z-index: 10;
+  justify-content: space-between;
+  padding: 1rem 1.2rem;
+  background-color: #FFFFFF;
   border-bottom: 1px solid #F0F0F0;
 }
 
-.mobile-categories-overlay__search form {
-  position: relative;
-  width: 100%;
+.mobile-categories-drawer__title-wrap {
+  display: flex;
+  flex-direction: column;
 }
 
-.mobile-categories-overlay__search input {
-  width: 100%;
-  padding: 0.85rem 2.5rem 0.85rem 2.8rem;
-  border: 1.5px solid #E0E0E0;
-  border-radius: 50px;
-  background-color: #F9F9F9;
-  font-size: 0.95rem;
-  color: #222;
-  transition: all 0.2s ease;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.03);
+.mobile-categories-drawer__title-wrap h2 {
+  font-family: var(--font-heading-family), serif;
+  font-size: 1.4rem;
+  color: #00352A;
+  margin: 0;
+  font-weight: 600;
+  line-height: 1.1;
 }
 
-.mobile-categories-overlay__search input:focus {
-  outline: none;
-  border-color: #D4AF37;
-  background-color: #FFF;
-  box-shadow: 0 4px 12px rgba(212, 175, 55, 0.15);
+.mobile-categories-drawer__title-wrap .ornament {
+  margin-top: 4px;
 }
 
-.search-clear-btn {
-  position: absolute;
-  right: 0.8rem;
-  top: 50%;
-  transform: translateY(-50%);
-  background: #EEE;
+.mobile-categories-drawer__close {
+  background: none;
   border: none;
-  width: 24px;
-  height: 24px;
-  border-radius: 50%;
-  font-size: 12px;
-  color: #666;
+  padding: 6px;
+  cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
-  cursor: pointer;
 }
 
-/* Trending Bar */
-.mobile-trending-bar {
+/* Search Box - 100% Guaranteed No Overlap */
+.mobile-categories-drawer__search {
+  padding: 1rem 1.2rem 0.8rem 1.2rem;
+  background: #FFFFFF;
+  border-bottom: 1px solid #F5F5F5;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+.mobile-search-form {
+  position: relative !important;
+  width: 100% !important;
+  display: block !important;
+}
+
+.mobile-search-form input[type="search"] {
+  width: 100% !important;
+  height: 44px !important;
+  padding: 10px 36px 10px 42px !important;
+  border: 1.5px solid #E0E0E0 !important;
+  border-radius: 50px !important;
+  background-color: #F9F9F9 !important;
+  font-size: 14px !important;
+  color: #222 !important;
+  transition: all 0.2s ease !important;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.02) !important;
+  box-sizing: border-box !important;
+}
+
+.mobile-search-form input[type="search"]:focus {
+  outline: none !important;
+  border-color: #D4AF37 !important;
+  background-color: #FFF !important;
+  box-shadow: 0 4px 12px rgba(212, 175, 55, 0.15) !important;
+}
+
+.mobile-search-form .search-icon {
+  position: absolute !important;
+  left: 14px !important;
+  top: 50% !important;
+  transform: translateY(-50%) !important;
+  width: 18px !important;
+  height: 18px !important;
+  color: #888 !important;
+  pointer-events: none !important;
+  z-index: 2 !important;
+}
+
+.search-clear-btn {
+  position: absolute !important;
+  right: 12px !important;
+  top: 50% !important;
+  transform: translateY(-50%) !important;
+  background: #EEE !important;
+  border: none !important;
+  width: 22px !important;
+  height: 22px !important;
+  border-radius: 50% !important;
+  font-size: 11px !important;
+  color: #666 !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  cursor: pointer !important;
+  z-index: 2 !important;
+}
+
+/* Horizontal Category Tabs Bar (Sleek Cartier/Tiffany Style Luxury Text Capsules) */
+.mobile-categories-drawer__tabs-bar {
   display: flex;
   align-items: center;
-  gap: 8px;
-  margin-top: 0.8rem;
-  padding-bottom: 0.8rem;
+  gap: 10px;
+  padding: 14px 1.2rem;
   overflow-x: auto;
   white-space: nowrap;
   scrollbar-width: none;
+  background-color: #FAFAF8;
+  border-bottom: 1px solid #EBE7E0;
 }
-.mobile-trending-bar::-webkit-scrollbar {
+
+.mobile-categories-drawer__tabs-bar::-webkit-scrollbar {
   display: none;
 }
-.trending-title {
-  font-size: 0.8rem;
+
+.category-tab-pill {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8px 22px;
+  background-color: #FFFFFF;
+  border: 1.5px solid #E0D8CE;
+  border-radius: 50px;
+  font-size: 14px;
   font-weight: 600;
-  color: #777;
-}
-.trending-pill {
-  background: #FAF4F0;
-  border: 1px solid #EBDAD0;
-  border-radius: 20px;
-  padding: 4px 12px;
-  font-size: 0.8rem;
-  color: #4A3B32;
+  color: #2C221E;
   cursor: pointer;
-  transition: all 0.2s ease;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  flex-shrink: 0;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.02);
+  letter-spacing: 0.2px;
 }
-.trending-pill:active, .trending-pill:hover {
-  background: #D4AF37;
-  color: #FFF;
+
+.category-tab-pill:hover {
+  background-color: #F4EFEA;
   border-color: #D4AF37;
+  color: #00352A;
+  transform: translateY(-1px);
+}
+
+.category-tab-pill.active {
+  background-color: #00352A;
+  color: #FFFFFF;
+  border-color: #00352A;
+  box-shadow: 0 4px 14px rgba(0, 53, 42, 0.28);
+  transform: translateY(-1px);
+}
+
+/* Dynamic Body Area */
+.mobile-categories-drawer__body {
+  flex: 1;
+  padding: 1.4rem 1.2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+/* Section Headers */
+.category-section-title {
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: #7A6F66;
+  text-transform: uppercase;
+  letter-spacing: 1.2px;
+  margin-bottom: 0.9rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.category-section-title a {
+  font-size: 0.8rem;
+  color: #00352A;
+  text-decoration: none;
+  text-transform: none;
+  font-weight: 600;
+  letter-spacing: 0;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  transition: opacity 0.2s ease;
+}
+
+.category-section-title a:hover {
+  opacity: 0.8;
+}
+
+/* Subcategories Luxury Card Container */
+.subcategories-list {
+  display: flex;
+  flex-direction: column;
+  background-color: #FCFBF9;
+  border: 1px solid #EBE6DF;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.02);
+}
+
+.subcategory-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 16px;
+  text-decoration: none;
+  color: #2C221E;
+  font-weight: 500;
+  font-size: 0.94rem;
+  border-bottom: 1px solid #EBE6DF;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  background: transparent;
+}
+
+.subcategory-item:last-child {
+  border-bottom: none;
+}
+
+.subcategory-item:hover, .subcategory-item:active {
+  background-color: #F5EFE6;
+  padding-left: 20px;
+  color: #00352A;
+}
+
+.subcategory-item__label {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.subcategory-item__diamond {
+  color: #D4AF37;
+  font-size: 0.8rem;
+  transition: transform 0.2s ease;
+}
+
+.subcategory-item:hover .subcategory-item__diamond {
+  transform: scale(1.25);
+}
+
+.subcategory-item__arrow {
+  color: #D4AF37;
+  display: flex;
+  align-items: center;
+  transition: transform 0.2s ease;
+}
+
+.subcategory-item:hover .subcategory-item__arrow {
+  transform: translateX(3px);
+}
+
+/* Featured Products Grid inside Category Menu */
+.category-products-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+}
+
+.category-product-card {
+  display: flex;
+  flex-direction: column;
+  text-decoration: none;
+  color: inherit;
+  background: #FFFFFF;
+  border: 1px solid #EBE6DF;
+  border-radius: 14px;
+  overflow: hidden;
+  transition: all 0.25s ease;
+  box-shadow: 0 3px 12px rgba(0,0,0,0.03);
+}
+
+.category-product-card:active {
+  transform: scale(0.98);
+  box-shadow: 0 2px 6px rgba(0,0,0,0.06);
+  border-color: #D4AF37;
+}
+
+.category-product-card__img-wrap {
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  background: #FAFAF8;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  position: relative;
+}
+
+.category-product-card__img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.4s ease;
+}
+
+.category-product-card:hover .category-product-card__img {
+  transform: scale(1.04);
+}
+
+.category-product-card__info {
+  padding: 12px 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  flex: 1;
+}
+
+.category-product-card__title {
+  font-size: 0.84rem;
+  font-weight: 500;
+  color: #1C2B26;
+  line-height: 1.35;
+  margin-bottom: 6px;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.category-product-card__price-wrap {
+  display: flex;
+  align-items: baseline;
+  gap: 6px;
+}
+
+.category-product-card__price {
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: #00352A;
+}
+
+.category-product-card__compare {
+  font-size: 0.74rem;
+  color: #999;
+  text-decoration: line-through;
 }
 
 /* Live Search Container */
 .mobile-live-search-container {
-  padding: 1rem 0 2rem 0;
-  max-height: calc(100vh - 180px);
+  padding: 1rem 1.2rem 2rem 1.2rem;
+  max-height: calc(100vh - 140px);
   overflow-y: auto;
-  -webkit-overflow-scrolling: touch;
 }
+
 .live-search-loading {
   text-align: center;
-  padding: 2rem;
-  color: #888;
-  font-size: 0.9rem;
+  padding: 2.5rem 1rem;
+  color: #7A6F66;
+  font-size: 0.92rem;
+  font-weight: 500;
 }
+
 .live-search-item {
   display: flex;
   align-items: center;
-  gap: 12px;
-  padding: 10px 0;
+  gap: 14px;
+  padding: 12px 0;
   border-bottom: 1px solid #F5F5F5;
   text-decoration: none;
   color: inherit;
+  transition: padding-left 0.2s ease;
 }
+
+.live-search-item:hover, .live-search-item:active {
+  padding-left: 6px;
+}
+
 .live-search-item__img {
-  width: 50px;
-  height: 50px;
-  border-radius: 8px;
+  width: 52px;
+  height: 52px;
+  border-radius: 10px;
   object-fit: cover;
   background: #F9F9F9;
+  border: 1px solid #EBE6DF;
 }
+
 .live-search-item__info {
   flex: 1;
 }
+
 .live-search-item__title {
-  font-size: 0.9rem;
+  font-size: 0.92rem;
   font-weight: 500;
   color: #222;
-  margin-bottom: 3px;
+  margin-bottom: 4px;
   line-height: 1.3;
 }
+
 .live-search-item__price {
-  font-size: 0.85rem;
-  font-weight: 600;
-  color: #D4AF37;
+  font-size: 0.88rem;
+  font-weight: 700;
+  color: #00352A;
 }
+
 .live-search-item__compare-price {
   font-size: 0.75rem;
   color: #999;
   text-decoration: line-through;
   margin-left: 6px;
 }
+
 mark.search-highlight {
-  background: rgba(255, 223, 0, 0.4);
+  background: rgba(255, 223, 0, 0.5);
   color: inherit;
   padding: 0 2px;
   border-radius: 2px;
 }
+
 .live-search-view-all {
   display: block;
   text-align: center;
-  padding: 12px;
-  margin-top: 15px;
-  background: #222;
+  padding: 14px;
+  margin-top: 18px;
+  background: #00352A;
   color: #FFF;
-  border-radius: 25px;
+  border-radius: 50px;
   text-decoration: none;
   font-weight: 600;
-  font-size: 0.9rem;
-}
-
-.mobile-categories-overlay__search .search-icon {
-  position: absolute;
-  left: 1rem;
-  top: 50%;
-  transform: translateY(-50%);
-  width: 20px;
-  height: 20px;
-  color: #888;
-}
-
-.mobile-categories-overlay__grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 1rem;
-  padding: 0 1.5rem 2rem 1.5rem;
-}
-
-.mobile-category-card {
-  background: none;
-  border: none;
-  border-radius: 12px;
-  padding: 1rem;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: space-between;
-  cursor: pointer;
-  text-decoration: none;
-  min-height: 140px;
-  transition: transform 0.2s ease;
-}
-
-.mobile-category-card:active {
-  transform: scale(0.97);
-}
-
-.mobile-category-card__image {
-  flex: 1;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 100%;
-  padding: 1rem 0;
-}
-
-.mobile-category-card__image img {
-  max-width: 70px;
-  max-height: 70px;
-  object-fit: contain;
-}
-
-.mobile-category-card__image--more {
-  flex-direction: row;
-  gap: 6px;
-}
-
-.more-dots {
-  display: flex;
-  gap: 6px;
-}
-
-.more-dots span {
-  width: 8px;
-  height: 8px;
-  background-color: #D4AF37;
-  border-radius: 50%;
-}
-
-.mobile-category-card__footer {
-  width: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-top: 0.5rem;
-}
-
-.mobile-category-card__title {
-  font-size: 0.95rem;
-  color: #00352A;
-  font-weight: 500;
-  text-align: left;
-  line-height: 1.2;
-}
-
-.mobile-category-card__arrow {
-  background-color: #FFFFFF;
-  border-radius: 50%;
-  width: 24px;
-  height: 24px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.05);
-}
-
-.mobile-category-card__arrow svg {
-  width: 14px;
-  height: 14px;
-}
-
-/* Bottom Sheet */
-.category-bottom-sheet-overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  background-color: rgba(0, 0, 0, 0.4);
-  z-index: 106;
-  opacity: 0;
-  visibility: hidden;
-  transition: opacity 0.3s ease;
-}
-
-.category-bottom-sheet-overlay.open {
-  opacity: 1;
-  visibility: visible;
-}
-
-.category-bottom-sheet {
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  width: 100vw;
-  max-height: 90vh;
-  background-color: #FFFFFF;
-  border-radius: 20px 20px 0 0;
-  z-index: 107;
-  transform: translateY(100%);
-  transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1);
-  display: flex;
-  flex-direction: column;
-}
-
-.category-bottom-sheet.open {
-  transform: translateY(0);
-}
-
-.category-bottom-sheet__drag-handle {
-  width: 40px;
-  height: 4px;
-  background-color: #E0E0E0;
-  border-radius: 2px;
-  margin: 12px auto;
-}
-
-.category-bottom-sheet__header {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-  padding: 0 1.5rem 1rem 1.5rem;
-  position: relative;
-}
-
-.category-bottom-sheet__title-wrap {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  margin-top: -10px;
-}
-
-.category-bottom-sheet__title-wrap h3 {
-  font-family: var(--font-heading-family), serif;
-  font-size: 1.6rem;
-  color: #00352A;
-  margin: 0 0 0.3rem 0;
-  font-weight: 500;
-}
-
-.category-bottom-sheet__title-wrap .ornament {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 50px;
-}
-
-.category-bottom-sheet__close {
-  background: none;
-  border: none;
-  padding: 0;
-  cursor: pointer;
-  position: absolute;
-  right: 1.5rem;
-  top: 0;
-}
-
-.category-bottom-sheet__filters {
-  padding: 0 1.5rem 1rem 1.5rem;
-  display: flex;
-  justify-content: center;
-}
-
-.gender-toggle {
-  display: flex;
-  background-color: #F5F5F5;
-  border-radius: 30px;
-  padding: 4px;
-}
-
-.gender-tab {
-  background: none;
-  border: none;
-  padding: 8px 16px;
-  border-radius: 20px;
-  font-size: 0.85rem;
-  color: #666;
-  font-weight: 500;
-  cursor: pointer;
-  transition: all 0.2s ease;
-}
-
-.gender-tab.active {
-  background-color: #FFFFFF;
-  color: #00352A;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.05);
-}
-
-.category-bottom-sheet__tabs {
-  display: flex;
-  background-color: #FAF4F0; /* Soft beige from design */
-  margin: 0 1.5rem;
-  border-radius: 30px;
-  overflow: hidden;
-  position: relative;
-}
-
-.sheet-tab {
-  flex: 1;
-  background: none;
-  border: none;
-  padding: 12px 0;
-  font-size: 0.8rem;
-  letter-spacing: 0.1em;
-  color: #888;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  z-index: 1;
-}
-
-.sheet-tab.active {
-  background-color: #00352A; /* Dark green */
-  color: #FFFFFF;
-  border-radius: 30px;
-}
-
-.category-bottom-sheet__content {
-  padding: 1rem 1.5rem 2rem 1.5rem;
-  overflow-y: auto;
-  max-height: 50vh;
-}
-
-/* List Items in Sheet */
-.sheet-list-item {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 1rem;
-  background-color: #FFFFFF;
-  border: 1px solid #F0F0F0;
-  border-radius: 12px;
-  margin-bottom: 0.8rem;
-  text-decoration: none;
-  color: #00352A;
-  transition: background-color 0.2s ease;
-}
-
-.sheet-list-item:active {
-  background-color: #F9F9F9;
-}
-
-.sheet-list-item__left {
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-}
-
-.sheet-list-item__icon {
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  background-color: #FAF4F0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.sheet-list-item__icon svg {
-  width: 20px;
-  height: 20px;
-  color: #D4AF37;
-}
-
-.sheet-list-item__icon img {
-  width: 24px;
-  height: 24px;
-  object-fit: contain;
-}
-
-.sheet-list-item__title {
-  font-weight: 500;
-  font-size: 0.95rem;
-}
-
-.sheet-list-item__arrow {
-  color: #999;
+  font-size: 0.92rem;
+  box-shadow: 0 4px 14px rgba(0, 53, 42, 0.25);
 }
 </style>
 
 <script>
 document.addEventListener('DOMContentLoaded', () => {
-  // 1. Full Screen Overlay Toggle
-  const categoriesToggles = document.querySelectorAll('.js-mobile-categories-toggle, .js-mobile-search-toggle');
-  const categoriesOverlay = document.getElementById('MobileCategoriesOverlay');
-  const categoriesClose = document.getElementById('MobileCategoriesClose');
+  const drawer = document.getElementById('MobileCategoriesOverlay');
+  const backdrop = document.getElementById('MobileCategoriesBackdrop');
+  const closeBtn = document.getElementById('MobileCategoriesClose');
+  const toggles = document.querySelectorAll('.js-mobile-categories-toggle, .js-mobile-search-toggle, [href="#MobileCategoriesOverlay"]');
+  const tabsBar = document.getElementById('MobileCategoriesTabsBar');
+  const bodyArea = document.getElementById('MobileCategoriesBody');
+  const tabPills = document.querySelectorAll('.category-tab-pill');
 
-  if (categoriesToggles.length > 0 && categoriesOverlay) {
-    categoriesToggles.forEach(toggle => {
-      toggle.addEventListener('click', (e) => {
-        e.preventDefault();
-        categoriesOverlay.classList.add('open');
-        categoriesOverlay.setAttribute('aria-hidden', 'false');
-        document.body.style.overflow = 'hidden'; // Prevent background scrolling
-        const searchInput = categoriesOverlay.querySelector('input[type="search"]');
-        if (searchInput) {
-          setTimeout(() => searchInput.focus(), 150);
-        }
-      });
-    });
-  }
-
-  if (categoriesClose && categoriesOverlay) {
-    categoriesClose.addEventListener('click', () => {
-      categoriesOverlay.classList.remove('open');
-      categoriesOverlay.setAttribute('aria-hidden', 'true');
-      document.body.style.overflow = '';
-    });
-  }
-
-  // 2. Bottom Sheet Logic
-  const openSheetBtns = document.querySelectorAll('.js-open-category-sheet');
-  const sheet = document.getElementById('CategoryBottomSheet');
-  const sheetOverlay = document.getElementById('CategoryBottomSheetOverlay');
-  const sheetClose = document.getElementById('CategorySheetClose');
-  const sheetTitle = document.getElementById('CategorySheetTitle');
-  const sheetContent = document.getElementById('CategorySheetContent');
-  
-  const sheetTabs = document.querySelectorAll('.sheet-tab');
-  const genderTabs = document.querySelectorAll('.gender-tab');
-
-  let currentCategory = 'rings';
-  let currentTab = 'style';
-  let currentGender = 'all';
-
-  // Dummy data representing the categories
-  // In a real scenario, this could be generated from Liquid or fetched via API
-  const categoryData = {
-    rings: {
-      title: "Shop Rings By",
-      style: [
-        { name: "Engagement Rings", iconUrl: "{{ 'rings_category.png' | asset_url }}" },
-        { name: "Couple Bands", iconUrl: "{{ 'ring_placeholder.png' | asset_url }}" },
-        { name: "Casual Rings", iconUrl: "{{ 'best_seller_ring.png' | asset_url }}" },
-        { name: "Eternity Rings", iconUrl: "{{ 'rings_category.png' | asset_url }}" }
-      ],
-      price: [
-        { name: "Under ₹10,000" },
-        { name: "₹10,000 - ₹20,000" },
-        { name: "₹20,000 - ₹30,000" },
-        { name: "₹30,000 - ₹50,000" },
-        { name: "Above ₹50,000" }
-      ],
-      metal: [
-        { name: "Yellow Gold", color: "#F3E5AB" },
-        { name: "White Gold", color: "#E5E4E2" },
-        { name: "Rose Gold", color: "#B76E79" },
-        { name: "Platinum", color: "#E5E4E2" }
-      ]
-    },
-    earrings: {
-      title: "Shop Earrings By",
-      style: [
-        { name: "Studs", iconUrl: "{{ 'earrings_category.png' | asset_url }}" },
-        { name: "Drops", iconUrl: "{{ 'earring_placeholder.png' | asset_url }}" },
-        { name: "Hoops", iconUrl: "{{ 'best_seller_earrings.png' | asset_url }}" },
-        { name: "Jhumkas", iconUrl: "{{ 'earrings_category.png' | asset_url }}" }
-      ],
-      price: [
-        { name: "Under ₹10,000" },
-        { name: "₹10,000 - ₹20,000" },
-        { name: "Above ₹20,000" }
-      ],
-      metal: [
-        { name: "Yellow Gold", color: "#F3E5AB" },
-        { name: "White Gold", color: "#E5E4E2" }
-      ]
-    }
-  };
-
-  // Default fallback for other categories
-  const defaultCategoryData = {
-    title: "Shop Category By",
-    style: [
-      { name: "Trending", iconUrl: "{{ 'ring_placeholder.png' | asset_url }}" },
-      { name: "New Arrivals", iconUrl: "{{ 'best_seller_ring.png' | asset_url }}" }
-    ],
-    price: [ { name: "Under ₹20,000" }, { name: "Above ₹20,000" } ],
-    metal: [ { name: "Gold", color: "#F3E5AB" } ]
-  };
-
-  function renderSheetContent() {
-    const data = categoryData[currentCategory] || defaultCategoryData;
-    const items = data[currentTab] || [];
-    
-    let html = '';
-    items.forEach(item => {
-      // Create appropriate icon based on tab type
-      let iconHtml = '';
-      if (currentTab === 'style') {
-        iconHtml = `<div class="sheet-list-item__icon"><img src="${item.iconUrl}" alt="${item.name}" onerror="this.style.display='none'"></div>`;
-      } else if (currentTab === 'metal') {
-        iconHtml = `<div class="sheet-list-item__icon" style="background-color: ${item.color || '#F3E5AB'}; border: 2px solid #FFF; box-shadow: 0 0 0 1px #E0E0E0;"></div>`;
-      } else if (currentTab === 'price') {
-         // No icon for price
-         iconHtml = '';
-      }
-
-      html += `
-        <a href="{{ routes.collections_url }}/${currentCategory}" class="sheet-list-item">
-          <div class="sheet-list-item__left">
-            ${iconHtml}
-            <span class="sheet-list-item__title">${item.name}</span>
-          </div>
-          <div class="sheet-list-item__arrow">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width: 16px; height: 16px;">
-              <polyline points="9 18 15 12 9 6"></polyline>
-            </svg>
-          </div>
-        </a>
-      `;
-    });
-    
-    sheetContent.innerHTML = html;
-  }
-
-  function openSheet(category) {
-    currentCategory = category;
-    const data = categoryData[currentCategory] || defaultCategoryData;
-    
-    // Update Title (capitalize first letter if fallback)
-    if(categoryData[currentCategory]){
-       sheetTitle.textContent = data.title;
-    } else {
-       sheetTitle.textContent = `Shop ${category.charAt(0).toUpperCase() + category.slice(1)} By`;
-    }
-
-    // Reset tabs to Style and All
-    currentTab = 'style';
-    currentGender = 'all';
-    
-    sheetTabs.forEach(t => t.classList.remove('active'));
-    sheetTabs[0].classList.add('active'); // Style is first
-    
-    genderTabs.forEach(t => t.classList.remove('active'));
-    genderTabs[0].classList.add('active'); // All is first
-
-    renderSheetContent();
-
-    sheet.classList.add('open');
-    sheetOverlay.classList.add('open');
-    sheet.setAttribute('aria-hidden', 'false');
-  }
-
-  function closeSheet() {
-    sheet.classList.remove('open');
-    sheetOverlay.classList.remove('open');
-    sheet.setAttribute('aria-hidden', 'true');
-  }
-
-  // Bind Open Buttons
-  openSheetBtns.forEach(btn => {
-    btn.addEventListener('click', (e) => {
-      e.preventDefault();
-      const cat = btn.getAttribute('data-category');
-      openSheet(cat);
-    });
-  });
-
-  // Bind Close Buttons
-  if(sheetClose) sheetClose.addEventListener('click', closeSheet);
-  if(sheetOverlay) sheetOverlay.addEventListener('click', closeSheet);
-
-  // Bind Tabs (Style, Price, Metal)
-  sheetTabs.forEach(tab => {
-    tab.addEventListener('click', () => {
-      sheetTabs.forEach(t => t.classList.remove('active'));
-      tab.classList.add('active');
-      currentTab = tab.getAttribute('data-tab');
-      renderSheetContent();
-    });
-  });
-
-  // Bind Gender Tabs (All, Women, Men)
-  genderTabs.forEach(tab => {
-    tab.addEventListener('click', () => {
-      genderTabs.forEach(t => t.classList.remove('active'));
-      tab.classList.add('active');
-      currentGender = tab.getAttribute('data-gender');
-      renderSheetContent(); 
-    });
-  });
-
-  // 3. Live Predictive Search & Trending Pills Logic
+  // Search elements
   const searchInput = document.getElementById('MobileCategorySearchInput');
   const searchClear = document.getElementById('MobileCategorySearchClear');
   const searchResults = document.getElementById('MobileCategorySearchResults');
-  const categoriesGrid = document.getElementById('MobileCategoriesGrid');
-  const trendingPills = document.querySelectorAll('.js-quick-search-term');
   let searchTimeout;
 
-  function performPredictiveSearch(query) {
+  // Reusable Luxury Image Interceptor (Catches all Shopify sample drawings like product-1.png to product-6.png)
+  function getLuxuryImageUrl(imgUrl, categoryKey = 'rings') {
+    if (!imgUrl || 
+        imgUrl.includes('no-image') || 
+        imgUrl.includes('placeholder') || 
+        imgUrl.includes('.gif') || 
+        imgUrl.includes('product-1') || 
+        imgUrl.includes('product-2') || 
+        imgUrl.includes('product-3') || 
+        imgUrl.includes('product-4') || 
+        imgUrl.includes('product-5') || 
+        imgUrl.includes('product-6') || 
+        imgUrl.includes('s/images/themes') || 
+        imgUrl.includes('empty-state')) {
+      if (categoryKey === 'earrings') {
+        return '{{ "best_seller_earrings_2.png" | asset_url }}';
+      } else if (categoryKey === 'bracelets' || categoryKey === 'bangles') {
+        return '{{ "best_seller_bracelet_2.png" | asset_url }}';
+      } else if (categoryKey === 'necklaces' || categoryKey === 'pendants' || categoryKey === 'mangalsutra') {
+        return '{{ "best_seller_pendant_2.png" | asset_url }}';
+      } else {
+        return '{{ "best_seller_ring_2.png" | asset_url }}';
+      }
+    }
+    return imgUrl;
+  }
+
+  // Category Subcategories & Links Data
+  const categoriesData = {
+    rings: {
+      name: 'Rings',
+      url: '{{ routes.collections_url }}/rings',
+      subcategories: [
+        { title: 'Engagement Rings', url: '{{ routes.collections_url }}/rings?filter.p.m.custom.style=Engagement' },
+        { title: 'Couple Bands', url: '{{ routes.collections_url }}/rings?filter.p.m.custom.style=Couple+Bands' },
+        { title: 'Casual & Daily Wear Rings', url: '{{ routes.collections_url }}/rings?filter.p.m.custom.style=Casual' },
+        { title: 'Eternity Bands', url: '{{ routes.collections_url }}/rings?filter.p.m.custom.style=Eternity' },
+        { title: 'Solitaire Rings', url: '{{ routes.collections_url }}/solitaires' }
+      ]
+    },
+    earrings: {
+      name: 'Earrings',
+      url: '{{ routes.collections_url }}/earrings',
+      subcategories: [
+        { title: 'Diamond Studs', url: '{{ routes.collections_url }}/earrings?filter.p.m.custom.style=Studs' },
+        { title: 'Drop & Dangle Earrings', url: '{{ routes.collections_url }}/earrings?filter.p.m.custom.style=Drops' },
+        { title: 'Hoop Earrings', url: '{{ routes.collections_url }}/earrings?filter.p.m.custom.style=Hoops' },
+        { title: 'Traditional Jhumkas', url: '{{ routes.collections_url }}/earrings?filter.p.m.custom.style=Jhumkas' },
+        { title: 'Huggie Hoops', url: '{{ routes.collections_url }}/earrings' }
+      ]
+    },
+    bracelets: {
+      name: 'Bracelets & Bangles',
+      url: '{{ routes.collections_url }}/bracelets',
+      subcategories: [
+        { title: 'Tennis Bracelets', url: '{{ routes.collections_url }}/bracelets?filter.p.m.custom.style=Tennis' },
+        { title: 'Charm Bracelets', url: '{{ routes.collections_url }}/bracelets?filter.p.m.custom.style=Charm' },
+        { title: 'Diamond Bangles', url: '{{ routes.collections_url }}/bracelets?filter.p.m.custom.style=Bangles' },
+        { title: 'Daily Wear Chain Bracelets', url: '{{ routes.collections_url }}/bracelets' }
+      ]
+    },
+    necklaces: {
+      name: 'Necklaces',
+      url: '{{ routes.collections_url }}/necklaces',
+      subcategories: [
+        { title: 'Diamond Chokers', url: '{{ routes.collections_url }}/necklaces?filter.p.m.custom.style=Choker' },
+        { title: 'Layered Chains', url: '{{ routes.collections_url }}/necklaces?filter.p.m.custom.style=Layered' },
+        { title: 'Minimalist Daily Necklaces', url: '{{ routes.collections_url }}/necklaces' },
+        { title: 'Mangalsutras', url: '{{ routes.collections_url }}/necklaces?filter.p.m.custom.style=Mangalsutra' }
+      ]
+    },
+    pendants: {
+      name: 'Pendants',
+      url: '{{ routes.collections_url }}/pendants',
+      subcategories: [
+        { title: 'Solitaire Pendants', url: '{{ routes.collections_url }}/pendants?filter.p.m.custom.style=Solitaire' },
+        { title: 'Evil Eye & Charm Pendants', url: '{{ routes.collections_url }}/pendants?filter.p.m.custom.style=Charm' },
+        { title: 'Heart & Floral Pendants', url: '{{ routes.collections_url }}/pendants' },
+        { title: 'Religious & Auspicious Pendants', url: '{{ routes.collections_url }}/pendants' }
+      ]
+    },
+    solitaires: {
+      name: 'Solitaires',
+      url: '{{ routes.collections_url }}/solitaires',
+      subcategories: [
+        { title: 'Solitaire Rings', url: '{{ routes.collections_url }}/solitaires?filter.p.m.custom.style=Rings' },
+        { title: 'Solitaire Studs', url: '{{ routes.collections_url }}/solitaires?filter.p.m.custom.style=Studs' },
+        { title: 'Solitaire Pendants', url: '{{ routes.collections_url }}/solitaires?filter.p.m.custom.style=Pendants' },
+        { title: 'Certified Solitaire Diamonds', url: '{{ routes.collections_url }}/solitaires' }
+      ]
+    },
+    diamonds: {
+      name: 'Diamonds & Fine Jewelry',
+      url: '{{ routes.collections_url }}/all',
+      subcategories: [
+        { title: 'Lab Grown Diamond Jewelry', url: '{{ routes.collections_url }}/all' },
+        { title: 'Bridal & Royal Heritage', url: '{{ routes.collections_url }}/all' },
+        { title: 'Gifts For Him & Her', url: '{{ routes.collections_url }}/all' },
+        { title: 'Latest & Best Sellers', url: '{{ routes.collections_url }}/all' }
+      ]
+    }
+  };
+
+  // Open / Close Drawer Logic
+  function openDrawer() {
+    if (!drawer) return;
+    drawer.classList.add('open');
+    drawer.setAttribute('aria-hidden', 'false');
+    document.body.style.overflow = 'hidden';
+    renderCategoryContent('rings'); // Default to rings
+  }
+
+  function closeDrawer() {
+    if (!drawer) return;
+    drawer.classList.remove('open');
+    drawer.setAttribute('aria-hidden', 'true');
+    document.body.style.overflow = '';
+  }
+
+  toggles.forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      e.preventDefault();
+      openDrawer();
+    });
+  });
+
+  if (closeBtn) closeBtn.addEventListener('click', closeDrawer);
+  if (backdrop) backdrop.addEventListener('click', closeDrawer);
+
+  // Tab Selection & Dynamic Content Rendering
+  function renderCategoryContent(categoryKey) {
+    if (!bodyArea) return;
+    const cat = categoriesData[categoryKey] || categoriesData['rings'];
+
+    // Update active tab styling
+    tabPills.forEach(pill => {
+      if (pill.getAttribute('data-category') === categoryKey) {
+        pill.classList.add('active');
+      } else {
+        pill.classList.remove('active');
+      }
+    });
+
+    // 1. Build Subcategories HTML with Luxury Diamond Bullets
+    let subcatsHtml = `
+      <div>
+        <div class="category-section-title">
+          <span>Shop ${cat.name} By</span>
+          <a href="${cat.url}">View All ↗</a>
+        </div>
+        <div class="subcategories-list">
+    `;
+
+    cat.subcategories.forEach(sub => {
+      subcatsHtml += `
+        <a href="${sub.url}" class="subcategory-item">
+          <span class="subcategory-item__label"><span class="subcategory-item__diamond">◈</span> ${sub.title}</span>
+          <span class="subcategory-item__arrow">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+          </span>
+        </a>
+      `;
+    });
+    subcatsHtml += `</div></div>`;
+
+    // 2. Build Featured Products Container (Will be populated via fetch)
+    const productsContainerId = `FeaturedProducts_${categoryKey}`;
+    let productsHtml = `
+      <div>
+        <div class="category-section-title">
+          <span>Featured in ${cat.name}</span>
+        </div>
+        <div id="${productsContainerId}" class="category-products-grid">
+          <div class="live-search-loading" style="grid-column: span 2; padding: 1.5rem 0;">Loading luxury jewelry...</div>
+        </div>
+      </div>
+    `;
+
+    bodyArea.innerHTML = subcatsHtml + productsHtml;
+
+    // 3. Dynamically Fetch Real Store Products for this Category!
+    fetch(`{{ routes.search_url }}/suggest.json?q=${encodeURIComponent(cat.name)}&resources[type]=product&resources[limit]=4`)
+      .then(res => res.json())
+      .then(data => {
+        const container = document.getElementById(productsContainerId);
+        if (!container) return;
+        const products = data.resources && data.resources.results && data.resources.results.products ? data.resources.results.products : [];
+        
+        if (products.length === 0) {
+          container.innerHTML = `<div style="grid-column: span 2; color: #7A6F66; font-size: 0.88rem; padding: 1rem 0;">No featured products found. <a href="${cat.url}" style="color: #00352A; text-decoration: underline; font-weight: 600;">Browse Collection ↗</a></div>`;
+          return;
+        }
+
+        let gridHtml = '';
+        products.forEach(prod => {
+          // Pass through luxury image interceptor to catch any Shopify sample briefcase/luggage sketches
+          const imgUrl = getLuxuryImageUrl(prod.image, categoryKey);
+          const fallbackUrl = getLuxuryImageUrl(null, categoryKey);
+          const priceFormatted = prod.price ? '₹' + (parseFloat(prod.price) / 100).toLocaleString('en-IN') : '';
+          const compareFormatted = prod.compare_at_price && parseFloat(prod.compare_at_price) > parseFloat(prod.price) ? '₹' + (parseFloat(prod.compare_at_price) / 100).toLocaleString('en-IN') : '';
+
+          gridHtml += `
+            <a href="${prod.url}" class="category-product-card">
+              <div class="category-product-card__img-wrap">
+                <img src="${imgUrl}" alt="${prod.title}" class="category-product-card__img" loading="lazy" onerror="this.src='${fallbackUrl}'">
+              </div>
+              <div class="category-product-card__info">
+                <div class="category-product-card__title">${prod.title}</div>
+                <div class="category-product-card__price-wrap">
+                  <span class="category-product-card__price">${priceFormatted}</span>
+                  ${compareFormatted ? `<span class="category-product-card__compare">${compareFormatted}</span>` : ''}
+                </div>
+              </div>
+            </a>
+          `;
+        });
+        container.innerHTML = gridHtml;
+      })
+      .catch(err => {
+        const container = document.getElementById(productsContainerId);
+        if (container) container.innerHTML = '';
+      });
+  }
+
+  // Bind Category Tabs Click
+  tabPills.forEach(pill => {
+    pill.addEventListener('click', () => {
+      const catKey = pill.getAttribute('data-category');
+      renderCategoryContent(catKey);
+    });
+  });
+
+  // Also bind any secondary buttons that might try to open category sheets
+  document.querySelectorAll('.js-open-category-sheet').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      e.preventDefault();
+      const cat = btn.getAttribute('data-category');
+      openDrawer();
+      if (cat) renderCategoryContent(cat);
+    });
+  });
+
+  // Predictive Search Logic
+  function performSearch(query) {
     if (!query || query.trim().length < 2) {
       if (searchResults) searchResults.style.display = 'none';
-      if (categoriesGrid) categoriesGrid.style.display = 'grid';
+      if (tabsBar) tabsBar.style.display = 'flex';
+      if (bodyArea) bodyArea.style.display = 'flex';
       if (searchClear) searchClear.style.display = 'none';
       return;
     }
 
     if (searchClear) searchClear.style.display = 'flex';
-    if (categoriesGrid) categoriesGrid.style.display = 'none';
+    if (tabsBar) tabsBar.style.display = 'none';
+    if (bodyArea) bodyArea.style.display = 'none';
+    
     if (searchResults) {
       searchResults.style.display = 'block';
       searchResults.innerHTML = '<div class="live-search-loading">Searching Swastik Jewels...</div>';
     }
 
     fetch(`{{ routes.search_url }}/suggest.json?q=${encodeURIComponent(query)}&resources[type]=product&resources[limit]=8`)
-      .then(response => response.json())
+      .then(res => res.json())
       .then(data => {
         const products = data.resources && data.resources.results && data.resources.results.products ? data.resources.results.products : [];
         if (products.length === 0) {
@@ -983,16 +844,17 @@ document.addEventListener('DOMContentLoaded', () => {
         let html = '';
         products.forEach(product => {
           const highlightedTitle = product.title.replace(regex, '<mark class="search-highlight">$1</mark>');
-          const imgUrl = product.image ? product.image : '{{ "ring_placeholder.png" | asset_url }}';
+          const imgUrl = getLuxuryImageUrl(product.image, 'rings');
+          const fallbackUrl = getLuxuryImageUrl(null, 'rings');
           const priceFormatted = product.price ? '₹' + (parseFloat(product.price) / 100).toLocaleString('en-IN') : '';
           const compareFormatted = product.compare_at_price && parseFloat(product.compare_at_price) > parseFloat(product.price) ? '₹' + (parseFloat(product.compare_at_price) / 100).toLocaleString('en-IN') : '';
 
           html += `
             <a href="${product.url}" class="live-search-item">
-              <img src="${imgUrl}" alt="${product.title}" class="live-search-item__img" onerror="this.src='{{ 'ring_placeholder.png' | asset_url }}'">
+              <img src="${imgUrl}" alt="${product.title}" class="live-search-item__img" onerror="this.src='${fallbackUrl}'">
               <div class="live-search-item__info">
                 <div class="live-search-item__title">${highlightedTitle}</div>
-                <div>
+                <div class="category-product-card__price-wrap">
                   <span class="live-search-item__price">${priceFormatted || 'View Price'}</span>
                   ${compareFormatted ? `<span class="live-search-item__compare-price">${compareFormatted}</span>` : ''}
                 </div>
@@ -1013,25 +875,15 @@ document.addEventListener('DOMContentLoaded', () => {
     searchInput.addEventListener('input', (e) => {
       clearTimeout(searchTimeout);
       const val = e.target.value;
-      searchTimeout = setTimeout(() => performPredictiveSearch(val), 250);
+      searchTimeout = setTimeout(() => performSearch(val), 250);
     });
   }
 
   if (searchClear && searchInput) {
     searchClear.addEventListener('click', () => {
       searchInput.value = '';
-      performPredictiveSearch('');
+      performSearch('');
       searchInput.focus();
-    });
-  }
-
-  if (trendingPills.length > 0 && searchInput) {
-    trendingPills.forEach(pill => {
-      pill.addEventListener('click', () => {
-        const term = pill.getAttribute('data-term');
-        searchInput.value = term;
-        performPredictiveSearch(term);
-      });
     });
   }
 });
