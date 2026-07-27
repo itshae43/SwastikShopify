@@ -55,7 +55,7 @@
           endif
         -%}
         
-        <div class="latest-collections__col {% if forloop.first %}is-active{% endif %}">
+        <div class="latest-collections__col {% if forloop.first %}is-active{% endif %}" data-index="{{ forloop.index0 }}">
           <div class="latest-collections__card" {{ block.shopify_attributes }}>
             <a href="{{ link }}" class="latest-collections__card-link" aria-label="{{ title | escape }}">
               <div class="latest-collections__image-wrap">
@@ -399,8 +399,8 @@
 
   @media screen and (max-width: 768px) {
     .latest-collections {
-      padding-top: 5rem;
-      padding-bottom: 5rem;
+      padding-top: 3.5rem;
+      padding-bottom: 3.5rem;
     }
     
     .latest-collections__container {
@@ -409,7 +409,7 @@
     }
 
     .latest-collections__header {
-      margin-bottom: 20px;
+      margin-bottom: 10px;
     }
 
     .latest-collections__eyebrow {
@@ -439,46 +439,57 @@
     }
 
     .latest-collections__grid {
-      --card-width: clamp(260px, 74vw, 310px);
+      --card-width: clamp(250px, 68vw, 290px);
+      position: relative;
+      width: 100%;
+      height: 350px; /* Perfectly tailored height for mobile card + shadow without excess white space */
       display: flex;
-      flex-direction: row;
-      flex-wrap: nowrap;
-      gap: 1.2rem;
+      justify-content: center;
       align-items: center;
-      overflow-x: auto;
-      scroll-snap-type: x mandatory;
-      margin-left: 0;
-      margin-right: 0;
-      padding-left: calc(50vw - (var(--card-width) / 2));
-      padding-right: calc(50vw - (var(--card-width) / 2));
-      padding-bottom: 2rem; /* Add space for box-shadow */
+      overflow: hidden;
+      margin: 0 auto;
+      padding: 0;
       box-sizing: border-box;
-      -ms-overflow-style: none;
-      scrollbar-width: none;
-    }
-
-    .latest-collections__grid::-webkit-scrollbar {
-      display: none;
+      touch-action: pan-y;
     }
 
     .latest-collections__col {
-      flex: 0 0 var(--card-width);
+      position: absolute;
       width: var(--card-width);
       max-width: var(--card-width);
-      scroll-snap-align: center;
-      scroll-snap-stop: always;
-      transition: transform 0.5s cubic-bezier(0.25, 1, 0.5, 1), opacity 0.5s cubic-bezier(0.25, 1, 0.5, 1);
+      margin: 0 !important;
+      padding: 0;
+      left: 50%;
+      top: 50%;
+      transform: translate3d(-50%, -50%, 0) scale(0.7);
+      opacity: 0;
+      z-index: 1;
+      pointer-events: none;
+      transition: transform 0.6s cubic-bezier(0.25, 0.8, 0.25, 1), opacity 0.6s ease;
+      will-change: transform, opacity;
+      cursor: pointer;
     }
 
-    /* 3D Depth Cue for Side Peeking Cards vs Active Center Card */
-    .latest-collections__col:not(.is-active) {
-      transform: scale(0.92);
-      opacity: 0.7;
-    }
-
-    .latest-collections__col.is-active {
-      transform: scale(1);
+    /* Initial 3-card layout before JS runs */
+    .latest-collections__col:nth-child(1) {
+      transform: translate3d(-50%, -50%, 0) scale(1);
       opacity: 1;
+      z-index: 3;
+      pointer-events: auto;
+    }
+
+    .latest-collections__col:nth-child(2) {
+      transform: translate3d(calc(-50% + 96%), calc(-50% + 12px), 0) scale(0.85);
+      opacity: 0.8;
+      z-index: 2;
+      pointer-events: auto;
+    }
+
+    .latest-collections__col:nth-child(3) {
+      transform: translate3d(calc(-50% - 96%), calc(-50% + 12px), 0) scale(0.85);
+      opacity: 0.8;
+      z-index: 2;
+      pointer-events: auto;
     }
 
     .latest-collections__card-title {
@@ -494,8 +505,8 @@
       display: flex;
       justify-content: center;
       gap: 8px;
-      margin-top: -1rem;
-      margin-bottom: 2rem;
+      margin-top: 0.5rem;
+      margin-bottom: 1.5rem;
     }
     
     .latest-collections__dot {
@@ -527,7 +538,7 @@
     }
 
     .latest-collections__button-container {
-      margin-top: 2rem;
+      margin-top: 0;
     }
 
     .latest-collections__btn {
@@ -542,75 +553,183 @@
     constructor() {
       super();
       this.slider = this.querySelector('.latest-collections__grid');
-      this.dots = this.querySelectorAll('.latest-collections__dot');
+      this.dots = Array.from(this.querySelectorAll('.latest-collections__dot'));
       
-      if (!this.slider || this.dots.length === 0) return;
+      if (!this.slider) return;
+      this.slides = Array.from(this.slider.children);
+      if (this.slides.length === 0) return;
 
+      this.currentIndex = 0;
+      this.totalSlides = this.slides.length;
+
+      this.init();
+    }
+
+    init() {
+      // Dot click handling
       this.dots.forEach((dot, index) => {
         dot.addEventListener('click', () => {
-          this.scrollToIndex(index, 'smooth');
-        });
-      });
-
-      // Direct tap on non-active peeking side cards scrolls them to center
-      Array.from(this.slider.children).forEach((cardCol, index) => {
-        cardCol.addEventListener('click', (e) => {
-          if (window.innerWidth <= 768 && !cardCol.classList.contains('is-active')) {
-            e.preventDefault();
-            this.scrollToIndex(index, 'smooth');
+          if (this.currentIndex !== index) {
+            this.currentIndex = index;
+            this.update();
           }
         });
       });
 
-      this.slider.addEventListener('scroll', this.updateDots.bind(this), { passive: true });
-      window.addEventListener('resize', this.updateDots.bind(this));
+      // Card tap handling (side peek cards navigate to center)
+      this.slides.forEach((slide, index) => {
+        slide.addEventListener('click', (e) => {
+          if (window.innerWidth <= 768 && index !== this.currentIndex) {
+            e.preventDefault();
+            this.currentIndex = index;
+            this.update();
+          }
+        });
+      });
 
-      this.updateDots();
+      // Touch swipe handling for horizontal coverflow carousel
+      let startX = 0;
+      let startY = 0;
+      let isDragging = false;
+
+      this.slider.addEventListener('touchstart', (e) => {
+        if (window.innerWidth > 768) return;
+        startX = e.touches[0].clientX;
+        startY = e.touches[0].clientY;
+        isDragging = true;
+      }, { passive: true });
+
+      this.slider.addEventListener('touchmove', (e) => {
+        if (!isDragging || window.innerWidth > 768) return;
+        const currentX = e.touches[0].clientX;
+        const currentY = e.touches[0].clientY;
+        const diffX = startX - currentX;
+        const diffY = startY - currentY;
+
+        // Ignore if scrolling vertically up/down the webpage
+        if (Math.abs(diffY) > Math.abs(diffX)) return;
+
+        if (Math.abs(diffX) > 45) {
+          if (diffX > 0) {
+            this.next();
+          } else {
+            this.prev();
+          }
+          isDragging = false;
+        }
+      }, { passive: true });
+
+      this.slider.addEventListener('touchend', () => {
+        isDragging = false;
+      });
+
+      window.addEventListener('resize', () => {
+        this.update();
+      });
+
+      this.update();
     }
 
-    scrollToIndex(index, behavior = 'smooth') {
-      const card = this.slider.children[index];
-      if (card) {
-        const cardRect = card.getBoundingClientRect();
-        const sliderRect = this.slider.getBoundingClientRect();
-        const cardCenter = cardRect.left + cardRect.width / 2;
-        const sliderCenter = sliderRect.left + sliderRect.width / 2;
-        const scrollDiff = cardCenter - sliderCenter;
+    next() {
+      this.currentIndex = (this.currentIndex + 1) % this.totalSlides;
+      this.update();
+    }
 
-        if (behavior === 'instant') {
-          this.slider.scrollLeft += scrollDiff;
-        } else {
-          this.slider.scrollTo({
-            left: this.slider.scrollLeft + scrollDiff,
-            behavior: 'smooth'
-          });
-        }
+    prev() {
+      this.currentIndex = (this.currentIndex - 1 + this.totalSlides) % this.totalSlides;
+      this.update();
+    }
+
+    update() {
+      const isMobile = window.innerWidth <= 768;
+      const total = this.totalSlides;
+
+      if (!isMobile) {
+        // Reset inline styles on desktop so standard grid takes over
+        this.slides.forEach((slide) => {
+          slide.style.transform = '';
+          slide.style.opacity = '';
+          slide.style.zIndex = '';
+          slide.style.pointerEvents = '';
+          slide.classList.remove('is-active', 'is-peek-left', 'is-peek-right');
+        });
+        return;
       }
-    }
 
-    updateDots() {
-      let activeIndex = 0;
-      let minDistance = Infinity;
-      
-      const sliderRect = this.slider.getBoundingClientRect();
-      const sliderCenter = sliderRect.left + sliderRect.width / 2;
+      const xStep = 96; // Percentage shift to maintain clean gap and visible side cards
 
-      Array.from(this.slider.children).forEach((card, index) => {
-        const cardRect = card.getBoundingClientRect();
-        const cardCenter = cardRect.left + cardRect.width / 2;
-        const distance = Math.abs(sliderCenter - cardCenter);
-        if (distance < minDistance) {
-          minDistance = distance;
-          activeIndex = index;
+      this.slides.forEach((slide, index) => {
+        let diff = index - this.currentIndex;
+        let offset = ((diff % total) + total) % total;
+        if (offset > Math.floor(total / 2)) {
+          offset -= total;
         }
+
+        // Detect if card is wrapping around the back of the carousel (jumping between opposite sides)
+        const prevOffset = slide._prevOffset;
+        const isWrapping = prevOffset !== undefined && Math.abs(offset - prevOffset) > 1;
+        slide._prevOffset = offset;
+
+        if (isWrapping) {
+          slide.style.transition = 'none';
+        } else {
+          slide.style.transition = '';
+        }
+
+        let translateX, translateY, scale, opacity, zIndex, pointerEvents;
+        let isCenter = false;
+        let isLeft = false;
+        let isRight = false;
+
+        if (offset === 0) {
+          // Active center card
+          translateX = '-50%';
+          translateY = '-50%';
+          scale = 1;
+          opacity = 1;
+          zIndex = 3;
+          pointerEvents = 'auto';
+          isCenter = true;
+        } else if (offset === -1 || (offset === total - 1 && total > 2)) {
+          // Left side peeking card
+          translateX = `calc(-50% - ${xStep}%)`;
+          translateY = 'calc(-50% + 12px)';
+          scale = 0.85;
+          opacity = 0.8;
+          zIndex = 2;
+          pointerEvents = 'auto';
+          isLeft = true;
+        } else if (offset === 1 || (offset === -(total - 1) && total > 2)) {
+          // Right side peeking card
+          translateX = `calc(-50% + ${xStep}%)`;
+          translateY = 'calc(-50% + 12px)';
+          scale = 0.85;
+          opacity = 0.8;
+          zIndex = 2;
+          pointerEvents = 'auto';
+          isRight = true;
+        } else {
+          // Hidden back cards
+          translateX = `calc(-50% + ${offset > 0 ? 120 : -120}%)`;
+          translateY = 'calc(-50% + 24px)';
+          scale = 0.7;
+          opacity = 0;
+          zIndex = 1;
+          pointerEvents = 'none';
+        }
+
+        slide.style.transform = `translate3d(${translateX}, ${translateY}, 0) scale(${scale})`;
+        slide.style.opacity = opacity;
+        slide.style.zIndex = zIndex;
+        slide.style.pointerEvents = pointerEvents;
+
+        slide.classList.toggle('is-active', isCenter);
+        slide.classList.toggle('is-peek-left', isLeft);
+        slide.classList.toggle('is-peek-right', isRight);
       });
 
       this.dots.forEach((dot, index) => {
-        dot.classList.toggle('is-active', index === activeIndex);
-      });
-
-      Array.from(this.slider.children).forEach((card, index) => {
-        card.classList.toggle('is-active', index === activeIndex);
+        dot.classList.toggle('is-active', index === this.currentIndex);
       });
     }
   }
