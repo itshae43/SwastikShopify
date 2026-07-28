@@ -282,8 +282,20 @@
           <div class="pp-row-divider"></div>
 
           <div class="pp-table-row">
+            <span class="pp-row-label">Net Weight</span>
+            <span class="pp-row-value" id="ui-detail-net">{{ product.metafields.custom.net_weight | default: '14.250' }} gms</span>
+          </div>
+          <div class="pp-row-divider"></div>
+
+          <div class="pp-table-row">
             <span class="pp-row-label">Diamond Weight</span>
             <span class="pp-row-value" id="ui-detail-diamond">{{ product.metafields.custom.diamond_weight | default: '1.75' }} cts</span>
+          </div>
+          <div class="pp-row-divider"></div>
+
+          <div class="pp-table-row">
+            <span class="pp-row-label">Stone Weight</span>
+            <span class="pp-row-value" id="ui-detail-stone">{{ product.metafields.custom.stone_weight | default: '0.50' }} cts</span>
           </div>
           <div class="pp-row-divider"></div>
 
@@ -291,12 +303,7 @@
             <span class="pp-row-label">Diamond Quality</span>
             <span class="pp-row-value" id="ui-detail-quality">G–VS</span>
           </div>
-          <div class="pp-row-divider"></div>
 
-          <div class="pp-table-row">
-            <span class="pp-row-label">Certification</span>
-            <span class="pp-row-value">BIS Hallmarked</span>
-          </div>
         </div>
 
         <!-- Card Below: Tab 2 (Price Breakdown) -->
@@ -586,7 +593,9 @@
 <script id="pp-metafields-json" type="application/json">
   {
     "gross_weight": {{ product.metafields.custom.gross_weight | json }},
+    "net_weight": {{ product.metafields.custom.net_weight | json }},
     "diamond_weight": {{ product.metafields.custom.diamond_weight | json }},
+    "stone_weight": {{ product.metafields.custom.stone_weight | json }},
     "making_charges": {{ product.metafields.custom.making_charges | json }}
   }
 </script>
