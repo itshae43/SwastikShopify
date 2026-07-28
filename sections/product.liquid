@@ -135,10 +135,30 @@
                     {%- assign name_dc = option.name | downcase -%}
                     <div class="pp-option-group" data-option-index="{{ forloop.index0 }}">
                       <label class="pp-option-label">{{ option.name }}</label>
+                      {%- assign opt_vals = option.values -%}
                       {%- if name_dc contains 'color' or name_dc contains 'colour' or name_dc contains 'metal' -%}
+                        {%- assign color_order = "rose,yellow,white" | split: "," -%}
+                        {%- assign ordered_vals = "" -%}
+                        {%- for color_key in color_order -%}
+                          {%- for value in option.values -%}
+                            {%- assign val_dc = value | downcase -%}
+                            {%- if val_dc contains color_key -%}
+                              {%- assign ordered_vals = ordered_vals | append: value | append: "|||" -%}
+                            {%- endif -%}
+                          {%- endfor -%}
+                        {%- endfor -%}
+                        {%- for value in option.values -%}
+                          {%- assign val_dc = value | downcase -%}
+                          {%- unless val_dc contains 'rose' or val_dc contains 'yellow' or val_dc contains 'white' -%}
+                            {%- assign ordered_vals = ordered_vals | append: value | append: "|||" -%}
+                          {%- endunless -%}
+                        {%- endfor -%}
+                        {%- assign opt_vals = ordered_vals | split: "|||" -%}
+                        
                         <!-- Metal Color Swatches -->
                         <div class="pp-option-values pp-swatches">
-                          {%- for value in option.values -%}
+                          {%- for value in opt_vals -%}
+                            {%- if value == blank %}{% continue %}{% endif -%}
                             {%- assign val_dc = value | downcase -%}
                             {%- assign bg_color = '#D4AF37' -%}
                             {%- if val_dc contains 'rose' or val_dc contains 'pink' -%}
@@ -152,13 +172,34 @@
                           {%- endfor -%}
                         </div>
                       {%- else -%}
+                        {%- if name_dc contains 'purity' or name_dc contains 'gold' or name_dc contains 'carat' or name_dc contains 'karat' -%}
+                          {%- assign purity_order = "9,10,14,18,22,24" | split: "," -%}
+                          {%- assign ordered_vals = "" -%}
+                          {%- for p_key in purity_order -%}
+                            {%- for value in option.values -%}
+                              {%- if value contains p_key -%}
+                                {%- assign ordered_vals = ordered_vals | append: value | append: "|||" -%}
+                              {%- endif -%}
+                            {%- endfor -%}
+                          {%- endfor -%}
+                          {%- for value in option.values -%}
+                            {%- assign has_match = false -%}
+                            {%- for p_key in purity_order -%}
+                              {%- if value contains p_key -%}
+                                {%- assign has_match = true -%}
+                              {%- endif -%}
+                            {%- endfor -%}
+                            {%- unless has_match -%}
+                              {%- assign ordered_vals = ordered_vals | append: value | append: "|||" -%}
+                            {%- endunless -%}
+                          {%- endfor -%}
+                          {%- assign opt_vals = ordered_vals | split: "|||" -%}
+                        {%- endif -%}
+
                         <!-- Gold Purity, Diamond Quality, or other Options (Rounded Pill Container) -->
                         <div class="pp-option-values pp-pill-container">
-                          {%- assign opt_vals = option.values -%}
-                          {%- if name_dc contains 'purity' or name_dc contains 'gold' or name_dc contains 'carat' or name_dc contains 'karat' -%}
-                            {%- assign opt_vals = option.values | sort_natural -%}
-                          {%- endif -%}
                           {%- for value in opt_vals -%}
+                            {%- if value == blank %}{% continue %}{% endif -%}
                             <button type="button" class="pp-opt-btn {% if option.selected_value == value %}is-active{% endif %}" data-value="{{ value | escape }}">
                               {{ value }}
                             </button>
@@ -174,17 +215,17 @@
                   <div class="pp-option-group">
                     <label class="pp-option-label">Metal Color</label>
                     <div class="pp-option-values pp-swatches">
-                      <button type="button" class="pp-opt-btn pp-swatch-btn is-active" data-value="Yellow Gold" title="Yellow Gold" style="--swatch-color: #D4AF37;"><span class="pp-swatch-circle"></span></button>
                       <button type="button" class="pp-opt-btn pp-swatch-btn" data-value="Rose Gold" title="Rose Gold" style="--swatch-color: #E6C2B8;"><span class="pp-swatch-circle"></span></button>
+                      <button type="button" class="pp-opt-btn pp-swatch-btn is-active" data-value="Yellow Gold" title="Yellow Gold" style="--swatch-color: #D4AF37;"><span class="pp-swatch-circle"></span></button>
                       <button type="button" class="pp-opt-btn pp-swatch-btn" data-value="White Gold" title="White Gold" style="--swatch-color: #E5E5E5;"><span class="pp-swatch-circle"></span></button>
                     </div>
                   </div>
                   <div class="pp-option-group">
                     <label class="pp-option-label">Gold Purity</label>
                     <div class="pp-option-values pp-pill-container">
+                      <button type="button" class="pp-opt-btn" data-value="9K">9K</button>
                       <button type="button" class="pp-opt-btn" data-value="14K">14K</button>
                       <button type="button" class="pp-opt-btn is-active" data-value="18K">18K</button>
-                      <button type="button" class="pp-opt-btn" data-value="22K">22K</button>
                     </div>
                   </div>
                   <div class="pp-option-group">
