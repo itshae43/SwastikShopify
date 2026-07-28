@@ -645,6 +645,19 @@
   {{ product.variants | json }}
 </script>
 
+<script id="pp-variant-metafields-json" type="application/json">
+  {
+    {% for variant in product.variants %}
+      "{{ variant.id }}": {
+        "gold_value": {{ variant.metafields.custom.gold_value | json }},
+        "diamond_value": {{ variant.metafields.custom.diamond_value | json }},
+        "making_charges": {{ variant.metafields.custom.making_charges | json }},
+        "gst_amount": {{ variant.metafields.custom.gst_amount | json }}
+      }{% unless forloop.last %},{% endunless %}
+    {% endfor %}
+  }
+</script>
+
 {% stylesheet %}
   @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,600;0,700;1,600&family=Inter:wght@400;500;600;700&display=swap');
 
@@ -2008,26 +2021,23 @@
               const purity = selectedVals[1] || '18K';
               const quality = selectedVals[2] || 'G-VS';
               
-              const diaWeightStr = String(meta.diamond_weight || '1.75').replace(/[^0-9.]/g, '');
-              const diaWeight = parseFloat(diaWeightStr) || 1.75;
+              const variantMetaEl = document.getElementById('pp-variant-metafields-json');
+              let variantMeta = {};
+              if (variantMetaEl) {
+                const allVariantMetas = JSON.parse(variantMetaEl.textContent || '{}');
+                variantMeta = allVariantMetas[matched.id] || {};
+              }
+
+              const safeParse = (val, defaultVal) => {
+                const parsed = parseFloat(String(val).replace(/[^0-9.]/g, ''));
+                return isNaN(parsed) ? defaultVal : parsed;
+              };
               
-              const makingStr = String(meta.making_charges || '13500').replace(/[^0-9.]/g, '');
-              const making = parseFloat(makingStr) || 13500;
-              
-              let diaRate = 45000;
-              const q = quality.toUpperCase();
-              if(q.includes('F-G VS-SI')) diaRate = 45000;
-              else if(q.includes('F-G SI-I')) diaRate = 40000;
-              else if(q.includes('G-H VS-SI')) diaRate = 40000;
-              else if(q.includes('G-H SI-I')) diaRate = 35000;
-              else if(q.includes('H-I VS-SI')) diaRate = 32000;
-              else if(q.includes('H-I SI-I')) diaRate = 28000;
-              else if(q.includes('I-J VS-SI')) diaRate = 21000;
-              else if(q.includes('I-J SI-I')) diaRate = 20000;
-              
-              const diamondValue = diaWeight * diaRate;
-              const gst = Math.round(total * 0.03);
-              const goldValue = total - diamondValue - making - gst;
+              const making = safeParse(variantMeta.making_charges, 13500);
+              const diamondValue = safeParse(variantMeta.diamond_value, 0);
+              const gst = safeParse(variantMeta.gst_amount, 0);
+              const goldValue = safeParse(variantMeta.gold_value, 0);
+              const diaWeight = parseFloat(String(meta.diamond_weight || '1.75').replace(/[^0-9.]/g, '')) || 1.75;
               
               const fmt = (val) => val.toLocaleString('en-IN', { style: 'currency', currency: 'INR', maximumFractionDigits: 0 }).replace('INR', '₹');
               
