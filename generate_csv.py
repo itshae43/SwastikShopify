@@ -1,77 +1,72 @@
 import csv
-import random
-import math
-import os
 
-categories = {
-    "Lab Grown Diamond": ["Ring", "Bracelet", "Gents Ring", "Earring", "Pendant"],
-    "Natural Diamond": ["Ring", "Bracelet", "Gents Ring", "Earring", "Pendant", "Necklace", "Pendant Set", "Bangle", "Mangalsutra"],
-    "Gold Jewellery": ["Chain", "Ladies Ring", "Pendant Set", "Choker Set", "Bracelet", "Bangle", "Necklace Set", "Chikpatti", "Long Set", "Earring", "Tika"]
-}
+colors = ["Rose Gold", "Yellow Gold", "White Gold"]
+purities = [("9kt", 0.375), ("14kt", 0.583), ("18kt", 0.75)]
+diamonds = [
+    ("F-G VS-SI", 45000),
+    ("F-G SI-I", 40000),
+    ("G-H VS-SI", 40000),
+    ("G-H SI-I", 35000),
+    ("H-I VS-SI", 3200),
+    ("H-I SI-I", 28000),
+    ("I-J VS-SI", 2100),
+    ("I-J SI-I", 2000)
+]
 
-# Realistic INR prices for the Indian Market
-price_ranges = {
-    "Lab Grown Diamond": (15000, 150000), # 15k to 1.5 Lakhs
-    "Natural Diamond": (35000, 750000),   # 35k to 7.5 Lakhs
-    "Gold Jewellery": (25000, 400000)     # 25k to 4 Lakhs
-}
+# The Master Formula Variables (Test Data)
+gold_rate_24k = 7000 # per gram
+gold_weight = 5.0 # grams
+diamond_weight = 1.0 # carat
+making_charges = 3000
 
 rows = []
 header = [
-    "Handle", "Title", "Body (HTML)", "Vendor", "Product Category", "Type", 
-    "Tags", "Published", "Option1 Name", "Option1 Value", "Variant SKU", 
-    "Variant Inventory Qty", "Variant Price", "Variant Compare At Price", "Image Src"
+    "Handle", "Title", "Body (HTML)", "Vendor", "Product Category", "Type", "Tags", "Published",
+    "Option1 Name", "Option1 Value", "Option2 Name", "Option2 Value", "Option3 Name", "Option3 Value",
+    "Variant SKU", "Variant Grams", "Variant Inventory Tracker", "Variant Inventory Qty", "Variant Inventory Policy", 
+    "Variant Fulfillment Service", "Variant Price", "Variant Compare At Price", "Variant Requires Shipping", "Variant Taxable",
+    "Image Src", "Image Position", "Image Alt Text", "Gift Card", "SEO Title", "SEO Description",
+    "Google Shopping / Google Product Category", "Google Shopping / Gender", "Google Shopping / Age Group", 
+    "Google Shopping / MPN", "Google Shopping / AdWords Grouping", "Google Shopping / AdWords Labels", 
+    "Google Shopping / Condition", "Google Shopping / Custom Product", "Google Shopping / Custom Label 0", 
+    "Google Shopping / Custom Label 1", "Google Shopping / Custom Label 2", "Google Shopping / Custom Label 3", 
+    "Google Shopping / Custom Label 4", "Variant Image", "Variant Weight Unit", "Variant Tax Code", "Cost per item", 
+    "Included / India", "Status"
 ]
-rows.append(header)
 
-target_per_main = 1010
+first_row = True
+for color in colors:
+    for purity_name, purity_mult in purities:
+        for dia_name, dia_price_per_ct in diamonds:
+            # The Automatic Math Calculation
+            gold_cost = gold_rate_24k * purity_mult * gold_weight
+            diamond_cost = dia_price_per_ct * diamond_weight
+            total_price = round(gold_cost + diamond_cost + making_charges)
+            
+            # Shopify only needs Title and Status on the first row of a product
+            title = "Sample Custom Diamond Ring" if first_row else ""
+            status = "active" if first_row else ""
+            
+            # Fill out the row with Shopify's required empty columns
+            row = [
+                "sample-custom-diamond-ring", # Handle
+                title, # Title
+                "", "", "", "", "", "", # Body to Published
+                "Metal Color", color, # Option 1
+                "Gold Purity", purity_name, # Option 2
+                "Diamond Quality", dia_name, # Option 3
+                "", "", "shopify", "10", "deny", "manual", # SKU to Fulfillment
+                str(total_price), # Variant Price
+                "", "TRUE", "TRUE", # Compare Price, Shipping, Taxable
+                "", "", "", "FALSE", "", "", # Image to SEO
+                "", "", "", "", "", "", "", "", "", "", "", "", "", "", # Google Shopping
+                "kg", "", "", "TRUE", status # Unit to Status
+            ]
+            rows.append(row)
+            first_row = False
 
-for main_cat, subcats in categories.items():
-    per_subcat = math.ceil(target_per_main / len(subcats))
-    
-    for subcat in subcats:
-        for i in range(1, per_subcat + 1):
-            handle = f"{main_cat.lower().replace(' ', '-')}-{subcat.lower().replace(' ', '-')}-{i:04d}"
-            title = f"{main_cat} {subcat} Model {i:04d}"
-            body = f"<p>Exquisite {main_cat.lower()} {subcat.lower()} designed for elegance and durability. Perfect for any occasion.</p>"
-            vendor = "Demo Brand"
-            prod_cat = "Apparel & Accessories > Jewelry"
-            type_val = subcat
-            tags = f"{main_cat}, {subcat}, Demo"
-            published = "TRUE"
-            
-            # Variant Option (Size for rings/bangles, Default for others)
-            opt1_name = "Title" if subcat not in ["Ring", "Gents Ring", "Ladies Ring", "Bangle"] else "Size"
-            
-            if opt1_name == "Size" and subcat == "Bangle":
-                opt1_val = str(random.choice(["2.2", "2.4", "2.6", "2.8"]))
-            elif opt1_name == "Size":
-                opt1_val = str(random.choice([10, 11, 12, 13, 14, 15, 16, 17, 18]))
-            else:
-                opt1_val = "Default Title"
-                
-            sku = f"SKU-{main_cat[:2].upper()}-{subcat[:2].upper()}-{i:04d}"
-            qty = random.randint(1, 20)
-            
-            # Generate Price in INR
-            min_p, max_p = price_ranges[main_cat]
-            price = random.randint(min_p, max_p)
-            
-            # 20% chance to have a discount (Compare at price is higher)
-            compare_price = int(price * random.uniform(1.15, 1.4)) if random.random() < 0.2 else ""
-            
-            # Empty image source as requested
-            img_src = ""
-            
-            rows.append([
-                handle, title, body, vendor, prod_cat, type_val, 
-                tags, published, opt1_name, opt1_val, sku, 
-                qty, price, compare_price, img_src
-            ])
-
-out_path = r"C:\Users\Acer\Dev\swastik-shopify\demo_products.csv"
-with open(out_path, "w", newline="", encoding="utf-8") as f:
+with open('sample_jewelry_product.csv', 'w', newline='', encoding='utf-8') as f:
     writer = csv.writer(f)
+    writer.writerow(header)
     writer.writerows(rows)
-    
-print("CSV generated successfully at", out_path, "with", len(rows)-1, "products.")
+print("CSV generated successfully.")
