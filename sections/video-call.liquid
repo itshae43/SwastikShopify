@@ -78,21 +78,12 @@
       {%- endif -%}
     </div>
     <div class="video-call__content">
-      <div class="video-call__icon-top">
-        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path d="M15 10L19.5 7V17L15 14V17H4V7H15V10Z" stroke="#B38245" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-        </svg>
-      </div>
       <h2 class="video-call__heading">{{ section.settings.heading }}</h2>
       <div class="video-call__divider">
         <div class="video-call__divider-line"></div>
         <div class="video-call__divider-icon">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M12 2L2 9L12 22L22 9L12 2Z" stroke="#B38245" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-            <path d="M2 9H22" stroke="#B38245" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-            <path d="M12 22V2" stroke="#B38245" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-            <path d="M12 2L7 9L12 22" stroke="#B38245" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-            <path d="M12 2L17 9L12 22" stroke="#B38245" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M15 10L19.5 7V17L15 14V17H4V7H15V10Z" stroke="#B38245" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
           </svg>
         </div>
         <div class="video-call__divider-line"></div>
@@ -358,36 +349,35 @@
     }
 
     .video-call__image {
-      height: 180px;
+      height: auto;
+      aspect-ratio: 4 / 3;
+      width: 100%;
+      object-fit: cover;
     }
 
     .video-call__content {
-      padding: 24px 16px 28px;
-    }
-
-    .video-call__icon-top {
-      margin-bottom: 12px;
+      padding: 32px 20px 36px;
     }
 
     .video-call__heading {
-      font-size: 22px;
-      line-height: 1.35;
-      margin-bottom: 12px;
+      font-size: 26px;
+      line-height: 1.3;
+      margin-bottom: 16px;
     }
 
     .video-call__divider {
-      max-width: 180px;
-      margin-bottom: 14px;
+      max-width: 200px;
+      margin-bottom: 20px;
     }
 
     .video-call__divider-icon {
-      margin: 0 10px;
+      margin: 0 12px;
     }
 
     .video-call__text {
-      font-size: 14px;
-      line-height: 1.5;
-      margin-bottom: 20px;
+      font-size: 15px;
+      line-height: 1.55;
+      margin-bottom: 28px;
     }
 
     .video-call__button {

@@ -85,10 +85,27 @@
       {%- endfor -%}
     </div>
 
-    <div class="latest-collections__dots">
-      {%- for block in section.blocks -%}
-        <button class="latest-collections__dot {% if forloop.first %}is-active{% endif %}" data-index="{{ forloop.index0 }}" aria-label="Go to slide {{ forloop.index }}"></button>
-      {%- endfor -%}
+    <div class="latest-collections__nav">
+      <button class="latest-collections__nav-btn latest-collections__nav-btn--prev" aria-label="Previous">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M15 18l-6-6 6-6"/></svg>
+      </button>
+      
+      <div class="latest-collections__pagination">
+        <div class="latest-collections__pagination-text">
+          <span class="latest-collections__current-page">01</span>
+          <span class="latest-collections__divider">/</span>
+          <span class="latest-collections__total-pages">{% if section.blocks.size < 10 %}0{% endif %}{{ section.blocks.size }}</span>
+        </div>
+        <div class="latest-collections__pagination-bars">
+          {%- for block in section.blocks -%}
+            <button class="latest-collections__bar {% if forloop.first %}is-active{% endif %}" data-index="{{ forloop.index0 }}" aria-label="Go to slide {{ forloop.index }}"></button>
+          {%- endfor -%}
+        </div>
+      </div>
+
+      <button class="latest-collections__nav-btn latest-collections__nav-btn--next" aria-label="Next">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M9 18l6-6-6-6"/></svg>
+      </button>
     </div>
 
     {%- if section.settings.button_label != blank -%}
@@ -113,7 +130,7 @@
     box-sizing: border-box;
   }
 
-  .latest-collections__dots {
+  .latest-collections__nav {
     display: none;
   }
 
@@ -397,7 +414,15 @@
     }
   }
 
+  .latest-collections__col.is-clone {
+    display: none;
+  }
+
   @media screen and (max-width: 768px) {
+    .latest-collections__col.is-clone {
+      display: block;
+    }
+
     .latest-collections {
       padding-top: 3.5rem;
       padding-bottom: 3.5rem;
@@ -501,40 +526,93 @@
       letter-spacing: 0.1em;
     }
 
-    .latest-collections__dots {
+    .latest-collections__nav {
       display: flex;
+      align-items: center;
       justify-content: center;
-      gap: 8px;
-      margin-top: 0.5rem;
+      gap: 24px;
+      margin-top: 1rem;
       margin-bottom: 1.5rem;
     }
-    
-    .latest-collections__dot {
-      position: relative;
-      width: 8px;
-      height: 8px;
+
+    .latest-collections__nav-btn {
+      width: 36px;
+      height: 36px;
       border-radius: 50%;
-      background-color: rgba(1, 63, 62, 0.2);
+      border: 1px solid #c5a47e;
+      background: transparent;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #013F3E;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      padding: 0;
+    }
+    
+    .latest-collections__nav-btn:hover {
+      background: rgba(197, 164, 126, 0.1);
+    }
+
+    .latest-collections__pagination {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .latest-collections__pagination-text {
+      font-size: 1.3rem;
+      font-family: var(--font-heading-family);
+      color: #666;
+    }
+
+    .latest-collections__current-page {
+      color: #013F3E;
+      font-weight: 600;
+      font-size: 1.4rem;
+    }
+
+    .latest-collections__divider {
+      margin: 0 4px;
+      color: #999;
+      font-weight: 400;
+      font-size: 1.2rem;
+    }
+
+    .latest-collections__total-pages {
+      color: #666;
+      font-weight: 400;
+      font-size: 1.2rem;
+    }
+
+    .latest-collections__pagination-bars {
+      display: flex;
+      gap: 6px;
+    }
+
+    .latest-collections__bar {
+      position: relative;
+      width: 16px;
+      height: 2px;
+      background-color: #EADCD0;
       border: none;
       padding: 0;
       cursor: pointer;
       transition: all 0.3s ease;
     }
 
-    /* Touch target padding area for WCAG/iOS touch guidelines */
-    .latest-collections__dot::before {
+    .latest-collections__bar::before {
       content: '';
       position: absolute;
       top: -12px;
       bottom: -12px;
-      left: -12px;
-      right: -12px;
+      left: -4px;
+      right: -4px;
     }
     
-    .latest-collections__dot.is-active {
-      background-color: var(--color-primary, #013F3E);
-      width: 24px;
-      border-radius: 4px;
+    .latest-collections__bar.is-active {
+      background-color: #c5a47e;
     }
 
     .latest-collections__button-container {
@@ -553,7 +631,12 @@
     constructor() {
       super();
       this.slider = this.querySelector('.latest-collections__grid');
-      this.dots = Array.from(this.querySelectorAll('.latest-collections__dot'));
+      this.dots = Array.from(this.querySelectorAll('.latest-collections__bar'));
+      
+      const prevBtn = this.querySelector('.latest-collections__nav-btn--prev');
+      const nextBtn = this.querySelector('.latest-collections__nav-btn--next');
+      if (prevBtn) prevBtn.addEventListener('click', () => { if (window.innerWidth <= 768) this.prev(); });
+      if (nextBtn) nextBtn.addEventListener('click', () => { if (window.innerWidth <= 768) this.next(); });
       
       if (!this.slider) return;
       this.slides = Array.from(this.slider.children);
@@ -566,10 +649,23 @@
     }
 
     init() {
+      // On mobile, if fewer than 5 slides, clone them so wrap-around happens invisibly in deep background without card recycling overlap
+      if (this.slides.length > 0 && this.slides.length < 5) {
+        const initialCount = this.slides.length;
+        for (let i = 0; i < initialCount; i++) {
+          const clone = this.slides[i].cloneNode(true);
+          clone.classList.add('is-clone');
+          this.slider.appendChild(clone);
+        }
+        this.slides = Array.from(this.slider.children);
+        this.totalSlides = this.slides.length;
+      }
+
       // Dot click handling
       this.dots.forEach((dot, index) => {
         dot.addEventListener('click', () => {
-          if (this.currentIndex !== index) {
+          const numDots = this.dots.length;
+          if ((this.currentIndex % numDots) !== index) {
             this.currentIndex = index;
             this.update();
           }
@@ -609,7 +705,7 @@
         // Ignore if scrolling vertically up/down the webpage
         if (Math.abs(diffY) > Math.abs(diffX)) return;
 
-        if (Math.abs(diffX) > 45) {
+        if (Math.abs(diffX) > 35) {
           if (diffX > 0) {
             this.next();
           } else {
@@ -645,15 +741,24 @@
       const total = this.totalSlides;
 
       if (!isMobile) {
-        // Reset inline styles on desktop so standard grid takes over
+        // Reset inline styles on desktop so standard grid takes over and hide clones
         this.slides.forEach((slide) => {
-          slide.style.transform = '';
-          slide.style.opacity = '';
-          slide.style.zIndex = '';
-          slide.style.pointerEvents = '';
-          slide.classList.remove('is-active', 'is-peek-left', 'is-peek-right');
+          if (slide.classList.contains('is-clone')) {
+            slide.style.display = 'none';
+          } else {
+            slide.style.display = '';
+            slide.style.transform = '';
+            slide.style.opacity = '';
+            slide.style.zIndex = '';
+            slide.style.pointerEvents = '';
+            slide.classList.remove('is-active', 'is-peek-left', 'is-peek-right');
+          }
         });
         return;
+      } else {
+        this.slides.forEach((slide) => {
+          slide.style.display = '';
+        });
       }
 
       const xStep = 96; // Percentage shift to maintain clean gap and visible side cards
@@ -728,9 +833,16 @@
         slide.classList.toggle('is-peek-right', isRight);
       });
 
+      const numDots = this.dots.length;
       this.dots.forEach((dot, index) => {
-        dot.classList.toggle('is-active', index === this.currentIndex);
+        dot.classList.toggle('is-active', index === (this.currentIndex % numDots));
       });
+      
+      const currentPageEl = this.querySelector('.latest-collections__current-page');
+      if (currentPageEl) {
+        const pageNum = (this.currentIndex % numDots) + 1;
+        currentPageEl.textContent = pageNum < 10 ? '0' + pageNum : pageNum;
+      }
     }
   }
 
