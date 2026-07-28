@@ -1,0 +1,5 @@
+Handle,Title,Body (HTML),Vendor,Option1 Name,Option1 Value,Option2 Name,Option2 Value,Option3 Name,Option3 Value,Variant SKU,Variant Price,Product Metafield: custom.gross_weight,Product Metafield: custom.net_weight,Product Metafield: custom.diamond_weight,Product Metafield: custom.stone_weight,Variant Metafield: custom.gold_value,Variant Metafield: custom.diamond_value,Variant Metafield: custom.making_charges,Variant Metafield: custom.gst_amount
+diamond-ring-01,Elegant Diamond Ring,<p>A beautiful ring.</p>,Swastik Jewellers,Gold Color,Rose Gold,Gold Purity,18kt,Diamond Quality,F-G VS-SI,SKU-18-ROSE,10000,5.2,4.8,1.75,0.5,1500,7000,1200,300
+diamond-ring-01,,,,Gold Color,Rose Gold,Gold Purity,14kt,Diamond Quality,F-G VS-SI,SKU-14-ROSE,8500,,,,,,1200,6000,1050,250
+diamond-ring-01,,,,Gold Color,White Gold,Gold Purity,18kt,Diamond Quality,F-G VS-SI,SKU-18-WHITE,10500,,,,,,1600,7400,1200,300
+diamond-ring-01,,,,Gold Color,White Gold,Gold Purity,14kt,Diamond Quality,F-G VS-SI,SKU-14-WHITE,9000,,,,,,1300,6400,1050,250

@@ -350,26 +350,26 @@
         <!-- Card Below: Tab 2 (Price Breakdown) -->
         <div class="pp-info-card pp-tab-body" id="tab-price" style="display: none;">
           <div class="pp-table-row">
-            <span class="pp-row-label" id="ui-label-gold">Gold Value (18K)</span>
-            <span class="pp-row-value" id="ui-price-gold">₹85,400</span>
+            <span class="pp-row-label" id="ui-label-gold">Gold Value</span>
+            <span class="pp-row-value" id="ui-price-gold">₹{{ current_variant.metafields.custom.gold_value | default: '0' }}</span>
           </div>
           <div class="pp-row-divider"></div>
 
           <div class="pp-table-row">
-            <span class="pp-row-label" id="ui-label-dia-val">Diamond Value (1.75 cts)</span>
-            <span class="pp-row-value" id="ui-price-diamond">₹42,500</span>
+            <span class="pp-row-label" id="ui-label-dia-val">Diamond Value</span>
+            <span class="pp-row-value" id="ui-price-diamond">₹{{ current_variant.metafields.custom.diamond_value | default: '0' }}</span>
           </div>
           <div class="pp-row-divider"></div>
 
           <div class="pp-table-row">
             <span class="pp-row-label">Making Charges</span>
-            <span class="pp-row-value" id="ui-price-making">{{ product.metafields.custom.making_charges | money | default: '₹13,500' }}</span>
+            <span class="pp-row-value" id="ui-price-making">₹{{ current_variant.metafields.custom.making_charges | default: '13500' }}</span>
           </div>
           <div class="pp-row-divider"></div>
 
           <div class="pp-table-row">
             <span class="pp-row-label">GST (3%)</span>
-            <span class="pp-row-value" id="ui-price-gst">₹4,500</span>
+            <span class="pp-row-value" id="ui-price-gst">₹{{ current_variant.metafields.custom.gst_amount | default: '0' }}</span>
           </div>
           <div class="pp-table-row pp-total-row">
             <span class="pp-row-label">TOTAL PRICE</span>

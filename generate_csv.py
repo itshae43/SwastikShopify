@@ -1,72 +1,92 @@
 import csv
 
-colors = ["Rose Gold", "Yellow Gold", "White Gold"]
-purities = [("9kt", 0.375), ("14kt", 0.583), ("18kt", 0.75)]
-diamonds = [
+colors = ["Yellow Gold", "Rose Gold", "White Gold"]
+purities = [
+    ("18kt", 5000), # example price per gram
+    ("14kt", 4000),
+    ("9kt", 3000)
+]
+diamond_grades = [
     ("F-G VS-SI", 45000),
     ("F-G SI-I", 40000),
     ("G-H VS-SI", 40000),
     ("G-H SI-I", 35000),
-    ("H-I VS-SI", 3200),
+    ("H-I VS-SI", 32000),
     ("H-I SI-I", 28000),
-    ("I-J VS-SI", 2100),
-    ("I-J SI-I", 2000)
+    ("I-J VS-SI", 21000),
+    ("I-J SI-I", 20000),
 ]
 
-# The Master Formula Variables (Test Data)
-gold_rate_24k = 7000 # per gram
-gold_weight = 5.0 # grams
-diamond_weight = 1.0 # carat
-making_charges = 3000
+net_weight = 14.25
+gross_weight = 15.0
+diamond_weight = 1.75
+stone_weight = 0.5
+making_charges = 13500
+
+header = [
+    "Handle","Title","Body (HTML)","Vendor",
+    "Option1 Name","Option1 Value",
+    "Option2 Name","Option2 Value",
+    "Option3 Name","Option3 Value",
+    "Variant SKU","Variant Price",
+    "Product Metafield: custom.gross_weight",
+    "Product Metafield: custom.net_weight",
+    "Product Metafield: custom.diamond_weight",
+    "Product Metafield: custom.stone_weight",
+    "Variant Metafield: custom.gold_value",
+    "Variant Metafield: custom.diamond_value",
+    "Variant Metafield: custom.making_charges",
+    "Variant Metafield: custom.gst_amount"
+]
 
 rows = []
-header = [
-    "Handle", "Title", "Body (HTML)", "Vendor", "Product Category", "Type", "Tags", "Published",
-    "Option1 Name", "Option1 Value", "Option2 Name", "Option2 Value", "Option3 Name", "Option3 Value",
-    "Variant SKU", "Variant Grams", "Variant Inventory Tracker", "Variant Inventory Qty", "Variant Inventory Policy", 
-    "Variant Fulfillment Service", "Variant Price", "Variant Compare At Price", "Variant Requires Shipping", "Variant Taxable",
-    "Image Src", "Image Position", "Image Alt Text", "Gift Card", "SEO Title", "SEO Description",
-    "Google Shopping / Google Product Category", "Google Shopping / Gender", "Google Shopping / Age Group", 
-    "Google Shopping / MPN", "Google Shopping / AdWords Grouping", "Google Shopping / AdWords Labels", 
-    "Google Shopping / Condition", "Google Shopping / Custom Product", "Google Shopping / Custom Label 0", 
-    "Google Shopping / Custom Label 1", "Google Shopping / Custom Label 2", "Google Shopping / Custom Label 3", 
-    "Google Shopping / Custom Label 4", "Variant Image", "Variant Weight Unit", "Variant Tax Code", "Cost per item", 
-    "Included / India", "Status"
-]
+is_first_row = True
 
-first_row = True
 for color in colors:
-    for purity_name, purity_mult in purities:
-        for dia_name, dia_price_per_ct in diamonds:
-            # The Automatic Math Calculation
-            gold_cost = gold_rate_24k * purity_mult * gold_weight
-            diamond_cost = dia_price_per_ct * diamond_weight
-            total_price = round(gold_cost + diamond_cost + making_charges)
+    for purity_name, purity_rate in purities:
+        for grade_name, grade_rate in diamond_grades:
             
-            # Shopify only needs Title and Status on the first row of a product
-            title = "Sample Custom Diamond Ring" if first_row else ""
-            status = "active" if first_row else ""
+            # Simulated calculations based on your provided per-carat prices
+            gold_value = round(net_weight * purity_rate)
+            diamond_value = round(diamond_weight * grade_rate)
             
-            # Fill out the row with Shopify's required empty columns
-            row = [
-                "sample-custom-diamond-ring", # Handle
-                title, # Title
-                "", "", "", "", "", "", # Body to Published
-                "Metal Color", color, # Option 1
-                "Gold Purity", purity_name, # Option 2
-                "Diamond Quality", dia_name, # Option 3
-                "", "", "shopify", "10", "deny", "manual", # SKU to Fulfillment
-                str(total_price), # Variant Price
-                "", "TRUE", "TRUE", # Compare Price, Shipping, Taxable
-                "", "", "", "FALSE", "", "", # Image to SEO
-                "", "", "", "", "", "", "", "", "", "", "", "", "", "", # Google Shopping
-                "kg", "", "", "TRUE", status # Unit to Status
-            ]
-            rows.append(row)
-            first_row = False
+            subtotal = gold_value + diamond_value + making_charges
+            gst = round(subtotal * 0.03)
+            total_price = subtotal + gst
+            
+            sku = f"SKU-{purity_name[:2]}-{color[:1]}-{grade_name.replace(' ', '')}"
+            
+            row = {
+                "Handle": "diamond-ring-01",
+                "Option1 Name": "Gold Color",
+                "Option1 Value": color,
+                "Option2 Name": "Gold Purity",
+                "Option2 Value": purity_name,
+                "Option3 Name": "Diamond Quality",
+                "Option3 Value": grade_name,
+                "Variant SKU": sku,
+                "Variant Price": total_price,
+                "Variant Metafield: custom.gold_value": gold_value,
+                "Variant Metafield: custom.diamond_value": diamond_value,
+                "Variant Metafield: custom.making_charges": making_charges,
+                "Variant Metafield: custom.gst_amount": gst,
+            }
+            
+            if is_first_row:
+                row["Title"] = "Elegant Diamond Ring"
+                row["Body (HTML)"] = "<p>A beautiful ring.</p>"
+                row["Vendor"] = "Swastik Jewellers"
+                row["Product Metafield: custom.gross_weight"] = gross_weight
+                row["Product Metafield: custom.net_weight"] = net_weight
+                row["Product Metafield: custom.diamond_weight"] = diamond_weight
+                row["Product Metafield: custom.stone_weight"] = stone_weight
+                is_first_row = False
+            
+            # Fill missing keys with empty string
+            final_row = [row.get(col, "") for col in header]
+            rows.append(final_row)
 
-with open('sample_jewelry_product.csv', 'w', newline='', encoding='utf-8') as f:
+with open("sample_product_import_full.csv", "w", newline="", encoding="utf-8") as f:
     writer = csv.writer(f)
     writer.writerow(header)
     writer.writerows(rows)
-print("CSV generated successfully.")
