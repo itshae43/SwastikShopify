@@ -585,7 +585,6 @@
 
 <script id="pp-metafields-json" type="application/json">
   {
-    "gold_rate_24k": {{ settings.gold_rate_24k | default: 10000 | json }},
     "gross_weight": {{ product.metafields.custom.gross_weight | json }},
     "diamond_weight": {{ product.metafields.custom.diamond_weight | json }},
     "making_charges": {{ product.metafields.custom.making_charges | json }}
@@ -1949,19 +1948,15 @@
             const skuEl = document.getElementById('pp-sku');
             if (skuEl && matched.sku) skuEl.textContent = matched.sku;
             
-            // --- DYNAMIC UI BREAKDOWN LOGIC (FORWARD MATH) ---
+            // --- DYNAMIC UI BREAKDOWN LOGIC ---
             const metaEl = document.getElementById('pp-metafields-json');
             if (metaEl) {
               const meta = JSON.parse(metaEl.textContent || '{}');
+              const total = matched.price / 100;
               
-              // Base properties
               const color = selectedVals[0] || 'Gold';
               const purity = selectedVals[1] || '18K';
               const quality = selectedVals[2] || 'G-VS';
-              
-              // Extract Metafields
-              const grossWeightStr = String(meta.gross_weight || '16.350').replace(/[^0-9.]/g, '');
-              const grossWeight = parseFloat(grossWeightStr) || 16.350;
               
               const diaWeightStr = String(meta.diamond_weight || '1.75').replace(/[^0-9.]/g, '');
               const diaWeight = parseFloat(diaWeightStr) || 1.75;
@@ -1969,21 +1964,6 @@
               const makingStr = String(meta.making_charges || '13500').replace(/[^0-9.]/g, '');
               const making = parseFloat(makingStr) || 13500;
               
-              const goldRate24k = parseFloat(meta.gold_rate_24k) || 10000;
-              
-              // 1. Calculate Gold Value based on Purity
-              let purityMultiplier = 0.76; // Default 18K
-              if (purity.includes('9K')) purityMultiplier = 0.40;
-              else if (purity.includes('14K')) purityMultiplier = 0.60;
-              else if (purity.includes('18K')) purityMultiplier = 0.76;
-              else if (purity.includes('22K')) purityMultiplier = 0.916;
-              else if (purity.includes('24K')) purityMultiplier = 1.0;
-              
-              const currentGoldRate = goldRate24k * purityMultiplier;
-              const netWeight = grossWeight - (diaWeight * 0.2); // 1 carat = 0.2 grams
-              const goldValue = Math.max(0, Math.round(netWeight * currentGoldRate));
-              
-              // 2. Calculate Diamond Value based on exact chart
               let diaRate = 45000;
               const q = quality.toUpperCase();
               if(q.includes('F-G VS-SI')) diaRate = 45000;
@@ -1995,21 +1975,14 @@
               else if(q.includes('I-J VS-SI')) diaRate = 21000;
               else if(q.includes('I-J SI-I')) diaRate = 20000;
               
-              const diamondValue = Math.round(diaWeight * diaRate);
-              
-              // 3. Calculate GST and Final Total
-              const preGstTotal = goldValue + diamondValue + making;
-              const gst = Math.round(preGstTotal * 0.03);
-              const finalTotal = preGstTotal + gst;
+              const diamondValue = diaWeight * diaRate;
+              const gst = Math.round(total * 0.03);
+              const goldValue = total - diamondValue - making - gst;
               
               const fmt = (val) => val.toLocaleString('en-IN', { style: 'currency', currency: 'INR', maximumFractionDigits: 0 }).replace('INR', '₹');
               
-              // Update Display values
               const elMetal = document.getElementById('ui-detail-metal');
               if(elMetal) elMetal.textContent = `${purity} ${color}`;
-              
-              const elGross = document.getElementById('ui-detail-gross');
-              if(elGross) elGross.textContent = `${grossWeight} gms`;
               
               const elDiaQuality = document.getElementById('ui-detail-quality');
               if(elDiaQuality) elDiaQuality.textContent = quality;
@@ -2021,7 +1994,7 @@
               if(elDiaLbl) elDiaLbl.textContent = `Diamond Value (${diaWeight} cts)`;
               
               const elGoldVal = document.getElementById('ui-price-gold');
-              if(elGoldVal) elGoldVal.textContent = fmt(goldValue);
+              if(elGoldVal) elGoldVal.textContent = fmt(goldValue > 0 ? goldValue : 0);
               
               const elDiaVal = document.getElementById('ui-price-diamond');
               if(elDiaVal) elDiaVal.textContent = fmt(diamondValue);
@@ -2032,12 +2005,8 @@
               const elGst = document.getElementById('ui-price-gst');
               if(elGst) elGst.textContent = fmt(gst);
               
-              // Overwrite both total price displays with the mathematically correct forward total
               const elTotal = document.getElementById('ui-price-total');
-              if(elTotal) elTotal.textContent = fmt(finalTotal);
-              
-              const priceEl = document.getElementById('pp-price');
-              if (priceEl) priceEl.innerHTML = fmt(finalTotal);
+              if(elTotal) elTotal.textContent = priceFormatted;
             }
           }
         } catch (err) {

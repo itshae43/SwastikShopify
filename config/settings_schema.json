@@ -108,18 +108,6 @@
         "info": "Will be scaled down to 32x32px for desktop tabs and 180x180px for mobile devices."
       }
     ]
-  },
-  {
-    "name": "Live Market Rates",
-    "settings": [
-      {
-        "type": "number",
-        "id": "gold_rate_24k",
-        "label": "24K Gold Rate (per gram)",
-        "default": 10000,
-        "info": "Used for live UI price calculations."
-      }
-    ]
   }
 ]
 
