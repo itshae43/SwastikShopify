@@ -23,11 +23,6 @@
         {%- if section.settings.title != blank -%}
           <h2 class="testimonials-v2__heading-centered serif-font">
             {{ section.settings.title | escape }}
-            <span class="testimonials-v2__heart-wrapper">
-              <svg class="testimonials-v2__heart-outline" viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="6" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M 50 35 C 50 35 38 15 20 25 C 2 35 10 70 50 85 C 90 70 98 35 80 25 C 62 15 50 35 50 35 Z" />
-              </svg>
-            </span>
           </h2>
         {%- endif -%}
 
@@ -76,7 +71,7 @@
                       <svg class="testimonials-v2__verify-icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
                         <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
                       </svg>
-                      VERIFIED PURCHASE
+                      VERIFIED
                     </span>
                     <span class="testimonials-v2__location-dot">&bull;</span>
                     <span class="testimonials-v2__location">{{ block.settings.location | escape | upcase }}</span>
@@ -125,9 +120,6 @@
         {%- if section.settings.trust_copy != blank -%}
           <div class="testimonials-v2__trust-copy">
             <span class="testimonials-v2__trust-text">{{ section.settings.trust_copy | newline_to_br }}</span>
-            <svg class="testimonials-v2__heart-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
-            </svg>
           </div>
         {%- endif -%}
 
@@ -202,7 +194,7 @@
                         <svg class="testimonials-v2__verify-icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
                           <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
                         </svg>
-                        VERIFIED PURCHASE
+                        VERIFIED
                       </span>
                       <span class="testimonials-v2__location-dot">&bull;</span>
                       <span class="testimonials-v2__location">{{ block.settings.location | escape | upcase }}</span>
@@ -821,35 +813,52 @@
     mask-image: none;
     -webkit-mask-image: none;
     margin: 0 -2rem; /* Bleed out on mobile */
-    padding: 0.8rem 2rem 1.5rem 2rem;
+    padding: 0.8rem 2rem 2rem 2rem;
   }
   .testimonials-v2__card-wrapper {
-    width: 310px;
-    scroll-snap-align: center;
+    width: 260px;
+    scroll-snap-align: start;
+    filter: none !important;
   }
   .testimonials-v2__card {
-    padding: 2.2rem 2rem;
-    border-radius: 20px;
-    border: 1px solid rgba(179, 130, 69, 0.08);
+    padding: 1.8rem 1.6rem;
+    border-radius: 16px;
+    border: 1px solid rgba(179, 130, 69, 0.15);
+    box-shadow: 0 10px 30px rgba(0,0,0,0.06);
+    background: #ffffff;
+    transition: transform 0.3s ease;
+  }
+  .testimonials-v2__card:active {
+    transform: scale(0.98);
   }
   .testimonials-v2__text p {
-    font-size: 1.3rem;
-    line-height: 1.45;
+    font-size: 1.15rem;
+    line-height: 1.5;
   }
   .testimonials-v2__card::after {
     border-top-color: #ffffff;
-    left: 45px;
+    left: 35px;
     bottom: -10px;
     border-left-width: 10px;
     border-right-width: 10px;
     border-top-width: 10px;
   }
   .testimonials-v2__quote-icon {
-    width: 18px;
+    width: 16px;
   }
   .testimonials-v2__rating .star {
-    width: 13px;
-    height: 13px;
+    width: 12px;
+    height: 12px;
+  }
+  .testimonials-v2__author {
+    font-size: 1.15rem;
+  }
+  .testimonials-v2__location-row {
+    font-size: 0.65rem;
+  }
+  .testimonials-v2__verify {
+    font-size: 0.55rem;
+    padding: 0.2rem 0.4rem;
   }
   .testimonials-v2__dots-container {
     justify-content: center;
@@ -879,29 +888,74 @@
     margin: 0 -1rem;
     padding-left: 1rem;
     padding-right: 1rem;
+    padding-bottom: 1.5rem;
     overflow-x: auto;
     overflow-y: visible;
     width: auto;
+    scroll-snap-type: none;
   }
   .testimonials-v2__container--centered .testimonials-v2__slider-track {
     display: flex;
     width: max-content;
-    padding-left: calc(50vw - 155px);
-    padding-right: calc(50vw - 155px);
-    gap: 1.6rem;
+    padding-left: 14px;
+    padding-right: 14px;
+    gap: 12px;
     margin: 0;
   }
   .testimonials-v2__container--centered .testimonials-v2__card-wrapper {
-    width: 310px;
-    opacity: 0.8 !important;
-    transform: scale(0.98) !important;
+    flex: 0 0 calc(50vw - 20px);
+    width: calc(50vw - 20px);
+    min-width: calc(50vw - 20px);
+    max-width: calc(50vw - 20px);
+    opacity: 1 !important;
+    transform: none !important;
+    scroll-snap-align: none;
+    display: flex;
+    flex-direction: column;
+    filter: none !important;
   }
   .testimonials-v2__container--centered .testimonials-v2__card-wrapper.is-active {
     opacity: 1 !important;
-    transform: scale(1) !important;
+    transform: none !important;
+    filter: none !important;
+  }
+  .testimonials-v2__container--centered .testimonials-v2__card {
+    padding: 1rem;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+  }
+  .testimonials-v2__container--centered .testimonials-v2__text {
+    margin-bottom: 0;
+    flex-grow: 0;
+    min-height: 70px;
+  }
+  .testimonials-v2__container--centered .testimonials-v2__meta {
+    margin-top: 5px;
+  }
+  .testimonials-v2__container--centered .testimonials-v2__text p {
+    font-size: 12.5px;
+    line-height: 1.4;
+    display: -webkit-box;
+    -webkit-line-clamp: 4;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    margin: 0 0 5px 0;
+  }
+  .testimonials-v2__container--centered .testimonials-v2__author {
+    font-size: 12px;
+  }
+  .testimonials-v2__container--centered .testimonials-v2__location-row {
+    font-size: 9px;
+  }
+  .testimonials-v2__container--centered .testimonials-v2__verify {
+    font-size: 8px;
+    padding: 0.15rem 0.3rem;
+    white-space: nowrap;
   }
   .testimonials-v2__container--centered .testimonials-v2__dots-container {
-    display: flex;
+    display: none;
   }
 }
 {% endstylesheet %}
@@ -961,12 +1015,7 @@ document.addEventListener('DOMContentLoaded', () => {
       });
 
       const getScrollPosition = (card) => {
-        const isCentered = section.querySelector('.testimonials-v2__container--centered') !== null;
-        const isMobile = window.innerWidth <= 990;
-        if (isCentered && isMobile) {
-          return card.offsetLeft - (viewport.clientWidth - card.clientWidth) / 2;
-        }
-        return card.offsetLeft;
+        return card.offsetLeft - 24; // 24px is 1.5rem for padding
       };
 
       // Handle dot clicks
@@ -984,8 +1033,6 @@ document.addEventListener('DOMContentLoaded', () => {
       
       // Auto setup initial dot
       updateDots();
-      setTimeout(updateDots, 150);
-
       // Autoplay logic
       const autoplay = section.dataset.autoplay === 'true';
       const autoplaySpeed = parseInt(section.dataset.autoplaySpeed, 10) * 1000 || 6000;
@@ -1012,12 +1059,49 @@ document.addEventListener('DOMContentLoaded', () => {
         if (autoplayInterval) clearInterval(autoplayInterval);
       };
 
+      const isMobileCentered = () => {
+        return window.innerWidth <= 990 && section.querySelector('.testimonials-v2__container--centered') !== null;
+      };
+
       if (autoplay) {
-        startAutoplay();
-        viewport.addEventListener('mouseenter', stopAutoplay);
-        viewport.addEventListener('mouseleave', startAutoplay);
-        viewport.addEventListener('touchstart', stopAutoplay, {passive: true});
-        viewport.addEventListener('touchend', startAutoplay, {passive: true});
+        if (isMobileCentered()) {
+          // Continuous marquee for mobile
+          const children = Array.from(track.children);
+          if (children.length > 0) {
+            children.forEach(child => {
+              const clone = child.cloneNode(true);
+              clone.setAttribute('aria-hidden', 'true');
+              track.appendChild(clone);
+            });
+          }
+          let isHovered = false;
+          let isTouching = false;
+          let speed = 0.45;
+          let marqueeFrame;
+
+          viewport.addEventListener('mouseenter', () => isHovered = true);
+          viewport.addEventListener('mouseleave', () => isHovered = false);
+          viewport.addEventListener('touchstart', () => isTouching = true, {passive: true});
+          viewport.addEventListener('touchend', () => { setTimeout(() => isTouching = false, 1200); }, {passive: true});
+
+          const autoScrollMarquee = () => {
+            if (!isHovered && !isTouching) {
+              viewport.scrollLeft += speed;
+              if (viewport.scrollLeft >= track.scrollWidth / 2) {
+                viewport.scrollLeft = viewport.scrollLeft - (track.scrollWidth / 2);
+              }
+            }
+            marqueeFrame = requestAnimationFrame(autoScrollMarquee);
+          };
+          marqueeFrame = requestAnimationFrame(autoScrollMarquee);
+        } else {
+          // Standard dot autoplay for desktop
+          startAutoplay();
+          viewport.addEventListener('mouseenter', stopAutoplay);
+          viewport.addEventListener('mouseleave', startAutoplay);
+          viewport.addEventListener('touchstart', stopAutoplay, {passive: true});
+          viewport.addEventListener('touchend', startAutoplay, {passive: true});
+        }
       }
     });
   };
