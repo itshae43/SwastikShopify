@@ -116,11 +116,11 @@
                 <span class="pp-price-tax-label">(Incl. of all taxes)</span>
               </div>
               <div class="pp-price-box-bottom">
-                <span class="pp-price-compare" id="pp-compare-price" {% unless current_variant.compare_at_price > current_variant.price %}style="display:none;"{% endunless %}>MRP {{ current_variant.compare_at_price | money }}</span>
-                {% unless current_variant.compare_at_price > current_variant.price %}
-                  {% assign dummy_compare = current_variant.price | times: 1.10 | round %}
-                  <span class="pp-price-compare" id="pp-compare-price">MRP {{ dummy_compare | money }}</span>
+                {% assign compare_price = current_variant.compare_at_price %}
+                {% unless compare_price > current_variant.price %}
+                  {% assign compare_price = current_variant.price | times: 1.10 | round %}
                 {% endunless %}
+                <span class="pp-price-compare" id="pp-compare-price">MRP {{ compare_price | money }}</span>
               </div>
             </div>
 
@@ -2009,12 +2009,25 @@
             const variantIdInput = document.getElementById('pp-variant-id');
             if (variantIdInput) variantIdInput.value = matched.id;
             
-            const priceFormatted = (matched.price / 100).toLocaleString('en-IN', { style: 'currency', currency: 'INR', maximumFractionDigits: 0 }).replace('INR', '₹');
+            const formatMoney = (cents) => {
+              return 'Rs. ' + (cents / 100).toLocaleString('en-IN', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+            };
+            const priceFormatted = formatMoney(matched.price);
             
             const priceEl = document.getElementById('pp-price');
             if (priceEl && matched.price) {
               priceEl.innerHTML = priceFormatted;
             }
+
+            const comparePriceEl = document.getElementById('pp-compare-price');
+            if (comparePriceEl) {
+              let comparePrice = matched.compare_at_price;
+              if (!comparePrice || comparePrice <= matched.price) {
+                comparePrice = Math.round(matched.price * 1.10);
+              }
+              comparePriceEl.innerHTML = 'MRP ' + formatMoney(comparePrice);
+            }
+
             const skuEl = document.getElementById('pp-sku');
             if (skuEl && matched.sku) skuEl.textContent = matched.sku;
             
@@ -2046,7 +2059,7 @@
               const goldValue = safeParse(variantMeta.gold_value, 0);
               const diaWeight = parseFloat(String(meta.diamond_weight || '1.75').replace(/[^0-9.]/g, '')) || 1.75;
               
-              const fmt = (val) => val.toLocaleString('en-IN', { style: 'currency', currency: 'INR', maximumFractionDigits: 0 }).replace('INR', '₹');
+              const fmt = (val) => 'Rs. ' + val.toLocaleString('en-IN', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
               
               const elMetal = document.getElementById('ui-detail-metal');
               if(elMetal) elMetal.textContent = `${purity} ${color}`;
