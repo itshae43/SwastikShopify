@@ -71,7 +71,7 @@
   }
   .cart-drawer__content {
     position: relative;
-    width: 100%;
+    width: 85%;
     max-width: 450px;
     height: 100%;
     background-color: #FAF8F2;
@@ -378,18 +378,21 @@
     }
 
     let html = '';
-    itemsToRender.forEach(item => {
-      const optionsText = item.options_with_values 
-        ? item.options_with_values.filter(opt => opt.value !== 'Default Title').map(opt => opt.value).join(' | ') 
-        : '';
-        
-      html += `
+    try {
+      itemsToRender.forEach(item => {
+        const optionsArray = Array.isArray(item.options_with_values) ? item.options_with_values : [];
+        const optionsText = optionsArray.length > 0 
+          ? optionsArray.filter(opt => opt.value && opt.value !== 'Default Title').map(opt => opt.value).join(' | ') 
+          : '';
+        const itemPrice = item.final_line_price !== undefined ? item.final_line_price : (item.line_price || item.price || 0);
+          
+        html += `
         <div class="cart-item" data-key="${item.key}">
           <img src="${item.image || ''}" alt="${item.title}" class="cart-item__image">
           <div class="cart-item__details">
-            <a href="${item.url}" class="cart-item__title">${item.product_title}</a>
+            <a href="${item.url || '#'}" class="cart-item__title">${item.product_title || item.title || 'Product'}</a>
             ${optionsText ? `<div class="cart-item__options">${optionsText}</div>` : ''}
-            <div class="cart-item__price">${formatMoney(item.final_line_price)}</div>
+            <div class="cart-item__price">${formatMoney(itemPrice)}</div>
             
             <div class="cart-item__bottom">
               <div class="cart-item__qty">
@@ -406,7 +409,10 @@
           </div>
         </div>
       `;
-    });
+      });
+    } catch (e) {
+      console.error('Error rendering cart items', e);
+    }
 
     body.innerHTML = html;
     
