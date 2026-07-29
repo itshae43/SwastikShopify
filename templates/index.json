@@ -214,7 +214,7 @@
           "type": "collection",
           "settings": {
             "collection": "pendant-sets",
-            "title": "PENDANT SET",
+            "title": "PENDANT SETS",
             "image": "shopify://shop_images/latest_6.png"
           }
         },
@@ -222,7 +222,7 @@
           "type": "collection",
           "settings": {
             "collection": "gold-earrings",
-            "title": "GOLD CHEEK PATTI",
+            "title": "GOLD BRACELETS",
             "image": "shopify://shop_images/latest_5.png"
           }
         },
