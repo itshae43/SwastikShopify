@@ -324,7 +324,9 @@
 
           <div class="pp-table-row">
             <span class="pp-row-label">Net Weight</span>
-            <span class="pp-row-value" id="ui-detail-net">{{ product.metafields.custom.net_weight | default: '14.250 gms' }}</span>
+            {%- comment -%} The store definition is the misspelled net_wight; net_weight is the newer key. {%- endcomment -%}
+            {%- assign net_wt = product.metafields.custom.net_weight | default: product.metafields.custom.net_wight -%}
+            <span class="pp-row-value" id="ui-detail-net">{{ net_wt | default: '14.250 gms' }}</span>
           </div>
           <div class="pp-row-divider"></div>
 
