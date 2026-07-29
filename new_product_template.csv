@@ -1,0 +1,9 @@
+Handle,Title,Body (HTML),Vendor,Option1 Name,Option1 Value,Option2 Name,Option2 Value,Option3 Name,Option3 Value,Variant SKU,Variant Price,Product Metafield: custom.gross_weight,Product Metafield: custom.net_weight,Product Metafield: custom.diamond_weight,Product Metafield: custom.stone_weight,Variant Metafield: custom.gold_value,Variant Metafield: custom.diamond_value,Variant Metafield: custom.making_charges,Variant Metafield: custom.gst_amount
+elegant-diamond-pendant,Elegant Diamond Pendant,<p>A stunning diamond pendant.</p>,Swastik Jewellers,Gold Color,Yellow Gold,Gold Purity,18kt,Diamond Quality,F-G VS-SI,PEND-18-Y-FG,155000,4.5,4.0,1.2,0.0,60000,80000,10500,4500
+elegant-diamond-pendant,,,,Gold Color,Yellow Gold,Gold Purity,18kt,Diamond Quality,G-H VS-SI,PEND-18-Y-GH,145000,,,,,,60000,70000,10500,4500
+elegant-diamond-pendant,,,,Gold Color,Yellow Gold,Gold Purity,14kt,Diamond Quality,F-G VS-SI,PEND-14-Y-FG,135000,,,,,,40000,80000,10500,4500
+elegant-diamond-pendant,,,,Gold Color,Yellow Gold,Gold Purity,14kt,Diamond Quality,G-H VS-SI,PEND-14-Y-GH,125000,,,,,,40000,70000,10500,4500
+elegant-diamond-pendant,,,,Gold Color,Rose Gold,Gold Purity,18kt,Diamond Quality,F-G VS-SI,PEND-18-R-FG,155000,,,,,,60000,80000,10500,4500
+elegant-diamond-pendant,,,,Gold Color,Rose Gold,Gold Purity,18kt,Diamond Quality,G-H VS-SI,PEND-18-R-GH,145000,,,,,,60000,70000,10500,4500
+elegant-diamond-pendant,,,,Gold Color,Rose Gold,Gold Purity,14kt,Diamond Quality,F-G VS-SI,PEND-14-R-FG,135000,,,,,,40000,80000,10500,4500
+elegant-diamond-pendant,,,,Gold Color,Rose Gold,Gold Purity,14kt,Diamond Quality,G-H VS-SI,PEND-14-R-GH,125000,,,,,,40000,70000,10500,4500

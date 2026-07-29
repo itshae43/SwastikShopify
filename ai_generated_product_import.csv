@@ -1,0 +1,19 @@
+Handle,Title,Body (HTML),Vendor,Option1 Name,Option1 Value,Option2 Name,Option2 Value,Option3 Name,Option3 Value,Variant SKU,Variant Price,Product Metafield: custom.gross_weight,Product Metafield: custom.net_weight,Product Metafield: custom.diamond_weight,Product Metafield: custom.stone_weight,Variant Metafield: custom.gold_value,Variant Metafield: custom.diamond_value,Variant Metafield: custom.making_charges,Variant Metafield: custom.gst_amount
+elegant-diamond-pendant,Elegant Diamond Pendant,<p>A beautiful elegant diamond pendant.</p>,Swastik Jewellers,Gold Color,Yellow Gold,Gold Purity,18,Diamond Quality,F-G VS-SI,PEND-18-Y-FG,150000,4.5,4.0,1.2,0,60000,75500,10000,4500
+elegant-diamond-pendant,,,,Gold Color,Yellow Gold,Gold Purity,18,Diamond Quality,G-H VS-SI,PEND-18-Y-GH,140000,,,,60000,65800,10000,4200
+elegant-diamond-pendant,,,,Gold Color,Yellow Gold,Gold Purity,14,Diamond Quality,F-G VS-SI,PEND-14-Y-FG,135000,,,,45000,75500,10000,4050
+elegant-diamond-pendant,,,,Gold Color,Yellow Gold,Gold Purity,14,Diamond Quality,G-H VS-SI,PEND-14-Y-GH,125000,,,,45000,65800,10000,3750
+elegant-diamond-pendant,,,,Gold Color,Yellow Gold,Gold Purity,9,Diamond Quality,F-G VS-SI,PEND-9-Y-FG,115000,,,,25000,75500,10000,3450
+elegant-diamond-pendant,,,,Gold Color,Yellow Gold,Gold Purity,9,Diamond Quality,G-H VS-SI,PEND-9-Y-GH,105000,,,,25000,65800,10000,3150
+elegant-diamond-pendant,,,,Gold Color,Rose Gold,Gold Purity,18,Diamond Quality,F-G VS-SI,PEND-18-R-FG,150000,,,,60000,75500,10000,4500
+elegant-diamond-pendant,,,,Gold Color,Rose Gold,Gold Purity,18,Diamond Quality,G-H VS-SI,PEND-18-R-GH,140000,,,,60000,65800,10000,4200
+elegant-diamond-pendant,,,,Gold Color,Rose Gold,Gold Purity,14,Diamond Quality,F-G VS-SI,PEND-14-R-FG,135000,,,,45000,75500,10000,4050
+elegant-diamond-pendant,,,,Gold Color,Rose Gold,Gold Purity,14,Diamond Quality,G-H VS-SI,PEND-14-R-GH,125000,,,,45000,65800,10000,3750
+elegant-diamond-pendant,,,,Gold Color,Rose Gold,Gold Purity,9,Diamond Quality,F-G VS-SI,PEND-9-R-FG,115000,,,,25000,75500,10000,3450
+elegant-diamond-pendant,,,,Gold Color,Rose Gold,Gold Purity,9,Diamond Quality,G-H VS-SI,PEND-9-R-GH,105000,,,,25000,65800,10000,3150
+elegant-diamond-pendant,,,,Gold Color,White Gold,Gold Purity,18,Diamond Quality,F-G VS-SI,PEND-18-W-FG,150000,,,,60000,75500,10000,4500
+elegant-diamond-pendant,,,,Gold Color,White Gold,Gold Purity,18,Diamond Quality,G-H VS-SI,PEND-18-W-GH,140000,,,,60000,65800,10000,4200
+elegant-diamond-pendant,,,,Gold Color,White Gold,Gold Purity,14,Diamond Quality,F-G VS-SI,PEND-14-W-FG,135000,,,,45000,75500,10000,4050
+elegant-diamond-pendant,,,,Gold Color,White Gold,Gold Purity,14,Diamond Quality,G-H VS-SI,PEND-14-W-GH,125000,,,,45000,65800,10000,3750
+elegant-diamond-pendant,,,,Gold Color,White Gold,Gold Purity,9,Diamond Quality,F-G VS-SI,PEND-9-W-FG,115000,,,,25000,75500,10000,3450
+elegant-diamond-pendant,,,,Gold Color,White Gold,Gold Purity,9,Diamond Quality,G-H VS-SI,PEND-9-W-GH,105000,,,,25000,65800,10000,3150

@@ -15,3 +15,7 @@ node_modules/
 ## Release files
 release
 *.zip
+
+# Secrets and local projects
+.env*
+swastik-admin/
