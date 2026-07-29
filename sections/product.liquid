@@ -117,10 +117,7 @@
               </div>
               <div class="pp-price-box-bottom">
                 {% assign compare_price = current_variant.compare_at_price %}
-                {% unless compare_price > current_variant.price %}
-                  {% assign compare_price = current_variant.price | times: 1.10 | round %}
-                {% endunless %}
-                <span class="pp-price-compare" id="pp-compare-price">MRP {{ compare_price | money }}</span>
+                <span class="pp-price-compare" id="pp-compare-price" {% unless compare_price > current_variant.price %}style="display:none;"{% endunless %}>MRP {{ compare_price | money }}</span>
               </div>
             </div>
 
@@ -2021,15 +2018,13 @@
 
             const comparePriceEl = document.getElementById('pp-compare-price');
             if (comparePriceEl) {
-              let comparePrice = matched.compare_at_price;
-              if (!comparePrice || comparePrice <= matched.price) {
-                comparePrice = Math.round(matched.price * 1.10);
+              if (matched.compare_at_price > matched.price) {
+                comparePriceEl.innerHTML = 'MRP ' + formatMoney(matched.compare_at_price);
+                comparePriceEl.style.display = '';
+              } else {
+                comparePriceEl.style.display = 'none';
               }
-              comparePriceEl.innerHTML = 'MRP ' + formatMoney(comparePrice);
             }
-
-            const skuEl = document.getElementById('pp-sku');
-            if (skuEl && matched.sku) skuEl.textContent = matched.sku;
             
             // --- DYNAMIC UI BREAKDOWN LOGIC ---
             const metaEl = document.getElementById('pp-metafields-json');
