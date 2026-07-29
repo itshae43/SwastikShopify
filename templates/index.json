@@ -576,8 +576,9 @@
         "reel_4": {
           "type": "reel",
           "settings": {
+            "video": "shopify://files/videos/Video-7135.mp4",
             "video_url": "",
-            "view_count": "9410"
+            "view_count": "1M"
           }
         },
         "reel_2": {
