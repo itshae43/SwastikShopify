@@ -198,7 +198,19 @@
                           {%- for value in opt_vals -%}
                             {%- if value == blank %}{% continue %}{% endif -%}
                             <button type="button" class="pp-opt-btn {% if option.selected_value == value %}is-active{% endif %}" data-value="{{ value | escape }}">
-                              {{ value }}
+                              {%- assign name_dc = option.name | downcase -%}
+                              {%- if name_dc contains 'diamond quality' or name_dc contains 'quality' -%}
+                                {%- assign split_val = value | split: " " -%}
+                                {%- if split_val.size > 1 -%}
+                                  <span style="display:block; line-height:1.2;">{{ split_val[0] }}</span>
+                                  <span style="display:block; line-height:0.8; font-weight:300; opacity:0.5; margin: 2px 0;">&mdash;</span>
+                                  <span style="display:block; line-height:1.2;">{{ split_val[1] }}</span>
+                                {%- else -%}
+                                  {{ value }}
+                                {%- endif -%}
+                              {%- else -%}
+                                {{ value }}
+                              {%- endif -%}
                             </button>
                           {%- endfor -%}
                         </div>
