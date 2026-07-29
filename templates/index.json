@@ -583,15 +583,17 @@
         "reel_2": {
           "type": "reel",
           "settings": {
+            "video": "shopify://files/videos/cocktail rings.mp4",
             "video_url": "",
-            "view_count": "773K"
+            "view_count": "1M"
           }
         },
         "reel_3": {
           "type": "reel",
           "settings": {
+            "video": "shopify://files/videos/IGI Certified Diamond Rings.mp4",
             "video_url": "",
-            "view_count": "63.6K"
+            "view_count": "3.6M"
           }
         },
         "reel_4": {
