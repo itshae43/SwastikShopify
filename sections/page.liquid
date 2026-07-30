@@ -5,9 +5,56 @@
   https://shopify.dev/docs/storefronts/themes/architecture/templates/page
 {% endcomment %}
 
-<h1>{{ page.title }}</h1>
+<div class="page-width container">
+  <h1 class="page-title">{{ page.title }}</h1>
+  
+  <div class="rte">
+    {{ page.content }}
+  </div>
+</div>
 
-{{ page.content }}
+{% stylesheet %}
+  .page-width {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 4rem 2rem;
+  }
+  .page-title {
+    text-align: center;
+    margin-bottom: 4rem;
+    font-size: 3.6rem;
+  }
+  .rte {
+    font-size: 1.6rem;
+    line-height: 1.8;
+    color: var(--color-foreground, #1A1A1A);
+  }
+  .rte p {
+    margin-bottom: 2rem;
+  }
+  .rte h1, .rte h2, .rte h3, .rte h4, .rte h5, .rte h6 {
+    margin-top: 4rem;
+    margin-bottom: 1.5rem;
+    font-weight: 500;
+  }
+  .rte ul, .rte ol {
+    margin-bottom: 2rem;
+    padding-left: 2.5rem;
+  }
+  .rte ul {
+    list-style-type: disc;
+  }
+  .rte ol {
+    list-style-type: decimal;
+  }
+  .rte li {
+    margin-bottom: 0.5rem;
+  }
+  .rte a {
+    color: var(--color-primary, #013F3E);
+    text-decoration: underline;
+  }
+{% endstylesheet %}
 
 {% schema %}
 {
