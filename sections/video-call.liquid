@@ -595,19 +595,13 @@
   }
 
   .video-call-form__platform-options {
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
   }
   
-  .video-call-form__platform-options::-webkit-scrollbar {
-    display: none;
-  }
-
   @media screen and (min-width: 480px) {
     .video-call-form__platform-options {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
       gap: 15px;
     }
   }
@@ -639,13 +633,14 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    padding: 12px 4px;
+    padding: 10px 4px;
     border: 2px solid #e0e0e0;
     border-radius: 12px;
-    gap: 8px;
+    gap: 6px;
     transition: all 0.2s ease;
     background-color: #fafafa;
     text-align: center;
+    height: 100%;
   }
   
   @media screen and (min-width: 480px) {
@@ -657,23 +652,45 @@
 
   .video-call-form__platform-card span {
     font-family: "Inter", sans-serif;
-    font-size: 14px;
+    font-size: 11px;
     font-weight: 600;
     color: #555;
+    line-height: 1.2;
+  }
+
+  @media screen and (min-width: 480px) {
+    .video-call-form__platform-card span {
+      font-size: 14px;
+    }
   }
 
   .platform-icon {
-    width: 40px;
-    height: 40px;
+    width: 36px;
+    height: 36px;
     display: flex;
     align-items: center;
     justify-content: center;
-    border-radius: 12px;
+    border-radius: 10px;
+  }
+
+  @media screen and (min-width: 480px) {
+    .platform-icon {
+      width: 40px;
+      height: 40px;
+      border-radius: 12px;
+    }
   }
 
   .platform-icon svg {
-    width: 24px;
-    height: 24px;
+    width: 20px;
+    height: 20px;
+  }
+
+  @media screen and (min-width: 480px) {
+    .platform-icon svg {
+      width: 24px;
+      height: 24px;
+    }
   }
 
   .platform-icon.google-meet {
@@ -760,21 +777,15 @@
   }
 
   .video-call-form__timing-options {
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
     margin-top: 8px;
     margin-bottom: 15px;
   }
 
-  .video-call-form__timing-options::-webkit-scrollbar {
-    display: none;
-  }
-
   @media screen and (min-width: 480px) {
     .video-call-form__timing-options {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
       gap: 15px;
     }
   }
@@ -795,7 +806,7 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    padding: 12px 4px;
+    padding: 10px 4px;
     border: 2px solid #e0e0e0;
     border-radius: 12px;
     gap: 6px;
@@ -803,9 +814,10 @@
     background-color: #fafafa;
     color: #555;
     font-family: "Inter", sans-serif;
-    font-size: 13px;
+    font-size: 11px;
     font-weight: 600;
     text-align: center;
+    height: 100%;
   }
   
   @media screen and (min-width: 480px) {
