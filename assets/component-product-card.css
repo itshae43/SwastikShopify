@@ -123,9 +123,11 @@
 .product-card-ui__price-row {
   display: flex !important;
   align-items: center !important;
+  flex-wrap: nowrap !important;
   gap: 8px !important;
   font-family: 'Inter', sans-serif !important;
   margin: 2px 0 4px 0 !important;
+  white-space: nowrap !important;
 }
 
 .product-card-ui__price-row .price-current {

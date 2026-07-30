@@ -44,12 +44,12 @@
     </div>
 
     <div class="product-card-ui__price-row">
-      <span class="price-current">{{ price | money | replace: '$', '₹' | replace: 'USD', '₹' }}</span>
+      <span class="price-current">{{ price | money_without_trailing_zeros | replace: 'Rs.', '₹' | replace: 'Rs ', '₹' | replace: 'Rs', '₹' | replace: '$', '₹' | replace: 'USD', '₹' | replace: '₹ ', '₹' }}</span>
       {% if original_price > price %}
-        <s class="price-original">{{ original_price | money | replace: '$', '₹' | replace: 'USD', '₹' }}</s>
+        <s class="price-original">{{ original_price | money_without_trailing_zeros | replace: 'Rs.', '₹' | replace: 'Rs ', '₹' | replace: 'Rs', '₹' | replace: '$', '₹' | replace: 'USD', '₹' | replace: '₹ ', '₹' }}</s>
       {% else %}
         {% assign approx_comp = price | times: 1.6 | divided_by: 100 | round | times: 100 %}
-        <s class="price-original">{{ approx_comp | money | replace: '$', '₹' | replace: 'USD', '₹' }}</s>
+        <s class="price-original">{{ approx_comp | money_without_trailing_zeros | replace: 'Rs.', '₹' | replace: 'Rs ', '₹' | replace: 'Rs', '₹' | replace: '$', '₹' | replace: 'USD', '₹' | replace: '₹ ', '₹' }}</s>
       {% endif %}
     </div>
 
