@@ -297,7 +297,7 @@
 
       <!-- Gold price pill -->
       <div class="header__gold-price">
-        <span class="gold-text">Gold {{ shop.metafields.custom.daily_gold_rate.value | default: '14,422' }}/1g</span>
+        <span class="gold-text">{{ section.settings.gold_price_label }} {{ shop.metafields.custom.daily_gold_rate.value | default: '14,422' }}/1g</span>
       </div>
 
       <!-- Wishlist Link & Count -->
@@ -1988,9 +1988,9 @@
     },
     {
       "type": "text",
-      "id": "gold_price",
-      "default": "Gold 15,620/g",
-      "label": "Gold Price Text"
+      "id": "gold_price_label",
+      "default": "Current Gold Rate",
+      "label": "Gold Rate Label"
     },
     {
       "type": "range",
