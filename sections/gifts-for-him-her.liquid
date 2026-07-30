@@ -104,27 +104,16 @@
   border: 1px solid rgba(179, 130, 69, 0.08);
   box-shadow: 0 15px 45px rgba(10, 42, 38, 0.03);
   display: flex;
-  justify-content: center;
-  align-items: center;
+  flex-direction: row;
 }
 
 .gifts-banner__side {
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  width: 50%;
+  position: relative;
+  flex: 1;
   height: 100%;
   z-index: 1;
   overflow: hidden;
   display: block;
-}
-
-.gifts-banner__side--him {
-  left: 0;
-}
-
-.gifts-banner__side--her {
-  right: 0;
 }
 
 .gifts-banner__image-container {
@@ -147,11 +136,11 @@
 }
 
 .gifts-banner__side--him .gifts-banner__img {
-  object-position: 20% center;
+  object-position: right center;
 }
 
 .gifts-banner__side--her .gifts-banner__img {
-  object-position: 80% center;
+  object-position: left center;
 }
 
 /* Responsiveness */
