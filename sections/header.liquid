@@ -118,7 +118,7 @@
         {% else %}
           <!-- Fallback menu matching the request exactly -->
           <li class="header__menu-item header__menu-item--has-dropdown">
-            <a href="#" class="header__menu-link">
+            <a href="{{ routes.collections_url }}/all" class="header__menu-link">
               Jewellery
               <svg class="icon icon-chevron-down" viewBox="0 0 24 24" fill="none" stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="m19.5 8.25-7.5 7.5-7.5-7.5" />
@@ -126,32 +126,71 @@
             </a>
             <ul class="header__dropdown-menu">
               <li><a href="{{ routes.collections_url }}/rings">Rings</a></li>
-              <li><a href="{{ routes.collections_url }}/necklaces">Necklaces</a></li>
               <li><a href="{{ routes.collections_url }}/earrings">Earrings</a></li>
-              <li><a href="{{ routes.collections_url }}/bracelets">Bracelets</a></li>
+              <li><a href="{{ routes.collections_url }}/necklaces-pendants">Necklaces & Pendants</a></li>
+              <li><a href="{{ routes.collections_url }}/bangles-bracelets">Bangles & Bracelets</a></li>
+              <li><a href="{{ routes.collections_url }}/mangalsutras">Mangalsutras</a></li>
+              <li><a href="{{ routes.collections_url }}/nose-pins">Nose Pins</a></li>
             </ul>
           </li>
-          <li class="header__menu-item">
-            <a href="{{ routes.collections_url }}/bridal" class="header__menu-link">Bridal</a>
-          </li>
-          <li class="header__menu-item">
-            <a href="{{ routes.collections_url }}/diamonds" class="header__menu-link">Diamonds</a>
-          </li>
           <li class="header__menu-item header__menu-item--has-dropdown">
-            <a href="#" class="header__menu-link">
+            <a href="{{ routes.collections_url }}" class="header__menu-link">
               Collections
               <svg class="icon icon-chevron-down" viewBox="0 0 24 24" fill="none" stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="m19.5 8.25-7.5 7.5-7.5-7.5" />
               </svg>
             </a>
             <ul class="header__dropdown-menu">
-              <li><a href="{{ routes.collections_url }}/festive">Festive Collection</a></li>
-              <li><a href="{{ routes.collections_url }}/heritage">Heritage Edit</a></li>
-              <li><a href="{{ routes.collections_url }}/daily">Daily Wear</a></li>
+              <li><a href="{{ routes.collections_url }}/bridal-edit">The Bridal Edit</a></li>
+              <li><a href="{{ routes.collections_url }}/everyday-essentials">Everyday Essentials</a></li>
+              <li><a href="{{ routes.collections_url }}/temple-jewellery">Temple Jewellery</a></li>
+              <li><a href="{{ routes.collections_url }}/mens-collection">Men's Collection</a></li>
+              <li><a href="{{ routes.collections_url }}/kids-collection">Kids' Collection</a></li>
             </ul>
           </li>
-          <li class="header__menu-item">
-            <a href="/pages/about-us" class="header__menu-link">Our Story</a>
+          <li class="header__menu-item header__menu-item--has-dropdown">
+            <a href="{{ routes.collections_url }}/diamonds" class="header__menu-link">
+              Diamonds
+              <svg class="icon icon-chevron-down" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="m19.5 8.25-7.5 7.5-7.5-7.5" />
+              </svg>
+            </a>
+            <ul class="header__dropdown-menu">
+              <li><a href="{{ routes.collections_url }}/diamond-rings">Diamond Rings</a></li>
+              <li><a href="{{ routes.collections_url }}/diamond-earrings">Diamond Earrings</a></li>
+              <li><a href="{{ routes.collections_url }}/diamond-necklaces">Diamond Necklaces</a></li>
+              <li><a href="{{ routes.collections_url }}/solitaires">Solitaires</a></li>
+            </ul>
+          </li>
+          <li class="header__menu-item header__menu-item--has-dropdown">
+            <a href="{{ routes.collections_url }}/gifting" class="header__menu-link">
+              Gifting
+              <svg class="icon icon-chevron-down" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="m19.5 8.25-7.5 7.5-7.5-7.5" />
+              </svg>
+            </a>
+            <ul class="header__dropdown-menu">
+              <li><a href="{{ routes.collections_url }}/gifting?filter.p.m.custom.recipient=her">Gifts for Her</a></li>
+              <li><a href="{{ routes.collections_url }}/gifting?filter.p.m.custom.recipient=him">Gifts for Him</a></li>
+              <li><a href="{{ routes.collections_url }}/anniversary-gifts">Anniversary Gifts</a></li>
+              <li><a href="{{ routes.collections_url }}/wedding-gifts">Wedding Gifts</a></li>
+              <li><a href="{{ routes.collections_url }}/gifting?filter.v.price.lte=15000">Gifts Under ₹15,000</a></li>
+            </ul>
+          </li>
+          <li class="header__menu-item header__menu-item--has-dropdown">
+            <a href="/pages/about-us" class="header__menu-link">
+              Our Story
+              <svg class="icon icon-chevron-down" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="m19.5 8.25-7.5 7.5-7.5-7.5" />
+              </svg>
+            </a>
+            <ul class="header__dropdown-menu">
+              <li><a href="/pages/about-us">About Swastik Jewels</a></li>
+              <li><a href="/pages/craftsmanship">Our Craftsmanship</a></li>
+              <li><a href="/pages/stores">Store Locator</a></li>
+              <li><a href="/pages/contact-us">Contact Us</a></li>
+              <li><a href="/pages/jewelry-care">Jewelry Care Guide</a></li>
+            </ul>
           </li>
         {% endif %}
       </ul>
@@ -365,74 +404,72 @@
             <!-- Bespoke Swastik Categories (Mirroring Home Page Signature Sections) -->
             <li class="mobile-menu-item mobile-menu-item--has-sub">
               <button type="button" class="mobile-menu-trigger" aria-expanded="false">
-                <span class="mobile-menu-title" style="color: #D4AF37;">GIFTS FOR HIM & HER</span>
+                <span class="mobile-menu-title" style="color: #D4AF37;">JEWELLERY</span>
                 <svg class="mobile-menu-arrow" viewBox="0 0 24 24" fill="none" stroke="#222222" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="m9 18 6-6-6-6" /></svg>
               </button>
               <ul class="mobile-submenu" style="display: none;">
-                <li><a href="{{ routes.collections_url }}/gifting?filter.p.m.custom.recipient=her">Gift for Her</a></li>
-                <li><a href="{{ routes.collections_url }}/gifting?filter.p.m.custom.recipient=him">Gift for Him</a></li>
-                <li><a href="{{ routes.collections_url }}/gifting?filter.v.price.lte=25000">Gifts Under ₹25,000</a></li>
-                <li><a href="{{ routes.collections_url }}/gifting?filter.v.price.lte=50000">Gifts Under ₹50,000</a></li>
-                <li><a href="{{ routes.collections_url }}/gifting">Shop by Occasion</a></li>
+                <li><a href="{{ routes.collections_url }}/rings">Rings</a></li>
+                <li><a href="{{ routes.collections_url }}/earrings">Earrings</a></li>
+                <li><a href="{{ routes.collections_url }}/necklaces-pendants">Necklaces & Pendants</a></li>
+                <li><a href="{{ routes.collections_url }}/bangles-bracelets">Bangles & Bracelets</a></li>
+                <li><a href="{{ routes.collections_url }}/mangalsutras">Mangalsutras</a></li>
+                <li><a href="{{ routes.collections_url }}/nose-pins">Nose Pins</a></li>
               </ul>
             </li>
 
             <li class="mobile-menu-item mobile-menu-item--has-sub">
               <button type="button" class="mobile-menu-trigger" aria-expanded="false">
-                <span class="mobile-menu-title">FOR EVERY YOU</span>
+                <span class="mobile-menu-title">COLLECTIONS</span>
                 <svg class="mobile-menu-arrow" viewBox="0 0 24 24" fill="none" stroke="#222222" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="m9 18 6-6-6-6" /></svg>
               </button>
               <ul class="mobile-submenu" style="display: none;">
-                <li><a href="{{ routes.collections_url }}/everyday-luxe">Everyday Luxe</a></li>
-                <li><a href="{{ routes.collections_url }}/for-every-you">Work & Office Wear</a></li>
-                <li><a href="{{ routes.collections_url }}/party-wear">Party & Celebration</a></li>
-                <li><a href="{{ routes.collections_url }}/minimalist">Modern Minimalist</a></li>
+                <li><a href="{{ routes.collections_url }}/bridal-edit">The Bridal Edit</a></li>
+                <li><a href="{{ routes.collections_url }}/everyday-essentials">Everyday Essentials</a></li>
+                <li><a href="{{ routes.collections_url }}/temple-jewellery">Temple Jewellery</a></li>
+                <li><a href="{{ routes.collections_url }}/mens-collection">Men's Collection</a></li>
+                <li><a href="{{ routes.collections_url }}/kids-collection">Kids' Collection</a></li>
               </ul>
             </li>
 
             <li class="mobile-menu-item mobile-menu-item--has-sub">
               <button type="button" class="mobile-menu-trigger" aria-expanded="false">
-                <span class="mobile-menu-title">BRIDAL & ROYAL HERITAGE</span>
+                <span class="mobile-menu-title">DIAMONDS</span>
                 <svg class="mobile-menu-arrow" viewBox="0 0 24 24" fill="none" stroke="#222222" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="m9 18 6-6-6-6" /></svg>
               </button>
               <ul class="mobile-submenu" style="display: none;">
-                <li><a href="{{ routes.collections_url }}/polki/royal-chokers">Royal Heritage Chokers</a></li>
-                <li><a href="{{ routes.collections_url }}/polki/kundan-polki">Kundan & Meenakari</a></li>
-                <li><a href="{{ routes.collections_url }}/bridal">Bridal Jadau Edit</a></li>
-                <li><a href="{{ routes.collections_url }}/polki/uncut-diamond-sets">Uncut Diamond Sets</a></li>
+                <li><a href="{{ routes.collections_url }}/diamond-rings">Diamond Rings</a></li>
+                <li><a href="{{ routes.collections_url }}/diamond-earrings">Diamond Earrings</a></li>
+                <li><a href="{{ routes.collections_url }}/diamond-necklaces">Diamond Necklaces</a></li>
+                <li><a href="{{ routes.collections_url }}/solitaires">Solitaires</a></li>
               </ul>
             </li>
 
             <li class="mobile-menu-item mobile-menu-item--has-sub">
               <button type="button" class="mobile-menu-trigger" aria-expanded="false">
-                <span class="mobile-menu-title">LATEST & BEST SELLERS</span>
+                <span class="mobile-menu-title">GIFTING</span>
                 <svg class="mobile-menu-arrow" viewBox="0 0 24 24" fill="none" stroke="#222222" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="m9 18 6-6-6-6" /></svg>
               </button>
               <ul class="mobile-submenu" style="display: none;">
-                <li><a href="{{ routes.collections_url }}/new-arrivals">New Arrivals</a></li>
-                <li><a href="{{ routes.collections_url }}/best-sellers">Best Sellers</a></li>
-                <li><a href="{{ routes.collections_url }}/gold-showcase">Gold Collection Showcase</a></li>
-                <li><a href="{{ routes.collections_url }}/quick-ship">Ships in 3 Days</a></li>
+                <li><a href="{{ routes.collections_url }}/gifting?filter.p.m.custom.recipient=her">Gifts for Her</a></li>
+                <li><a href="{{ routes.collections_url }}/gifting?filter.p.m.custom.recipient=him">Gifts for Him</a></li>
+                <li><a href="{{ routes.collections_url }}/anniversary-gifts">Anniversary Gifts</a></li>
+                <li><a href="{{ routes.collections_url }}/wedding-gifts">Wedding Gifts</a></li>
+                <li><a href="{{ routes.collections_url }}/gifting?filter.v.price.lte=15000">Gifts Under ₹15,000</a></li>
               </ul>
             </li>
 
             <li class="mobile-menu-item mobile-menu-item--has-sub">
               <button type="button" class="mobile-menu-trigger" aria-expanded="false">
-                <span class="mobile-menu-title">DIAMONDS & SOLITAIRES</span>
+                <span class="mobile-menu-title">OUR STORY</span>
                 <svg class="mobile-menu-arrow" viewBox="0 0 24 24" fill="none" stroke="#222222" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="m9 18 6-6-6-6" /></svg>
               </button>
               <ul class="mobile-submenu" style="display: none;">
-                <li><a href="{{ routes.collections_url }}/diamonds/natural-diamonds">Natural Diamonds</a></li>
-                <li><a href="{{ routes.collections_url }}/diamonds/lab-grown-diamonds">Lab Grown Diamonds</a></li>
-                <li><a href="{{ routes.collections_url }}/solitaires">Solitaire Rings & Pendants</a></li>
-                <li><a href="{{ routes.collections_url }}/diamonds/diamond-bangles">Diamond Bangles & Bracelets</a></li>
+                <li><a href="/pages/about-us">About Swastik Jewels</a></li>
+                <li><a href="/pages/craftsmanship">Our Craftsmanship</a></li>
+                <li><a href="/pages/stores">Store Locator</a></li>
+                <li><a href="/pages/contact-us">Contact Us</a></li>
+                <li><a href="/pages/jewelry-care">Jewelry Care Guide</a></li>
               </ul>
-            </li>
-
-            <li class="mobile-menu-item">
-              <a href="{{ routes.collections_url }}/all" class="mobile-menu-link">
-                <span class="mobile-menu-title">MADE FOR EVERY BOND</span>
-              </a>
             </li>
           {%- endif -%}
         </ul>
