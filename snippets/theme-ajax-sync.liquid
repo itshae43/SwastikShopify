@@ -329,7 +329,7 @@
         // surface the real reason. Do NOT fabricate a success.
         if (!result.ok) throw result.data;
         // Re-read the real cart so the badge and drawer always match checkout.
-        return fetch(rootUrl + 'cart.js').then(r => r.json());
+        return fetch(rootUrl + 'cart.js', { cache: 'no-store' }).then(r => r.json());
       })
       .then(cart => {
         if (submitBtn) submitBtn.classList.remove('btn-loading');
@@ -347,16 +347,16 @@
       });
     });
 
-    // 6. Header Triggers for Drawer (using event delegation for reliability)
+    // 6. Header and Mobile Triggers for Drawer (using event delegation for reliability)
     document.addEventListener('click', (e) => {
-      const wishlistTrigger = e.target.closest('.header__wishlist-trigger');
+      const wishlistTrigger = e.target.closest('.header__wishlist-trigger, .js-mobile-wishlist-trigger');
       if (wishlistTrigger) {
         e.preventDefault();
         if (window.openWishlistDrawer) window.openWishlistDrawer();
         return;
       }
 
-      const cartTrigger = e.target.closest('.header__cart-trigger');
+      const cartTrigger = e.target.closest('.header__cart-trigger, .js-mobile-cart-trigger');
       if (cartTrigger) {
         e.preventDefault();
         if (window.openCartDrawer) window.openCartDrawer();
