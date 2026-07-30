@@ -64,12 +64,18 @@
     color: var(--color-foreground, #1A1A1A);
   }
   .rte p {
-    margin-bottom: 2rem;
+    margin-bottom: 1.5rem;
+  }
+  .rte p:last-child {
+    margin-bottom: 0;
   }
   .rte h1, .rte h2, .rte h3, .rte h4, .rte h5, .rte h6 {
-    margin-top: 4rem;
-    margin-bottom: 1.5rem;
+    margin-top: 3rem;
+    margin-bottom: 1.2rem;
     font-weight: 500;
+  }
+  .rte h1:first-child, .rte h2:first-child, .rte h3:first-child, .rte h4:first-child, .rte h5:first-child, .rte h6:first-child {
+    margin-top: 0;
   }
   .rte ul, .rte ol {
     margin-bottom: 2rem;
@@ -82,7 +88,11 @@
     list-style-type: decimal;
   }
   .rte li {
-    margin-bottom: 0.5rem;
+    margin-bottom: 0.8rem;
+  }
+  .rte li p {
+    margin-bottom: 0;
+    display: inline;
   }
   .rte a {
     color: var(--color-primary, #013F3E);
