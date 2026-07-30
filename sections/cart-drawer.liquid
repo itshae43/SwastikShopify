@@ -391,7 +391,8 @@
         if (imageUrl && imageUrl.startsWith('//')) {
           imageUrl = 'https:' + imageUrl;
         } else if (!imageUrl) {
-          imageUrl = 'https://cdn.shopify.com/s/images/admin/no-image-large.gif';
+          // Fallback to the theme's default jewelry image if the product has no image uploaded in Shopify admin
+          imageUrl = '{{ "best_seller_pendant.png" | asset_url }}';
         }
           
         html += `
