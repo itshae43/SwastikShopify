@@ -208,9 +208,9 @@
           </div>
 
           <div class="video-call-form__row">
-            <div class="video-call-form__group" style="flex: 1;">
+            <div class="video-call-form__group js-email-group" style="flex: 1;">
               <label for="VideoCallEmail" class="video-call-form__label">Email Address</label>
-              <input type="email" id="VideoCallEmail" required class="video-call-form__input" placeholder="your@email.com">
+              <input type="email" id="VideoCallEmail" class="video-call-form__input" placeholder="your@email.com">
             </div>
             <div class="video-call-form__group" style="flex: 1;">
               <label for="VideoCallWhatsApp" class="video-call-form__label">WhatsApp Number</label>
@@ -595,19 +595,42 @@
   }
 
   .video-call-form__platform-options {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 10px;
+    display: flex;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    gap: 12px;
+    padding-bottom: 8px;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+    scroll-snap-type: x mandatory;
+  }
+  
+  .video-call-form__platform-options::-webkit-scrollbar {
+    display: none;
   }
 
   @media screen and (min-width: 480px) {
     .video-call-form__platform-options {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
       gap: 15px;
+      overflow-x: visible;
+      padding-bottom: 0;
     }
   }
 
   .video-call-form__platform-option {
+    flex: 0 0 75%;
+    min-width: 200px;
     cursor: pointer;
+    scroll-snap-align: start;
+  }
+  
+  @media screen and (min-width: 480px) {
+    .video-call-form__platform-option {
+      flex: auto;
+      min-width: 0;
+    }
   }
 
   .visually-hidden {
@@ -747,22 +770,44 @@
   }
 
   .video-call-form__timing-options {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 10px;
+    display: flex;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    gap: 12px;
     margin-top: 8px;
     margin-bottom: 15px;
+    padding-bottom: 8px;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+    scroll-snap-type: x mandatory;
+  }
+
+  .video-call-form__timing-options::-webkit-scrollbar {
+    display: none;
   }
 
   @media screen and (min-width: 480px) {
     .video-call-form__timing-options {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
       gap: 15px;
+      overflow-x: visible;
+      padding-bottom: 0;
     }
   }
 
   .video-call-form__timing-option {
-    flex: 1;
+    flex: 0 0 75%;
+    min-width: 200px;
     cursor: pointer;
+    scroll-snap-align: start;
+  }
+  
+  @media screen and (min-width: 480px) {
+    .video-call-form__timing-option {
+      flex: auto;
+      min-width: 0;
+    }
   }
 
   .video-call-form__timing-card {
@@ -922,6 +967,22 @@
     };
     timingRadios.forEach(r => r.addEventListener('change', updateTiming));
     updateTiming();
+    
+    // ---- Platform (Google Meet vs WhatsApp) shows/hides the email field ----
+    const emailGroup = document.querySelector('.js-email-group');
+    const platformRadios = document.querySelectorAll('input[name="platform"]');
+    const updatePlatform = () => {
+      const sel = document.querySelector('input[name="platform"]:checked');
+      if (sel && emailGroup) {
+        if (sel.value === 'WhatsApp Video Call') {
+          emailGroup.style.display = 'none';
+        } else {
+          emailGroup.style.display = 'flex';
+        }
+      }
+    };
+    platformRadios.forEach(r => r.addEventListener('change', updatePlatform));
+    updatePlatform();
 
     // ---- Submit -> POST JSON to the CRM ----
     const form = document.querySelector('.video-call-form');
@@ -965,7 +1026,11 @@
 
         // Validation
         if (!firstName || !lastName) { showError('Please enter your first and last name.'); return; }
-        if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { showError('Please enter a valid email address.'); return; }
+        
+        if (platformEl && platformEl.value === 'Google Meet') {
+          if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { showError('Please enter a valid email address for Google Meet.'); return; }
+        }
+        
         if (!whatsapp) { showError('Please enter your WhatsApp number.'); return; }
 
         // Meeting date & time

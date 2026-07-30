@@ -478,17 +478,21 @@
   <!-- Fixed Mobile Bottom Navigation -->
   <div class="mobile-bottom-nav">
     <a href="{{ routes.root_url }}" class="mobile-bottom-nav__item {% if request.page_type == 'index' or request.path == routes.root_url %}active{% endif %}" aria-label="Home">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-        <path d="M3 9.5L12 3l9 6.5V20a1 1 0 0 1-1 1h-5v-6h-6v6H4a1 1 0 0 1-1-1V9.5z"/>
-      </svg>
+      <div class="mobile-bottom-nav__icon-wrapper">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M3 9.5L12 3l9 6.5V20a1 1 0 0 1-1 1h-5v-6h-6v6H4a1 1 0 0 1-1-1V9.5z"/>
+        </svg>
+      </div>
       <span>Home</span>
     </a>
 
     <a href="{{ routes.search_url }}" class="mobile-bottom-nav__item js-mobile-categories-toggle js-mobile-search-toggle {% if request.page_type == 'search' %}active{% endif %}" aria-label="Search">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-        <circle cx="11" cy="11" r="8"></circle>
-        <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
-      </svg>
+      <div class="mobile-bottom-nav__icon-wrapper">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="11" cy="11" r="8"></circle>
+          <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+        </svg>
+      </div>
       <span>Search</span>
     </a>
 
@@ -503,8 +507,8 @@
     </a>
 
     <a href="javascript:void(0)" class="mobile-bottom-nav__item js-mobile-wishlist-trigger" aria-label="Wishlist">
-      <div style="position: relative;">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+      <div class="mobile-bottom-nav__icon-wrapper">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
           <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
         </svg>
         <span class="mobile-bottom-nav__badge" id="mobile-wishlist-badge" style="display: none;">0</span>
@@ -513,8 +517,8 @@
     </a>
 
     <a href="{{ routes.cart_url }}" class="mobile-bottom-nav__item js-mobile-cart-trigger" aria-label="Bag">
-      <div style="position: relative;">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+      <div class="mobile-bottom-nav__icon-wrapper">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
           <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path>
           <line x1="3" y1="6" x2="21" y2="6"></line>
           <path d="M16 10a4 4 0 0 1-8 0"></path>
@@ -1664,17 +1668,17 @@
     .mobile-bottom-nav {
       display: flex !important;
       justify-content: space-around !important;
-      align-items: flex-end !important;
+      align-items: center !important;
       position: fixed !important;
       bottom: 0 !important;
       left: 0 !important;
       right: 0 !important;
       width: 100% !important;
-      height: calc(58px + env(safe-area-inset-bottom, 0px)) !important;
+      height: calc(64px + env(safe-area-inset-bottom, 0px)) !important;
       background-color: var(--color-background, #FFFFFF) !important;
       box-shadow: 0 -4px 20px rgba(1, 39, 38, 0.08) !important;
       z-index: 99999 !important;
-      padding: 4px 6px max(6px, env(safe-area-inset-bottom, 0px)) !important;
+      padding: 0 6px env(safe-area-inset-bottom, 0px) !important;
       box-sizing: border-box !important;
       border-top-left-radius: 18px !important;
       border-top-right-radius: 18px !important;
@@ -1698,24 +1702,30 @@
       display: flex;
       flex-direction: column;
       align-items: center;
-      justify-content: flex-end;
+      justify-content: center;
       text-decoration: none;
       color: #4B5855;
       font-family: 'Montserrat', var(--font-primary--family), sans-serif;
       font-size: 0.72rem;
       font-weight: 500;
       line-height: 1.1;
-      gap: 3px;
+      gap: 4px;
       flex: 1;
       height: 100%;
       background: none;
       border: none;
-      padding: 4px 0 2px;
+      padding: 0;
       outline: none;
       cursor: pointer;
       -webkit-tap-highlight-color: transparent;
       transition: color 0.2s ease, transform 0.15s ease;
+    }
+
+    .mobile-bottom-nav__icon-wrapper {
       position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
 
     .mobile-bottom-nav__item * {
@@ -1735,30 +1745,31 @@
     }
     
     .mobile-bottom-nav__item svg {
-      width: 22px;
-      height: 22px;
+      width: 24px;
+      height: 24px;
       stroke: currentColor;
-      stroke-width: 1.65;
+      stroke-width: 1.5;
       fill: none;
+      display: block;
     }
     
     .mobile-bottom-nav__item--chat {
       position: relative;
       overflow: visible !important;
+      transform: translateY(-10px);
     }
     
     .chat-icon-wrapper {
       background: linear-gradient(135deg, #25D366 0%, #128C7E 100%);
       border-radius: 50%;
-      width: 48px;
-      height: 48px;
+      width: 52px;
+      height: 52px;
       display: flex;
       align-items: center;
       justify-content: center;
       box-shadow: 0 4px 14px rgba(37, 211, 102, 0.45);
-      border: 3.5px solid #FFFFFF;
-      margin-top: -24px;
-      margin-bottom: 2px;
+      border: 4px solid #FFFFFF;
+      margin-bottom: 4px;
       transition: transform 0.2s ease, box-shadow 0.2s ease, opacity 0.25s ease, visibility 0.25s ease;
     }
 
@@ -1773,8 +1784,8 @@
     }
     
     .chat-icon-wrapper svg {
-      width: 26px;
-      height: 26px;
+      width: 28px;
+      height: 28px;
       stroke: none;
       fill: #FFFFFF;
     }
@@ -1792,16 +1803,16 @@
     .mobile-bottom-nav__badge {
       position: absolute;
       top: -4px;
-      right: -7px;
+      right: -8px;
       background-color: var(--color-accent, #D4AF37);
       color: var(--color-primary, #012726);
       font-family: 'Montserrat', var(--font-primary--family), sans-serif;
       font-size: 0.65rem;
       font-weight: 700;
-      min-width: 16px;
-      height: 16px;
+      min-width: 18px;
+      height: 18px;
       padding: 0 4px;
-      border-radius: 10px;
+      border-radius: 9px;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -1811,7 +1822,7 @@
     
     /* Pad body so fixed bottom nav doesn't overlap content */
     body {
-      padding-bottom: calc(65px + env(safe-area-inset-bottom, 0px)) !important;
+      padding-bottom: calc(75px + env(safe-area-inset-bottom, 0px)) !important;
     }
   }
 {% endstylesheet %}
