@@ -164,7 +164,7 @@
         "pendants": {
           "type": "card",
           "settings": {
-            "image": "shopify://shop_images/new_1_93f59d24-716e-411c-8468-c757322e5509.png",
+            "image": "shopify://shop_images/sj_narrow_category.png",
             "link": "shopify://collections/close-to-heart"
           }
         },
@@ -230,8 +230,8 @@
           "type": "collection",
           "settings": {
             "collection": "gold-bangles",
-            "title": "GOLD BANGLES",
-            "image": "shopify://shop_images/lastest_1.png"
+            "title": "GOLD Chikpatti",
+            "image": "shopify://shop_images/Gold_Jewellery_1_a2a98288-c703-4edc-b5f2-9cdee7d1d7ac.png"
           }
         }
       },
