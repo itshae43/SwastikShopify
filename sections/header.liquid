@@ -116,81 +116,21 @@
             </li>
           {% endfor %}
         {% else %}
-          <!-- Fallback menu matching the request exactly -->
-          <li class="header__menu-item header__menu-item--has-dropdown">
-            <a href="{{ routes.collections_url }}/all" class="header__menu-link">
-              Jewellery
-              <svg class="icon icon-chevron-down" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="m19.5 8.25-7.5 7.5-7.5-7.5" />
-              </svg>
-            </a>
-            <ul class="header__dropdown-menu">
-              <li><a href="{{ routes.collections_url }}/all">Rings</a></li>
-              <li><a href="{{ routes.collections_url }}/all">Earrings</a></li>
-              <li><a href="{{ routes.collections_url }}/all">Necklaces & Pendants</a></li>
-              <li><a href="{{ routes.collections_url }}/all">Bangles & Bracelets</a></li>
-              <li><a href="{{ routes.collections_url }}/all">Mangalsutras</a></li>
-              <li><a href="{{ routes.collections_url }}/all">Nose Pins</a></li>
-            </ul>
+          <!-- Premium Headings (No Submenus) -->
+          <li class="header__menu-item">
+            <a href="{{ routes.collections_url }}/all" class="header__menu-link">The Collections</a>
           </li>
-          <li class="header__menu-item header__menu-item--has-dropdown">
-            <a href="{{ routes.collections_url }}" class="header__menu-link">
-              Collections
-              <svg class="icon icon-chevron-down" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="m19.5 8.25-7.5 7.5-7.5-7.5" />
-              </svg>
-            </a>
-            <ul class="header__dropdown-menu">
-              <li><a href="{{ routes.collections_url }}/all">The Bridal Edit</a></li>
-              <li><a href="{{ routes.collections_url }}/all">Everyday Essentials</a></li>
-              <li><a href="{{ routes.collections_url }}/all">Temple Jewellery</a></li>
-              <li><a href="{{ routes.collections_url }}/all">Men's Collection</a></li>
-              <li><a href="{{ routes.collections_url }}/all">Kids' Collection</a></li>
-            </ul>
+          <li class="header__menu-item">
+            <a href="{{ routes.collections_url }}/all" class="header__menu-link">Bridal Heritage</a>
           </li>
-          <li class="header__menu-item header__menu-item--has-dropdown">
-            <a href="{{ routes.collections_url }}/diamonds" class="header__menu-link">
-              Diamonds
-              <svg class="icon icon-chevron-down" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="m19.5 8.25-7.5 7.5-7.5-7.5" />
-              </svg>
-            </a>
-            <ul class="header__dropdown-menu">
-              <li><a href="{{ routes.collections_url }}/all">Diamond Rings</a></li>
-              <li><a href="{{ routes.collections_url }}/all">Diamond Earrings</a></li>
-              <li><a href="{{ routes.collections_url }}/all">Diamond Necklaces</a></li>
-              <li><a href="{{ routes.collections_url }}/all">Solitaires</a></li>
-            </ul>
+          <li class="header__menu-item">
+            <a href="{{ routes.collections_url }}/all" class="header__menu-link">Fine Diamonds</a>
           </li>
-          <li class="header__menu-item header__menu-item--has-dropdown">
-            <a href="{{ routes.collections_url }}/gifting" class="header__menu-link">
-              Gifting
-              <svg class="icon icon-chevron-down" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="m19.5 8.25-7.5 7.5-7.5-7.5" />
-              </svg>
-            </a>
-            <ul class="header__dropdown-menu">
-              <li><a href="{{ routes.collections_url }}/all">Gifts for Her</a></li>
-              <li><a href="{{ routes.collections_url }}/all">Gifts for Him</a></li>
-              <li><a href="{{ routes.collections_url }}/all">Anniversary Gifts</a></li>
-              <li><a href="{{ routes.collections_url }}/all">Wedding Gifts</a></li>
-              <li><a href="{{ routes.collections_url }}/all">Gifts Under ₹15,000</a></li>
-            </ul>
+          <li class="header__menu-item">
+            <a href="{{ routes.collections_url }}/all" class="header__menu-link">Curated Gifts</a>
           </li>
-          <li class="header__menu-item header__menu-item--has-dropdown">
-            <a href="/pages/about-us" class="header__menu-link">
-              Our Story
-              <svg class="icon icon-chevron-down" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="m19.5 8.25-7.5 7.5-7.5-7.5" />
-              </svg>
-            </a>
-            <ul class="header__dropdown-menu">
-              <li><a href="/pages/about-us">About Swastik Jewels</a></li>
-              <li><a href="/pages/craftsmanship">Our Craftsmanship</a></li>
-              <li><a href="/pages/stores">Store Locator</a></li>
-              <li><a href="/pages/contact-us">Contact Us</a></li>
-              <li><a href="/pages/jewelry-care">Jewelry Care Guide</a></li>
-            </ul>
+          <li class="header__menu-item">
+            <a href="/pages/about-us" class="header__menu-link">Our Legacy</a>
           </li>
         {% endif %}
       </ul>
@@ -400,76 +340,31 @@
                 {%- endif -%}
               </li>
             {%- endfor -%}
-          {%- else -%}
-            <!-- Bespoke Swastik Categories (Mirroring Home Page Signature Sections) -->
-            <li class="mobile-menu-item mobile-menu-item--has-sub">
-              <button type="button" class="mobile-menu-trigger" aria-expanded="false">
-                <span class="mobile-menu-title" style="color: #D4AF37;">JEWELLERY</span>
-                <svg class="mobile-menu-arrow" viewBox="0 0 24 24" fill="none" stroke="#222222" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="m9 18 6-6-6-6" /></svg>
-              </button>
-              <ul class="mobile-submenu" style="display: none;">
-                <li><a href="{{ routes.collections_url }}/all">Rings</a></li>
-                <li><a href="{{ routes.collections_url }}/all">Earrings</a></li>
-                <li><a href="{{ routes.collections_url }}/all">Necklaces & Pendants</a></li>
-                <li><a href="{{ routes.collections_url }}/all">Bangles & Bracelets</a></li>
-                <li><a href="{{ routes.collections_url }}/all">Mangalsutras</a></li>
-                <li><a href="{{ routes.collections_url }}/all">Nose Pins</a></li>
-              </ul>
+          {%- else -%}            <!-- Premium Headings (No Submenus) -->
+            <li class="mobile-menu-item">
+              <a href="{{ routes.collections_url }}/all" class="mobile-menu-link">
+                <span class="mobile-menu-title" style="color: #D4AF37;">THE COLLECTIONS</span>
+              </a>
             </li>
-
-            <li class="mobile-menu-item mobile-menu-item--has-sub">
-              <button type="button" class="mobile-menu-trigger" aria-expanded="false">
-                <span class="mobile-menu-title">COLLECTIONS</span>
-                <svg class="mobile-menu-arrow" viewBox="0 0 24 24" fill="none" stroke="#222222" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="m9 18 6-6-6-6" /></svg>
-              </button>
-              <ul class="mobile-submenu" style="display: none;">
-                <li><a href="{{ routes.collections_url }}/all">The Bridal Edit</a></li>
-                <li><a href="{{ routes.collections_url }}/all">Everyday Essentials</a></li>
-                <li><a href="{{ routes.collections_url }}/all">Temple Jewellery</a></li>
-                <li><a href="{{ routes.collections_url }}/all">Men's Collection</a></li>
-                <li><a href="{{ routes.collections_url }}/all">Kids' Collection</a></li>
-              </ul>
+            <li class="mobile-menu-item">
+              <a href="{{ routes.collections_url }}/all" class="mobile-menu-link">
+                <span class="mobile-menu-title">BRIDAL HERITAGE</span>
+              </a>
             </li>
-
-            <li class="mobile-menu-item mobile-menu-item--has-sub">
-              <button type="button" class="mobile-menu-trigger" aria-expanded="false">
-                <span class="mobile-menu-title">DIAMONDS</span>
-                <svg class="mobile-menu-arrow" viewBox="0 0 24 24" fill="none" stroke="#222222" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="m9 18 6-6-6-6" /></svg>
-              </button>
-              <ul class="mobile-submenu" style="display: none;">
-                <li><a href="{{ routes.collections_url }}/all">Diamond Rings</a></li>
-                <li><a href="{{ routes.collections_url }}/all">Diamond Earrings</a></li>
-                <li><a href="{{ routes.collections_url }}/all">Diamond Necklaces</a></li>
-                <li><a href="{{ routes.collections_url }}/all">Solitaires</a></li>
-              </ul>
+            <li class="mobile-menu-item">
+              <a href="{{ routes.collections_url }}/all" class="mobile-menu-link">
+                <span class="mobile-menu-title">FINE DIAMONDS</span>
+              </a>
             </li>
-
-            <li class="mobile-menu-item mobile-menu-item--has-sub">
-              <button type="button" class="mobile-menu-trigger" aria-expanded="false">
-                <span class="mobile-menu-title">GIFTING</span>
-                <svg class="mobile-menu-arrow" viewBox="0 0 24 24" fill="none" stroke="#222222" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="m9 18 6-6-6-6" /></svg>
-              </button>
-              <ul class="mobile-submenu" style="display: none;">
-                <li><a href="{{ routes.collections_url }}/all">Gifts for Her</a></li>
-                <li><a href="{{ routes.collections_url }}/all">Gifts for Him</a></li>
-                <li><a href="{{ routes.collections_url }}/all">Anniversary Gifts</a></li>
-                <li><a href="{{ routes.collections_url }}/all">Wedding Gifts</a></li>
-                <li><a href="{{ routes.collections_url }}/all">Gifts Under ₹15,000</a></li>
-              </ul>
+            <li class="mobile-menu-item">
+              <a href="{{ routes.collections_url }}/all" class="mobile-menu-link">
+                <span class="mobile-menu-title">CURATED GIFTS</span>
+              </a>
             </li>
-
-            <li class="mobile-menu-item mobile-menu-item--has-sub">
-              <button type="button" class="mobile-menu-trigger" aria-expanded="false">
-                <span class="mobile-menu-title">OUR STORY</span>
-                <svg class="mobile-menu-arrow" viewBox="0 0 24 24" fill="none" stroke="#222222" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="m9 18 6-6-6-6" /></svg>
-              </button>
-              <ul class="mobile-submenu" style="display: none;">
-                <li><a href="/pages/about-us">About Swastik Jewels</a></li>
-                <li><a href="/pages/craftsmanship">Our Craftsmanship</a></li>
-                <li><a href="/pages/stores">Store Locator</a></li>
-                <li><a href="/pages/contact-us">Contact Us</a></li>
-                <li><a href="/pages/jewelry-care">Jewelry Care Guide</a></li>
-              </ul>
+            <li class="mobile-menu-item">
+              <a href="/pages/about-us" class="mobile-menu-link">
+                <span class="mobile-menu-title">OUR LEGACY</span>
+              </a>
             </li>
           {%- endif -%}
         </ul>
