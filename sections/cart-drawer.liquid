@@ -340,8 +340,8 @@
 {% endstyle %}
 
 <script>
-  function formatMoney(cents) {
-    if (window.formatMoney) {
+  function drawerFormatMoney(cents) {
+    if (typeof window.formatMoney === 'function') {
       return window.formatMoney(cents);
     }
     return '₹' + (cents / 100).toLocaleString('en-IN', { minimumFractionDigits: 0, maximumFractionDigits: 0 });
@@ -392,7 +392,7 @@
           <div class="cart-item__details">
             <a href="${item.url || '#'}" class="cart-item__title">${item.product_title || item.title || 'Product'}</a>
             ${optionsText ? `<div class="cart-item__options">${optionsText}</div>` : ''}
-            <div class="cart-item__price">${formatMoney(itemPrice)}</div>
+            <div class="cart-item__price">${drawerFormatMoney(itemPrice)}</div>
             
             <div class="cart-item__bottom">
               <div class="cart-item__qty">
@@ -416,7 +416,7 @@
 
     body.innerHTML = html;
     
-    document.getElementById('CartDrawerSubtotal').textContent = formatMoney(totalPrice);
+    document.getElementById('CartDrawerSubtotal').textContent = drawerFormatMoney(totalPrice);
     footer.style.display = 'block';
   }
 
