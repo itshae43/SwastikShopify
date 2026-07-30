@@ -596,13 +596,8 @@
 
   .video-call-form__platform-options {
     display: flex;
-    flex-wrap: nowrap;
-    overflow-x: auto;
+    flex-direction: column;
     gap: 12px;
-    padding-bottom: 8px;
-    -ms-overflow-style: none;
-    scrollbar-width: none;
-    scroll-snap-type: x mandatory;
   }
   
   .video-call-form__platform-options::-webkit-scrollbar {
@@ -614,22 +609,17 @@
       display: grid;
       grid-template-columns: 1fr 1fr;
       gap: 15px;
-      overflow-x: visible;
-      padding-bottom: 0;
     }
   }
 
   .video-call-form__platform-option {
-    flex: 0 0 75%;
-    min-width: 200px;
+    width: 100%;
     cursor: pointer;
-    scroll-snap-align: start;
   }
   
   @media screen and (min-width: 480px) {
     .video-call-form__platform-option {
-      flex: auto;
-      min-width: 0;
+      width: auto;
     }
   }
 
@@ -771,15 +761,10 @@
 
   .video-call-form__timing-options {
     display: flex;
-    flex-wrap: nowrap;
-    overflow-x: auto;
+    flex-direction: column;
     gap: 12px;
     margin-top: 8px;
     margin-bottom: 15px;
-    padding-bottom: 8px;
-    -ms-overflow-style: none;
-    scrollbar-width: none;
-    scroll-snap-type: x mandatory;
   }
 
   .video-call-form__timing-options::-webkit-scrollbar {
@@ -791,22 +776,17 @@
       display: grid;
       grid-template-columns: 1fr 1fr;
       gap: 15px;
-      overflow-x: visible;
-      padding-bottom: 0;
     }
   }
 
   .video-call-form__timing-option {
-    flex: 0 0 75%;
-    min-width: 200px;
+    width: 100%;
     cursor: pointer;
-    scroll-snap-align: start;
   }
   
   @media screen and (min-width: 480px) {
     .video-call-form__timing-option {
-      flex: auto;
-      min-width: 0;
+      width: auto;
     }
   }
 

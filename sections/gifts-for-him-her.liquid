@@ -105,6 +105,7 @@
   box-shadow: 0 15px 45px rgba(10, 42, 38, 0.03);
   display: flex;
   flex-direction: row;
+  gap: 0;
 }
 
 .gifts-banner__side {
@@ -114,6 +115,10 @@
   z-index: 1;
   overflow: hidden;
   display: block;
+}
+
+.gifts-banner__side--her {
+  margin-left: -1px;
 }
 
 .gifts-banner__image-container {
@@ -185,6 +190,10 @@
     display: block;
     z-index: 1;
     overflow: hidden;
+  }
+
+  .gifts-banner__side--her {
+    margin-left: 0;
   }
   
   .gifts-banner__side--him .gifts-banner__img,
