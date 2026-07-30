@@ -61,8 +61,7 @@
       <p class="cart-drawer__tax-note">Taxes and shipping calculated at checkout</p>
       
       <div class="cart-drawer__actions">
-        <a href="{{ routes.cart_url }}" class="btn-view-cart">View Cart</a>
-        <form action="{{ routes.cart_url }}" method="post" id="cart-drawer-form">
+        <form action="{{ routes.cart_url }}" method="post" id="cart-drawer-form" style="width: 100%; margin: 0;">
           <button type="submit" name="checkout" class="btn-checkout">Checkout</button>
         </form>
       </div>
