@@ -236,8 +236,8 @@
     border: none;
     text-align: center;
     font-family: 'Montserrat', sans-serif;
-    font-size: 1.2rem;
-    font-weight: 500;
+    font-size: 1.4rem;
+    font-weight: 600;
     background: none;
     color: var(--color-primary, #013F3E);
   }
@@ -247,11 +247,12 @@
   .cart-item__remove {
     background: none;
     border: none;
-    color: #999;
-    font-size: 1.15rem;
+    color: #666;
+    font-size: 1.2rem;
     text-decoration: underline;
     cursor: pointer;
-    font-family: inherit;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 500;
     transition: color 0.2s ease;
   }
   .cart-item__remove:hover {
@@ -276,8 +277,8 @@
     color: var(--color-primary, #013F3E);
   }
   .subtotal-price {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 2.2rem;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 2.0rem;
     font-weight: 600;
     color: var(--color-primary, #013F3E);
   }
@@ -385,10 +386,17 @@
           ? optionsArray.filter(opt => opt.value && opt.value !== 'Default Title').map(opt => opt.value).join(' | ') 
           : '';
         const itemPrice = item.final_line_price !== undefined ? item.final_line_price : (item.line_price || item.price || 0);
+        
+        let imageUrl = item.image || item.featured_image?.url || '';
+        if (imageUrl && imageUrl.startsWith('//')) {
+          imageUrl = 'https:' + imageUrl;
+        } else if (!imageUrl) {
+          imageUrl = 'https://cdn.shopify.com/s/images/admin/no-image-large.gif';
+        }
           
         html += `
         <div class="cart-item" data-key="${item.key}">
-          <img src="${item.image || ''}" alt="${item.title}" class="cart-item__image">
+          <img src="${imageUrl}" alt="${(item.product_title || item.title || '').replace(/"/g, '&quot;')}" class="cart-item__image">
           <div class="cart-item__details">
             <a href="${item.url || '#'}" class="cart-item__title">${item.product_title || item.title || 'Product'}</a>
             ${optionsText ? `<div class="cart-item__options">${optionsText}</div>` : ''}
