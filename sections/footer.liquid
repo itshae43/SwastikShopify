@@ -213,11 +213,20 @@
       </div>
       
       <div class="footer__bottom-center">
-        <a href="{{ section.settings.sitemap_url | default: '#' }}" class="footer__bottom-link">SITEMAP</a>
-        <span class="footer__bottom-divider">|</span>
-        <a href="/pages/accessibility" class="footer__bottom-link">ACCESSIBILITY</a>
-        <span class="footer__bottom-divider">|</span>
-        <a href="/pages/disclaimer" class="footer__bottom-link">DISCLAIMER</a>
+        {% if section.settings.bottom_menu != blank %}
+          {% for link in section.settings.bottom_menu.links %}
+            <a href="{{ link.url }}" class="footer__bottom-link">{{ link.title | upcase }}</a>
+            {% unless forloop.last %}
+              <span class="footer__bottom-divider">|</span>
+            {% endunless %}
+          {% endfor %}
+        {% else %}
+          <a href="/policies/privacy-policy" class="footer__bottom-link">PRIVACY POLICY</a>
+          <span class="footer__bottom-divider">|</span>
+          <a href="/policies/terms-of-service" class="footer__bottom-link">TERMS OF SERVICE</a>
+          <span class="footer__bottom-divider">|</span>
+          <a href="/policies/shipping-policy" class="footer__bottom-link">SHIPPING POLICY</a>
+        {% endif %}
       </div>
 
       <div class="footer__bottom-right">
@@ -1104,19 +1113,10 @@
       "content": "Footer Bottom Links"
     },
     {
-      "type": "url",
-      "id": "privacy_policy_url",
-      "label": "Privacy Policy URL"
-    },
-    {
-      "type": "url",
-      "id": "terms_of_service_url",
-      "label": "Terms of Service URL"
-    },
-    {
-      "type": "url",
-      "id": "sitemap_url",
-      "label": "Sitemap URL"
+      "type": "link_list",
+      "id": "bottom_menu",
+      "label": "Bottom Links Menu",
+      "info": "Create a menu in Navigation (e.g. for Privacy Policy, Terms of Service) and select it here."
     },
     {
       "type": "header",
