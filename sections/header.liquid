@@ -295,9 +295,17 @@
         });
       </script>
 
-      <!-- Gold price pill -->
-      <div class="header__gold-price">
-        <span class="gold-text">{{ section.settings.gold_price_label }} {{ shop.metafields.custom.daily_gold_rate.value | default: '14,422' }}/1g</span>
+      <!-- Gold price badge -->
+      <div class="header__gold-price new-gold-badge">
+        <div class="gold-badge-icon">
+          <svg width="22" height="24" viewBox="0 0 18 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M10.5 0.5L15 3.5C15.6 3.9 16 4.6 16 5.3V16C16 18.2091 14.2091 20 12 20H6C3.79086 20 2 18.2091 2 16V5.3C2 4.6 2.4 3.9 3 3.5L7.5 0.5C8.4 -0.1 9.6 -0.1 10.5 0.5Z" fill="#a87b29"/>
+          </svg>
+        </div>
+        <div class="gold-badge-text">
+          <span class="gold-badge-title">{{ section.settings.gold_price_label | default: '24K Gold' }}</span>
+          <span class="gold-badge-value">₹{{ shop.metafields.custom.daily_gold_rate.value | default: '14,150.00' }}/g</span>
+        </div>
       </div>
 
       <!-- Wishlist Link & Count -->
@@ -927,46 +935,42 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    border: 1px solid rgba(139, 101, 8, 0.25);
-    background: linear-gradient(to right, #cfaf6c 0%, #f7e6c4 50%, #cfaf6c 100%);
-    padding: 0.6rem 1.8rem;
-    border-radius: 50px;
+    gap: 0.8rem;
+    border: 1px solid #c29d59;
+    background: #f4e8d3;
+    padding: 0.5rem 1.4rem;
+    border-radius: 8px;
     font-family: 'Montserrat', sans-serif;
-    font-size: 1.25rem;
-    font-weight: 600;
-    color: #4a3b12;
     cursor: default;
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    white-space: nowrap;
-    box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.6), 
-                0 2px 4px rgba(0, 0, 0, 0.05);
-    position: relative;
-    overflow: hidden;
-  }
-  .header__gold-price::after {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: -50%;
-    width: 20%;
-    height: 100%;
-    background: linear-gradient(to right, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0.3) 50%, rgba(255, 255, 255, 0) 100%);
-    transform: skewX(-25deg);
-    animation: gold-shimmer 6s infinite ease-in-out;
-  }
-  @keyframes gold-shimmer {
-    0% { left: -50%; }
-    30% { left: 150%; }
-    100% { left: 150%; }
+    transition: all 0.3s ease;
+    text-decoration: none;
   }
   .header__gold-price:hover {
     transform: translateY(-1px);
-    box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.6), 
-                0 4px 10px rgba(139, 101, 8, 0.15);
-    border-color: rgba(139, 101, 8, 0.4);
+    box-shadow: 0 4px 8px rgba(178, 138, 71, 0.15);
   }
-  .gold-text {
-    letter-spacing: 0.04em;
+  .gold-badge-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .gold-badge-text {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    line-height: 1.2;
+  }
+  .gold-badge-title {
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--color-primary, #002e28);
+    margin-bottom: 0.15rem;
+  }
+  .gold-badge-value {
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: #a87b29;
   }
 
   /* Icons styling */
@@ -1073,8 +1077,13 @@
       gap: 1.2rem;
     }
     .header__gold-price {
-      padding: 0.5rem 1rem;
-      font-size: 1.1rem;
+      padding: 0.4rem 1rem;
+    }
+    .gold-badge-title {
+      font-size: 0.9rem;
+    }
+    .gold-badge-value {
+      font-size: 1rem;
     }
   }
 
