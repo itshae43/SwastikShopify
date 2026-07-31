@@ -1,13 +1,13 @@
 {% stylesheet %}
   .find-store-page {
-    font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    font-family: var(--font-body-family, 'Inter', sans-serif);
     color: #333;
-    background-color: #fcfcfc;
+    background-color: #FAFAFA;
     overflow: hidden;
   }
   
   .fs-container {
-    max-width: 1300px;
+    max-width: 1200px;
     margin: 0 auto;
     padding: 0 20px;
   }
@@ -16,8 +16,9 @@
   .fs-hero {
     display: flex;
     flex-wrap: wrap;
-    background: linear-gradient(135deg, #FFF9F2 0%, #FAF0E6 100%);
+    background: linear-gradient(135deg, #FFF9F2 0%, #F5EBE1 100%);
     position: relative;
+    border-bottom: 1px solid #efe4d8;
   }
   .fs-hero-content {
     flex: 1 1 500px;
@@ -39,25 +40,25 @@
     top: 0; left: 0;
   }
   .fs-hero-subtitle {
-    font-size: 1.2rem;
-    font-weight: 600;
+    font-size: 1.1rem;
+    font-weight: 700;
     text-transform: uppercase;
     letter-spacing: 2px;
-    color: #9c7b54;
+    color: #b08958;
     margin-bottom: 15px;
   }
   .fs-hero-title {
-    font-family: 'Playfair Display', serif;
-    font-size: 5rem;
+    font-family: var(--font-heading-family, 'Playfair Display', serif);
+    font-size: 5.5rem;
     color: #013F3E;
     line-height: 1.1;
-    margin-bottom: 20px;
+    margin-bottom: 25px;
     font-weight: 500;
   }
   .fs-hero-divider {
     width: 60px;
-    height: 2px;
-    background-color: #9c7b54;
+    height: 1px;
+    background-color: #b08958;
     margin-bottom: 25px;
     position: relative;
   }
@@ -68,12 +69,12 @@
     left: 50%;
     transform: translate(-50%, -50%);
     background: transparent;
-    color: #9c7b54;
+    color: #b08958;
     font-size: 14px;
     padding: 0 5px;
   }
   .fs-hero-text {
-    font-size: 1.4rem;
+    font-size: 1.5rem;
     line-height: 1.6;
     color: #555;
     margin-bottom: 40px;
@@ -89,10 +90,12 @@
     align-items: center;
     justify-content: center;
     gap: 10px;
-    padding: 14px 24px;
+    padding: 12px 24px;
     border-radius: 4px;
-    font-size: 1.3rem;
+    font-size: 1.2rem;
     font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
     text-decoration: none;
     transition: all 0.3s ease;
     cursor: pointer;
@@ -106,8 +109,8 @@
     background-color: #025958;
   }
   .fs-btn-secondary {
-    background-color: transparent;
-    border-color: #ccc;
+    background-color: white;
+    border-color: #ddd;
     color: #333;
   }
   .fs-btn-secondary:hover {
@@ -115,23 +118,23 @@
     color: #013F3E;
   }
   .fs-btn-gold {
-    background-color: #B58A59;
+    background-color: #b08958;
     color: white;
   }
   .fs-btn-gold:hover {
-    background-color: #a37948;
+    background-color: #9c7849;
   }
 
   /* --- DETAILS & MAP --- */
   .fs-details-section {
-    padding: 80px 0;
+    padding: 60px 0;
   }
   .fs-details-wrapper {
     display: flex;
     flex-wrap: wrap;
-    gap: 40px;
+    gap: 0px;
     background: white;
-    box-shadow: 0 10px 40px rgba(0,0,0,0.05);
+    box-shadow: 0 10px 40px rgba(0,0,0,0.06);
     border-radius: 12px;
     overflow: hidden;
   }
@@ -156,8 +159,8 @@
     top: 0; left: 0;
   }
   .fs-store-name {
-    font-family: 'Playfair Display', serif;
-    font-size: 3.2rem;
+    font-family: var(--font-heading-family, 'Playfair Display', serif);
+    font-size: 3rem;
     color: #013F3E;
     margin-bottom: 30px;
   }
@@ -165,66 +168,76 @@
     display: flex;
     align-items: flex-start;
     gap: 15px;
-    margin-bottom: 25px;
+    margin-bottom: 20px;
   }
   .fs-info-icon {
-    width: 24px;
-    height: 24px;
-    color: #9c7b54;
+    width: 22px;
+    height: 22px;
+    color: #b08958;
     flex-shrink: 0;
-    margin-top: 3px;
+    margin-top: 2px;
   }
   .fs-info-text {
-    font-size: 1.4rem;
-    line-height: 1.6;
-    color: #444;
+    font-size: 1.35rem;
+    line-height: 1.5;
+    color: #555;
   }
   .fs-info-text strong {
-    color: #111;
+    color: #222;
     display: block;
     margin-bottom: 2px;
+    font-weight: 600;
   }
   .fs-info-text a {
-    color: #444;
+    color: #555;
     text-decoration: none;
   }
   .fs-info-text a:hover {
-    color: #9c7b54;
+    color: #b08958;
   }
   .fs-facilities {
     display: flex;
-    gap: 20px;
-    margin-top: 20px;
+    gap: 15px;
+    margin-top: 25px;
     padding-top: 30px;
-    border-top: 1px solid #eee;
+    border-top: 1px solid #f0f0f0;
   }
   .fs-facility-item {
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 8px;
+    gap: 10px;
     text-align: center;
     font-size: 1.1rem;
-    color: #666;
+    color: #555;
     flex: 1;
+    font-weight: 500;
   }
   .fs-facility-icon {
-    width: 32px;
-    height: 32px;
-    color: #B58A59;
+    width: 40px;
+    height: 40px;
+    color: #b08958;
     background: #FFF9F2;
     border-radius: 50%;
-    padding: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .fs-facility-icon svg {
+    width: 20px;
+    height: 20px;
   }
 
   /* --- WHY VISIT US --- */
   .fs-features-section {
-    padding: 60px 0;
+    padding: 70px 0;
     background: #FAF8F5;
+    border-top: 1px solid #efe4d8;
+    border-bottom: 1px solid #efe4d8;
   }
   .fs-section-title {
     text-align: center;
-    font-family: 'Playfair Display', serif;
+    font-family: var(--font-heading-family, 'Playfair Display', serif);
     font-size: 2.8rem;
     color: #013F3E;
     margin-bottom: 15px;
@@ -234,7 +247,7 @@
   .fs-title-divider {
     width: 40px;
     height: 1px;
-    background: #9c7b54;
+    background: #b08958;
     margin: 0 auto 50px;
     position: relative;
   }
@@ -245,13 +258,13 @@
     left: 50%;
     transform: translate(-50%, -50%);
     background: #FAF8F5;
-    color: #9c7b54;
+    color: #b08958;
     font-size: 14px;
     padding: 0 5px;
   }
   .fs-features-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
     gap: 30px;
     text-align: center;
   }
@@ -262,8 +275,8 @@
     gap: 15px;
   }
   .fs-feature-icon {
-    width: 50px;
-    height: 50px;
+    width: 55px;
+    height: 55px;
     color: #013F3E;
   }
   .fs-feature-text {
@@ -287,34 +300,35 @@
   }
   .fs-apt-content {
     flex: 1 1 300px;
-    padding: 50px 40px;
+    padding: 60px 50px;
     display: flex;
     flex-direction: column;
     justify-content: center;
   }
   .fs-apt-subtitle {
     font-size: 1.1rem;
+    font-weight: 700;
     text-transform: uppercase;
     letter-spacing: 2px;
-    color: #B58A59;
-    margin-bottom: 10px;
+    color: #b08958;
+    margin-bottom: 12px;
   }
   .fs-apt-title {
-    font-family: 'Playfair Display', serif;
-    font-size: 3.6rem;
-    margin-bottom: 15px;
+    font-family: var(--font-heading-family, 'Playfair Display', serif);
+    font-size: 4rem;
+    margin-bottom: 20px;
     line-height: 1.1;
   }
   .fs-apt-text {
-    font-size: 1.3rem;
-    color: #ddd;
-    line-height: 1.5;
+    font-size: 1.4rem;
+    color: #e0e0e0;
+    line-height: 1.6;
     margin-bottom: 30px;
   }
   .fs-apt-divider {
     width: 40px;
     height: 1px;
-    background: #B58A59;
+    background: #b08958;
     position: relative;
   }
   .fs-apt-divider::after {
@@ -324,7 +338,7 @@
     left: 50%;
     transform: translate(-50%, -50%);
     background: #013F3E;
-    color: #B58A59;
+    color: #b08958;
     font-size: 14px;
     padding: 0 5px;
   }
@@ -332,7 +346,7 @@
     flex: 2 1 450px;
     background: white;
     padding: 40px;
-    margin: 20px 0 20px 20px;
+    margin: 20px 0 20px 0;
     border-radius: 8px 0 0 8px;
     color: #333;
   }
@@ -361,7 +375,7 @@
   .fs-form-field label {
     font-size: 1.2rem;
     font-weight: 500;
-    color: #555;
+    color: #444;
   }
   .fs-form-input {
     padding: 12px 15px;
@@ -372,26 +386,27 @@
     width: 100%;
     box-sizing: border-box;
     background: #fafafa;
+    color: #333;
   }
   .fs-form-input:focus {
     outline: none;
     border-color: #013F3E;
   }
   .fs-form-submit {
-    align-self: flex-end;
-    margin-top: 25px;
+    grid-column: 1 / -1;
+    margin-top: 10px;
   }
 
   /* --- STATS SECTION --- */
   .fs-stats-section {
-    padding: 40px 0 80px;
+    padding: 0 0 70px;
   }
   .fs-stats-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
     gap: 30px;
-    border-top: 1px solid #eee;
-    border-bottom: 1px solid #eee;
+    border-top: 1px solid #eaeaea;
+    border-bottom: 1px solid #eaeaea;
     padding: 40px 0;
   }
   .fs-stat-item {
@@ -401,19 +416,21 @@
     gap: 15px;
   }
   .fs-stat-icon {
-    width: 40px;
-    height: 40px;
-    color: #B58A59;
+    width: 45px;
+    height: 45px;
+    color: #b08958;
   }
   .fs-stat-content h4 {
-    font-size: 1.6rem;
+    font-family: var(--font-heading-family, 'Playfair Display', serif);
+    font-size: 1.8rem;
     color: #111;
     margin: 0 0 4px;
   }
   .fs-stat-content p {
     font-size: 1.2rem;
-    color: #666;
+    color: #555;
     margin: 0;
+    font-weight: 500;
   }
 
   /* --- BOTTOM CTA --- */
@@ -426,19 +443,16 @@
     padding: 60px 20px;
     text-align: center;
     color: white;
-    background-image: url('https://cdn.shopify.com/s/files/1/0813/1166/2381/files/pattern.png?v=1716382181'); /* Optional subtle pattern */
-    background-blend-mode: overlay;
-    background-size: cover;
   }
   .fs-cta-wrapper h2 {
-    font-family: 'Playfair Display', serif;
+    font-family: var(--font-heading-family, 'Playfair Display', serif);
     font-size: 3.6rem;
     margin-bottom: 15px;
     color: white;
   }
   .fs-cta-wrapper p {
     font-size: 1.4rem;
-    color: #ddd;
+    color: #e0e0e0;
     margin-bottom: 30px;
   }
   .fs-cta-buttons {
@@ -459,7 +473,7 @@
   }
 
   @media screen and (max-width: 768px) {
-    .fs-hero-title { font-size: 3.5rem; }
+    .fs-hero-title { font-size: 4rem; }
     .fs-store-name { font-size: 2.6rem; }
     .fs-details-wrapper, .fs-appointment-wrapper { flex-direction: column; }
     .fs-form-grid { grid-template-columns: 1fr; }
@@ -480,19 +494,19 @@
       <div class="fs-buttons">
         {% if section.settings.btn_directions_link != blank %}
           <a href="{{ section.settings.btn_directions_link }}" target="_blank" class="fs-btn fs-btn-primary">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
             {{ section.settings.btn_directions_text }}
           </a>
         {% endif %}
         {% if section.settings.btn_call_link != blank %}
           <a href="tel:{{ section.settings.btn_call_link }}" class="fs-btn fs-btn-secondary">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
             {{ section.settings.btn_call_text }}
           </a>
         {% endif %}
         {% if section.settings.btn_whatsapp_link != blank %}
           <a href="{{ section.settings.btn_whatsapp_link }}" target="_blank" class="fs-btn fs-btn-secondary">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg>
             {{ section.settings.btn_whatsapp_text }}
           </a>
         {% endif %}
@@ -502,7 +516,7 @@
       {% if section.settings.hero_image != blank %}
         {{ section.settings.hero_image | image_url: width: 1500 | image_tag: loading: 'lazy', alt: section.settings.hero_title }}
       {% else %}
-        <div style="background: #ccc; width: 100%; height: 100%; display: flex; align-items: center; justify-content: center;">Upload Hero Image</div>
+        <div style="background: #e2d9cf; width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; color: #888;">Upload Hero Image</div>
       {% endif %}
     </div>
   </section>
@@ -526,7 +540,7 @@
             <div class="fs-info-text">
               <strong>{{ section.settings.store_hours | newline_to_br }}</strong>
               {% if section.settings.store_status_text != blank %}
-                <span style="display:inline-block; margin-top: 5px; background: #013F3E; color: white; padding: 2px 8px; border-radius: 12px; font-size: 1rem; font-weight: 600;">{{ section.settings.store_status_text }}</span>
+                <span style="display:inline-block; margin-top: 5px; background: #013F3E; color: white; padding: 3px 10px; border-radius: 12px; font-size: 1rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px;">{{ section.settings.store_status_text }}</span>
               {% endif %}
             </div>
           </div>
@@ -577,7 +591,7 @@
           {% if section.settings.map_iframe != blank %}
             {{ section.settings.map_iframe }}
           {% else %}
-            <div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;padding:20px;text-align:center;">Please paste your Google Maps Embed Iframe in the theme editor.</div>
+            <div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;padding:20px;text-align:center;color:#888;">Please paste your Google Maps embed iframe in the theme editor.</div>
           {% endif %}
         </div>
       </div>
@@ -598,7 +612,7 @@
                 {% if block.settings.icon != blank %}
                   {{ block.settings.icon }}
                 {% else %}
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3h12l4 6-10 13L2 9Z"></path><path d="M11 3 8 9l4 13 4-13-3-6"></path><path d="M2 9h20"></path></svg>
                 {% endif %}
               </div>
               <div class="fs-feature-text">{{ block.settings.text }}</div>
@@ -653,7 +667,7 @@
               </div>
               <div class="fs-form-field" style="grid-column: 1 / -1;">
                 <label for="AptFormPurpose">Purpose of Visit</label>
-                <select id="AptFormPurpose" name="contact[Purpose of Visit]" class="fs-form-input">
+                <select id="AptFormPurpose" name="contact[Purpose of Visit]" class="fs-form-input" style="appearance: auto;">
                   <option value="General Viewing">General Viewing</option>
                   <option value="Bridal Consultation">Bridal Consultation</option>
                   <option value="Custom Jewellery Design">Custom Jewellery Design</option>
@@ -661,9 +675,9 @@
                   <option value="Repair / Polishing">Repair / Polishing</option>
                 </select>
               </div>
-            </div>
-            <div class="fs-form-submit">
-              <button type="submit" class="fs-btn fs-btn-gold" style="width: 100%;">Book Appointment</button>
+              <div class="fs-form-submit">
+                <button type="submit" class="fs-btn fs-btn-gold" style="width: 100%; border: none; padding: 14px; font-size: 1.3rem;">Book Appointment</button>
+              </div>
             </div>
           {% endform %}
         </div>
@@ -672,7 +686,7 @@
           {% if section.settings.apt_image != blank %}
             {{ section.settings.apt_image | image_url: width: 800 | image_tag: loading: 'lazy' }}
           {% else %}
-            <div style="background: #2a2a2a; width: 100%; height: 100%;"></div>
+            <div style="background: #111; width: 100%; height: 100%;"></div>
           {% endif %}
         </div>
       </div>
@@ -715,7 +729,7 @@
             <a href="{{ section.settings.cta_btn1_link }}" class="fs-btn fs-btn-gold">{{ section.settings.cta_btn1_text }}</a>
           {% endif %}
           {% if section.settings.cta_btn2_link != blank %}
-            <a href="{{ section.settings.cta_btn2_link }}" class="fs-btn fs-btn-secondary" style="border-color: rgba(255,255,255,0.3); color: white;">{{ section.settings.cta_btn2_text }}</a>
+            <a href="{{ section.settings.cta_btn2_link }}" class="fs-btn fs-btn-secondary" style="background: transparent; border-color: rgba(255,255,255,0.4); color: white;">{{ section.settings.cta_btn2_text }}</a>
           {% endif %}
         </div>
       </div>
@@ -927,7 +941,8 @@
         {
           "type": "html",
           "id": "icon",
-          "label": "SVG Icon HTML"
+          "label": "SVG Icon HTML",
+          "info": "Paste custom SVG here. Try finding clean, thin-line SVGs."
         },
         {
           "type": "textarea",
@@ -969,65 +984,75 @@
         {
           "type": "feature",
           "settings": {
-            "text": "See & Try Your Favourites"
+            "text": "See & Try Your Favourites",
+            "icon": "<svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M6 3h12l4 6-10 13L2 9Z\"></path><path d=\"M11 3 8 9l4 13 4-13-3-6\"></path><path d=\"M2 9h20\"></path></svg>"
           }
         },
         {
           "type": "feature",
           "settings": {
-            "text": "Personalised Expert Guidance"
+            "text": "Personalised Expert Guidance",
+            "icon": "<svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2\"></path><circle cx=\"12\" cy=\"7\" r=\"4\"></circle></svg>"
           }
         },
         {
           "type": "feature",
           "settings": {
-            "text": "Custom Jewellery Consultation"
+            "text": "Custom Jewellery Consultation",
+            "icon": "<svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><circle cx=\"12\" cy=\"14\" r=\"8\"></circle><path d=\"M12 2L9 8h6l-3-6z\"></path></svg>"
           }
         },
         {
           "type": "feature",
           "settings": {
-            "text": "Gold Exchange & Upgrade"
+            "text": "Gold Exchange & Upgrade",
+            "icon": "<svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8\"></path><path d=\"M3 3v5h5\"></path></svg>"
           }
         },
         {
           "type": "feature",
           "settings": {
-            "text": "BIS Hallmarked Assurance"
+            "text": "BIS Hallmarked Assurance",
+            "icon": "<svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M22 11.08V12a10 10 0 1 1-5.93-9.14\"></path><polyline points=\"22 4 12 14.01 9 11.01\"></polyline></svg>"
           }
         },
         {
           "type": "feature",
           "settings": {
-            "text": "Easy EMI Options"
+            "text": "Easy EMI Options",
+            "icon": "<svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><rect x=\"2\" y=\"5\" width=\"20\" height=\"14\" rx=\"2\"></rect><line x1=\"2\" y1=\"10\" x2=\"22\" y2=\"10\"></line></svg>"
           }
         },
         {
           "type": "stat",
           "settings": {
             "number": "SINCE 2011",
-            "text": "15+ Years of Trust"
+            "text": "15+ Years of Trust",
+            "icon": "<svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><circle cx=\"12\" cy=\"8\" r=\"7\"></circle><polyline points=\"8.21 13.89 7 23 12 20 17 23 15.79 13.88\"></polyline></svg>"
           }
         },
         {
           "type": "stat",
           "settings": {
             "number": "10,000+",
-            "text": "Happy Families"
+            "text": "Happy Families",
+            "icon": "<svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2\"></path><circle cx=\"9\" cy=\"7\" r=\"4\"></circle><path d=\"M23 21v-2a4 4 0 0 0-3-3.87\"></path><path d=\"M16 3.13a4 4 0 0 1 0 7.75\"></path></svg>"
           }
         },
         {
           "type": "stat",
           "settings": {
             "number": "1000+",
-            "text": "Jewellery Designs"
+            "text": "Jewellery Designs",
+            "icon": "<svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M6 3h12l4 6-10 13L2 9Z\"></path><path d=\"M11 3 8 9l4 13 4-13-3-6\"></path><path d=\"M2 9h20\"></path></svg>"
           }
         },
         {
           "type": "stat",
           "settings": {
             "number": "100% BIS Hallmarked",
-            "text": "Gold & Certified Diamonds"
+            "text": "Gold & Certified Diamonds",
+            "icon": "<svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z\"></path><polyline points=\"9 12 11 14 15 10\"></polyline></svg>"
           }
         }
       ]
