@@ -59,7 +59,7 @@
       <div class="contact-item-row">
         <span class="contact-icon">🏢</span> 
         <div class="contact-item-content">
-          <p><strong>Office Address:</strong> {{ section.settings.address }}</p>
+          <p><strong>Office Address:</strong> <a href="https://www.google.com/maps/search/?api=1&query={{ section.settings.address | url_encode }}" target="_blank" rel="noopener noreferrer">{{ section.settings.address }}</a></p>
         </div>
       </div>
     </div>
@@ -246,8 +246,14 @@
   }
 
   .contact-item-row a {
-    color: #555;
+    color: #013F3E;
     text-decoration: underline;
+    text-underline-offset: 4px;
+    transition: color 0.2s;
+  }
+  
+  .contact-item-row a:hover {
+    color: #d94182;
   }
 
   .contact-subtext {
@@ -268,23 +274,27 @@
   }
 
   .contact-form-wrapper {
+    margin-top: 20px;
     margin-bottom: 30px;
-    background: #fdfdfd;
-    padding: 25px;
-    border-radius: 12px;
-    border: 1px solid #eee;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.03);
+    background: #ffffff;
+    padding: 40px;
+    border-radius: 16px;
+    border: 1px solid #f0f0f0;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.06);
+    max-width: 800px;
+    margin-left: auto;
+    margin-right: auto;
   }
 
   .custom-contact-form {
     display: flex;
     flex-direction: column;
-    gap: 15px;
+    gap: 20px;
   }
 
   .contact-fields {
     display: flex;
-    gap: 15px;
+    gap: 20px;
   }
 
   .contact-fields .field {
@@ -293,42 +303,48 @@
 
   .custom-contact-form .field__input {
     width: 100%;
-    padding: 12px 15px;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    font-size: 1.4rem;
+    padding: 16px 20px;
+    border: 1.5px solid #eaeaea;
+    border-radius: 10px;
+    font-size: 1.5rem;
     font-family: inherit;
-    background-color: #fff;
+    background-color: #fcfcfc;
     transition: all 0.3s ease;
     box-sizing: border-box;
+    color: #333;
   }
 
   .custom-contact-form .field__input:focus {
     outline: none;
-    border-color: #d94182;
-    box-shadow: 0 0 0 2px rgba(217,65,130,0.1);
+    border-color: #013F3E;
+    box-shadow: 0 0 0 4px rgba(1, 63, 62, 0.1);
+    background-color: #fff;
   }
 
   .custom-contact-form .text-area {
     resize: vertical;
-    min-height: 100px;
+    min-height: 120px;
   }
 
   .custom-contact-form .custom-button {
     background-color: #013F3E;
     color: white;
     border: none;
-    padding: 14px 24px;
-    font-size: 1.4rem;
-    font-weight: 500;
-    border-radius: 8px;
+    padding: 16px 32px;
+    font-size: 1.5rem;
+    font-weight: 600;
+    border-radius: 10px;
     cursor: pointer;
-    transition: background-color 0.3s ease;
+    transition: all 0.3s ease;
     width: 100%;
+    letter-spacing: 0.5px;
+    margin-top: 10px;
   }
 
   .custom-contact-form .custom-button:hover {
     background-color: #025958;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(1, 63, 62, 0.2);
   }
 
   .success-message {
