@@ -63,8 +63,74 @@
         </div>
       </div>
     </div>
-    
 
+    </div>
+    
+  </div>
+</div>
+
+<div class="custom-contact-form-container">
+  <div class="contact-form-wrapper">
+    {%- form 'contact', id: 'ContactForm', class: 'custom-contact-form' -%}
+      {%- if form.posted_successfully? -%}
+        <div class="form-status form-status-list form__message success-message" tabindex="-1" autofocus>
+          <svg aria-hidden="true" focusable="false" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color: #28a745; margin-right: 8px;"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+          Thanks for contacting us. We'll get back to you as soon as possible.
+        </div>
+      {%- elsif form.errors -%}
+        <div class="form__message error-message">
+          <h3 class="form-status" role="alert" tabindex="-1" autofocus style="margin: 0; font-size: 1.4rem;">
+            Please adjust the following:
+          </h3>
+          <ul class="form-status-list">
+            <li>
+              <a href="#ContactForm-email">
+                {{ form.errors.translated_fields.email | capitalize }} {{ form.errors.messages.email }}
+              </a>
+            </li>
+          </ul>
+        </div>
+      {%- endif -%}
+
+      <div class="contact-fields">
+        <div class="field">
+          <input class="field__input" autocomplete="name" type="text" id="ContactForm-name" name="contact[{{ 'templates.contact.form.name' | t | default: 'name' }}]" value="{% if form.name %}{{ form.name }}{% elsif customer %}{{ customer.name }}{% endif %}" placeholder="Your Name" required>
+        </div>
+        <div class="field">
+          <input
+            autocomplete="email"
+            type="email"
+            id="ContactForm-email"
+            class="field__input"
+            name="contact[email]"
+            spellcheck="false"
+            autocapitalize="off"
+            value="{% if form.email %}{{ form.email }}{% elsif customer %}{{ customer.email }}{% endif %}"
+            aria-required="true"
+            placeholder="Your Email"
+            required
+          >
+        </div>
+      </div>
+      <div class="field">
+        <input type="tel" id="ContactForm-phone" class="field__input" autocomplete="tel" name="contact[{{ 'templates.contact.form.phone' | t | default: 'phone' }}]" pattern="[0-9\-]*" value="{% if form.phone %}{{ form.phone }}{% elsif customer %}{{ customer.phone }}{% endif %}" placeholder="Phone Number">
+      </div>
+      <div class="field">
+        <textarea
+          rows="4"
+          id="ContactForm-body"
+          class="text-area field__input"
+          name="contact[{{ 'templates.contact.form.comment' | t | default: 'message' }}]"
+          placeholder="Your Message"
+          required
+        >{%- if form.body -%}{{- form.body -}}{%- endif -%}</textarea>
+      </div>
+      <div class="contact-submit">
+        <button type="submit" class="button custom-button">
+          Send Message
+        </button>
+      </div>
+    {%- endform -%}
   </div>
 </div>
 
@@ -84,10 +150,17 @@
     flex-wrap: wrap;
     max-width: 1300px;
     margin: 0 auto;
-    padding: 60px 20px;
+    padding: 60px 20px 30px;
     gap: 60px;
     font-family: inherit;
     color: #333;
+  }
+  
+  .custom-contact-form-container {
+    max-width: 1300px;
+    margin: 0 auto;
+    padding: 0 20px 60px;
+    font-family: inherit;
   }
   
   .contact-map {
@@ -192,6 +265,101 @@
     height: 24px;
     font-size: 1.4rem;
     line-height: 1;
+  }
+
+  .contact-form-wrapper {
+    margin-bottom: 30px;
+    background: #fdfdfd;
+    padding: 25px;
+    border-radius: 12px;
+    border: 1px solid #eee;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.03);
+  }
+
+  .custom-contact-form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+  }
+
+  .contact-fields {
+    display: flex;
+    gap: 15px;
+  }
+
+  .contact-fields .field {
+    flex: 1;
+  }
+
+  .custom-contact-form .field__input {
+    width: 100%;
+    padding: 12px 15px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    font-size: 1.4rem;
+    font-family: inherit;
+    background-color: #fff;
+    transition: all 0.3s ease;
+    box-sizing: border-box;
+  }
+
+  .custom-contact-form .field__input:focus {
+    outline: none;
+    border-color: #d94182;
+    box-shadow: 0 0 0 2px rgba(217,65,130,0.1);
+  }
+
+  .custom-contact-form .text-area {
+    resize: vertical;
+    min-height: 100px;
+  }
+
+  .custom-contact-form .custom-button {
+    background-color: #013F3E;
+    color: white;
+    border: none;
+    padding: 14px 24px;
+    font-size: 1.4rem;
+    font-weight: 500;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    width: 100%;
+  }
+
+  .custom-contact-form .custom-button:hover {
+    background-color: #025958;
+  }
+
+  .success-message {
+    display: flex;
+    align-items: center;
+    background-color: #e8f5e9;
+    color: #2e7d32;
+    padding: 12px 15px;
+    border-radius: 8px;
+    margin-bottom: 15px;
+    font-size: 1.3rem;
+  }
+
+  .error-message {
+    background-color: #ffebee;
+    color: #c62828;
+    padding: 12px 15px;
+    border-radius: 8px;
+    margin-bottom: 15px;
+    font-size: 1.3rem;
+  }
+
+  .error-message ul {
+    margin: 5px 0 0 20px;
+    padding: 0;
+  }
+
+  @media screen and (max-width: 480px) {
+    .contact-fields {
+      flex-direction: column;
+    }
   }
 
 
