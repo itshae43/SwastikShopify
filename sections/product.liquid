@@ -374,6 +374,22 @@
           </div>
           <div class="pp-row-divider"></div>
 
+          {%- assign stone_wt = product.metafields.custom.stone_weight | default: '0' -%}
+          {%- assign has_stone = false -%}
+          {%- if stone_wt != '0' and stone_wt != blank -%}
+            {%- assign has_stone = true -%}
+          {%- endif -%}
+          {%- assign stone_val = current_variant.metafields.custom.stone_value | default: '0' -%}
+          {%- assign show_stone_row = false -%}
+          {%- if has_stone or stone_val != '0' -%}
+            {%- assign show_stone_row = true -%}
+          {%- endif -%}
+          <div class="pp-table-row" id="ui-row-stone" {% unless show_stone_row %}style="display: none;"{% endunless %}>
+            <span class="pp-row-label" id="ui-label-stone-val">Stone Value{% if has_stone %} ({{ stone_wt }}){% endif %}</span>
+            <span class="pp-row-value" id="ui-price-stone">₹{{ stone_val }}</span>
+          </div>
+          <div class="pp-row-divider" id="ui-divider-stone" {% unless show_stone_row %}style="display: none;"{% endunless %}></div>
+
           <div class="pp-table-row">
             <span class="pp-row-label">Making Charges</span>
             <span class="pp-row-value" id="ui-price-making">₹{{ current_variant.metafields.custom.making_charges | default: '13500' }}</span>
@@ -664,6 +680,7 @@
       "{{ variant.id }}": {
         "gold_value": {{ variant.metafields.custom.gold_value | json }},
         "diamond_value": {{ variant.metafields.custom.diamond_value | json }},
+        "stone_value": {{ variant.metafields.custom.stone_value | json }},
         "making_charges": {{ variant.metafields.custom.making_charges | json }},
         "gst_amount": {{ variant.metafields.custom.gst_amount | json }}
       }{% unless forloop.last %},{% endunless %}
@@ -2059,6 +2076,7 @@
               
               const making = safeParse(variantMeta.making_charges, 13500);
               const diamondValue = safeParse(variantMeta.diamond_value, 0);
+              const stoneValue = safeParse(variantMeta.stone_value, 0);
               const gst = safeParse(variantMeta.gst_amount, 0);
               const goldValue = safeParse(variantMeta.gold_value, 0);
               const diaWeight = parseFloat(String(meta.diamond_weight || '1.75').replace(/[^0-9.]/g, '')) || 1.75;
@@ -2082,6 +2100,25 @@
               
               const elDiaVal = document.getElementById('ui-price-diamond');
               if(elDiaVal) elDiaVal.textContent = fmt(diamondValue);
+              
+              const stoneWeightStr = String(meta.stone_weight || '0').trim();
+              const hasStone = stoneWeightStr !== '0' && stoneWeightStr !== '';
+              const elStoneLbl = document.getElementById('ui-label-stone-val');
+              if(elStoneLbl && hasStone) elStoneLbl.textContent = `Stone Value (${stoneWeightStr})`;
+
+              const elStoneVal = document.getElementById('ui-price-stone');
+              const elStoneRow = document.getElementById('ui-row-stone');
+              const elStoneDivider = document.getElementById('ui-divider-stone');
+              if(elStoneVal) {
+                elStoneVal.textContent = fmt(stoneValue);
+                if(hasStone || stoneValue > 0) {
+                  if(elStoneRow) elStoneRow.style.display = '';
+                  if(elStoneDivider) elStoneDivider.style.display = '';
+                } else {
+                  if(elStoneRow) elStoneRow.style.display = 'none';
+                  if(elStoneDivider) elStoneDivider.style.display = 'none';
+                }
+              }
               
               const elMaking = document.getElementById('ui-price-making');
               if(elMaking) elMaking.textContent = fmt(making);

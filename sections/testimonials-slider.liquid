@@ -34,52 +34,61 @@
       </div>
 
       <!-- Slider block (Centered Layout) -->
-      <div class="testimonials-v2__slider-viewport" data-slider-viewport>
-        <div class="testimonials-v2__slider-track" data-slider-track>
-          {%- for block in section.blocks -%}
-            <div class="testimonials-v2__card-wrapper" data-slide-index="{{ forloop.index0 }}" {{ block.shopify_attributes }}>
-              <div class="testimonials-v2__card">
-                <div class="testimonials-v2__card-header">
-                  <div class="testimonials-v2__quote-icon">
-                    <svg viewBox="0 0 24 20" fill="currentColor">
-                      <path d="M5.5 20c-1.8 0-3.3-.7-4.5-2C.3 16.7 0 15 0 13c0-2.8 1-5.6 3.1-8.3C5.2 2 8 0 11.5 0v3.5C9.2 4.7 7.7 6.2 7 8c1.3.2 2.3.8 3 1.8.8 1 1.2 2.3 1.2 3.7 0 1.8-.6 3.3-1.8 4.5S6.8 20 5.5 20zm12 0c-1.8 0-3.3-.7-4.5-2-1.2-1.3-1.8-3-1.8-5 0-2.8 1-5.6 3.1-8.3C17.2 2 20 0 23.5 0v3.5c-2.3 1.2-3.8 2.7-4.5 4.5 1.3.2 2.3.8 3 1.8.8 1 1.2 2.3 1.2 3.7 0 1.8-.6 3.3-1.8 4.5s-2.6 2-3.9 2z"/>
-                    </svg>
-                  </div>
-                  {%- if block.settings.rating > 0 -%}
-                    <div class="testimonials-v2__rating" aria-label="{{ block.settings.rating }} out of 5 stars">
-                      {%- for i in (1..5) -%}
-                        {%- if i <= block.settings.rating -%}
-                          <svg class="star star--filled" viewBox="0 0 24 24" fill="currentColor"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
-                        {%- else -%}
-                          <svg class="star star--empty" viewBox="0 0 24 24" fill="currentColor" opacity="0.2"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
-                        {%- endif -%}
-                      {%- endfor -%}
-                    </div>
-                  {%- endif -%}
+      {% capture testimonials_cards %}
+        {%- for block in section.blocks -%}
+          <div class="testimonials-v2__card-wrapper" data-slide-index="{{ forloop.index0 }}" {{ block.shopify_attributes }}>
+            <div class="testimonials-v2__card">
+              <div class="testimonials-v2__card-header">
+                <div class="testimonials-v2__quote-icon">
+                  <svg viewBox="0 0 24 20" fill="currentColor">
+                    <path d="M5.5 20c-1.8 0-3.3-.7-4.5-2C.3 16.7 0 15 0 13c0-2.8 1-5.6 3.1-8.3C5.2 2 8 0 11.5 0v3.5C9.2 4.7 7.7 6.2 7 8c1.3.2 2.3.8 3 1.8.8 1 1.2 2.3 1.2 3.7 0 1.8-.6 3.3-1.8 4.5S6.8 20 5.5 20zm12 0c-1.8 0-3.3-.7-4.5-2-1.2-1.3-1.8-3-1.8-5 0-2.8 1-5.6 3.1-8.3C17.2 2 20 0 23.5 0v3.5c-2.3 1.2-3.8 2.7-4.5 4.5 1.3.2 2.3.8 3 1.8.8 1 1.2 2.3 1.2 3.7 0 1.8-.6 3.3-1.8 4.5s-2.6 2-3.9 2z"/>
+                  </svg>
                 </div>
-                
-                <blockquote class="testimonials-v2__text">
-                  <p>{{ block.settings.text | escape }}</p>
-                </blockquote>
-                
-                <div class="testimonials-v2__meta">
-                  <div class="testimonials-v2__author-row">
-                    <span class="testimonials-v2__author">- {{ block.settings.author | escape }}</span>
+                {%- if block.settings.rating > 0 -%}
+                  <div class="testimonials-v2__rating" aria-label="{{ block.settings.rating }} out of 5 stars">
+                    {%- for i in (1..5) -%}
+                      {%- if i <= block.settings.rating -%}
+                        <svg class="star star--filled" viewBox="0 0 24 24" fill="currentColor"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                      {%- else -%}
+                        <svg class="star star--empty" viewBox="0 0 24 24" fill="currentColor" opacity="0.2"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                      {%- endif -%}
+                    {%- endfor -%}
                   </div>
-                  <div class="testimonials-v2__location-row">
-                    <span class="testimonials-v2__verify">
-                      <svg class="testimonials-v2__verify-icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-                        <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
-                      </svg>
-                      VERIFIED
-                    </span>
-                    <span class="testimonials-v2__location-dot">&bull;</span>
-                    <span class="testimonials-v2__location">{{ block.settings.location | escape | upcase }}</span>
-                  </div>
+                {%- endif -%}
+              </div>
+              
+              <blockquote class="testimonials-v2__text">
+                <p>{{ block.settings.text | escape }}</p>
+              </blockquote>
+              
+              <div class="testimonials-v2__meta">
+                <div class="testimonials-v2__author-row">
+                  <span class="testimonials-v2__author">- {{ block.settings.author | escape }}</span>
+                </div>
+                <div class="testimonials-v2__location-row">
+                  <span class="testimonials-v2__verify">
+                    <svg class="testimonials-v2__verify-icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                      <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
+                    </svg>
+                    VERIFIED
+                  </span>
+                  <span class="testimonials-v2__location-dot">&bull;</span>
+                  <span class="testimonials-v2__location">{{ block.settings.location | escape | upcase }}</span>
                 </div>
               </div>
             </div>
-          {%- endfor -%}
+          </div>
+        {%- endfor -%}
+      {% endcapture %}
+
+      <div class="testimonials-v2__slider-viewport" data-slider-viewport>
+        <div class="testimonials-v2__slider-track" data-slider-track>
+          <div class="testimonials-v2__marquee-content">
+            {{ testimonials_cards }}
+          </div>
+          <div class="testimonials-v2__marquee-content" aria-hidden="true">
+            {{ testimonials_cards }}
+          </div>
         </div>
       </div>
 
@@ -210,19 +219,7 @@
 
   </div>
 
-  {%- if section.settings.layout_style == 'centered' or section.blocks.size > 1 -%}
-    {%- if section.settings.layout_style == 'split' -%}
-      <!-- Render dots here only for split layout, centered renders inside container -->
-    {%- else -%}
-      <div class="testimonials-v2__dots-container">
-        <div class="testimonials-v2__dots" data-slider-dots>
-          {%- for block in section.blocks -%}
-            <button class="testimonials-v2__nav-dot {% if forloop.first %}is-active{% endif %}" aria-label="Go to slide {{ forloop.index }}" data-index="{{ forloop.index0 }}"></button>
-          {%- endfor -%}
-        </div>
-      </div>
-    {%- endif -%}
-  {%- endif -%}
+
 </div>
 
 {% stylesheet %}
@@ -684,27 +681,49 @@
 
 /* Make slider take full viewport area in centered layout */
 .testimonials-v2__container--centered .testimonials-v2__slider-viewport {
-  width: 100%;
-  overflow: visible;
+  width: 100vw;
+  margin-left: calc(-50vw + 50%);
+  margin-right: calc(-50vw + 50%);
+  overflow-x: hidden;
+  overflow-y: visible;
   mask-image: none;
   -webkit-mask-image: none;
+  scroll-snap-type: none;
+  padding-bottom: 2rem;
 }
 
 .testimonials-v2__container--centered .testimonials-v2__slider-track {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 2.4rem;
-  max-width: 1200px;
-  margin: 0 auto;
+  display: flex;
+  gap: 0;
+  width: max-content;
+  margin: 0;
   padding: 0;
-  width: 100%;
+}
+
+.testimonials-v2__container--centered .testimonials-v2__marquee-content {
+  display: flex;
+  gap: 2.4rem;
+  padding-right: 2.4rem;
+  animation: scroll-marquee 40s linear infinite;
+  will-change: transform;
+}
+
+.testimonials-v2__container--centered .testimonials-v2__slider-track:hover .testimonials-v2__marquee-content {
+  animation-play-state: paused;
+}
+
+@keyframes scroll-marquee {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-100%); }
 }
 
 .testimonials-v2__container--centered .testimonials-v2__card-wrapper {
-  width: 100%;
+  width: 380px;
+  max-width: 90vw;
   opacity: 1 !important;
   transform: none !important;
   filter: drop-shadow(0 4px 15px rgba(0,0,0,0.04));
+  scroll-snap-align: none;
 }
 
 .testimonials-v2__container--centered .testimonials-v2__dots-container {
@@ -885,28 +904,34 @@
   .testimonials-v2__container--centered .testimonials-v2__slider-viewport {
     mask-image: none;
     -webkit-mask-image: none;
-    margin: 0 -1rem;
-    padding-left: 1rem;
-    padding-right: 1rem;
+    margin: 0;
+    margin-left: calc(-50vw + 50%);
+    margin-right: calc(-50vw + 50%);
+    padding-left: 0;
+    padding-right: 0;
     padding-bottom: 1.5rem;
-    overflow-x: auto;
+    overflow-x: hidden;
     overflow-y: visible;
-    width: auto;
+    width: 100vw;
     scroll-snap-type: none;
   }
   .testimonials-v2__container--centered .testimonials-v2__slider-track {
     display: flex;
     width: max-content;
-    padding-left: 14px;
-    padding-right: 14px;
-    gap: 12px;
+    padding: 0;
+    gap: 0;
     margin: 0;
   }
+  .testimonials-v2__container--centered .testimonials-v2__marquee-content {
+    gap: 12px;
+    padding-right: 12px;
+    animation-duration: 20s;
+  }
   .testimonials-v2__container--centered .testimonials-v2__card-wrapper {
-    flex: 0 0 calc(50vw - 20px);
-    width: calc(50vw - 20px);
-    min-width: calc(50vw - 20px);
-    max-width: calc(50vw - 20px);
+    flex: 0 0 calc(70vw - 20px);
+    width: calc(70vw - 20px);
+    min-width: calc(70vw - 20px);
+    max-width: calc(70vw - 20px);
     opacity: 1 !important;
     transform: none !important;
     scroll-snap-align: none;
@@ -1059,43 +1084,13 @@ document.addEventListener('DOMContentLoaded', () => {
         if (autoplayInterval) clearInterval(autoplayInterval);
       };
 
-      const isMobileCentered = () => {
-        return window.innerWidth <= 990 && section.querySelector('.testimonials-v2__container--centered') !== null;
+      const isCenteredLayout = () => {
+        return section.querySelector('.testimonials-v2__container--centered') !== null;
       };
 
       if (autoplay) {
-        if (isMobileCentered()) {
-          // Continuous marquee for mobile
-          const children = Array.from(track.children);
-          if (children.length > 0) {
-            children.forEach(child => {
-              const clone = child.cloneNode(true);
-              clone.setAttribute('aria-hidden', 'true');
-              track.appendChild(clone);
-            });
-          }
-          let isHovered = false;
-          let isTouching = false;
-          let speed = 0.45;
-          let marqueeFrame;
-
-          viewport.addEventListener('mouseenter', () => isHovered = true);
-          viewport.addEventListener('mouseleave', () => isHovered = false);
-          viewport.addEventListener('touchstart', () => isTouching = true, {passive: true});
-          viewport.addEventListener('touchend', () => { setTimeout(() => isTouching = false, 1200); }, {passive: true});
-
-          const autoScrollMarquee = () => {
-            if (!isHovered && !isTouching) {
-              viewport.scrollLeft += speed;
-              if (viewport.scrollLeft >= track.scrollWidth / 2) {
-                viewport.scrollLeft = viewport.scrollLeft - (track.scrollWidth / 2);
-              }
-            }
-            marqueeFrame = requestAnimationFrame(autoScrollMarquee);
-          };
-          marqueeFrame = requestAnimationFrame(autoScrollMarquee);
-        } else {
-          // Standard dot autoplay for desktop
+        if (!isCenteredLayout()) {
+          // Standard dot autoplay for desktop split layout
           startAutoplay();
           viewport.addEventListener('mouseenter', stopAutoplay);
           viewport.addEventListener('mouseleave', startAutoplay);
