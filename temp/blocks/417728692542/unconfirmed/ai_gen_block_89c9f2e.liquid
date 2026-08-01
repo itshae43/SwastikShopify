@@ -1,6 +1,117 @@
+{% doc %}
+  @prompt
+    In the "Gifts for Him & Her" section, the middle image (a gift box icon in a circle) is being cut off because of object-fit: cover CSS. Create a CSS fix that changes the middle image in this section to use object-fit: contain instead of object-fit: cover, so the full image is visible without cropping. Ensure the fix targets only the middle image in the gifts_for_him_her section and doesn't affect other images on the page.
+{% enddoc %}
+{% assign ai_gen_id = block.id | replace: '_', '' | downcase %}
+
+{% style %}
+  .ai-gift-image-fix-{{ ai_gen_id }} {
+    display: block;
+    width: 100%;
+  }
+
+  {% comment %}Target the middle image in the gifts_for_him_her section{% endcomment %}
+  #shopify-section-template--26660099293502__178559520306f2d462 .gifts_for_him_her img:nth-of-type(2),
+  #shopify-section-template--26660099293502__178559520306f2d462 .gifts_for_him_her .image-wrapper:nth-of-type(2) img,
+  #shopify-section-template--26660099293502__178559520306f2d462 .gifts_for_him_her .gift-item:nth-of-type(2) img,
+  #shopify-section-template--26660099293502__178559520306f2d462 .gifts_for_him_her > *:nth-child(2) img {
+    object-fit: contain !important;
+  }
+
+  {% comment %}Additional fallback selectors for common grid/flex layouts{% endcomment %}
+  [id*="gifts_for_him_her"] .grid > *:nth-child(2) img,
+  [id*="gifts_for_him_her"] .flex > *:nth-child(2) img,
+  [class*="gifts"] .grid > *:nth-child(2) img,
+  [class*="gifts"] .flex > *:nth-child(2) img {
+    object-fit: contain !important;
+  }
+{% endstyle %}
+
+<div class="ai-gift-image-fix-{{ ai_gen_id }}" {{ block.shopify_attributes }}>
+  <p style="
+    padding: {{ block.settings.padding }}px;
+    background-color: {{ block.settings.background_color }};
+    color: {{ block.settings.text_color }};
+    border-radius: {{ block.settings.border_radius }}px;
+    text-align: center;
+    font-size: {{ block.settings.font_size }}px;
+    margin: 0;
+  ">
+    {{ block.settings.message }}
+  </p>
+</div>
+
 {% schema %}
- {
-   "name": "AI_Block",
-   "tag": "shopify-ai-generated-block"
- }
+{
+  "name": "Gift image fix",
+  "settings": [
+    {
+      "type": "header",
+      "content": "CSS fix applied"
+    },
+    {
+      "type": "paragraph",
+      "content": "This block fixes the middle image cropping in the Gifts for Him & Her section by changing object-fit from cover to contain."
+    },
+    {
+      "type": "inline_richtext",
+      "id": "message",
+      "label": "Status message",
+      "default": "✓ Middle image fix applied"
+    },
+    {
+      "type": "range",
+      "id": "font_size",
+      "label": "Font size",
+      "min": 10,
+      "max": 20,
+      "step": 1,
+      "unit": "px",
+      "default": 12
+    },
+    {
+      "type": "range",
+      "id": "padding",
+      "label": "Padding",
+      "min": 5,
+      "max": 20,
+      "step": 1,
+      "unit": "px",
+      "default": 10
+    },
+    {
+      "type": "range",
+      "id": "border_radius",
+      "label": "Border radius",
+      "min": 0,
+      "max": 10,
+      "step": 1,
+      "unit": "px",
+      "default": 4
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background color",
+      "default": "#FDFBF7"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text color",
+      "default": "#012726"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_message",
+      "label": "Show status message",
+      "default": false
+    }
+  ],
+  "presets": [
+    {
+      "name": "Gift image fix"
+    }
+  ]
+}
 {% endschema %}
