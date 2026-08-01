@@ -199,7 +199,8 @@
           "settings": {
             "collection": "gold-rings",
             "title": "GOLD RINGS",
-            "image": "shopify://shop_images/latest_4.png"
+            "image": "shopify://shop_images/latest_4.png",
+            "is_coming_soon": false
           }
         },
         "necklace": {
@@ -207,7 +208,8 @@
           "settings": {
             "collection": "gold-necklaces",
             "title": "GOLD NECKLACES",
-            "image": "shopify://shop_images/latest_7.png"
+            "image": "shopify://shop_images/latest_7.png",
+            "is_coming_soon": false
           }
         },
         "pendant_set": {
@@ -215,23 +217,26 @@
           "settings": {
             "collection": "pendant-sets",
             "title": "PENDANT SETS",
-            "image": "shopify://shop_images/latest_6.png"
+            "image": "shopify://shop_images/latest_6.png",
+            "is_coming_soon": false
           }
         },
         "earring": {
           "type": "collection",
           "settings": {
-            "collection": "gold-earrings",
+            "collection": "gold-bracelets",
             "title": "GOLD BRACELETS",
-            "image": "shopify://shop_images/latest_5.png"
+            "image": "shopify://shop_images/latest_5.png",
+            "is_coming_soon": false
           }
         },
         "bangle": {
           "type": "collection",
           "settings": {
-            "collection": "gold-bangles",
+            "collection": "gold-chikpatti-sets",
             "title": "GOLD CHIKPATTIS",
-            "image": "shopify://shop_images/Gold_Jewellery_1_a2a98288-c703-4edc-b5f2-9cdee7d1d7ac.png"
+            "image": "shopify://shop_images/Gold_Jewellery_1_a2a98288-c703-4edc-b5f2-9cdee7d1d7ac.png",
+            "is_coming_soon": false
           }
         }
       },
@@ -576,7 +581,6 @@
         "reel_4": {
           "type": "reel",
           "settings": {
-            "video": "",
             "video_url": "",
             "view_count": "1M"
           }
@@ -584,7 +588,6 @@
         "reel_2": {
           "type": "reel",
           "settings": {
-            "video": "",
             "video_url": "",
             "view_count": "1M"
           }
@@ -592,7 +595,6 @@
         "reel_3": {
           "type": "reel",
           "settings": {
-            "video": "",
             "video_url": "",
             "view_count": "3.6M"
           }
@@ -600,7 +602,6 @@
         "reel_1": {
           "type": "reel",
           "settings": {
-            "video": "",
             "video_url": "",
             "view_count": "11.9K"
           }
