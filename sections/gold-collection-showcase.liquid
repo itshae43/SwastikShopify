@@ -49,6 +49,7 @@
             assign collection = block.settings.collection
             assign custom_title = block.settings.title
             assign custom_image = block.settings.image
+            assign is_coming_soon = block.settings.is_coming_soon
             
             assign collection_title = collection.title | default: 'Collection'
             if custom_title != blank
@@ -62,8 +63,12 @@
             
             assign collection_url = collection.url | default: routes.all_products_collection_url
           -%}
-          <div class="gold-showcase__item" {{ block.shopify_attributes }}>
-            <a href="{{ collection_url }}" class="gold-showcase__img-link" aria-label="{{ collection_title | escape }}">
+          <div class="gold-showcase__item{% if is_coming_soon %} gold-showcase__item--coming-soon{% endif %}" {{ block.shopify_attributes }}>
+            {%- if is_coming_soon -%}
+              <div class="gold-showcase__img-link" aria-label="{{ collection_title | escape }}">
+            {%- else -%}
+              <a href="{{ collection_url }}" class="gold-showcase__img-link" aria-label="{{ collection_title | escape }}">
+            {%- endif -%}
               <div class="gold-showcase__img-container">
                 {%- if collection_image != blank -%}
                   {{ collection_image | image_url: width: 400, height: 550, crop: 'center' | image_tag: loading: 'lazy', alt: collection_title, class: 'gold-showcase__img' }}
@@ -72,7 +77,11 @@
                   {{ 'collection-' | append: placeholder_index | placeholder_svg_tag: 'gold-showcase__img placeholder-svg' }}
                 {%- endif -%}
               </div>
-            </a>
+            {%- if is_coming_soon -%}
+              </div>
+            {%- else -%}
+              </a>
+            {%- endif -%}
             
             <div class="gold-showcase__item-divider">
               <svg viewBox="0 0 24 24" fill="currentColor">
@@ -82,10 +91,16 @@
 
             <h3 class="gold-showcase__item-title">{{ collection_title | escape }}</h3>
             
-            <a href="{{ collection_url }}" class="gold-showcase__explore">
-              {{ 'sections.gold_collection_showcase.explore' | t | default: 'EXPLORE' }}
-              <span class="gold-showcase__explore-arrow">&rarr;</span>
-            </a>
+            {%- if is_coming_soon -%}
+              <span class="gold-showcase__explore gold-showcase__explore--disabled">
+                COMING SOON
+              </span>
+            {%- else -%}
+              <a href="{{ collection_url }}" class="gold-showcase__explore">
+                {{ 'sections.gold_collection_showcase.explore' | t | default: 'EXPLORE' }}
+                <span class="gold-showcase__explore-arrow">&rarr;</span>
+              </a>
+            {%- endif -%}
           </div>
         {%- endfor -%}
       </div>
@@ -264,6 +279,10 @@
   text-decoration: none;
 }
 
+.gold-showcase__item--coming-soon .gold-showcase__img-link {
+  cursor: default;
+}
+
 .gold-showcase__img-container {
   aspect-ratio: 1 / 1.38;
   border-radius: 50%;
@@ -279,6 +298,15 @@
   box-shadow: 0 8px 25px rgba(0, 0, 0, 0.05);
 }
 
+.gold-showcase__item--coming-soon .gold-showcase__img-container {
+  opacity: 0.85;
+}
+
+.gold-showcase__item--coming-soon .gold-showcase__img-container:hover {
+  transform: none;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.02);
+}
+
 .gold-showcase__img {
   width: 100%;
   height: 100%;
@@ -288,6 +316,10 @@
 
 .gold-showcase__img-container:hover .gold-showcase__img {
   transform: scale(1.04);
+}
+
+.gold-showcase__item--coming-soon .gold-showcase__img-container:hover .gold-showcase__img {
+  transform: none;
 }
 
 .gold-showcase__img.placeholder-svg {
@@ -359,6 +391,15 @@
 
 .gold-showcase__explore:hover .gold-showcase__explore-arrow {
   transform: translateX(3px);
+}
+
+.gold-showcase__explore--disabled {
+  cursor: default;
+  opacity: 0.6;
+}
+
+.gold-showcase__explore--disabled::after {
+  display: none;
 }
 
 .gold-showcase__slider-container {
@@ -762,6 +803,13 @@
           "type": "image_picker",
           "id": "image",
           "label": "t:sections.gold_collection_showcase.blocks.collection.settings.image"
+        },
+        {
+          "type": "checkbox",
+          "id": "is_coming_soon",
+          "label": "Coming Soon",
+          "info": "Displays 'Coming Soon' instead of 'Explore' and disables the link.",
+          "default": false
         }
       ]
     }
