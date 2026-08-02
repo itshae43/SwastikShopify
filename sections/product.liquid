@@ -600,7 +600,7 @@
                   {% if rel_product.featured_image %}
                     <img src="{{ rel_product.featured_image | image_url: width: 400 }}" alt="{{ rel_product.title | escape }}" width="400" height="400" loading="lazy">
                   {% else %}
-                    <img src="{{ 'best_seller_pendant.png' | asset_url }}" alt="Jewelry" width="400" height="400" loading="lazy">
+                    <img src="{{ 'FallBack image.png' | asset_url }}" alt="Jewelry" width="400" height="400" loading="lazy">
                   {% endif %}
                 </div>
                 <div class="pp-related-info">
@@ -656,7 +656,7 @@
                     {% if rel_product.featured_image %}
                       <img src="{{ rel_product.featured_image | image_url: width: 400 }}" alt="{{ rel_product.title | escape }}" width="400" height="400" loading="lazy">
                     {% else %}
-                      <img src="{{ 'best_seller_pendant.png' | asset_url }}" alt="Jewelry" width="400" height="400" loading="lazy">
+                      <img src="{{ 'FallBack image.png' | asset_url }}" alt="Jewelry" width="400" height="400" loading="lazy">
                     {% endif %}
                   </div>
                   <div class="pp-related-info">

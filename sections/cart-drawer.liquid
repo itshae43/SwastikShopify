@@ -26,7 +26,7 @@
             {% if item.image %}
               <img src="{{ item.image | image_url: width: 200 }}" alt="{{ item.title | escape }}" class="cart-item__image">
             {% else %}
-              <img src="{{ 'best_seller_pendant.png' | asset_url }}" alt="{{ item.title | escape }}" class="cart-item__image">
+              <img src="{{ 'FallBack image.png' | asset_url }}" alt="{{ item.title | escape }}" class="cart-item__image">
             {% endif %}
             <div class="cart-item__details">
               <a href="{{ item.url }}" class="cart-item__title">{{ item.product.title | default: item.title }}</a>
@@ -423,7 +423,7 @@
           imageUrl = 'https:' + imageUrl;
         } else if (!imageUrl) {
           // Fallback to the theme's default jewelry image if the product has no image uploaded in Shopify admin
-          imageUrl = '{{ "best_seller_pendant.png" | asset_url }}';
+          imageUrl = '{{ "FallBack image.png" | asset_url }}';
         }
           
         html += `
