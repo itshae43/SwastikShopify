@@ -33,12 +33,12 @@
         </div>
         
         <!-- Thumbnails Horizontal Carousel Below Main Image -->
-        <div class="pp-thumbnails-section">
-          <button class="pp-thumb-nav-btn pp-thumb-nav-prev" type="button" aria-label="Previous Thumbnails">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg>
-          </button>
+        {% if product.images.size > 1 %}
+          <div class="pp-thumbnails-section">
+            <button class="pp-thumb-nav-btn pp-thumb-nav-prev" type="button" aria-label="Previous Thumbnails">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg>
+            </button>
 
-          {% if product.images.size > 1 %}
             <div class="pp-thumbnails-wrapper">
               <div class="pp-thumbnails">
                 {% for image in product.images %}
@@ -50,34 +50,12 @@
                 {% endfor %}
               </div>
             </div>
-          {% else %}
-            <div class="pp-thumbnails-wrapper">
-              <div class="pp-thumbnails">
-                {% if product.featured_image %}
-                  <div class="pp-thumb-item is-active" data-image="{{ product.featured_image | image_url: width: 1000 }}">
-                    <div class="pp-thumb-img">
-                      <img src="{{ product.featured_image | image_url: width: 180 }}" alt="{{ product.title | escape }}" width="180" height="180">
-                    </div>
-                  </div>
-                {% endif %}
-                {% assign luxury_fallbacks = "best_seller_pendant.png,best_seller_earrings.png,best_seller_ring.png,best_seller_bracelet.png" | split: "," %}
-                {% for img_name in luxury_fallbacks %}
-                  {% unless product.featured_image and forloop.first %}
-                    <div class="pp-thumb-item {% if product.featured_image == blank and forloop.first %}is-active{% endif %}" data-image="{{ img_name | asset_url }}">
-                      <div class="pp-thumb-img">
-                        <img src="{{ img_name | asset_url }}" alt="Luxury Jewelry Thumbnail" width="180" height="180">
-                      </div>
-                    </div>
-                  {% endunless %}
-                {% endfor %}
-              </div>
-            </div>
-          {% endif %}
 
-          <button class="pp-thumb-nav-btn pp-thumb-nav-next" type="button" aria-label="Next Thumbnails">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg>
-          </button>
-        </div>
+            <button class="pp-thumb-nav-btn pp-thumb-nav-next" type="button" aria-label="Next Thumbnails">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg>
+            </button>
+          </div>
+        {% endif %}
       </div>
 
 
