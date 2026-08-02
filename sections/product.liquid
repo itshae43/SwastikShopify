@@ -2524,7 +2524,27 @@
         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
       </button>
       <div class="pp-guide-modal-content">
-        {{ section.settings.guide_gold_color.content }}
+        {% if section.settings.guide_gold_color != blank and section.settings.guide_gold_color.content != blank %}
+          {{ section.settings.guide_gold_color.content }}
+        {% else %}
+          <div style="padding: 20px;">
+            <h2 style="margin-bottom: 15px; color: #163D39; font-size: 22px; font-weight: 600;">Gold Color Guide</h2>
+            <div style="display: flex; flex-direction: column; gap: 15px;">
+              <div>
+                <h3 style="font-size: 16px; margin-bottom: 5px; color: #D4AF37; font-weight: 600;">Yellow Gold</h3>
+                <p style="font-size: 14px; color: #555; line-height: 1.5;">Classic and timeless, yellow gold offers a warm, traditional glow that complements diamonds beautifully.</p>
+              </div>
+              <div>
+                <h3 style="font-size: 16px; margin-bottom: 5px; color: #E0BFB8; font-weight: 600;">Rose Gold</h3>
+                <p style="font-size: 14px; color: #555; line-height: 1.5;">With its romantic pink hue, rose gold is created by mixing gold with copper, offering a unique and vintage feel.</p>
+              </div>
+              <div>
+                <h3 style="font-size: 16px; margin-bottom: 5px; color: #C0C0C0; font-weight: 600;">White Gold</h3>
+                <p style="font-size: 14px; color: #555; line-height: 1.5;">Sleek and modern, white gold is plated with rhodium for a brilliant white finish that enhances the sparkle of diamonds.</p>
+              </div>
+            </div>
+          </div>
+        {% endif %}
       </div>
     </div>
   </div>
@@ -2537,7 +2557,28 @@
         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
       </button>
       <div class="pp-guide-modal-content">
-        {{ section.settings.guide_gold_purity.content }}
+        {% if section.settings.guide_gold_purity != blank and section.settings.guide_gold_purity.content != blank %}
+          {{ section.settings.guide_gold_purity.content }}
+        {% else %}
+          <div style="padding: 20px;">
+            <h2 style="margin-bottom: 15px; color: #163D39; font-size: 22px; font-weight: 600;">Gold Purity Guide</h2>
+            <p style="font-size: 14px; color: #555; margin-bottom: 15px; line-height: 1.5;">Gold purity is measured in karats (K). 24K is pure gold, but it's too soft for jewelry, so it's alloyed with other metals for strength.</p>
+            <div style="display: flex; flex-direction: column; gap: 15px;">
+              <div>
+                <h3 style="font-size: 16px; margin-bottom: 5px; font-weight: 600; color: #222;">18K Gold (75% Pure)</h3>
+                <p style="font-size: 14px; color: #555; line-height: 1.5;">The perfect balance of luxury and durability. Offers a richer color and is ideal for fine jewelry and sensitive skin.</p>
+              </div>
+              <div>
+                <h3 style="font-size: 16px; margin-bottom: 5px; font-weight: 600; color: #222;">14K Gold (58.3% Pure)</h3>
+                <p style="font-size: 14px; color: #555; line-height: 1.5;">The most popular choice for everyday wear. It is highly durable and offers excellent value.</p>
+              </div>
+              <div>
+                <h3 style="font-size: 16px; margin-bottom: 5px; font-weight: 600; color: #222;">9K / 10K Gold</h3>
+                <p style="font-size: 14px; color: #555; line-height: 1.5;">The most affordable and durable option, great for pieces that will experience heavy wear.</p>
+              </div>
+            </div>
+          </div>
+        {% endif %}
       </div>
     </div>
   </div>
@@ -2550,7 +2591,24 @@
         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
       </button>
       <div class="pp-guide-modal-content">
-        {{ section.settings.guide_diamond_quality.content }}
+        {% if section.settings.guide_diamond_quality != blank and section.settings.guide_diamond_quality.content != blank %}
+          {{ section.settings.guide_diamond_quality.content }}
+        {% else %}
+          <div style="padding: 20px;">
+            <h2 style="margin-bottom: 15px; color: #163D39; font-size: 22px; font-weight: 600;">Diamond Quality Guide</h2>
+            <p style="font-size: 14px; color: #555; margin-bottom: 15px; line-height: 1.5;">We evaluate diamonds based on the 4Cs, with a focus on Color and Clarity for our standard offerings.</p>
+            <div style="display: flex; flex-direction: column; gap: 15px;">
+              <div>
+                <h3 style="font-size: 16px; margin-bottom: 5px; font-weight: 600; color: #222;">Color (D to Z)</h3>
+                <p style="font-size: 14px; color: #555; line-height: 1.5;"><strong>F-G:</strong> Rare white to white. Appears completely colorless to the naked eye.<br><strong>H-I:</strong> White to slightly tinted white. Offers excellent value with minimal visible color.</p>
+              </div>
+              <div>
+                <h3 style="font-size: 16px; margin-bottom: 5px; font-weight: 600; color: #222;">Clarity (FL to I3)</h3>
+                <p style="font-size: 14px; color: #555; line-height: 1.5;"><strong>VS (Very Slightly Included):</strong> Minor inclusions that are difficult to see under 10x magnification.<br><strong>SI (Slightly Included):</strong> Inclusions visible under 10x magnification, but usually eye-clean.</p>
+              </div>
+            </div>
+          </div>
+        {% endif %}
       </div>
     </div>
   </div>
@@ -2563,7 +2621,21 @@
         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
       </button>
       <div class="pp-guide-modal-content">
-        {{ section.settings.guide_ring_size.content }}
+        {% if section.settings.guide_ring_size != blank and section.settings.guide_ring_size.content != blank %}
+          {{ section.settings.guide_ring_size.content }}
+        {% else %}
+          <div style="padding: 20px;">
+            <h2 style="margin-bottom: 15px; color: #163D39; font-size: 22px; font-weight: 600;">Ring Size Guide</h2>
+            <p style="font-size: 14px; color: #555; margin-bottom: 15px; line-height: 1.5;">Finding the perfect fit is important. Here is a quick guide on how to measure your ring size at home:</p>
+            <ul style="font-size: 14px; color: #555; padding-left: 20px; display: flex; flex-direction: column; gap: 10px; line-height: 1.5;">
+              <li>Wrap a piece of string or paper around the base of your finger.</li>
+              <li>Mark where the ends meet with a pen.</li>
+              <li>Measure the string or paper with a ruler in millimeters.</li>
+              <li>Use a standard ring size chart to convert the circumference to your ring size.</li>
+            </ul>
+            <p style="font-size: 14px; color: #555; margin-top: 15px; font-style: italic;">Tip: Measure your fingers at the end of the day when they are largest.</p>
+          </div>
+        {% endif %}
       </div>
     </div>
   </div>
