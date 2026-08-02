@@ -2297,24 +2297,27 @@
                 const meta = JSON.parse(metaEl.textContent || '{}');
                 const total = matched.price / 100;
                 
-                const getOptionVal = (keywords) => {
-                  const groups = Array.from(document.querySelectorAll('.pp-option-group'));
-                  const group = groups.find(g => {
-                    const lbl = g.querySelector('.pp-option-label');
-                    if (!lbl) return false;
-                    const txt = lbl.textContent.toLowerCase();
-                    return keywords.some(k => txt.includes(k));
-                  });
-                  if (group) {
-                    const btn = group.querySelector('.pp-opt-btn.is-active');
-                    return btn ? (btn.getAttribute('data-value') || btn.textContent.trim()) : null;
+                let color = selectedVals[0] || 'Gold';
+                let purity = selectedVals[1] || '18K';
+                let quality = selectedVals[2] || 'G-VS';
+                
+                const groups = Array.from(document.querySelectorAll('.pp-option-group'));
+                groups.forEach(g => {
+                  const lbl = g.querySelector('.pp-option-label');
+                  if (!lbl) return;
+                  const txt = lbl.textContent.toLowerCase();
+                  const btn = g.querySelector('.pp-opt-btn.is-active');
+                  const val = btn ? (btn.getAttribute('data-value') || btn.textContent.trim()) : null;
+                  if (!val) return;
+                  
+                  if (txt.includes('color') || txt.includes('metal') || txt.includes('colour')) {
+                    color = val;
+                  } else if (txt.includes('purity') || txt.includes('gold') || txt.includes('carat') || txt.includes('karat')) {
+                    purity = val;
+                  } else if (txt.includes('quality') || txt.includes('diamond') || txt.includes('clarity') || txt.includes('grade')) {
+                    quality = val;
                   }
-                  return null;
-                };
-
-                const color = getOptionVal(['color', 'metal', 'colour']) || selectedVals[0] || 'Gold';
-                const purity = getOptionVal(['purity', 'gold', 'carat', 'karat']) || selectedVals[1] || '18K';
-                const quality = getOptionVal(['quality', 'diamond', 'clarity', 'grade']) || selectedVals[2] || 'G-VS';
+                });
                 
                 // Update Summary Card
                 const elSumMetal = document.getElementById('sum-val-metal');
