@@ -90,8 +90,8 @@
                               <span class="price-slider__label">{{ cart.currency.symbol }} <span id="label-max-{{ filter.label | handleize }}">{{ filter.max_value.value | default: filter.range_max | divided_by: 100.0 | ceil }}</span>+</span>
                             </div>
 
-                            <input type="hidden" name="{{ filter.min_value.param_name }}" id="Filter-{{ filter.min_value.param_name }}" value="{{ filter.min_value.value | divided_by: 100.0 | floor | default: '' }}">
-                            <input type="hidden" name="{{ filter.max_value.param_name }}" id="Filter-{{ filter.max_value.param_name }}" value="{{ filter.max_value.value | divided_by: 100.0 | ceil | default: '' }}">
+                            <input type="hidden" name="{{ filter.min_value.param_name }}" id="Filter-{{ filter.min_value.param_name }}" value="{{ filter.min_value.value | divided_by: 100.0 | floor | default: 0 }}" {% if filter.min_value.value == blank %}disabled{% endif %}>
+                            <input type="hidden" name="{{ filter.max_value.param_name }}" id="Filter-{{ filter.max_value.param_name }}" value="{{ filter.max_value.value | divided_by: 100.0 | ceil | default: '' }}" {% if filter.max_value.value == blank %}disabled{% endif %}>
                           </div>
                         </div>
                     {%- endcase -%}
@@ -1001,10 +1001,17 @@
         minLabel.textContent = minVal.toLocaleString(activeLocale);
         maxLabel.textContent = maxVal.toLocaleString(activeLocale);
         
-        if (hiddenMin) hiddenMin.value = minVal;
-        if (hiddenMax) hiddenMax.value = maxVal;
-
         const maxTotal = parseInt(minSlider.max) || 1;
+
+        if (hiddenMin) {
+          hiddenMin.value = minVal;
+          hiddenMin.disabled = (minVal <= 0);
+        }
+        if (hiddenMax) {
+          hiddenMax.value = maxVal;
+          hiddenMax.disabled = (maxVal >= maxTotal);
+        }
+
         const percentMin = (minVal / maxTotal) * 100;
         const percentMax = (maxVal / maxTotal) * 100;
         
