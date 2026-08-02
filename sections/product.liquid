@@ -2522,6 +2522,14 @@
   document.addEventListener('keydown', function(e) {
     if (e.key === 'Escape') closeGuideModals();
   });
+
+  // Initialize dynamic fields on page load to ensure they match the active variant
+  window.addEventListener('DOMContentLoaded', function() {
+    const defaultActiveBtn = document.querySelector('.pp-option-group .pp-opt-btn.is-active');
+    if (defaultActiveBtn) {
+      defaultActiveBtn.click();
+    }
+  });
 })();
 </script>
 
