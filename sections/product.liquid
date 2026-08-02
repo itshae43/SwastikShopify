@@ -605,10 +605,7 @@
           <div class="breakdown-row">
             <div class="bd-col-desc">
               <div class="bd-title">Making Charges</div>
-              <div class="bd-subtitle">
-                <span class="bd-desktop-text">₹<span id="ui-bd-making-rate-text">{{ v.custom_making_charge_rate | default: v.making_charge_rate | default: '0' }}</span> per gram (Net Weight)</span>
-                <span class="bd-mobile-text">For Craftsmanship & Labour</span>
-              </div>
+              <div class="bd-subtitle">₹<span id="ui-bd-making-rate-text">{{ v.custom_making_charge_rate | default: v.making_charge_rate | default: '0' }}</span> per gram (Net Weight)</div>
             </div>
             <div class="bd-col-rate" id="ui-bd-making-rate">₹{{ v.custom_making_charge_rate | default: v.making_charge_rate | default: '0' }} / gm</div>
             <div class="bd-col-qty" id="ui-bd-making-qty">{{ p.net_weight | default: p.net_wight | default: '0' }}</div>
@@ -620,9 +617,6 @@
           <div class="breakdown-row">
             <div class="bd-col-desc">
               <div class="bd-title">GST (3%)</div>
-              <div class="bd-subtitle">
-                <span class="bd-mobile-text">Goods & Services Tax</span>
-              </div>
             </div>
             <div class="bd-col-rate" style="color: #ccc;"><span class="bd-desktop-text">—</span></div>
             <div class="bd-col-qty" style="color: #ccc;"><span class="bd-desktop-text">—</span></div>
