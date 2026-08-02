@@ -148,14 +148,6 @@
                     </div>
                     <span class="pp-summary-label">Metal Color</span>
                     <span class="pp-summary-val" id="sum-val-metal">
-                      {%- assign bg_color = '#D4AF37' -%}
-                      {%- assign val_dc = sum_metal | downcase -%}
-                      {%- if val_dc contains 'rose' or val_dc contains 'pink' -%}
-                        {%- assign bg_color = '#E6C2B8' -%}
-                      {%- elsif val_dc contains 'white' or val_dc contains 'silver' or val_dc contains 'platinum' -%}
-                        {%- assign bg_color = '#E5E5E5' -%}
-                      {%- endif -%}
-                      <span class="pp-sum-color-dot" id="sum-dot-metal" style="background-color: {{ bg_color }};"></span>
                       {{ sum_metal }}
                     </span>
                   </div>
@@ -2332,8 +2324,7 @@
                 if(elSumPurity) elSumPurity.textContent = purity;
                 if(elSumQuality) elSumQuality.textContent = quality;
                 if(elSumMetal) {
-                  const bg_color = color.toLowerCase().includes('rose') || color.toLowerCase().includes('pink') ? '#E6C2B8' : (color.toLowerCase().includes('white') || color.toLowerCase().includes('silver') ? '#E5E5E5' : '#D4AF37');
-                  elSumMetal.innerHTML = `<span class="pp-sum-color-dot" id="sum-dot-metal" style="background-color: ${bg_color};"></span>${color}`;
+                  elSumMetal.textContent = color;
                 }
                 if(elSumSize && selectedVals.length > 3 && selectedVals[3] != undefined) elSumSize.textContent = selectedVals[3];
                 
