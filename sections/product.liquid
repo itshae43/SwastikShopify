@@ -126,7 +126,86 @@
               <input type="hidden" name="id" id="pp-variant-id" value="{{ current_variant.id }}">
               <input type="hidden" name="quantity" class="pp-qty-val" value="1">
               
-              {%- unless product.has_only_default_variant -%}
+              <!-- SUMMARY CARD -->
+              <div class="pp-summary-card">
+                <div class="pp-summary-items">
+                  {%- assign sum_metal = "Gold" -%}
+                  {%- assign sum_purity = "18K" -%}
+                  {%- assign sum_quality = "G-VS" -%}
+                  {%- assign sum_size = "12" -%}
+                  
+                  {%- for option in product.options_with_values -%}
+                    {%- assign name_dc = option.name | downcase -%}
+                    {%- if name_dc contains 'color' or name_dc contains 'metal' -%}
+                      {%- assign sum_metal = option.selected_value -%}
+                    {%- elsif name_dc contains 'purity' or name_dc contains 'gold' or name_dc contains 'carat' -%}
+                      {%- assign sum_purity = option.selected_value -%}
+                    {%- elsif name_dc contains 'quality' or name_dc contains 'diamond' -%}
+                      {%- assign sum_quality = option.selected_value -%}
+                    {%- elsif name_dc contains 'size' -%}
+                      {%- assign sum_size = option.selected_value -%}
+                    {%- endif -%}
+                  {%- endfor -%}
+
+                  <div class="pp-summary-item">
+                    <div class="pp-summary-icon">
+                      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+                    </div>
+                    <span class="pp-summary-label">Gold Purity</span>
+                    <span class="pp-summary-val" id="sum-val-purity">{{ sum_purity }}</span>
+                  </div>
+                  
+                  <div class="pp-summary-item">
+                    <div class="pp-summary-icon">
+                      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="8"/><circle cx="12" cy="12" r="3"/></svg>
+                    </div>
+                    <span class="pp-summary-label">Metal Color</span>
+                    <span class="pp-summary-val" id="sum-val-metal">
+                      {%- assign bg_color = '#D4AF37' -%}
+                      {%- assign val_dc = sum_metal | downcase -%}
+                      {%- if val_dc contains 'rose' or val_dc contains 'pink' -%}
+                        {%- assign bg_color = '#E6C2B8' -%}
+                      {%- elsif val_dc contains 'white' or val_dc contains 'silver' or val_dc contains 'platinum' -%}
+                        {%- assign bg_color = '#E5E5E5' -%}
+                      {%- endif -%}
+                      <span class="pp-sum-color-dot" id="sum-dot-metal" style="background-color: {{ bg_color }};"></span>
+                      {{ sum_metal }}
+                    </span>
+                  </div>
+
+                  <div class="pp-summary-item">
+                    <div class="pp-summary-icon">
+                      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3h12l4 6-10 12L2 9l4-6z"/></svg>
+                    </div>
+                    <span class="pp-summary-label">Diamond Quality</span>
+                    <span class="pp-summary-val" id="sum-val-quality">{{ sum_quality }}</span>
+                  </div>
+                  
+                  <div class="pp-summary-item">
+                    <div class="pp-summary-icon">
+                      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 2v20M2 12h20"/></svg>
+                    </div>
+                    <span class="pp-summary-label">Ring Size</span>
+                    <span class="pp-summary-val" id="sum-val-size">{{ sum_size }}</span>
+                  </div>
+                </div>
+              </div>
+              
+              <!-- CUSTOMIZE ACCORDION -->
+              <div class="pp-customize-wrap">
+                <button type="button" class="pp-customize-toggle" aria-expanded="false">
+                  <div class="pp-customize-toggle-left">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#D4AF37" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>
+                    <div class="pp-customize-text">
+                      <span class="pp-cust-title">Customize Your Ring</span>
+                      <span class="pp-cust-desc">Change gold purity, metal color, diamond quality or ring size</span>
+                    </div>
+                  </div>
+                  <svg class="pp-cust-chevron" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+                </button>
+                
+                <div class="pp-customize-content" style="display: none;">
+                  {%- unless product.has_only_default_variant -%}
                 <div class="pp-variants">
                   {%- for option in product.options_with_values -%}
                     {%- assign name_dc = option.name | downcase -%}
@@ -246,11 +325,28 @@
                     </div>
                   </div>
                 </div>
+                </div>
               {%- endunless -%}
+              </div> <!-- End customize content -->
+            </div> <!-- End customize wrap -->
             {% endform %}
 
           {%- when 'buy_buttons' -%}
             <div class="pp-actions-container">
+              
+              <!-- IN STOCK INDICATOR -->
+              <div class="pp-stock-indicator">
+                <div class="pp-stock-status">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="#0E4A43"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>
+                  <span>In Stock</span>
+                </div>
+                <div class="pp-stock-divider"></div>
+                <div class="pp-stock-shipping">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#666" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="3" width="15" height="13"></rect><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"></polygon><circle cx="5.5" cy="18.5" r="2.5"></circle><circle cx="18.5" cy="18.5" r="2.5"></circle></svg>
+                  <span>Ships in 5 - 7 Working Days</span>
+                </div>
+              </div>
+
               <!-- ROW 1: QUANTITY + ADD TO CART -->
               <div class="pp-actions-top-row">
                 <div class="pp-qty-widget">
@@ -1764,6 +1860,33 @@
     .pp-rel-view-btn svg { width: 14px !important; height: 14px !important; }
     .pp-rel-badge { display: none !important; }
   }
+
+  /* Summary Card */
+  .pp-summary-card { border: 1px solid var(--pp-border); border-radius: 12px; padding: 16px; margin-bottom: 20px; background: #fff; }
+  .pp-summary-items { display: flex; align-items: center; justify-content: space-between; gap: 10px; }
+  .pp-summary-item { display: flex; flex-direction: column; align-items: center; text-align: center; gap: 6px; flex: 1; }
+  .pp-summary-icon { width: 40px; height: 40px; border-radius: 50%; background: var(--pp-bg-light); display: flex; align-items: center; justify-content: center; color: var(--pp-primary); }
+  .pp-summary-label { font-size: 11px; font-weight: 500; color: var(--pp-text-muted); }
+  .pp-summary-val { font-size: 13px; font-weight: 600; color: var(--pp-text); display: flex; align-items: center; gap: 6px; }
+  .pp-sum-color-dot { width: 12px; height: 12px; border-radius: 50%; border: 1px solid rgba(0,0,0,0.1); }
+
+  /* Customize Accordion */
+  .pp-customize-wrap { border: 1px solid var(--pp-border); border-radius: 12px; margin-bottom: 20px; background: #fff; overflow: hidden; }
+  .pp-customize-toggle { width: 100%; display: flex; align-items: center; justify-content: space-between; padding: 16px; background: transparent; border: none; cursor: pointer; text-align: left; }
+  .pp-customize-toggle-left { display: flex; align-items: center; gap: 12px; }
+  .pp-customize-text { display: flex; flex-direction: column; }
+  .pp-cust-title { font-size: 15px; font-weight: 600; color: var(--pp-text); }
+  .pp-cust-desc { font-size: 12px; color: var(--pp-text-muted); }
+  .pp-cust-chevron { color: var(--pp-primary); transition: transform 0.3s; }
+  .pp-customize-wrap.is-open .pp-cust-chevron { transform: rotate(180deg); }
+  .pp-customize-content { padding: 0 16px 16px 16px; border-top: 1px solid var(--pp-border); }
+
+  /* In Stock Indicator */
+  .pp-stock-indicator { display: flex; align-items: center; gap: 12px; margin-bottom: 20px; font-size: 13px; font-weight: 500; }
+  .pp-stock-status { display: flex; align-items: center; gap: 6px; color: #0E4A43; }
+  .pp-stock-divider { width: 1px; height: 14px; background: var(--pp-border); }
+  .pp-stock-shipping { display: flex; align-items: center; gap: 6px; color: var(--pp-text-muted); }
+
 {% endstylesheet %}
 
 <script>
@@ -1915,7 +2038,7 @@
       return;
     }
 
-    // 7. Accordion Dropdown Toggle
+    // 7. Accordion Dropdown Toggle (Details)
     const accHeader = e.target.closest('.pp-acc-header');
     if (accHeader) {
       e.preventDefault();
@@ -1929,6 +2052,24 @@
           item.classList.add('is-open');
           accHeader.setAttribute('aria-expanded', 'true');
         }
+      }
+      return;
+    }
+
+    // 7b. Customize Accordion Toggle
+    const custToggle = e.target.closest('.pp-customize-toggle');
+    if (custToggle) {
+      e.preventDefault();
+      const wrap = custToggle.closest('.pp-customize-wrap');
+      const content = wrap.querySelector('.pp-customize-content');
+      if (wrap.classList.contains('is-open')) {
+        wrap.classList.remove('is-open');
+        custToggle.setAttribute('aria-expanded', 'false');
+        content.style.display = 'none';
+      } else {
+        wrap.classList.add('is-open');
+        custToggle.setAttribute('aria-expanded', 'true');
+        content.style.display = 'block';
       }
       return;
     }
@@ -2052,17 +2193,30 @@
               }
             }
             
-            // --- DYNAMIC UI BREAKDOWN LOGIC ---
-            const metaEl = document.getElementById('pp-metafields-json');
-            if (metaEl) {
-              const meta = JSON.parse(metaEl.textContent || '{}');
-              const total = matched.price / 100;
-              
-              const color = selectedVals[0] || 'Gold';
-              const purity = selectedVals[1] || '18K';
-              const quality = selectedVals[2] || 'G-VS';
-              
-              const variantMetaEl = document.getElementById('pp-variant-metafields-json');
+              // --- DYNAMIC UI BREAKDOWN LOGIC ---
+              const metaEl = document.getElementById('pp-metafields-json');
+              if (metaEl) {
+                const meta = JSON.parse(metaEl.textContent || '{}');
+                const total = matched.price / 100;
+                
+                const color = selectedVals[0] || 'Gold';
+                const purity = selectedVals[1] || '18K';
+                const quality = selectedVals[2] || 'G-VS';
+                
+                // Update Summary Card
+                const elSumMetal = document.getElementById('sum-val-metal');
+                const elSumPurity = document.getElementById('sum-val-purity');
+                const elSumQuality = document.getElementById('sum-val-quality');
+                const elSumSize = document.getElementById('sum-val-size');
+                if(elSumPurity) elSumPurity.textContent = purity;
+                if(elSumQuality) elSumQuality.textContent = quality;
+                if(elSumMetal) {
+                  const bg_color = color.toLowerCase().includes('rose') || color.toLowerCase().includes('pink') ? '#E6C2B8' : (color.toLowerCase().includes('white') || color.toLowerCase().includes('silver') ? '#E5E5E5' : '#D4AF37');
+                  elSumMetal.innerHTML = `<span class="pp-sum-color-dot" id="sum-dot-metal" style="background-color: ${bg_color};"></span>${color}`;
+                }
+                if(elSumSize && selectedVals.length > 3) elSumSize.textContent = selectedVals[3] || '12';
+                
+                const variantMetaEl = document.getElementById('pp-variant-metafields-json');
               let variantMeta = {};
               if (variantMetaEl) {
                 const allVariantMetas = JSON.parse(variantMetaEl.textContent || '{}');
