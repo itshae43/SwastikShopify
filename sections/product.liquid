@@ -2491,14 +2491,12 @@
     document.body.style.overflow = '';
   };
 
-  document.querySelectorAll('.pp-guide-modal-close').forEach(btn => {
-    btn.addEventListener('click', closeGuideModals);
-  });
-
-  document.querySelectorAll('.pp-guide-modal-overlay').forEach(overlay => {
-    overlay.addEventListener('click', function(e) {
-      if (e.target === this) closeGuideModals();
-    });
+  document.addEventListener('click', function(e) {
+    if (e.target.closest('.pp-guide-modal-close')) {
+      closeGuideModals();
+    } else if (e.target.classList.contains('pp-guide-modal-overlay')) {
+      closeGuideModals();
+    }
   });
 
   document.addEventListener('keydown', function(e) {
