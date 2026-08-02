@@ -35,24 +35,7 @@
           assign font_sz_mobile = block.settings.title_font_size_mobile | default: 20
           assign font_weight = block.settings.title_font_weight | default: '400'
           
-          assign fallback_image_name = ''
-          assign title_downcase = title | downcase
-          if title_downcase contains 'clay'
-            assign fallback_image_name = 'bond_mothers.png'
-          elsif title_downcase contains 'gem'
-            assign fallback_image_name = 'testimonial_bg_silk.png'
-          elsif title_downcase contains 'raw' or title_downcase contains 'heritage'
-            assign fallback_image_name = 'bond_brides.png'
-          else
-            assign cycle_index = forloop.index | modulo: 3
-            if cycle_index == 1
-              assign fallback_image_name = 'bond_mothers.png'
-            elsif cycle_index == 2
-              assign fallback_image_name = 'testimonial_bg_silk.png'
-            else
-              assign fallback_image_name = 'bond_brides.png'
-            endif
-          endif
+          assign fallback_image_name = 'FallBack image.png'
         -%}
         
         <div class="latest-collections__col {% if forloop.first %}is-active{% endif %}" data-index="{{ forloop.index0 }}">

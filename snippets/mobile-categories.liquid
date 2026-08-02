@@ -584,15 +584,7 @@ document.addEventListener('DOMContentLoaded', () => {
         imgUrl.includes('product-6') || 
         imgUrl.includes('s/images/themes') || 
         imgUrl.includes('empty-state')) {
-      if (categoryKey === 'earrings') {
-        return '{{ "best_seller_earrings_2.png" | asset_url }}';
-      } else if (categoryKey === 'bracelets' || categoryKey === 'bangles') {
-        return '{{ "best_seller_bracelet_2.png" | asset_url }}';
-      } else if (categoryKey === 'necklaces' || categoryKey === 'pendants' || categoryKey === 'mangalsutra') {
-        return '{{ "best_seller_pendant_2.png" | asset_url }}';
-      } else {
-        return '{{ "best_seller_ring_2.png" | asset_url }}';
-      }
+      return '{{ "FallBack image.png" | asset_url }}';
     }
     return imgUrl;
   }

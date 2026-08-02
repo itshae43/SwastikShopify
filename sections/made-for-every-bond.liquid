@@ -58,13 +58,7 @@
               {%- else -%}
                 {%- comment -%}Use generated fallback image based on the block index or settings{%- endcomment -%}
                 {%- assign fallback_img_name = '' -%}
-                {%- if title contains 'Mother' -%}
-                  {%- assign fallback_img_name = 'bond_mothers.png' -%}
-                {%- elsif title contains 'Sister' -%}
-                  {%- assign fallback_img_name = 'bond_sisters.png' -%}
-                {%- elsif title contains 'Bride' -%}
-                  {%- assign fallback_img_name = 'bond_brides.png' -%}
-                {%- endif -%}
+                {%- assign fallback_img_name = 'FallBack image.png' -%}
 
                 {%- if fallback_img_name != '' -%}
                   <img src="{{ fallback_img_name | asset_url }}" alt="{{ title }}" loading="lazy" width="600" height="800" class="every-bond__img">

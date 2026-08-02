@@ -20,16 +20,7 @@
                 {{ block.settings.image | image_url: width: 300, height: 300 | image_tag: class: 'featured-categories__img', loading: 'lazy' }}
               {% else %}
                 {% # Use static asset image name matches if present, else fallback %}
-                {% capture fallback_image_name %}
-                  {% case block.settings.title | downcase %}
-                    {% when 'rings' %}ring_placeholder.png
-                    {% when 'earrings' %}earring_placeholder.png
-                    {% when 'pendants' %}pendant_placeholder.png
-                    {% when 'bangles' %}bangle_placeholder.png
-                    {% when 'necklace' or 'necklaces' %}necklace_placeholder.png
-                    {% else %}logo.png
-                  {% endcase %}
-                {% endcapture %}
+                {% assign fallback_image_name = 'FallBack image.png' %}
                 <img src="{{ fallback_image_name | asset_url }}" 
                      alt="{{ block.settings.title | escape }}" 
                      class="featured-categories__img"
