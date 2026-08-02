@@ -581,7 +581,7 @@
         "reel_4": {
           "type": "reel",
           "settings": {
-            "video": "shopify://files/videos/Video-7135.mp4",
+            "video": "",
             "video_url": "",
             "view_count": "1M"
           }
@@ -589,7 +589,7 @@
         "reel_2": {
           "type": "reel",
           "settings": {
-            "video": "shopify://files/videos/IGI Certified Diamond Rings.mp4",
+            "video": "",
             "video_url": "",
             "view_count": "1M"
           }
@@ -597,7 +597,7 @@
         "reel_3": {
           "type": "reel",
           "settings": {
-            "video": "shopify://files/videos/cocktail rings.mp4",
+            "video": "",
             "video_url": "",
             "view_count": "3.6M"
           }
@@ -605,7 +605,7 @@
         "reel_1": {
           "type": "reel",
           "settings": {
-            "video": "shopify://files/videos/✨ 5 Diamond Bali Designs Under 3 Grams – Lightweight Luxury for Everyday Elegance! ✨Looking for  (1).mp4",
+            "video": "",
             "video_url": "",
             "view_count": "11.9K"
           }

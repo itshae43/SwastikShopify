@@ -212,7 +212,13 @@
                     <div class="pp-option-group" data-option-index="{{ forloop.index0 }}">
                       <div class="pp-option-header" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
                         <label class="pp-option-label" style="margin-bottom: 0;">{{ option.name }}</label>
-                        {%- if name_dc contains 'purity' or name_dc contains 'gold' or name_dc contains 'carat' -%}
+                        {%- if name_dc contains 'color' or name_dc contains 'colour' -%}
+                          {%- if section.settings.guide_gold_color != blank -%}
+                            <button type="button" class="pp-guide-btn" data-modal="modal-guide-gold-color">
+                              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"/></svg> Gold Color Guide
+                            </button>
+                          {%- endif -%}
+                        {%- elsif name_dc contains 'purity' or name_dc contains 'carat' -%}
                           {%- if section.settings.guide_gold_purity != blank -%}
                             <button type="button" class="pp-guide-btn" data-modal="modal-guide-gold-purity">
                               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg> Gold Purity Guide
@@ -2501,6 +2507,19 @@
 <!-- Zoom logic integrated into unified gallery controller above -->
 
 <!-- Educational Guide Modals -->
+{%- if section.settings.guide_gold_color != blank -%}
+  <div class="pp-guide-modal-overlay" id="modal-guide-gold-color">
+    <div class="pp-guide-modal-box">
+      <button class="pp-guide-modal-close">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+      <div class="pp-guide-modal-content">
+        {{ pages[section.settings.guide_gold_color].content }}
+      </div>
+    </div>
+  </div>
+{%- endif -%}
+
 {%- if section.settings.guide_gold_purity != blank -%}
   <div class="pp-guide-modal-overlay" id="modal-guide-gold-purity">
     <div class="pp-guide-modal-box">
@@ -2547,6 +2566,12 @@
     {
       "type": "header",
       "content": "Educational Guides"
+    },
+    {
+      "type": "page",
+      "id": "guide_gold_color",
+      "label": "Gold Color Guide Page",
+      "info": "Select the page containing the guide content for Gold Color."
     },
     {
       "type": "page",
