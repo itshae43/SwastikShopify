@@ -471,48 +471,141 @@
         </div>
 
         <!-- Card Below: Tab 2 (Price Breakdown) -->
+        <style>
+          .pp-breakdown-header {
+            display: flex;
+            font-size: 11px;
+            font-weight: 700;
+            color: #888;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            padding-bottom: 12px;
+            border-bottom: 1px solid #eee;
+            margin-bottom: 12px;
+          }
+          .bd-col-desc { flex: 2; text-align: left; }
+          .bd-col-rate { flex: 1; text-align: center; }
+          .bd-col-qty { flex: 1; text-align: center; }
+          .bd-col-amt { flex: 1; text-align: right; font-weight: 600; color: #013F3E; }
+
+          .breakdown-row {
+            display: flex;
+            align-items: center;
+            padding: 12px 0;
+          }
+          .breakdown-row .bd-title {
+            font-weight: 600;
+            color: #013F3E;
+            font-size: 14px;
+            margin-bottom: 4px;
+          }
+          .breakdown-row .bd-subtitle {
+            font-size: 12px;
+            color: #888;
+          }
+          .breakdown-row .bd-col-rate, .breakdown-row .bd-col-qty {
+            font-size: 13px;
+            color: #555;
+          }
+          .breakdown-row .bd-col-amt {
+            font-size: 15px;
+          }
+          .bd-total-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: #f6f7f5;
+            padding: 16px 20px;
+            border-radius: 8px;
+            margin-top: 12px;
+          }
+          .bd-total-label {
+            font-size: 14px;
+            font-weight: 700;
+            color: #013F3E;
+            text-transform: uppercase;
+          }
+          .bd-total-val {
+            font-size: 20px;
+            font-weight: 700;
+            color: #013F3E;
+          }
+        </style>
         <div class="pp-info-card pp-tab-body" id="tab-price" style="display: none;">
-          <div class="pp-table-row">
-            <span class="pp-row-label" id="ui-label-gold">Gold Value</span>
-            <span class="pp-row-value" id="ui-price-gold">₹{{ current_variant.metafields.custom.gold_value | default: '0' }}</span>
+          <div class="pp-breakdown-header">
+            <span class="bd-col-desc">DESCRIPTION</span>
+            <span class="bd-col-rate">RATE</span>
+            <span class="bd-col-qty">QTY / WEIGHT</span>
+            <span class="bd-col-amt">AMOUNT</span>
+          </div>
+
+          {%- assign v = current_variant.metafields.custom -%}
+          {%- assign p = product.metafields.custom -%}
+          
+          <!-- Gold Value -->
+          <div class="breakdown-row">
+            <div class="bd-col-desc">
+              <div class="bd-title" id="ui-label-gold">Gold Value</div>
+              <div class="bd-subtitle">Gold Rate Per Gram</div>
+            </div>
+            <div class="bd-col-rate" id="ui-bd-gold-rate">₹{{ v.custom_gold_rate | default: v.gold_rate | default: '0' }} / gm</div>
+            <div class="bd-col-qty" id="ui-bd-gold-qty">{{ p.net_weight | default: p.net_wight | default: '0' }}</div>
+            <div class="bd-col-amt" id="ui-price-gold">₹{{ v.gold_value | default: '0' }}</div>
           </div>
           <div class="pp-row-divider"></div>
 
-          <div class="pp-table-row">
-            <span class="pp-row-label" id="ui-label-dia-val">Diamond Value</span>
-            <span class="pp-row-value" id="ui-price-diamond">₹{{ current_variant.metafields.custom.diamond_value | default: '0' }}</span>
+          <!-- Diamond Value -->
+          <div class="breakdown-row">
+            <div class="bd-col-desc">
+              <div class="bd-title" id="ui-label-dia-val">Diamond Value</div>
+              <div class="bd-subtitle">Diamond Rate Per Carat</div>
+            </div>
+            <div class="bd-col-rate" id="ui-bd-dia-rate">₹{{ v.custom_diamond_rate | default: v.diamond_rate | default: '0' }} / ct</div>
+            <div class="bd-col-qty" id="ui-bd-dia-qty">{{ p.diamond_weight | default: '0' }}</div>
+            <div class="bd-col-amt" id="ui-price-diamond">₹{{ v.diamond_value | default: '0' }}</div>
           </div>
           <div class="pp-row-divider"></div>
 
-          {%- assign stone_wt = product.metafields.custom.stone_weight | default: '0' -%}
-          {%- assign has_stone = false -%}
-          {%- if stone_wt != '0' and stone_wt != blank -%}
-            {%- assign has_stone = true -%}
-          {%- endif -%}
-          {%- assign stone_val = current_variant.metafields.custom.stone_value | default: 0 | plus: 0 -%}
-          {%- assign show_stone_row = false -%}
-          {%- if stone_val > 0 -%}
-            {%- assign show_stone_row = true -%}
-          {%- endif -%}
-          <div class="pp-table-row" id="ui-row-stone" {% unless show_stone_row %}style="display: none !important;"{% endunless %}>
-            <span class="pp-row-label" id="ui-label-stone-val">Stone Value{% if has_stone %} ({{ stone_wt }}){% endif %}</span>
-            <span class="pp-row-value" id="ui-price-stone">₹{{ stone_val }}</span>
+          <!-- Stone Value -->
+          {%- assign stone_wt = p.stone_weight | default: '0' -%}
+          {%- assign stone_val = v.stone_value | default: 0 | plus: 0 -%}
+          <div class="breakdown-row" id="ui-row-stone" {% unless stone_val > 0 %}style="display: none !important;"{% endunless %}>
+            <div class="bd-col-desc">
+              <div class="bd-title" id="ui-label-stone-val">Stone Value</div>
+              <div class="bd-subtitle">Stone Rate Per ct</div>
+            </div>
+            <div class="bd-col-rate" id="ui-bd-stone-rate">₹{{ v.custom_stone_rate | default: v.stone_rate | default: '0' }} / ct</div>
+            <div class="bd-col-qty" id="ui-bd-stone-qty">{{ stone_wt }}</div>
+            <div class="bd-col-amt" id="ui-price-stone">₹{{ stone_val }}</div>
           </div>
-          <div class="pp-row-divider" id="ui-divider-stone" {% unless show_stone_row %}style="display: none !important;"{% endunless %}></div>
+          <div class="pp-row-divider" id="ui-divider-stone" {% unless stone_val > 0 %}style="display: none !important;"{% endunless %}></div>
 
-          <div class="pp-table-row">
-            <span class="pp-row-label">Making Charges</span>
-            <span class="pp-row-value" id="ui-price-making">₹{{ current_variant.metafields.custom.making_charges | default: '13500' }}</span>
+          <!-- Making Charges -->
+          <div class="breakdown-row">
+            <div class="bd-col-desc">
+              <div class="bd-title">Making Charges</div>
+              <div class="bd-subtitle">₹<span id="ui-bd-making-rate-text">{{ v.custom_making_charge_rate | default: v.making_charge_rate | default: '0' }}</span> per gram (Net Weight)</div>
+            </div>
+            <div class="bd-col-rate" id="ui-bd-making-rate">₹{{ v.custom_making_charge_rate | default: v.making_charge_rate | default: '0' }} / gm</div>
+            <div class="bd-col-qty" id="ui-bd-making-qty">{{ p.net_weight | default: p.net_wight | default: '0' }}</div>
+            <div class="bd-col-amt" id="ui-price-making">₹{{ v.making_charges | default: '0' }}</div>
           </div>
           <div class="pp-row-divider"></div>
 
-          <div class="pp-table-row">
-            <span class="pp-row-label">GST (3%)</span>
-            <span class="pp-row-value" id="ui-price-gst">₹{{ current_variant.metafields.custom.gst_amount | default: '0' }}</span>
+          <!-- GST -->
+          <div class="breakdown-row">
+            <div class="bd-col-desc">
+              <div class="bd-title">GST (3%)</div>
+            </div>
+            <div class="bd-col-rate" style="color: #ccc;">—</div>
+            <div class="bd-col-qty" style="color: #ccc;">—</div>
+            <div class="bd-col-amt" id="ui-price-gst">₹{{ v.gst_amount | default: '0' }}</div>
           </div>
-          <div class="pp-table-row pp-total-row">
-            <span class="pp-row-label">TOTAL PRICE</span>
-            <span class="pp-row-value" id="ui-price-total">{{ current_variant.price | money }}</span>
+
+          <!-- Total Price -->
+          <div class="bd-total-row">
+            <span class="bd-total-label">TOTAL PRICE</span>
+            <span class="bd-total-val" id="ui-price-total">{{ current_variant.price | money }}</span>
           </div>
         </div>
       </div>
@@ -792,7 +885,11 @@
         "diamond_value": {{ variant.metafields.custom.diamond_value | json }},
         "stone_value": {{ variant.metafields.custom.stone_value | json }},
         "making_charges": {{ variant.metafields.custom.making_charges | json }},
-        "gst_amount": {{ variant.metafields.custom.gst_amount | json }}
+        "gst_amount": {{ variant.metafields.custom.gst_amount | json }},
+        "custom_gold_rate": {{ variant.metafields.custom.custom_gold_rate | default: variant.metafields.custom.gold_rate | json }},
+        "custom_diamond_rate": {{ variant.metafields.custom.custom_diamond_rate | default: variant.metafields.custom.diamond_rate | json }},
+        "custom_stone_rate": {{ variant.metafields.custom.custom_stone_rate | default: variant.metafields.custom.stone_rate | json }},
+        "custom_making_charge_rate": {{ variant.metafields.custom.custom_making_charge_rate | default: variant.metafields.custom.making_charge_rate | json }}
       }{% unless forloop.last %},{% endunless %}
     {% endfor %}
   }
@@ -2350,6 +2447,11 @@
               const goldValue = safeParse(variantMeta.gold_value, 0);
               const diaWeight = parseFloat(String(meta.diamond_weight || '1.75').replace(/[^0-9.]/g, '')) || 1.75;
               
+              const goldRate = safeParse(variantMeta.custom_gold_rate, 0);
+              const diaRate = safeParse(variantMeta.custom_diamond_rate, 0);
+              const stoneRate = safeParse(variantMeta.custom_stone_rate, 0);
+              const makingRate = safeParse(variantMeta.custom_making_charge_rate, 0);
+              
               const fmt = (val) => 'Rs. ' + val.toLocaleString('en-IN', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
               
               const elMetal = document.getElementById('ui-detail-metal');
@@ -2362,8 +2464,23 @@
               if(elGoldLbl) elGoldLbl.textContent = `Gold Value (${purity})`;
               
               const elDiaLbl = document.getElementById('ui-label-dia-val');
-              if(elDiaLbl) elDiaLbl.textContent = `Diamond Value (${diaWeight} cts)`;
+              if(elDiaLbl) elDiaLbl.textContent = `Diamond Value`;
               
+              const elGoldRate = document.getElementById('ui-bd-gold-rate');
+              if(elGoldRate) elGoldRate.textContent = `₹${goldRate} / gm`;
+              
+              const elDiaRate = document.getElementById('ui-bd-dia-rate');
+              if(elDiaRate) elDiaRate.textContent = `₹${diaRate} / ct`;
+              
+              const elStoneRate = document.getElementById('ui-bd-stone-rate');
+              if(elStoneRate) elStoneRate.textContent = `₹${stoneRate} / ct`;
+              
+              const elMakingRate = document.getElementById('ui-bd-making-rate');
+              if(elMakingRate) elMakingRate.textContent = `₹${makingRate} / gm`;
+              
+              const elMakingRateText = document.getElementById('ui-bd-making-rate-text');
+              if(elMakingRateText) elMakingRateText.textContent = makingRate;
+
               const elGoldVal = document.getElementById('ui-price-gold');
               if(elGoldVal) elGoldVal.textContent = fmt(goldValue > 0 ? goldValue : 0);
               
@@ -2373,7 +2490,7 @@
               const stoneWeightStr = String(meta.stone_weight || '0').trim();
               const hasStone = stoneWeightStr !== '0' && stoneWeightStr !== '';
               const elStoneLbl = document.getElementById('ui-label-stone-val');
-              if(elStoneLbl && hasStone) elStoneLbl.textContent = `Stone Value (${stoneWeightStr})`;
+              if(elStoneLbl && hasStone) elStoneLbl.textContent = `Stone Value`;
 
               const elStoneVal = document.getElementById('ui-price-stone');
               const elStoneRow = document.getElementById('ui-row-stone');
