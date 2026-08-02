@@ -43,7 +43,11 @@
         "variant_picker",
         "buy_buttons"
       ],
-      "settings": {}
+      "settings": {
+        "guide_gold_purity": "gold-purity-guide",
+        "guide_diamond_quality": "diamond-quality-guide",
+        "guide_ring_size": "ring-size-guide"
+      }
     },
     "product_reviews": {
       "type": "product-reviews",
@@ -150,7 +154,8 @@
       "settings": {
         "heading": "What people are saying?",
         "subheading": "Don't just take our word for it—see what our customers have to say about their experience!",
-        "whatsapp_number": "+91 96500 90730"
+        "whatsapp_number": "+91 96500 90730",
+        "whatsapp_link": ""
       }
     }
   },
