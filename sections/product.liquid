@@ -107,24 +107,31 @@
               <!-- SUMMARY CARD -->
               <div class="pp-summary-card">
                 <div class="pp-summary-items">
-                  {%- assign sum_metal = "Gold" -%}
-                  {%- assign sum_purity = "18K" -%}
-                  {%- assign sum_quality = "G-VS" -%}
+                  {%- assign sum_metal = blank -%}
+                  {%- assign sum_purity = blank -%}
+                  {%- assign sum_quality = blank -%}
                   {%- assign sum_size = blank -%}
                   
-                  {%- for option in product.options_with_values -%}
-                    {%- assign name_dc = option.name | downcase -%}
-                    {%- if name_dc contains 'color' or name_dc contains 'metal' -%}
-                      {%- assign sum_metal = option.selected_value -%}
-                    {%- elsif name_dc contains 'purity' or name_dc contains 'gold' or name_dc contains 'carat' -%}
-                      {%- assign sum_purity = option.selected_value -%}
-                    {%- elsif name_dc contains 'quality' or name_dc contains 'diamond' -%}
-                      {%- assign sum_quality = option.selected_value -%}
-                    {%- elsif name_dc contains 'size' -%}
-                      {%- assign sum_size = option.selected_value -%}
-                    {%- endif -%}
-                  {%- endfor -%}
+                  {%- if product.has_only_default_variant -%}
+                    {%- assign sum_metal = "Yellow Gold" -%}
+                    {%- assign sum_purity = "18K" -%}
+                    {%- assign sum_quality = "G-VS" -%}
+                  {%- else -%}
+                    {%- for option in product.options_with_values -%}
+                      {%- assign name_dc = option.name | downcase -%}
+                      {%- if name_dc contains 'color' or name_dc contains 'metal' or name_dc contains 'colour' -%}
+                        {%- assign sum_metal = option.selected_value -%}
+                      {%- elsif name_dc contains 'purity' or name_dc contains 'gold' or name_dc contains 'carat' or name_dc contains 'karat' -%}
+                        {%- assign sum_purity = option.selected_value -%}
+                      {%- elsif name_dc contains 'quality' or name_dc contains 'diamond' or name_dc contains 'clarity' or name_dc contains 'grade' -%}
+                        {%- assign sum_quality = option.selected_value -%}
+                      {%- elsif name_dc contains 'size' -%}
+                        {%- assign sum_size = option.selected_value -%}
+                      {%- endif -%}
+                    {%- endfor -%}
+                  {%- endif -%}
 
+                  {%- if sum_purity != blank -%}
                   <div class="pp-summary-item">
                     <div class="pp-summary-icon">
                       <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
@@ -132,7 +139,9 @@
                     <span class="pp-summary-label">Gold Purity</span>
                     <span class="pp-summary-val" id="sum-val-purity">{{ sum_purity }}</span>
                   </div>
+                  {%- endif -%}
                   
+                  {%- if sum_metal != blank -%}
                   <div class="pp-summary-item">
                     <div class="pp-summary-icon">
                       <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"/></svg>
@@ -150,7 +159,9 @@
                       {{ sum_metal }}
                     </span>
                   </div>
+                  {%- endif -%}
 
+                  {%- if sum_quality != blank -%}
                   <div class="pp-summary-item">
                     <div class="pp-summary-icon">
                       <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3h12l4 6-10 12L2 9l4-6z"/><path d="M11 3l4 6-4 12"/><path d="M13 3l-4 6 4 12"/><path d="M2 9h20"/></svg>
@@ -158,6 +169,7 @@
                     <span class="pp-summary-label">Diamond Quality</span>
                     <span class="pp-summary-val" id="sum-val-quality">{{ sum_quality }}</span>
                   </div>
+                  {%- endif -%}
                   
                   {%- if sum_size != blank -%}
                   <div class="pp-summary-item">
@@ -2293,9 +2305,24 @@
                 const meta = JSON.parse(metaEl.textContent || '{}');
                 const total = matched.price / 100;
                 
-                const color = selectedVals[0] || 'Gold';
-                const purity = selectedVals[1] || '18K';
-                const quality = selectedVals[2] || 'G-VS';
+                const getOptionVal = (keywords) => {
+                  const groups = Array.from(document.querySelectorAll('.pp-option-group'));
+                  const group = groups.find(g => {
+                    const lbl = g.querySelector('.pp-option-label');
+                    if (!lbl) return false;
+                    const txt = lbl.textContent.toLowerCase();
+                    return keywords.some(k => txt.includes(k));
+                  });
+                  if (group) {
+                    const btn = group.querySelector('.pp-opt-btn.is-active');
+                    return btn ? (btn.getAttribute('data-value') || btn.textContent.trim()) : null;
+                  }
+                  return null;
+                };
+
+                const color = getOptionVal(['color', 'metal', 'colour']) || selectedVals[0] || 'Gold';
+                const purity = getOptionVal(['purity', 'gold', 'carat', 'karat']) || selectedVals[1] || '18K';
+                const quality = getOptionVal(['quality', 'diamond', 'clarity', 'grade']) || selectedVals[2] || 'G-VS';
                 
                 // Update Summary Card
                 const elSumMetal = document.getElementById('sum-val-metal');
