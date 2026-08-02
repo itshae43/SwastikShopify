@@ -581,7 +581,6 @@
         "reel_4": {
           "type": "reel",
           "settings": {
-            "video": "",
             "video_url": "",
             "view_count": "1M"
           }
@@ -589,7 +588,6 @@
         "reel_2": {
           "type": "reel",
           "settings": {
-            "video": "",
             "video_url": "",
             "view_count": "1M"
           }
@@ -597,7 +595,6 @@
         "reel_3": {
           "type": "reel",
           "settings": {
-            "video": "",
             "video_url": "",
             "view_count": "3.6M"
           }
@@ -605,7 +602,6 @@
         "reel_1": {
           "type": "reel",
           "settings": {
-            "video": "",
             "video_url": "",
             "view_count": "11.9K"
           }
