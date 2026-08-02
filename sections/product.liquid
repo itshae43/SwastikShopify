@@ -1964,6 +1964,20 @@
   .pp-stock-divider { width: 1px; height: 14px; background: #D1D5DB; }
   .pp-stock-shipping { display: flex; align-items: center; gap: 8px; color: var(--pp-text-muted); }
 
+  @media screen and (max-width: 767px) {
+    .pp-customize-toggle { padding: 12px; }
+    .pp-customize-toggle-left { gap: 10px; }
+    .pp-customize-toggle-left svg { width: 18px; height: 18px; }
+    .pp-cust-title { font-size: 14px; }
+    .pp-cust-desc { font-size: 11px; line-height: 1.3; }
+    .pp-cust-chevron { width: 18px; height: 18px; }
+    .pp-customize-content { padding: 16px 12px; }
+    .pp-option-group { gap: 8px; }
+    .pp-option-values { gap: 6px; }
+    .pp-pill-container { gap: 4px; padding: 4px; }
+    .pp-opt-btn:not(.pp-swatch-btn) { padding: 6px 10px; font-size: 12px; }
+    button.pp-opt-btn.pp-swatch-btn { width: 26px !important; height: 26px !important; min-width: 26px !important; min-height: 26px !important; }
+  }
 {% endstylesheet %}
 
 <script>
