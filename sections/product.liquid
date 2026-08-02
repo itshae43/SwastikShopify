@@ -530,6 +530,18 @@
             font-weight: 700;
             color: #013F3E;
           }
+          .bd-mobile-text { display: none; }
+          @media (max-width: 767px) {
+            .pp-breakdown-header { display: none !important; }
+            .bd-col-rate, .bd-col-qty { display: none !important; }
+            .breakdown-row { justify-content: space-between; align-items: flex-start; }
+            .bd-col-desc { flex: 1; padding-right: 15px; }
+            .bd-col-amt { flex: 0 0 auto; text-align: right; font-size: 16px !important; margin-top: 2px; }
+            .bd-subtitle { margin-top: 4px; display: flex; align-items: center; }
+            .bd-mobile-text { display: inline-block !important; }
+            .bd-desktop-text { display: none !important; }
+            .pp-info-card { padding: 16px !important; }
+          }
         </style>
         <div class="pp-info-card pp-tab-body" id="tab-price" style="display: none;">
           <div class="pp-breakdown-header">
@@ -546,7 +558,10 @@
           <div class="breakdown-row">
             <div class="bd-col-desc">
               <div class="bd-title" id="ui-label-gold">Gold Value</div>
-              <div class="bd-subtitle">Gold Rate Per Gram</div>
+              <div class="bd-subtitle">
+                <span class="bd-desktop-text">Gold Rate Per Gram</span>
+                <span class="bd-mobile-text"><span id="ui-bd-gold-rate-m">₹{{ v.custom_gold_rate | default: v.gold_rate | default: '0' }}/gm</span> &bull; <span id="ui-bd-gold-qty-m">{{ p.net_weight | default: p.net_wight | default: '0' }}gm</span></span>
+              </div>
             </div>
             <div class="bd-col-rate" id="ui-bd-gold-rate">₹{{ v.custom_gold_rate | default: v.gold_rate | default: '0' }} / gm</div>
             <div class="bd-col-qty" id="ui-bd-gold-qty">{{ p.net_weight | default: p.net_wight | default: '0' }}</div>
@@ -558,7 +573,10 @@
           <div class="breakdown-row">
             <div class="bd-col-desc">
               <div class="bd-title" id="ui-label-dia-val">Diamond Value</div>
-              <div class="bd-subtitle">Diamond Rate Per Carat</div>
+              <div class="bd-subtitle">
+                <span class="bd-desktop-text">Diamond Rate Per Carat</span>
+                <span class="bd-mobile-text"><span id="ui-bd-dia-rate-m">₹{{ v.custom_diamond_rate | default: v.diamond_rate | default: '0' }}/ct</span> &bull; <span id="ui-bd-dia-qty-m">{{ p.diamond_weight | default: '0' }}</span></span>
+              </div>
             </div>
             <div class="bd-col-rate" id="ui-bd-dia-rate">₹{{ v.custom_diamond_rate | default: v.diamond_rate | default: '0' }} / ct</div>
             <div class="bd-col-qty" id="ui-bd-dia-qty">{{ p.diamond_weight | default: '0' }}</div>
@@ -572,7 +590,10 @@
           <div class="breakdown-row" id="ui-row-stone" {% unless stone_val > 0 %}style="display: none !important;"{% endunless %}>
             <div class="bd-col-desc">
               <div class="bd-title" id="ui-label-stone-val">Stone Value</div>
-              <div class="bd-subtitle">Stone Rate Per ct</div>
+              <div class="bd-subtitle">
+                <span class="bd-desktop-text">Stone Rate Per ct</span>
+                <span class="bd-mobile-text"><span id="ui-bd-stone-rate-m">₹{{ v.custom_stone_rate | default: v.stone_rate | default: '0' }}/ct</span> &bull; <span id="ui-bd-stone-qty-m">{{ stone_wt }}</span></span>
+              </div>
             </div>
             <div class="bd-col-rate" id="ui-bd-stone-rate">₹{{ v.custom_stone_rate | default: v.stone_rate | default: '0' }} / ct</div>
             <div class="bd-col-qty" id="ui-bd-stone-qty">{{ stone_wt }}</div>
@@ -584,7 +605,10 @@
           <div class="breakdown-row">
             <div class="bd-col-desc">
               <div class="bd-title">Making Charges</div>
-              <div class="bd-subtitle">₹<span id="ui-bd-making-rate-text">{{ v.custom_making_charge_rate | default: v.making_charge_rate | default: '0' }}</span> per gram (Net Weight)</div>
+              <div class="bd-subtitle">
+                <span class="bd-desktop-text">₹<span id="ui-bd-making-rate-text">{{ v.custom_making_charge_rate | default: v.making_charge_rate | default: '0' }}</span> per gram (Net Weight)</span>
+                <span class="bd-mobile-text">For Craftsmanship & Labour</span>
+              </div>
             </div>
             <div class="bd-col-rate" id="ui-bd-making-rate">₹{{ v.custom_making_charge_rate | default: v.making_charge_rate | default: '0' }} / gm</div>
             <div class="bd-col-qty" id="ui-bd-making-qty">{{ p.net_weight | default: p.net_wight | default: '0' }}</div>
@@ -596,9 +620,12 @@
           <div class="breakdown-row">
             <div class="bd-col-desc">
               <div class="bd-title">GST (3%)</div>
+              <div class="bd-subtitle">
+                <span class="bd-mobile-text">Goods & Services Tax</span>
+              </div>
             </div>
-            <div class="bd-col-rate" style="color: #ccc;">—</div>
-            <div class="bd-col-qty" style="color: #ccc;">—</div>
+            <div class="bd-col-rate" style="color: #ccc;"><span class="bd-desktop-text">—</span></div>
+            <div class="bd-col-qty" style="color: #ccc;"><span class="bd-desktop-text">—</span></div>
             <div class="bd-col-amt" id="ui-price-gst">₹{{ v.gst_amount | default: '0' }}</div>
           </div>
 
@@ -2468,12 +2495,18 @@
               
               const elGoldRate = document.getElementById('ui-bd-gold-rate');
               if(elGoldRate) elGoldRate.textContent = `₹${goldRate} / gm`;
+              const elGoldRateM = document.getElementById('ui-bd-gold-rate-m');
+              if(elGoldRateM) elGoldRateM.textContent = `₹${goldRate}/gm`;
               
               const elDiaRate = document.getElementById('ui-bd-dia-rate');
               if(elDiaRate) elDiaRate.textContent = `₹${diaRate} / ct`;
+              const elDiaRateM = document.getElementById('ui-bd-dia-rate-m');
+              if(elDiaRateM) elDiaRateM.textContent = `₹${diaRate}/ct`;
               
               const elStoneRate = document.getElementById('ui-bd-stone-rate');
               if(elStoneRate) elStoneRate.textContent = `₹${stoneRate} / ct`;
+              const elStoneRateM = document.getElementById('ui-bd-stone-rate-m');
+              if(elStoneRateM) elStoneRateM.textContent = `₹${stoneRate}/ct`;
               
               const elMakingRate = document.getElementById('ui-bd-making-rate');
               if(elMakingRate) elMakingRate.textContent = `₹${makingRate} / gm`;
