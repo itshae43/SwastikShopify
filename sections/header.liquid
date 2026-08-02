@@ -297,7 +297,7 @@
 
       <!-- Gold price badge -->
       <div class="header__gold-price">
-        <span class="gold-text">{{ section.settings.gold_price | default: 'Gold 14500/1g' }}</span>
+        <span class="gold-text">Gold ₹{{ shop.metafields.custom.daily_gold_rate.value | default: '14,500' }}/1g</span>
       </div>
 
       <!-- Wishlist Link & Count -->
