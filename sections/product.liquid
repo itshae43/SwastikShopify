@@ -210,7 +210,28 @@
                   {%- for option in product.options_with_values -%}
                     {%- assign name_dc = option.name | downcase -%}
                     <div class="pp-option-group" data-option-index="{{ forloop.index0 }}">
-                      <label class="pp-option-label">{{ option.name }}</label>
+                      <div class="pp-option-header" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+                        <label class="pp-option-label" style="margin-bottom: 0;">{{ option.name }}</label>
+                        {%- if name_dc contains 'purity' or name_dc contains 'gold' or name_dc contains 'carat' -%}
+                          {%- if section.settings.guide_gold_purity != blank -%}
+                            <button type="button" class="pp-guide-btn" data-modal="modal-guide-gold-purity">
+                              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg> Gold Purity Guide
+                            </button>
+                          {%- endif -%}
+                        {%- elsif name_dc contains 'quality' or name_dc contains 'diamond' -%}
+                          {%- if section.settings.guide_diamond_quality != blank -%}
+                            <button type="button" class="pp-guide-btn" data-modal="modal-guide-diamond-quality">
+                              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg> Diamond Guide
+                            </button>
+                          {%- endif -%}
+                        {%- elsif name_dc contains 'size' -%}
+                          {%- if section.settings.guide_ring_size != blank -%}
+                            <button type="button" class="pp-guide-btn" data-modal="modal-guide-ring-size">
+                              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="22" y1="12" x2="18" y2="12"/><line x1="6" y1="12" x2="2" y2="12"/><line x1="12" y1="6" x2="12" y2="2"/><line x1="12" y1="22" x2="12" y2="18"/></svg> Ring Size Guide
+                            </button>
+                          {%- endif -%}
+                        {%- endif -%}
+                      </div>
                       {%- assign opt_vals = option.values -%}
                       {%- if name_dc contains 'color' or name_dc contains 'colour' or name_dc contains 'metal' -%}
                         {%- assign color_order = "rose,yellow,white" | split: "," -%}
@@ -1158,8 +1179,37 @@
     padding: 0 24px !important;
   }
   .pp-btn-buy:hover { background: #B5822C !important; transform: translateY(-2px) !important; box-shadow: 0 8px 26px rgba(200, 146, 52, 0.38) !important; }
-  .pp-btn-spacer { width: 20px; flex-shrink: 0; }
-  .pp-btn-text { flex: 1; text-align: center; }
+  .pp-stock-indicator svg { flex-shrink: 0; }
+  .pp-stock-shipping { color: #555; }
+
+  /* Educational Guides */
+  .pp-guide-btn {
+    font-size: 11px; font-weight: 600; color: #666; text-decoration: none; background: transparent; border: none; cursor: pointer; padding: 0;
+    display: inline-flex; align-items: center; gap: 6px; transition: color 0.2s;
+  }
+  .pp-guide-btn:hover { color: var(--pp-primary); }
+  
+  .pp-guide-modal-overlay {
+    position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(0,0,0,0.5); z-index: 99999;
+    display: flex; align-items: center; justify-content: center; opacity: 0; visibility: hidden; transition: all 0.3s ease;
+  }
+  .pp-guide-modal-overlay.is-active { opacity: 1; visibility: visible; }
+  .pp-guide-modal-box {
+    background: #fff; width: 90%; max-width: 600px; max-height: 90vh; border-radius: 16px; padding: 40px 30px;
+    position: relative; overflow-y: auto; box-shadow: 0 10px 40px rgba(0,0,0,0.15); transform: translateY(20px); transition: transform 0.3s ease;
+  }
+  .pp-guide-modal-overlay.is-active .pp-guide-modal-box { transform: translateY(0); }
+  .pp-guide-modal-close {
+    position: absolute; top: 16px; right: 16px; background: transparent; border: none; cursor: pointer; color: #999;
+    width: 32px; height: 32px; display: flex; align-items: center; justify-content: center; border-radius: 50%; transition: all 0.2s;
+  }
+  .pp-guide-modal-close:hover { background: #f5f5f5; color: #222; }
+  .pp-guide-modal-content { font-size: 14px; line-height: 1.6; color: #333; }
+  .pp-guide-modal-content h1, .pp-guide-modal-content h2, .pp-guide-modal-content h3 { color: var(--pp-primary); margin-top: 0; }
+  .pp-guide-modal-content img { max-width: 100%; height: auto; border-radius: 8px; margin-top: 10px; }
+  .pp-guide-modal-content table { width: 100%; border-collapse: collapse; margin-top: 10px; }
+  .pp-guide-modal-content th, .pp-guide-modal-content td { padding: 10px; border: 1px solid var(--pp-border); text-align: left; }
+  .pp-guide-modal-content th { background: #FAF7F0; font-weight: 600; }
   .pp-btn-arrow { width: 20px; height: 20px; flex-shrink: 0; transition: transform 0.25s ease; }
   .pp-btn-buy:hover .pp-btn-arrow { transform: translateX(4px); }
 
@@ -2403,6 +2453,41 @@
       });
     });
   }
+
+  // Guide Modals Logic
+  const guideBtns = document.querySelectorAll('.pp-guide-btn');
+  guideBtns.forEach(btn => {
+    btn.addEventListener('click', function(e) {
+      e.preventDefault();
+      const targetId = this.getAttribute('data-modal');
+      const targetModal = document.getElementById(targetId);
+      if (targetModal) {
+        targetModal.classList.add('is-active');
+        document.body.style.overflow = 'hidden';
+      }
+    });
+  });
+
+  const closeGuideModals = () => {
+    document.querySelectorAll('.pp-guide-modal-overlay').forEach(modal => {
+      modal.classList.remove('is-active');
+    });
+    document.body.style.overflow = '';
+  };
+
+  document.querySelectorAll('.pp-guide-modal-close').forEach(btn => {
+    btn.addEventListener('click', closeGuideModals);
+  });
+
+  document.querySelectorAll('.pp-guide-modal-overlay').forEach(overlay => {
+    overlay.addEventListener('click', function(e) {
+      if (e.target === this) closeGuideModals();
+    });
+  });
+
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') closeGuideModals();
+  });
 })();
 </script>
 
@@ -2415,10 +2500,73 @@
 
 <!-- Zoom logic integrated into unified gallery controller above -->
 
+<!-- Educational Guide Modals -->
+{%- if section.settings.guide_gold_purity != blank -%}
+  <div class="pp-guide-modal-overlay" id="modal-guide-gold-purity">
+    <div class="pp-guide-modal-box">
+      <button class="pp-guide-modal-close">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+      <div class="pp-guide-modal-content">
+        {{ pages[section.settings.guide_gold_purity].content }}
+      </div>
+    </div>
+  </div>
+{%- endif -%}
+
+{%- if section.settings.guide_diamond_quality != blank -%}
+  <div class="pp-guide-modal-overlay" id="modal-guide-diamond-quality">
+    <div class="pp-guide-modal-box">
+      <button class="pp-guide-modal-close">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+      <div class="pp-guide-modal-content">
+        {{ pages[section.settings.guide_diamond_quality].content }}
+      </div>
+    </div>
+  </div>
+{%- endif -%}
+
+{%- if section.settings.guide_ring_size != blank -%}
+  <div class="pp-guide-modal-overlay" id="modal-guide-ring-size">
+    <div class="pp-guide-modal-box">
+      <button class="pp-guide-modal-close">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+      <div class="pp-guide-modal-content">
+        {{ pages[section.settings.guide_ring_size].content }}
+      </div>
+    </div>
+  </div>
+{%- endif -%}
+
 {% schema %}
 {
   "name": "Product Premium",
-  "settings": [],
+  "settings": [
+    {
+      "type": "header",
+      "content": "Educational Guides"
+    },
+    {
+      "type": "page",
+      "id": "guide_gold_purity",
+      "label": "Gold Purity Guide Page",
+      "info": "Select the page containing the guide content for Gold Purity."
+    },
+    {
+      "type": "page",
+      "id": "guide_diamond_quality",
+      "label": "Diamond Quality Guide Page",
+      "info": "Select the page containing the guide content for Diamond Quality."
+    },
+    {
+      "type": "page",
+      "id": "guide_ring_size",
+      "label": "Ring Size Guide Page",
+      "info": "Select the page containing the guide content for Ring Size."
+    }
+  ],
   "blocks": [
     { "type": "title", "name": "Title & Reviews", "limit": 1 },
     { "type": "price", "name": "Price", "limit": 1 },
