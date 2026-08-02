@@ -19,7 +19,7 @@
             {% if product.featured_image %}
               <img id="pp-main-image" src="{{ product.featured_image | image_url: width: 1000 }}" alt="{{ product.title | escape }}" width="1000" height="1000">
             {% else %}
-              <img id="pp-main-image" src="{{ 'best_seller_pendant.png' | asset_url }}" alt="Luxury Diamond Jewelry" width="1000" height="1000">
+              <img id="pp-main-image" src="{{ 'FallBack image.png' | asset_url }}" alt="Image coming soon" width="1000" height="1000">
             {% endif %}
           </div>
           
