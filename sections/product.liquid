@@ -488,11 +488,11 @@
           {%- if stone_val > 0 -%}
             {%- assign show_stone_row = true -%}
           {%- endif -%}
-          <div class="pp-table-row" id="ui-row-stone" {% unless show_stone_row %}style="display: none;"{% endunless %}>
+          <div class="pp-table-row" id="ui-row-stone" {% unless show_stone_row %}style="display: none !important;"{% endunless %}>
             <span class="pp-row-label" id="ui-label-stone-val">Stone Value{% if has_stone %} ({{ stone_wt }}){% endif %}</span>
             <span class="pp-row-value" id="ui-price-stone">₹{{ stone_val }}</span>
           </div>
-          <div class="pp-row-divider" id="ui-divider-stone" {% unless show_stone_row %}style="display: none;"{% endunless %}></div>
+          <div class="pp-row-divider" id="ui-divider-stone" {% unless show_stone_row %}style="display: none !important;"{% endunless %}></div>
 
           <div class="pp-table-row">
             <span class="pp-row-label">Making Charges</span>
@@ -2358,11 +2358,11 @@
               if(elStoneVal) {
                 elStoneVal.textContent = fmt(stoneValue);
                 if(stoneValue > 0) {
-                  if(elStoneRow) elStoneRow.style.display = '';
+                  if(elStoneRow) elStoneRow.style.setProperty('display', 'flex', 'important');
                   if(elStoneDivider) elStoneDivider.style.display = '';
                 } else {
-                  if(elStoneRow) elStoneRow.style.display = 'none';
-                  if(elStoneDivider) elStoneDivider.style.display = 'none';
+                  if(elStoneRow) elStoneRow.style.setProperty('display', 'none', 'important');
+                  if(elStoneDivider) elStoneDivider.style.setProperty('display', 'none', 'important');
                 }
               }
               
