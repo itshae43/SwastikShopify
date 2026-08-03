@@ -188,9 +188,46 @@
   
   .wishlist-item__bottom {
     display: flex;
-    justify-content: flex-end;
+    justify-content: space-between;
     align-items: center;
     margin-top: auto;
+    width: 100%;
+    gap: 1rem;
+  }
+  
+  .wishlist-item__actions {
+    display: flex;
+    gap: 0.8rem;
+    margin-right: auto;
+  }
+  
+  .wishlist-btn-add, .wishlist-btn-buy {
+    font-family: 'Inter', sans-serif;
+    font-size: 1.1rem;
+    font-weight: 500;
+    padding: 0.6rem 1rem;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+  
+  .wishlist-btn-add {
+    background-color: transparent;
+    color: var(--color-primary, #013F3E);
+    border: 1px solid var(--color-primary, #013F3E);
+  }
+  .wishlist-btn-add:hover {
+    background-color: rgba(1, 63, 62, 0.05);
+  }
+  
+  .wishlist-btn-buy {
+    background-color: var(--color-primary, #013F3E);
+    color: #FFF;
+    border: 1px solid var(--color-primary, #013F3E);
+  }
+  .wishlist-btn-buy:hover {
+    background-color: var(--color-accent, #D4AF37);
+    border-color: var(--color-accent, #D4AF37);
   }
   
   .wishlist-item__remove {
@@ -268,6 +305,12 @@
             <div class="wishlist-item__price">${formatMoneyWishlist(item.price)}</div>
             
             <div class="wishlist-item__bottom">
+              <div class="wishlist-item__actions">
+                ${item.variant_id ? `
+                <button type="button" class="wishlist-btn-add" onclick="addToCartFromWishlist('${item.variant_id}', this)">Add to Cart</button>
+                <button type="button" class="wishlist-btn-buy" onclick="buyNowFromWishlist('${item.variant_id}')">Buy Now</button>
+                ` : ''}
+              </div>
               <button type="button" class="wishlist-item__remove" onclick="removeWishlistItem('${item.id}')">Remove</button>
             </div>
           </div>
@@ -323,6 +366,83 @@
     document.body.style.overflow = '';
     document.body.classList.remove('drawer-open');
     document.body.classList.remove('body-lock');
+  };
+
+  window.addToCartFromWishlist = function(variantId, btn) {
+    if(!variantId) return;
+    
+    // UI Loading state
+    const originalText = btn.innerText;
+    btn.innerText = 'Adding...';
+    btn.style.pointerEvents = 'none';
+
+    let formData = {
+      'items': [{
+        'id': variantId,
+        'quantity': 1
+      }]
+    };
+
+    fetch(window.Shopify.routes.root + 'cart/add.js', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(formData)
+    })
+    .then(response => {
+      btn.innerText = originalText;
+      btn.style.pointerEvents = 'auto';
+      if (!response.ok) {
+        throw new Error('Failed to add to cart');
+      }
+      return response.json();
+    })
+    .then(data => {
+      fetch(window.Shopify.routes.root + 'cart.js', { cache: 'no-store' })
+      .then(r => r.json())
+      .then(cart => {
+        if (window.updateGlobalCartCount) window.updateGlobalCartCount(cart.item_count);
+        if (window.openCartDrawer) {
+            closeWishlistDrawer();
+            window.openCartDrawer();
+        } else if (window.showSwastikToast) {
+            window.showSwastikToast('Added to Cart', 'Item added to your cart from wishlist.', true);
+        }
+      });
+    })
+    .catch((error) => {
+      console.error('Error:', error);
+      btn.innerText = originalText;
+      btn.style.pointerEvents = 'auto';
+      if (window.showSwastikToast) {
+         window.showSwastikToast('Error', 'Could not add to cart.', false);
+      }
+    });
+  };
+
+  window.buyNowFromWishlist = function(variantId) {
+    if(!variantId) return;
+    
+    let formData = {
+      'items': [{
+        'id': variantId,
+        'quantity': 1
+      }]
+    };
+
+    fetch(window.Shopify.routes.root + 'cart/add.js', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(formData)
+    })
+    .then(response => {
+      if(response.ok) {
+        window.location.href = '/checkout';
+      }
+    });
   };
 </script>
 

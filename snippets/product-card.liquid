@@ -16,7 +16,7 @@
 
 {{ 'component-product-card.css' | asset_url | stylesheet_tag }}
 
-<a href="{{ product_url }}" class="product-card-ui" data-product-id="{{ product.id }}">
+<a href="{{ product_url }}" class="product-card-ui" data-product-id="{{ product.id }}" data-variant-id="{{ current_variant.id }}">
   <!-- Image Area -->
   <div class="product-card-ui__image-wrapper">
     <div class="product-card-ui__wishlist">

@@ -250,7 +250,8 @@
       if (!card) return;
 
       const productId = card.getAttribute('data-product-id');
-      const url = card.getAttribute('data-url') || '#';
+      const variantId = card.getAttribute('data-variant-id') || '';
+      const url = card.getAttribute('href') || card.getAttribute('data-url') || '#';
       const titleElement = card.querySelector('.best-sellers__card-title, .new-arrivals__card-title, .product-single__title, .product-single__heading, .product-card-ui__title');
       const productTitle = titleElement ? titleElement.innerText.trim() : 'Product';
       
@@ -270,6 +271,7 @@
           let detailedWishlist = JSON.parse(localStorage.getItem('wishlist_items_data') || '[]');
           detailedWishlist.push({
             id: productId,
+            variant_id: variantId,
             title: productTitle,
             price: productPrice,
             image: productImg,
