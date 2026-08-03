@@ -51,6 +51,38 @@
   display: none !important;
 }
 
+.product-card-ui__wishlist {
+  position: absolute !important;
+  top: 12px !important;
+  right: 12px !important;
+  width: 32px !important;
+  height: 32px !important;
+  background: #FFFFFF !important;
+  border-radius: 50% !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08) !important;
+  cursor: pointer !important;
+  z-index: 2 !important;
+  transition: all 0.2s ease !important;
+}
+
+.product-card-ui__wishlist:hover {
+  transform: scale(1.1) !important;
+}
+
+.product-card-ui__wishlist svg {
+  width: 16px !important;
+  height: 16px !important;
+  stroke: #013F3E !important;
+  transition: fill 0.2s ease !important;
+}
+
+.product-card-ui__wishlist:active svg {
+  fill: #013F3E !important;
+}
+
 .product-card-ui__content {
   background: transparent !important;
   padding: 16px !important;
