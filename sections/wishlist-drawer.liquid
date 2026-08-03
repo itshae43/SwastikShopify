@@ -243,6 +243,26 @@
   .wishlist-item__remove:hover {
     color: #D32F2F;
   }
+  
+  @media (max-width: 480px) {
+    .wishlist-item__bottom {
+      flex-wrap: wrap;
+    }
+    .wishlist-item__actions {
+      width: 100%;
+      margin-right: 0;
+      margin-bottom: 0.8rem;
+    }
+    .wishlist-btn-add, .wishlist-btn-buy {
+      flex: 1;
+      white-space: nowrap;
+      text-align: center;
+    }
+    .wishlist-item__remove {
+      width: 100%;
+      text-align: right;
+    }
+  }
 {% endstyle %}
 
 <script>

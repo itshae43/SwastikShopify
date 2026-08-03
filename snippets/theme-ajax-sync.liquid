@@ -282,10 +282,8 @@
         }
         window.updateWishlistBadge();
         
-        // Open Sidebar Drawer instead of Toast
-        if (window.openWishlistDrawer) {
-          window.openWishlistDrawer();
-        } else {
+        // Show toast instead of opening drawer automatically
+        if (window.showSwastikToast) {
           showSwastikToast('Added to Wishlist', `${productTitle} has been saved to your likes.`, false);
         }
       } else {
@@ -298,11 +296,10 @@
 
         window.updateWishlistBadge();
         
-        if (window.renderDrawerContent && document.getElementById('SidebarDrawer').classList.contains('open')) {
+        if (window.renderDrawerContent && document.getElementById('SidebarDrawer') && document.getElementById('SidebarDrawer').classList.contains('open')) {
           window.renderDrawerContent();
-        } else {
-          showSwastikToast('Removed from Wishlist', `${productTitle} has been removed.`, false);
         }
+        // User requested not to show the removed toast
       }
     });
 
