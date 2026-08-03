@@ -134,9 +134,10 @@
   /* Make heart filled and red when active */
   .best-sellers__wishlist-btn.active svg,
   .new-arrivals__wishlist-btn.active svg,
-  .product-single__wishlist-btn.active svg {
-    fill: #E25C5C;
-    stroke: #E25C5C;
+  .product-single__wishlist-btn.active svg,
+  .product-card-ui__wishlist.active svg {
+    fill: #E25C5C !important;
+    stroke: #E25C5C !important;
   }
 </style>
 
@@ -189,7 +190,7 @@
       document.querySelectorAll('[data-product-id]').forEach(card => {
         const id = card.getAttribute('data-product-id');
         if (wishlist.includes(id)) {
-          const heart = card.querySelector('.best-sellers__wishlist-btn, .new-arrivals__wishlist-btn, .product-single__wishlist-btn');
+          const heart = card.querySelector('.best-sellers__wishlist-btn, .new-arrivals__wishlist-btn, .product-single__wishlist-btn, .product-card-ui__wishlist');
           if (heart) heart.classList.add('active');
         }
       });
