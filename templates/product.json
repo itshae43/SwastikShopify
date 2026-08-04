@@ -44,10 +44,10 @@
         "buy_buttons"
       ],
       "settings": {
-        "guide_gold_color": "gold-colors-guide",
-        "guide_gold_purity": "gold-purity-guide",
-        "guide_diamond_quality": "diamond-quality-guide",
-        "guide_ring_size": "ring-size-guide"
+        "guide_gold_color": "",
+        "guide_gold_purity": "",
+        "guide_diamond_quality": "",
+        "guide_ring_size": ""
       }
     },
     "product_reviews": {
