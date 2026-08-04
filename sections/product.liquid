@@ -1039,7 +1039,16 @@
     box-shadow: 0 10px 35px rgba(1, 63, 62, 0.04);
     margin: 0 auto;
   }
-  .pp-main-img-container { width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; padding: 0; }
+  .pp-main-img-container { 
+    width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; padding: 0; 
+    background-color: #FAF7F0; /* Placeholder background */
+    /* Uncomment below to add your logo as a placeholder before image loads */
+    /* background-image: url('{{ "your-logo.png" | asset_url }}'); */
+    /* background-size: 100px; */
+    /* background-position: center; */
+    /* background-repeat: no-repeat; */
+  }
+  #pp-main-image { color: transparent; } /* Hides alt text before image loads */
   /* #pp-main-image styled below in zoom overlay section */
 
 
@@ -1075,7 +1084,10 @@
     width: 100%; height: 100%; border-radius: 12px; background: #FAF7F0; border: 2px solid #EAE0D5;
     overflow: hidden; display: flex; align-items: center; justify-content: center; transition: all 0.2s ease; padding: 0;
   }
-  .pp-thumb-img img, .pp-thumb-img svg { width: 100%; height: 100%; object-fit: cover; }
+  .pp-thumb-img img, .pp-thumb-img svg { 
+    width: 100%; height: 100%; object-fit: cover; 
+    color: transparent; /* Hides alt text before image loads */
+  }
   .pp-thumb-item.is-active .pp-thumb-img { border-color: #C89234 !important; box-shadow: 0 6px 16px rgba(200, 146, 52, 0.28) !important; transform: scale(1.02); }
 
   /* ==========================================================================
