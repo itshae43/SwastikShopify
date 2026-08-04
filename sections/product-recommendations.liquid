@@ -114,7 +114,16 @@
                 <div class="pp-related-pills">
                   <span class="pp-rel-pill">BIS 916</span>
                   <span class="pp-rel-pill">Certified</span>
-                  <span class="pp-rel-pill">In Stock</span>
+                  {%- assign rec_variant = recommendation.selected_or_first_available_variant -%}
+                  {%- if rec_variant.available -%}
+                    {%- if rec_variant.inventory_management and rec_variant.inventory_quantity <= 0 and rec_variant.inventory_policy == 'continue' -%}
+                      <span class="pp-rel-pill pp-rel-pill--made-to-order">Made to Order</span>
+                    {%- else -%}
+                      <span class="pp-rel-pill pp-rel-pill--in-stock">In Stock</span>
+                    {%- endif -%}
+                  {%- else -%}
+                    <span class="pp-rel-pill pp-rel-pill--sold-out">Sold Out</span>
+                  {%- endif -%}
                 </div>
                 {% assign rev_count = recommendation.id | modulo: 80 | plus: 48 %}
                 <div class="pp-related-reviews">
@@ -464,6 +473,19 @@
     .pr-rec-price {
       font-size: 14px;
     }
+  }
+
+  .pp-rel-pill--in-stock {
+    background: #E8F5E9 !important;
+    color: #2E7D32 !important;
+  }
+  .pp-rel-pill--made-to-order {
+    background: #FFF3E0 !important;
+    color: #E65100 !important;
+  }
+  .pp-rel-pill--sold-out {
+    background: #FFEBEE !important;
+    color: #C62828 !important;
   }
 {% endstylesheet %}
 

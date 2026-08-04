@@ -355,10 +355,24 @@
               
               <!-- IN STOCK INDICATOR -->
               <div class="pp-stock-indicator">
-                <div class="pp-stock-status">
-                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
-                  <span>In Stock</span>
-                </div>
+                {%- if current_variant.available -%}
+                  {%- if current_variant.inventory_management and current_variant.inventory_quantity <= 0 and current_variant.inventory_policy == 'continue' -%}
+                    <div class="pp-stock-status" style="color: #C87A1E;">
+                      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 9.36l-7.1 7.1a1 1 0 0 1-1.41-1.41l7.1-7.1a6 6 0 0 1 9.36-7.94z"/></svg>
+                      <span>Made to Order</span>
+                    </div>
+                  {%- else -%}
+                    <div class="pp-stock-status" style="color: #0E4A43;">
+                      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+                      <span>In Stock</span>
+                    </div>
+                  {%- endif -%}
+                {%- else -%}
+                  <div class="pp-stock-status" style="color: #D32F2F;">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg>
+                    <span>Sold Out</span>
+                  </div>
+                {%- endif -%}
               </div>
 
               <!-- ROW 1: QUANTITY + ADD TO CART -->
@@ -368,18 +382,19 @@
                   <input type="number" name="quantity" value="1" min="1" class="pp-qty-input" form="pp-product-form" readonly>
                   <button type="button" class="pp-qty-btn pp-qty-plus" aria-label="Increase quantity">+</button>
                 </div>
-                <button type="submit" form="pp-product-form" class="pp-btn-add">
+                <button type="submit" form="pp-product-form" class="pp-btn-add" {% unless current_variant.available %}disabled{% endunless %}>
                   <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
-                  <span>ADD TO CART</span>
+                  <span>{% if current_variant.available %}ADD TO CART{% else %}SOLD OUT{% endif %}</span>
                 </button>
               </div>
 
               <!-- ROW 2: BUY NOW WITH ARROW -->
-              <button type="button" class="pp-btn-buy" id="pp-buy-now">
+              <button type="button" class="pp-btn-buy" id="pp-buy-now" {% unless current_variant.available %}style="display: none;" disabled{% endunless %}>
                 <span class="pp-btn-spacer"></span>
                 <span class="pp-btn-text">BUY NOW</span>
                 <svg class="pp-btn-arrow" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
               </button>
+
             </div>
 
 
@@ -726,7 +741,16 @@
                   <div class="pp-related-pills">
                     <span class="pp-rel-pill">BIS 916</span>
                     <span class="pp-rel-pill">Certified</span>
-                    <span class="pp-rel-pill">In Stock</span>
+                    {%- assign rel_variant = rel_product.selected_or_first_available_variant -%}
+                    {%- if rel_variant.available -%}
+                      {%- if rel_variant.inventory_management and rel_variant.inventory_quantity <= 0 and rel_variant.inventory_policy == 'continue' -%}
+                        <span class="pp-rel-pill pp-rel-pill--made-to-order">Made to Order</span>
+                      {%- else -%}
+                        <span class="pp-rel-pill pp-rel-pill--in-stock">In Stock</span>
+                      {%- endif -%}
+                    {%- else -%}
+                      <span class="pp-rel-pill pp-rel-pill--sold-out">Sold Out</span>
+                    {%- endif -%}
                   </div>
                   {% assign rev_count = rel_product.id | modulo: 80 | plus: 48 %}
                   <div class="pp-related-reviews">
@@ -782,7 +806,16 @@
                     <div class="pp-related-pills">
                       <span class="pp-rel-pill">BIS 916</span>
                       <span class="pp-rel-pill">Certified</span>
-                      <span class="pp-rel-pill">In Stock</span>
+                      {%- assign rel_variant = rel_product.selected_or_first_available_variant -%}
+                      {%- if rel_variant.available -%}
+                        {%- if rel_variant.inventory_management and rel_variant.inventory_quantity <= 0 and rel_variant.inventory_policy == 'continue' -%}
+                          <span class="pp-rel-pill pp-rel-pill--made-to-order">Made to Order</span>
+                        {%- else -%}
+                          <span class="pp-rel-pill pp-rel-pill--in-stock">In Stock</span>
+                        {%- endif -%}
+                      {%- else -%}
+                        <span class="pp-rel-pill pp-rel-pill--sold-out">Sold Out</span>
+                      {%- endif -%}
                     </div>
                     {% assign rev_count = rel_product.id | modulo: 80 | plus: 48 %}
                     <div class="pp-related-reviews">
@@ -848,7 +881,11 @@
                 <div class="pp-related-pills">
                   <span class="pp-rel-pill">BIS 916</span>
                   <span class="pp-rel-pill">Certified</span>
-                  <span class="pp-rel-pill">In Stock</span>
+                  {%- if demo_index == 2 -%}
+                    <span class="pp-rel-pill pp-rel-pill--made-to-order">Made to Order</span>
+                  {%- else -%}
+                    <span class="pp-rel-pill pp-rel-pill--in-stock">In Stock</span>
+                  {%- endif -%}
                 </div>
                 {% assign demo_rev = demo_index | times: 32 | plus: 64 %}
                 <div class="pp-related-reviews">
@@ -897,6 +934,20 @@
 <script id="pp-variants-json" type="application/json">
   {{ product.variants | json }}
 </script>
+
+<script id="pp-variant-inventory-json" type="application/json">
+  {
+    {% for variant in product.variants %}
+      "{{ variant.id }}": {
+        "available": {{ variant.available | json }},
+        "inventory_management": {{ variant.inventory_management | json }},
+        "inventory_policy": {{ variant.inventory_policy | json }},
+        "inventory_quantity": {{ variant.inventory_quantity | json }}
+      }{% unless forloop.last %},{% endunless %}
+    {% endfor %}
+  }
+</script>
+
 
 <script id="pp-variant-metafields-json" type="application/json">
   {
@@ -1804,6 +1855,18 @@
     border-radius: 6px !important;
     letter-spacing: 0.02em !important;
   }
+  .pp-rel-pill--in-stock {
+    background: #E8F5E9 !important;
+    color: #2E7D32 !important;
+  }
+  .pp-rel-pill--made-to-order {
+    background: #FFF3E0 !important;
+    color: #E65100 !important;
+  }
+  .pp-rel-pill--sold-out {
+    background: #FFEBEE !important;
+    color: #C62828 !important;
+  }
   .pp-related-reviews {
     display: flex !important;
     align-items: center !important;
@@ -2381,23 +2444,65 @@
             
             // Stock Indicator Logic
             const elStockStatus = document.querySelector('.pp-stock-status');
-            const elStockShipping = document.querySelector('.pp-stock-shipping');
+            const elBtnAdd = document.querySelector('.pp-btn-add');
+            const elBtnAddText = elBtnAdd ? elBtnAdd.querySelector('span') : null;
+            const elBtnBuy = document.getElementById('pp-buy-now');
             
-            if (elStockStatus) {
-              if (matched.available) {
-                elStockStatus.innerHTML = `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg><span>In Stock</span>`;
-                elStockStatus.style.color = '#0E4A43';
-                if(elStockShipping) {
-                  elStockShipping.innerHTML = 'Ships in 5 - 7 Working Days';
-                  elStockShipping.style.display = 'flex';
+            const variantInventoryEl = document.getElementById('pp-variant-inventory-json');
+            let isAvailable = matched.available;
+            let invMgmt = null;
+            let invPolicy = 'deny';
+            let invQty = 0;
+            
+            if (variantInventoryEl) {
+              try {
+                const inventories = JSON.parse(variantInventoryEl.textContent || '{}');
+                const invInfo = inventories[matched.id];
+                if (invInfo) {
+                  isAvailable = invInfo.available;
+                  invMgmt = invInfo.inventory_management;
+                  invPolicy = invInfo.inventory_policy;
+                  invQty = invInfo.inventory_quantity;
+                }
+              } catch (err) {
+                console.error('Error parsing variant inventory json:', err);
+              }
+            }
+            
+            if (isAvailable) {
+              if (invMgmt && invQty <= 0 && invPolicy === 'continue') {
+                if (elStockStatus) {
+                  elStockStatus.innerHTML = `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 9.36l-7.1 7.1a1 1 0 0 1-1.41-1.41l7.1-7.1a6 6 0 0 1 9.36-7.94z"/></svg><span>Made to Order</span>`;
+                  elStockStatus.style.color = '#C87A1E';
                 }
               } else {
-                elStockStatus.innerHTML = `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 9.36l-7.1 7.1a1 1 0 0 1-1.41-1.41l7.1-7.1a6 6 0 0 1 9.36-7.94z"/></svg><span>Made to Order</span>`;
-                elStockStatus.style.color = '#C87A1E';
-                if(elStockShipping) {
-                  elStockShipping.innerHTML = 'Manufactured & Ships in 15 - 20 Days';
-                  elStockShipping.style.display = 'flex';
+                if (elStockStatus) {
+                  elStockStatus.innerHTML = `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg><span>In Stock</span>`;
+                  elStockStatus.style.color = '#0E4A43';
                 }
+              }
+              
+              if (elBtnAdd) {
+                elBtnAdd.removeAttribute('disabled');
+                if (elBtnAddText) elBtnAddText.textContent = 'ADD TO CART';
+              }
+              if (elBtnBuy) {
+                elBtnBuy.removeAttribute('disabled');
+                elBtnBuy.style.display = '';
+              }
+            } else {
+              if (elStockStatus) {
+                elStockStatus.innerHTML = `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg><span>Sold Out</span>`;
+                elStockStatus.style.color = '#D32F2F';
+              }
+              
+              if (elBtnAdd) {
+                elBtnAdd.setAttribute('disabled', 'true');
+                if (elBtnAddText) elBtnAddText.textContent = 'SOLD OUT';
+              }
+              if (elBtnBuy) {
+                elBtnBuy.setAttribute('disabled', 'true');
+                elBtnBuy.style.display = 'none';
               }
             }
             

@@ -133,6 +133,21 @@
   letter-spacing: 0.02em !important;
 }
 
+.product-card-ui__pill--in-stock {
+  background: #E8F5E9 !important;
+  color: #2E7D32 !important;
+}
+
+.product-card-ui__pill--made-to-order {
+  background: #FFF3E0 !important;
+  color: #E65100 !important;
+}
+
+.product-card-ui__pill--sold-out {
+  background: #FFEBEE !important;
+  color: #C62828 !important;
+}
+
 .product-card-ui__reviews {
   display: flex !important;
   align-items: center !important;

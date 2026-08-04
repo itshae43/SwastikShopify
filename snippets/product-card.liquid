@@ -39,7 +39,15 @@
     <div class="product-card-ui__pills">
       <span class="product-card-ui__pill">BIS 916</span>
       <span class="product-card-ui__pill">Certified</span>
-      <span class="product-card-ui__pill">In Stock</span>
+      {%- if current_variant.available -%}
+        {%- if current_variant.inventory_management and current_variant.inventory_quantity <= 0 and current_variant.inventory_policy == 'continue' -%}
+          <span class="product-card-ui__pill product-card-ui__pill--made-to-order">Made to Order</span>
+        {%- else -%}
+          <span class="product-card-ui__pill product-card-ui__pill--in-stock">In Stock</span>
+        {%- endif -%}
+      {%- else -%}
+        <span class="product-card-ui__pill product-card-ui__pill--sold-out">Sold Out</span>
+      {%- endif -%}
     </div>
 
     {% assign rev_count = product.id | modulo: 80 | plus: 48 %}
