@@ -144,13 +144,14 @@
     color: #FFFFFF;
   }
 
-  /* Wishlist Items */
   .wishlist-item {
     display: flex;
+    flex-wrap: wrap;
     gap: 1.6rem;
     padding-bottom: 2rem;
     margin-bottom: 2rem;
     border-bottom: 1px solid rgba(1, 63, 62, 0.08);
+    position: relative;
   }
   .wishlist-item:last-child {
     border-bottom: none;
@@ -168,6 +169,7 @@
     flex: 1;
     display: flex;
     flex-direction: column;
+    padding-right: 24px;
   }
   .wishlist-item__title {
     font-size: 1.4rem;
@@ -187,28 +189,27 @@
   }
   
   .wishlist-item__bottom {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-top: auto;
     width: 100%;
-    gap: 1rem;
+    margin-top: 0.5rem;
   }
   
   .wishlist-item__actions {
     display: flex;
     gap: 0.8rem;
-    margin-right: auto;
+    width: 100%;
   }
   
   .wishlist-btn-add, .wishlist-btn-buy {
     font-family: 'Inter', sans-serif;
     font-size: 1.1rem;
     font-weight: 500;
-    padding: 0.6rem 1rem;
+    padding: 0.8rem 1rem;
     border-radius: 4px;
     cursor: pointer;
     transition: all 0.2s ease;
+    flex: 1;
+    text-align: center;
+    white-space: nowrap;
   }
   
   .wishlist-btn-add {
@@ -230,37 +231,24 @@
     border-color: var(--color-accent, #D4AF37);
   }
   
-  .wishlist-item__remove {
+  .wishlist-item__remove-icon {
+    position: absolute;
+    top: 0;
+    right: 0;
     background: none;
     border: none;
-    color: #999;
-    font-size: 1.15rem;
-    text-decoration: underline;
+    color: rgba(0, 46, 40, 0.4);
     cursor: pointer;
-    font-family: inherit;
-    transition: color 0.2s ease;
+    padding: 0.2rem;
+    transition: color 0.2s;
   }
-  .wishlist-item__remove:hover {
+  .wishlist-item__remove-icon:hover {
     color: #D32F2F;
   }
   
   @media (max-width: 480px) {
-    .wishlist-item__bottom {
-      flex-wrap: wrap;
-    }
-    .wishlist-item__actions {
-      width: 100%;
-      margin-right: 0;
-      margin-bottom: 0.8rem;
-    }
     .wishlist-btn-add, .wishlist-btn-buy {
-      flex: 1;
-      white-space: nowrap;
-      text-align: center;
-    }
-    .wishlist-item__remove {
-      width: 100%;
-      text-align: right;
+      padding: 1rem 0.5rem;
     }
   }
 {% endstyle %}
@@ -323,15 +311,19 @@
           <div class="wishlist-item__details">
             <a href="${item.url || '#'}" class="wishlist-item__title">${item.title}</a>
             <div class="wishlist-item__price">${formatMoneyWishlist(item.price)}</div>
-            
-            <div class="wishlist-item__bottom">
-              <div class="wishlist-item__actions">
-                ${item.variant_id ? `
-                <button type="button" class="wishlist-btn-add" onclick="addToCartFromWishlist('${item.variant_id}', this)">Add to Cart</button>
-                <button type="button" class="wishlist-btn-buy" onclick="buyNowFromWishlist('${item.variant_id}')">Buy Now</button>
-                ` : ''}
-              </div>
-              <button type="button" class="wishlist-item__remove" onclick="removeWishlistItem('${item.id}')">Remove</button>
+          </div>
+          <button type="button" class="wishlist-item__remove-icon" onclick="removeWishlistItem('${item.id}')" aria-label="Remove item">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <line x1="18" y1="6" x2="6" y2="18"></line>
+              <line x1="6" y1="6" x2="18" y2="18"></line>
+            </svg>
+          </button>
+          <div class="wishlist-item__bottom">
+            <div class="wishlist-item__actions">
+              ${item.variant_id ? `
+              <button type="button" class="wishlist-btn-add" onclick="addToCartFromWishlist('${item.variant_id}', this)">Add to Cart</button>
+              <button type="button" class="wishlist-btn-buy" onclick="buyNowFromWishlist('${item.variant_id}')">Buy Now</button>
+              ` : ''}
             </div>
           </div>
         </div>

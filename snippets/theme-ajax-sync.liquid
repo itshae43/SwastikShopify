@@ -282,10 +282,7 @@
         }
         window.updateWishlistBadge();
         
-        // Open Sidebar Drawer instead of Toast
-        if (window.openWishlistDrawer) {
-          window.openWishlistDrawer();
-        } else {
+        if (window.showSwastikToast) {
           showSwastikToast('Added to Wishlist', `${productTitle} has been saved to your likes.`, false);
         }
       } else {
