@@ -2745,24 +2745,148 @@
         {% if section.settings.guide_gold_purity != blank and section.settings.guide_gold_purity.content != blank %}
           {{ section.settings.guide_gold_purity.content }}
         {% else %}
-          <div style="padding: 20px;">
-            <h2 style="margin-bottom: 15px; color: #163D39; font-size: 22px; font-weight: 600;">Gold Purity Guide</h2>
-            <p style="font-size: 14px; color: #555; margin-bottom: 15px; line-height: 1.5;">Gold purity is measured in karats (K). 24K is pure gold, but it's too soft for jewelry, so it's alloyed with other metals for strength.</p>
-            <div style="display: flex; flex-direction: column; gap: 15px;">
-              <div>
-                <h3 style="font-size: 16px; margin-bottom: 5px; font-weight: 600; color: #222;">18K Gold (75% Pure)</h3>
-                <p style="font-size: 14px; color: #555; line-height: 1.5;">The perfect balance of luxury and durability. Offers a richer color and is ideal for fine jewelry and sensitive skin.</p>
+          <div class="gold-purity-modal-wrapper" style="padding: 10px;">
+            <h2 class="gold-purity-modal-title">
+              How Much
+              <span class="gold-purity-modal-title-main">GOLD IS IN IT?</span>
+            </h2>
+            
+            <div class="gold-purity-modal-divider">
+              <span class="gold-purity-divider-line line-left"></span>
+              <span class="gold-purity-divider-star">&#x2726;</span>
+              <span class="gold-purity-divider-line line-right"></span>
+            </div>
+            
+            <div class="gold-purity-modal-grid">
+              <!-- 9KT Card -->
+              <div class="gold-purity-modal-card">
+                <div class="gold-purity-card-header">9KT</div>
+                <div class="gold-purity-card-star">&#x2726;</div>
+                <div class="gold-purity-card-pct">40%</div>
+                <div class="gold-purity-card-footer">REAL GOLD</div>
               </div>
-              <div>
-                <h3 style="font-size: 16px; margin-bottom: 5px; font-weight: 600; color: #222;">14K Gold (58.3% Pure)</h3>
-                <p style="font-size: 14px; color: #555; line-height: 1.5;">The most popular choice for everyday wear. It is highly durable and offers excellent value.</p>
+
+              <!-- 14KT Card -->
+              <div class="gold-purity-modal-card">
+                <div class="gold-purity-card-header">14KT</div>
+                <div class="gold-purity-card-star">&#x2726;</div>
+                <div class="gold-purity-card-pct">60%</div>
+                <div class="gold-purity-card-footer">REAL GOLD</div>
               </div>
-              <div>
-                <h3 style="font-size: 16px; margin-bottom: 5px; font-weight: 600; color: #222;">9K / 10K Gold</h3>
-                <p style="font-size: 14px; color: #555; line-height: 1.5;">The most affordable and durable option, great for pieces that will experience heavy wear.</p>
+
+              <!-- 18KT Card -->
+              <div class="gold-purity-modal-card">
+                <div class="gold-purity-card-header">18KT</div>
+                <div class="gold-purity-card-star">&#x2726;</div>
+                <div class="gold-purity-card-pct">76%</div>
+                <div class="gold-purity-card-footer">REAL GOLD</div>
               </div>
             </div>
           </div>
+
+          <style>
+            .gold-purity-modal-title {
+              font-family: var(--pp-font-serif), 'Playfair Display', Georgia, serif;
+              font-size: 22px;
+              color: var(--pp-primary, #013F3E);
+              text-align: center;
+              text-transform: uppercase;
+              letter-spacing: 0.05em;
+              margin: 0 0 4px 0;
+              font-weight: 500;
+              line-height: 1.2;
+            }
+            .gold-purity-modal-title-main {
+              display: block;
+              font-size: 30px;
+              font-weight: 600;
+              letter-spacing: 0.08em;
+              margin-top: 4px;
+            }
+            .gold-purity-modal-divider {
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              width: 50%;
+              margin: 12px auto 28px auto;
+            }
+            .gold-purity-divider-line {
+              height: 1px;
+              flex-grow: 1;
+            }
+            .gold-purity-divider-line.line-left {
+              background: linear-gradient(to right, transparent, var(--pp-accent, #D4AF37));
+            }
+            .gold-purity-divider-line.line-right {
+              background: linear-gradient(to left, transparent, var(--pp-accent, #D4AF37));
+            }
+            .gold-purity-divider-star {
+              font-size: 12px;
+              color: var(--pp-accent, #D4AF37);
+              margin: 0 12px;
+            }
+            .gold-purity-modal-grid {
+              display: grid;
+              grid-template-columns: repeat(3, 1fr);
+              gap: 20px;
+            }
+            .gold-purity-modal-card {
+              background: var(--pp-bg-light, #FAF7F0);
+              border: 1px solid var(--pp-border, #EAE0D5);
+              border-radius: 16px;
+              padding: 28px 16px;
+              text-align: center;
+              transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            }
+            .gold-purity-modal-card:hover {
+              transform: translateY(-4px);
+              border-color: var(--pp-accent, #D4AF37);
+              box-shadow: 0 8px 24px rgba(212, 175, 55, 0.12);
+            }
+            .gold-purity-card-header {
+              font-family: var(--pp-font-serif), 'Playfair Display', Georgia, serif;
+              font-size: 28px;
+              color: var(--pp-primary, #013F3E);
+              font-weight: 500;
+              margin-bottom: 6px;
+            }
+            .gold-purity-card-star {
+              font-size: 10px;
+              color: var(--pp-accent, #D4AF37);
+              margin-bottom: 8px;
+            }
+            .gold-purity-card-pct {
+              font-family: var(--pp-font-serif), 'Playfair Display', Georgia, serif;
+              font-size: 36px;
+              color: var(--pp-accent, #D4AF37);
+              font-weight: 600;
+              line-height: 1.1;
+              border-top: 1px solid var(--pp-border, #EAE0D5);
+              padding-top: 12px;
+              margin: 8px auto 4px auto;
+              width: 70%;
+            }
+            .gold-purity-card-footer {
+              font-family: var(--pp-font-sans), 'Inter', sans-serif;
+              font-size: 11px;
+              letter-spacing: 0.15em;
+              color: var(--pp-text-muted, #666666);
+              font-weight: 600;
+              text-transform: uppercase;
+            }
+            @media screen and (max-width: 600px) {
+              .gold-purity-modal-grid {
+                grid-template-columns: 1fr;
+                gap: 16px;
+              }
+              .gold-purity-modal-divider {
+                width: 70%;
+              }
+              .gold-purity-modal-card {
+                padding: 24px 16px;
+              }
+            }
+          </style>
         {% endif %}
       </div>
     </div>
