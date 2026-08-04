@@ -1043,7 +1043,7 @@
     width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; padding: 0; 
     background-color: #FAF7F0; /* Placeholder background */
     /* Uncomment below to add your logo as a placeholder before image loads */
-    /* background-image: url('{{ "your-logo.png" | asset_url }}'); */
+    /* background-image: url('your-logo.png'); */
     /* background-size: 100px; */
     /* background-position: center; */
     /* background-repeat: no-repeat; */
@@ -2682,6 +2682,25 @@
     if (e.key === 'Escape') closeGuideModals();
   });
 
+  // Diamond Guide Tab Switching Logic
+  document.addEventListener('click', function(e) {
+    const tabBtn = e.target.closest('.diamond-tab-btn');
+    if (tabBtn) {
+      e.preventDefault();
+      const tabId = tabBtn.getAttribute('data-tab');
+      const modal = tabBtn.closest('.pp-guide-modal-overlay');
+      if (modal) {
+        modal.querySelectorAll('.diamond-tab-btn').forEach(btn => btn.classList.remove('active'));
+        modal.querySelectorAll('.diamond-tab-pane').forEach(pane => pane.classList.remove('active'));
+        tabBtn.classList.add('active');
+        const targetPane = modal.querySelector('#' + tabId);
+        if (targetPane) {
+          targetPane.classList.add('active');
+        }
+      }
+    }
+  });
+
   // Initialize dynamic fields on page load to ensure they match the active variant
   window.addEventListener('DOMContentLoaded', function() {
     const defaultActiveBtn = document.querySelector('.pp-option-group .pp-opt-btn.is-active');
@@ -3038,20 +3057,611 @@
         {% if section.settings.guide_diamond_quality != blank and section.settings.guide_diamond_quality.content != blank %}
           {{ section.settings.guide_diamond_quality.content }}
         {% else %}
-          <div style="padding: 20px;">
-            <h2 style="margin-bottom: 15px; color: #163D39; font-size: 22px; font-weight: 600;">Diamond Quality Guide</h2>
-            <p style="font-size: 14px; color: #555; margin-bottom: 15px; line-height: 1.5;">We evaluate diamonds based on the 4Cs, with a focus on Color and Clarity for our standard offerings.</p>
-            <div style="display: flex; flex-direction: column; gap: 15px;">
-              <div>
-                <h3 style="font-size: 16px; margin-bottom: 5px; font-weight: 600; color: #222;">Color (D to Z)</h3>
-                <p style="font-size: 14px; color: #555; line-height: 1.5;"><strong>F-G:</strong> Rare white to white. Appears completely colorless to the naked eye.<br><strong>H-I:</strong> White to slightly tinted white. Offers excellent value with minimal visible color.</p>
+          {%- capture diamond_facets -%}
+            <!-- Table -->
+            <polygon points="50,27 62.7,32.3 68,45 62.7,57.7 50,63 37.3,57.7 32,45 37.3,32.3" fill="var(--diamond-fill)" fill-opacity="var(--diamond-op, 0.45)" stroke="var(--diamond-stroke)" stroke-width="0.8" stroke-linejoin="round" />
+            <!-- Star Facets -->
+            <polygon points="68,45 77.7,33.5 62.7,32.3" fill="var(--diamond-fill)" fill-opacity="var(--diamond-op, 0.3)" stroke="var(--diamond-stroke)" stroke-width="0.8" stroke-linejoin="round" />
+            <polygon points="62.7,32.3 61.5,17.3 50,27" fill="var(--diamond-fill)" fill-opacity="var(--diamond-op, 0.3)" stroke="var(--diamond-stroke)" stroke-width="0.8" stroke-linejoin="round" />
+            <polygon points="50,27 38.5,17.3 37.3,32.3" fill="var(--diamond-fill)" fill-opacity="var(--diamond-op, 0.3)" stroke="var(--diamond-stroke)" stroke-width="0.8" stroke-linejoin="round" />
+            <polygon points="37.3,32.3 22.3,33.5 32,45" fill="var(--diamond-fill)" fill-opacity="var(--diamond-op, 0.3)" stroke="var(--diamond-stroke)" stroke-width="0.8" stroke-linejoin="round" />
+            <polygon points="32,45 22.3,56.5 37.3,57.7" fill="var(--diamond-fill)" fill-opacity="var(--diamond-op, 0.3)" stroke="var(--diamond-stroke)" stroke-width="0.8" stroke-linejoin="round" />
+            <polygon points="37.3,57.7 38.5,72.7 50,63" fill="var(--diamond-fill)" fill-opacity="var(--diamond-op, 0.3)" stroke="var(--diamond-stroke)" stroke-width="0.8" stroke-linejoin="round" />
+            <polygon points="50,63 61.5,72.7 62.7,57.7" fill="var(--diamond-fill)" fill-opacity="var(--diamond-op, 0.3)" stroke="var(--diamond-stroke)" stroke-width="0.8" stroke-linejoin="round" />
+            <polygon points="62.7,57.7 77.7,56.5 68,45" fill="var(--diamond-fill)" fill-opacity="var(--diamond-op, 0.3)" stroke="var(--diamond-stroke)" stroke-width="0.8" stroke-linejoin="round" />
+            <!-- Kites -->
+            <polygon points="68,45 77.7,56.5 92,45 77.7,33.5" fill="var(--diamond-fill)" fill-opacity="var(--diamond-op, 0.35)" stroke="var(--diamond-stroke)" stroke-width="0.8" stroke-linejoin="round" />
+            <polygon points="62.7,32.3 77.7,33.5 79.7,15.3 61.5,17.3" fill="var(--diamond-fill)" fill-opacity="var(--diamond-op, 0.35)" stroke="var(--diamond-stroke)" stroke-width="0.8" stroke-linejoin="round" />
+            <polygon points="50,27 61.5,17.3 50,3 38.5,17.3" fill="var(--diamond-fill)" fill-opacity="var(--diamond-op, 0.35)" stroke="var(--diamond-stroke)" stroke-width="0.8" stroke-linejoin="round" />
+            <polygon points="37.3,32.3 38.5,17.3 20.3,15.3 22.3,33.5" fill="var(--diamond-fill)" fill-opacity="var(--diamond-op, 0.35)" stroke="var(--diamond-stroke)" stroke-width="0.8" stroke-linejoin="round" />
+            <polygon points="32,45 22.3,33.5 8,45 22.3,56.5" fill="var(--diamond-fill)" fill-opacity="var(--diamond-op, 0.35)" stroke="var(--diamond-stroke)" stroke-width="0.8" stroke-linejoin="round" />
+            <polygon points="37.3,57.7 22.3,56.5 20.3,74.7 38.5,72.7" fill="var(--diamond-fill)" fill-opacity="var(--diamond-op, 0.35)" stroke="var(--diamond-stroke)" stroke-width="0.8" stroke-linejoin="round" />
+            <polygon points="50,63 38.5,72.7 50,87 61.5,72.7" fill="var(--diamond-fill)" fill-opacity="var(--diamond-op, 0.35)" stroke="var(--diamond-stroke)" stroke-width="0.8" stroke-linejoin="round" />
+            <polygon points="62.7,57.7 61.5,72.7 79.7,74.7 77.7,56.5" fill="var(--diamond-fill)" fill-opacity="var(--diamond-op, 0.35)" stroke="var(--diamond-stroke)" stroke-width="0.8" stroke-linejoin="round" />
+            <!-- Upper Girdle Triangles -->
+            <polygon points="77.7,56.5 92,45 88.8,61.1" fill="var(--diamond-fill)" fill-opacity="var(--diamond-op, 0.25)" stroke="var(--diamond-stroke)" stroke-width="0.8" stroke-linejoin="round" />
+            <polygon points="77.7,56.5 88.8,61.1 79.7,74.7" fill="var(--diamond-fill)" fill-opacity="var(--diamond-op, 0.25)" stroke="var(--diamond-stroke)" stroke-width="0.8" stroke-linejoin="round" />
+            <polygon points="61.5,72.7 79.7,74.7 66.1,83.8" fill="var(--diamond-fill)" fill-opacity="var(--diamond-op, 0.25)" stroke="var(--diamond-stroke)" stroke-width="0.8" stroke-linejoin="round" />
+            <polygon points="61.5,72.7 66.1,83.8 50,87" fill="var(--diamond-fill)" fill-opacity="var(--diamond-op, 0.25)" stroke="var(--diamond-stroke)" stroke-width="0.8" stroke-linejoin="round" />
+            <polygon points="38.5,72.7 50,87 33.9,83.8" fill="var(--diamond-fill)" fill-opacity="var(--diamond-op, 0.25)" stroke="var(--diamond-stroke)" stroke-width="0.8" stroke-linejoin="round" />
+            <polygon points="38.5,72.7 33.9,83.8 20.3,74.7" fill="var(--diamond-fill)" fill-opacity="var(--diamond-op, 0.25)" stroke="var(--diamond-stroke)" stroke-width="0.8" stroke-linejoin="round" />
+            <polygon points="22.3,56.5 20.3,74.7 11.2,61.1" fill="var(--diamond-fill)" fill-opacity="var(--diamond-op, 0.25)" stroke="var(--diamond-stroke)" stroke-width="0.8" stroke-linejoin="round" />
+            <polygon points="22.3,56.5 11.2,61.1 8,45" fill="var(--diamond-fill)" fill-opacity="var(--diamond-op, 0.25)" stroke="var(--diamond-stroke)" stroke-width="0.8" stroke-linejoin="round" />
+            <polygon points="22.3,33.5 8,45 11.2,28.9" fill="var(--diamond-fill)" fill-opacity="var(--diamond-op, 0.25)" stroke="var(--diamond-stroke)" stroke-width="0.8" stroke-linejoin="round" />
+            <polygon points="22.3,33.5 11.2,28.9 20.3,15.3" fill="var(--diamond-fill)" fill-opacity="var(--diamond-op, 0.25)" stroke="var(--diamond-stroke)" stroke-width="0.8" stroke-linejoin="round" />
+            <polygon points="38.5,17.3 20.3,15.3 33.9,6.2" fill="var(--diamond-fill)" fill-opacity="var(--diamond-op, 0.25)" stroke="var(--diamond-stroke)" stroke-width="0.8" stroke-linejoin="round" />
+            <polygon points="38.5,17.3 33.9,6.2 50,3" fill="var(--diamond-fill)" fill-opacity="var(--diamond-op, 0.25)" stroke="var(--diamond-stroke)" stroke-width="0.8" stroke-linejoin="round" />
+            <polygon points="61.5,17.3 50,3 66.1,6.2" fill="var(--diamond-fill)" fill-opacity="var(--diamond-op, 0.25)" stroke="var(--diamond-stroke)" stroke-width="0.8" stroke-linejoin="round" />
+            <polygon points="61.5,17.3 66.1,6.2 79.7,15.3" fill="var(--diamond-fill)" fill-opacity="var(--diamond-op, 0.25)" stroke="var(--diamond-stroke)" stroke-width="0.8" stroke-linejoin="round" />
+            <polygon points="77.7,33.5 79.7,15.3 88.8,28.9" fill="var(--diamond-fill)" fill-opacity="var(--diamond-op, 0.25)" stroke="var(--diamond-stroke)" stroke-width="0.8" stroke-linejoin="round" />
+            <polygon points="77.7,33.5 88.8,28.9 92,45" fill="var(--diamond-fill)" fill-opacity="var(--diamond-op, 0.25)" stroke="var(--diamond-stroke)" stroke-width="0.8" stroke-linejoin="round" />
+            <!-- Outer Circle Girdle -->
+            <circle cx="50" cy="45" r="42" fill="none" stroke="var(--diamond-stroke)" stroke-width="1.2" />
+          {%- endcapture -%}
+
+          <div class="diamond-modal-inner" style="padding: 10px;">
+            <h2 class="diamond-modal-title">
+              Swastik Jewels
+              <span class="diamond-modal-title-main">DIAMOND QUALITY GUIDE</span>
+            </h2>
+            
+            <div class="diamond-modal-divider">
+              <span class="diamond-divider-line line-left"></span>
+              <span class="diamond-divider-star">&#x2726;</span>
+              <span class="diamond-divider-line line-right"></span>
+            </div>
+
+            <!-- Tab Switcher -->
+            <div class="diamond-tabs">
+              <button type="button" class="diamond-tab-btn active" data-tab="diamond-tab-color">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"/></svg>
+                Color Scale
+              </button>
+              <button type="button" class="diamond-tab-btn" data-tab="diamond-tab-clarity">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                Clarity Scale
+              </button>
+            </div>
+
+            <div class="diamond-tab-contents">
+              <!-- Color Scale Tab Content -->
+              <div class="diamond-tab-pane active" id="diamond-tab-color">
+                <p class="diamond-tab-intro">
+                  Diamonds are graded by color from <strong>D (Colorless)</strong> to <strong>Z (Light Yellow)</strong>. 
+                  Completely colorless diamonds are the rarest, while slight warmth is often chosen for its soft and elegant appearance.
+                </p>
+
+                <div class="diamond-scale-scroll-tip">Swipe to view full scale &rarr;</div>
+                
+                <div class="diamond-scale-container">
+                  <!-- D-F -->
+                  <div class="diamond-scale-card">
+                    <div class="diamond-visual-box">
+                      <svg class="diamond-drawing" viewBox="0 0 100 100">
+                        <defs>
+                          <linearGradient id="grad-colorless" x1="0%" y1="0%" x2="100%" y2="100%">
+                            <stop offset="0%" stop-color="#FFFFFF" />
+                            <stop offset="50%" stop-color="#F4F9FC" />
+                            <stop offset="100%" stop-color="#D9ECF6" />
+                          </linearGradient>
+                        </defs>
+                        <g style="--diamond-fill: url(#grad-colorless); --diamond-op: 0.8; --diamond-stroke: #013F3E;">
+                          {{ diamond_facets }}
+                        </g>
+                      </svg>
+                    </div>
+                    <div class="diamond-grade-label">D - F</div>
+                    <div class="diamond-grade-name">Colorless</div>
+                    <p class="diamond-card-desc">Completely colorless. The rarest grade, showing maximum brilliance and cold ice sparkle.</p>
+                  </div>
+
+                  <!-- G-J -->
+                  <div class="diamond-scale-card highlighted-store-choice">
+                    <div class="store-choice-badge">Store Standard</div>
+                    <div class="diamond-visual-box">
+                      <svg class="diamond-drawing" viewBox="0 0 100 100">
+                        <defs>
+                          <linearGradient id="grad-near-colorless" x1="0%" y1="0%" x2="100%" y2="100%">
+                            <stop offset="0%" stop-color="#FFFFFF" />
+                            <stop offset="60%" stop-color="#FDFBF7" />
+                            <stop offset="100%" stop-color="#EBE7DA" />
+                          </linearGradient>
+                        </defs>
+                        <g style="--diamond-fill: url(#grad-near-colorless); --diamond-op: 0.8; --diamond-stroke: #013F3E;">
+                          {{ diamond_facets }}
+                        </g>
+                      </svg>
+                    </div>
+                    <div class="diamond-grade-label">G - J</div>
+                    <div class="diamond-grade-name">Near Colorless</div>
+                    <p class="diamond-card-desc">Appears white unless compared next to colorless. Offers the finest value with zero visible color face-up.</p>
+                  </div>
+
+                  <!-- K-M -->
+                  <div class="diamond-scale-card">
+                    <div class="diamond-visual-box">
+                      <svg class="diamond-drawing" viewBox="0 0 100 100">
+                        <defs>
+                          <linearGradient id="grad-faint-yellow" x1="0%" y1="0%" x2="100%" y2="100%">
+                            <stop offset="0%" stop-color="#FFFFFF" />
+                            <stop offset="50%" stop-color="#FFFDEC" />
+                            <stop offset="100%" stop-color="#F3EAB4" />
+                          </linearGradient>
+                        </defs>
+                        <g style="--diamond-fill: url(#grad-faint-yellow); --diamond-op: 0.8; --diamond-stroke: #013F3E;">
+                          {{ diamond_facets }}
+                        </g>
+                      </svg>
+                    </div>
+                    <div class="diamond-grade-label">K - M</div>
+                    <div class="diamond-grade-name">Faint Yellow</div>
+                    <p class="diamond-card-desc">Exhibits a subtle, very soft warm tint. Pairs beautifully with yellow gold bands.</p>
+                  </div>
+
+                  <!-- N-Q -->
+                  <div class="diamond-scale-card">
+                    <div class="diamond-visual-box">
+                      <svg class="diamond-drawing" viewBox="0 0 100 100">
+                        <defs>
+                          <linearGradient id="grad-very-light-yellow" x1="0%" y1="0%" x2="100%" y2="100%">
+                            <stop offset="0%" stop-color="#FFFFFF" />
+                            <stop offset="40%" stop-color="#FFFBD0" />
+                            <stop offset="100%" stop-color="#EED47A" />
+                          </linearGradient>
+                        </defs>
+                        <g style="--diamond-fill: url(#grad-very-light-yellow); --diamond-op: 0.8; --diamond-stroke: #013F3E;">
+                          {{ diamond_facets }}
+                        </g>
+                      </svg>
+                    </div>
+                    <div class="diamond-grade-label">N - Q</div>
+                    <div class="diamond-grade-name">Very Light Yellow</div>
+                    <p class="diamond-card-desc">A visible warm yellow/champagne hue is present, offering an antique gold aura.</p>
+                  </div>
+
+                  <!-- S-Z -->
+                  <div class="diamond-scale-card">
+                    <div class="diamond-visual-box">
+                      <svg class="diamond-drawing" viewBox="0 0 100 100">
+                        <defs>
+                          <linearGradient id="grad-light-yellow" x1="0%" y1="0%" x2="100%" y2="100%">
+                            <stop offset="0%" stop-color="#FFFFFF" />
+                            <stop offset="45%" stop-color="#FFF5A8" />
+                            <stop offset="100%" stop-color="#E4C143" />
+                          </linearGradient>
+                        </defs>
+                        <g style="--diamond-fill: url(#grad-light-yellow); --diamond-op: 0.8; --diamond-stroke: #013F3E;">
+                          {{ diamond_facets }}
+                        </g>
+                      </svg>
+                    </div>
+                    <div class="diamond-grade-label">S - Z</div>
+                    <div class="diamond-grade-name">Light Yellow</div>
+                    <p class="diamond-card-desc">Distinct yellow tint is easily noticeable. Preferred for unique, warm custom designs.</p>
+                  </div>
+                </div>
+
+                <!-- Store Color Ranges Info -->
+                <div class="store-guide-standards">
+                  <h4 class="standards-title">Our Color Offerings Explained</h4>
+                  <div class="standards-grid">
+                    <div class="standard-row">
+                      <span class="standard-badge">F-G Range</span>
+                      <p><strong>Rare White to White:</strong> Looks exceptionally clean and colorless. Represents premium grade aesthetics.</p>
+                    </div>
+                    <div class="standard-row">
+                      <span class="standard-badge">G-H Range</span>
+                      <p><strong>Near Colorless:</strong> Appears white under standard viewing conditions. The ideal balance between purity and price.</p>
+                    </div>
+                    <div class="standard-row">
+                      <span class="standard-badge">H-I Range</span>
+                      <p><strong>Warm White:</strong> Soft white color. Offers excellent value with almost no color visible unless compared side-by-side.</p>
+                    </div>
+                    <div class="standard-row">
+                      <span class="standard-badge">I-J Range</span>
+                      <p><strong>Warm Tint:</strong> Very budget-friendly. Pairs gorgeously with yellow/rose gold bands for a warm, harmonious look.</p>
+                    </div>
+                  </div>
+                </div>
               </div>
-              <div>
-                <h3 style="font-size: 16px; margin-bottom: 5px; font-weight: 600; color: #222;">Clarity (FL to I3)</h3>
-                <p style="font-size: 14px; color: #555; line-height: 1.5;"><strong>VS (Very Slightly Included):</strong> Minor inclusions that are difficult to see under 10x magnification.<br><strong>SI (Slightly Included):</strong> Inclusions visible under 10x magnification, but usually eye-clean.</p>
+
+              <!-- Clarity Scale Tab Content -->
+              <div class="diamond-tab-pane" id="diamond-tab-clarity">
+                <p class="diamond-tab-intro">
+                  Clarity grades diamonds based on internal characteristics (inclusions) and surface details (blemishes). 
+                  Grades range from <strong>Flawless</strong> to <strong>Included</strong>.
+                </p>
+
+                <div class="diamond-scale-scroll-tip">Swipe to view full scale &rarr;</div>
+
+                <div class="diamond-scale-container">
+                  <!-- FL/IF -->
+                  <div class="diamond-scale-card">
+                    <div class="diamond-visual-box">
+                      <svg class="diamond-drawing" viewBox="0 0 100 100">
+                        <g style="--diamond-fill: url(#grad-colorless); --diamond-op: 0.8; --diamond-stroke: #013F3E;">
+                          {{ diamond_facets }}
+                        </g>
+                      </svg>
+                    </div>
+                    <div class="diamond-grade-label">FL / IF</div>
+                    <div class="diamond-grade-name">Flawless</div>
+                    <p class="diamond-card-desc">Perfect inside & out. Absolutely no blemishes or inclusions visible under 10x magnification.</p>
+                  </div>
+
+                  <!-- VVS -->
+                  <div class="diamond-scale-card">
+                    <div class="diamond-visual-box">
+                      <svg class="diamond-drawing" viewBox="0 0 100 100">
+                        <g style="--diamond-fill: url(#grad-colorless); --diamond-op: 0.8; --diamond-stroke: #013F3E;">
+                          {{ diamond_facets }}
+                        </g>
+                        <!-- Tiny pinpoints -->
+                        <circle cx="48" cy="40" r="0.6" fill="#888" opacity="0.7" />
+                        <circle cx="56" cy="48" r="0.6" fill="#888" opacity="0.7" />
+                      </svg>
+                    </div>
+                    <div class="diamond-grade-label">VVS1/2</div>
+                    <div class="diamond-grade-name">V.V.S. Included</div>
+                    <p class="diamond-card-desc">Extremely small inclusions. Hard for even a master grader to see under 10x magnification.</p>
+                  </div>
+
+                  <!-- VS -->
+                  <div class="diamond-scale-card highlighted-best-choice">
+                    <div class="best-choice-badge">BEST CHOICE</div>
+                    <div class="diamond-visual-box">
+                      <svg class="diamond-drawing" viewBox="0 0 100 100">
+                        <g style="--diamond-fill: url(#grad-colorless); --diamond-op: 0.8; --diamond-stroke: #013F3E;">
+                          {{ diamond_facets }}
+                        </g>
+                        <!-- VS inclusions -->
+                        <circle cx="45" cy="42" r="0.8" fill="#777" opacity="0.8" />
+                        <circle cx="53" cy="35" r="0.6" fill="#777" opacity="0.8" />
+                        <circle cx="55" cy="52" r="0.8" fill="#777" opacity="0.8" />
+                        <line x1="42" y1="48" x2="44" y2="50" stroke="#777" stroke-width="0.5" opacity="0.7" />
+                      </svg>
+                    </div>
+                    <div class="diamond-grade-label">VS1 / VS2</div>
+                    <div class="diamond-grade-name">Very Slightly Inc.</div>
+                    <p class="diamond-card-desc">Minor inclusions (Eye Clean). Microscopic flaws completely invisible to the naked eye. Finest value choice.</p>
+                  </div>
+
+                  <!-- SI -->
+                  <div class="diamond-scale-card">
+                    <div class="diamond-visual-box">
+                      <svg class="diamond-drawing" viewBox="0 0 100 100">
+                        <g style="--diamond-fill: url(#grad-colorless); --diamond-op: 0.8; --diamond-stroke: #013F3E;">
+                          {{ diamond_facets }}
+                        </g>
+                        <!-- SI inclusions (marked in red as standard) -->
+                        <circle cx="48" cy="38" r="1.0" fill="#c0392b" opacity="0.9" />
+                        <circle cx="54" cy="46" r="0.9" fill="#555" opacity="0.8" />
+                        <circle cx="42" cy="52" r="0.8" fill="#c0392b" opacity="0.9" />
+                        <circle cx="58" cy="32" r="0.8" fill="#555" opacity="0.8" />
+                        <line x1="45" y1="45" x2="49" y2="48" stroke="#c0392b" stroke-width="0.7" opacity="0.8" />
+                        <line x1="38" y1="38" x2="41" y2="35" stroke="#555" stroke-width="0.6" opacity="0.8" />
+                      </svg>
+                    </div>
+                    <div class="diamond-grade-label">SI1 / SI2</div>
+                    <div class="diamond-grade-name">Slightly Included</div>
+                    <p class="diamond-card-desc">Inclusions visible under 10x magnification. Frequently eye-clean in normal conditions.</p>
+                  </div>
+
+                  <!-- I -->
+                  <div class="diamond-scale-card">
+                    <div class="diamond-visual-box">
+                      <svg class="diamond-drawing" viewBox="0 0 100 100">
+                        <g style="--diamond-fill: url(#grad-colorless); --diamond-op: 0.8; --diamond-stroke: #013F3E;">
+                          {{ diamond_facets }}
+                        </g>
+                        <!-- I Inclusions (marked in red) -->
+                        <circle cx="50" cy="45" r="1.5" fill="#c0392b" opacity="0.95" />
+                        <circle cx="42" cy="36" r="1.2" fill="#c0392b" opacity="0.9" />
+                        <circle cx="58" cy="52" r="1.3" fill="#333" opacity="0.9" />
+                        <circle cx="36" cy="48" r="1.1" fill="#c0392b" opacity="0.9" />
+                        <circle cx="62" cy="38" r="1.0" fill="#333" opacity="0.9" />
+                        <circle cx="52" cy="56" r="1.2" fill="#c0392b" opacity="0.9" />
+                        <line x1="44" y1="40" x2="52" y2="48" stroke="#c0392b" stroke-width="1.2" opacity="0.85" />
+                        <line x1="38" y1="52" x2="34" y2="58" stroke="#333" stroke-width="1.0" opacity="0.9" />
+                        <line x1="56" y1="32" x2="60" y2="28" stroke="#c0392b" stroke-width="1.0" opacity="0.9" />
+                      </svg>
+                    </div>
+                    <div class="diamond-grade-label">I1 / I2 / I3</div>
+                    <div class="diamond-grade-name">Included</div>
+                    <p class="diamond-card-desc">Inclusions visible to the naked eye. May slightly impact brilliance, offering larger size on a budget.</p>
+                  </div>
+                </div>
+
+                <!-- Store Clarity Ranges Info -->
+                <div class="store-guide-standards">
+                  <h4 class="standards-title">Our Clarity Offerings Explained</h4>
+                  <div class="standards-grid">
+                    <div class="standard-row">
+                      <span class="standard-badge badge-vs">VS-SI Range</span>
+                      <p><strong>Eye Clean:</strong> Combines the highly pristine VS1/VS2 and SI1 grades. No flaws are visible to the naked eye, guaranteeing beautiful brilliance and fire.</p>
+                    </div>
+                    <div class="standard-row">
+                      <span class="standard-badge badge-si">SI-I Range</span>
+                      <p><strong>Value Tier:</strong> Offers an incredibly sparkle-rich look for its budget. Some tiny inclusions might be visible under magnification but are placed to retain beauty.</p>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
+
+          <style>
+            #modal-guide-diamond-quality .pp-guide-modal-box {
+              max-width: 820px;
+            }
+            .diamond-modal-title {
+              font-family: var(--pp-font-serif), 'Playfair Display', Georgia, serif;
+              font-size: 18px;
+              color: var(--pp-primary, #013F3E);
+              text-align: center;
+              text-transform: uppercase;
+              letter-spacing: 0.05em;
+              margin: 0 0 4px 0;
+              font-weight: 500;
+              line-height: 1.2;
+            }
+            .diamond-modal-title-main {
+              display: block;
+              font-size: 26px;
+              font-weight: 600;
+              letter-spacing: 0.08em;
+              margin-top: 4px;
+            }
+            .diamond-modal-divider {
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              width: 40%;
+              margin: 12px auto 20px auto;
+            }
+            .diamond-divider-line {
+              height: 1px;
+              flex-grow: 1;
+            }
+            .diamond-divider-line.line-left {
+              background: linear-gradient(to right, transparent, var(--pp-accent, #D4AF37));
+            }
+            .diamond-divider-line.line-right {
+              background: linear-gradient(to left, transparent, var(--pp-accent, #D4AF37));
+            }
+            .diamond-divider-star {
+              font-size: 11px;
+              color: var(--pp-accent, #D4AF37);
+              margin: 0 10px;
+            }
+            /* Tabs styling */
+            .diamond-tabs {
+              display: flex;
+              justify-content: center;
+              gap: 8px;
+              background: var(--pp-bg-light, #FAF7F0);
+              padding: 6px;
+              border-radius: 30px;
+              max-width: 320px;
+              margin: 0 auto 24px auto;
+              border: 1px solid var(--pp-border, #EAE0D5);
+            }
+            .diamond-tab-btn {
+              flex: 1;
+              padding: 8px 16px;
+              border: none;
+              background: transparent;
+              color: var(--pp-text-muted, #666666);
+              font-size: 13px;
+              font-weight: 600;
+              border-radius: 20px;
+              cursor: pointer;
+              transition: all 0.25s ease;
+              display: inline-flex;
+              align-items: center;
+              justify-content: center;
+              gap: 6px;
+            }
+            .diamond-tab-btn.active {
+              background: var(--pp-primary, #013F3E);
+              color: #FFFFFF;
+              box-shadow: 0 4px 12px rgba(1, 63, 62, 0.15);
+            }
+            .diamond-tab-contents {
+              position: relative;
+            }
+            .diamond-tab-pane {
+              display: none;
+            }
+            .diamond-tab-pane.active {
+              display: block;
+              animation: fadeIn 0.4s ease forwards;
+            }
+            .diamond-tab-intro {
+              font-size: 14px;
+              line-height: 1.6;
+              text-align: center;
+              color: var(--pp-text, #444);
+              max-width: 600px;
+              margin: 0 auto 20px auto;
+            }
+            .diamond-scale-container {
+              display: grid;
+              grid-template-columns: repeat(5, 1fr);
+              gap: 12px;
+              margin-bottom: 24px;
+            }
+            .diamond-scale-card {
+              background: var(--pp-bg-light, #FAF7F0);
+              border: 1px solid var(--pp-border, #EAE0D5);
+              border-radius: 16px;
+              padding: 16px 12px;
+              text-align: center;
+              transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+              display: flex;
+              flex-direction: column;
+              align-items: center;
+              position: relative;
+            }
+            .diamond-scale-card:hover {
+              transform: translateY(-4px);
+              border-color: var(--pp-accent, #D4AF37);
+              box-shadow: 0 6px 20px rgba(212, 175, 55, 0.08);
+            }
+            /* Highlighted store standard and best choice cards */
+            .diamond-scale-card.highlighted-store-choice {
+              border-color: var(--pp-accent, #D4AF37);
+              background: #FFFDF9;
+              box-shadow: 0 4px 15px rgba(212, 175, 55, 0.05);
+            }
+            .diamond-scale-card.highlighted-best-choice {
+              border-color: #2e7d32;
+              background: #F1F8F1;
+              box-shadow: 0 4px 15px rgba(46, 125, 50, 0.05);
+            }
+            .store-choice-badge {
+              background: var(--pp-accent, #D4AF37);
+              color: #013F3E;
+              font-size: 9px;
+              font-weight: 700;
+              padding: 3px 8px;
+              border-radius: 8px;
+              position: absolute;
+              top: -8px;
+              left: 50%;
+              transform: translateX(-50%);
+              white-space: nowrap;
+              letter-spacing: 0.02em;
+            }
+            .best-choice-badge {
+              background: #2e7d32;
+              color: #FFFFFF;
+              font-size: 9px;
+              font-weight: 700;
+              padding: 3px 8px;
+              border-radius: 8px;
+              position: absolute;
+              top: -8px;
+              left: 50%;
+              transform: translateX(-50%);
+              white-space: nowrap;
+              letter-spacing: 0.02em;
+            }
+            .diamond-visual-box {
+              width: 60px;
+              height: 60px;
+              margin-bottom: 12px;
+              display: flex;
+              align-items: center;
+              justify-content: center;
+            }
+            .diamond-drawing {
+              width: 100%;
+              height: 100%;
+            }
+            .diamond-grade-label {
+              font-family: var(--pp-font-serif), 'Playfair Display', Georgia, serif;
+              font-size: 16px;
+              font-weight: 700;
+              color: var(--pp-primary, #013F3E);
+            }
+            .diamond-grade-name {
+              font-size: 11px;
+              font-weight: 600;
+              color: var(--pp-text-muted, #777);
+              margin: 2px 0 8px 0;
+              text-transform: uppercase;
+              letter-spacing: 0.02em;
+            }
+            .diamond-card-desc {
+              font-size: 11px;
+              line-height: 1.4;
+              color: #666;
+              margin: 0;
+            }
+            /* Standards explanation box */
+            .store-guide-standards {
+              background: var(--pp-bg-light, #FAF7F0);
+              border: 1px solid var(--pp-border, #EAE0D5);
+              border-radius: 16px;
+              padding: 20px;
+              margin-top: 10px;
+            }
+            .standards-title {
+              font-family: var(--pp-font-serif), 'Playfair Display', Georgia, serif;
+              font-size: 16px;
+              font-weight: 600;
+              color: var(--pp-primary, #013F3E);
+              margin: 0 0 16px 0;
+              text-transform: uppercase;
+              letter-spacing: 0.03em;
+            }
+            .standards-grid {
+              display: grid;
+              grid-template-columns: 1fr 1fr;
+              gap: 16px;
+            }
+            .standard-row {
+              display: flex;
+              align-items: flex-start;
+              gap: 12px;
+            }
+            .standard-badge {
+              background: var(--pp-primary, #013F3E);
+              color: #FFFFFF;
+              font-size: 10px;
+              font-weight: 700;
+              padding: 4px 8px;
+              border-radius: 6px;
+              white-space: nowrap;
+            }
+            .standard-badge.badge-vs {
+              background: #2e7d32;
+            }
+            .standard-badge.badge-si {
+              background: #c62828;
+            }
+            .standard-row p {
+              font-size: 12px;
+              line-height: 1.5;
+              color: #555;
+              margin: 0;
+            }
+            .diamond-scale-scroll-tip {
+              display: none;
+            }
+            @keyframes fadeIn {
+              from { opacity: 0; transform: translateY(6px); }
+              to { opacity: 1; transform: translateY(0); }
+            }
+            @media screen and (max-width: 768px) {
+              .standards-grid {
+                grid-template-columns: 1fr;
+                gap: 12px;
+              }
+            }
+            @media screen and (max-width: 640px) {
+              .diamond-scale-container {
+                display: flex;
+                overflow-x: auto;
+                padding: 12px 0 8px 0;
+                scroll-snap-type: x mandatory;
+                -webkit-overflow-scrolling: touch;
+              }
+              .diamond-scale-card {
+                flex: 0 0 150px;
+                scroll-snap-align: start;
+              }
+              .diamond-scale-scroll-tip {
+                display: block;
+                text-align: center;
+                font-size: 11px;
+                color: var(--pp-text-muted, #888);
+                margin-bottom: 8px;
+                font-style: italic;
+              }
+            }
+          </style>
         {% endif %}
       </div>
     </div>
