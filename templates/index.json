@@ -29,9 +29,8 @@
         },
         "slide_WxzxDN": {
           "type": "slide",
-          "disabled": true,
           "settings": {
-            "image_desktop": "shopify://shop_images/goldc_jewel_banner.png",
+            "image_desktop": "shopify://shop_images/hero_banner_2_2800_x_1100_px_caa5edff-d986-451e-b14d-9b13e06df6a9.png",
             "image_mobile": "shopify://shop_images/mobile_banner_gold_jewel.png",
             "alignment": "left",
             "subheading": "",
