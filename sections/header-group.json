@@ -15,14 +15,14 @@
       "type": "header",
       "settings": {
         "logo_width": 65,
-        "gold_price_label": "Current Gold Rate",
+        "gold_price": "Gold 14500/1g",
         "wishlist_count": 2,
         "mock_cart_count": true,
         "show_announcement": true,
         "announcement_left_text": "DELHI • SINCE 2011",
         "announcement_center_text": "MADE FOR MOMENTS THAT MATTER",
         "announcement_right_text": "WORLDWIDE SHIPPING",
-        "menu": ""
+        "menu": "navabar"
       }
     }
   },
