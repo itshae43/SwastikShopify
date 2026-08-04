@@ -90,12 +90,12 @@
           {%- when 'price' -%}
             <div class="pp-price-box">
               <div class="pp-price-box-top">
-                <span class="pp-price-current" id="pp-price">{{ current_variant.price | money }}</span>
+                <span class="pp-price-current money" id="pp-price" data-inr-price="{{ current_variant.price }}">{{ current_variant.price | money }}</span>
                 <span class="pp-price-tax-label">(Incl. of all taxes)</span>
               </div>
               <div class="pp-price-box-bottom">
                 {% assign compare_price = current_variant.compare_at_price %}
-                <span class="pp-price-compare" id="pp-compare-price" {% unless compare_price > current_variant.price %}style="display:none;"{% endunless %}>MRP {{ compare_price | money }}</span>
+                <span class="pp-price-compare money" id="pp-compare-price" data-inr-price="{{ compare_price }}" {% unless compare_price > current_variant.price %}style="display:none;"{% endunless %}>MRP {{ compare_price | money }}</span>
               </div>
             </div>
 
@@ -565,7 +565,7 @@
             </div>
             <div class="bd-col-rate" id="ui-bd-gold-rate">₹{{ v.custom_gold_rate | default: v.gold_rate | default: '0' }} / gm</div>
             <div class="bd-col-qty" id="ui-bd-gold-qty">{{ p.net_weight | default: p.net_wight | default: '0' }}</div>
-            <div class="bd-col-amt" id="ui-price-gold">₹{{ v.gold_value | default: '0' }}</div>
+            <div class="bd-col-amt money" id="ui-price-gold" data-inr-price="{{ v.gold_value | default: '0' | times: 100 }}">₹{{ v.gold_value | default: '0' }}</div>
           </div>
           <div class="pp-row-divider"></div>
 
@@ -580,7 +580,7 @@
             </div>
             <div class="bd-col-rate" id="ui-bd-dia-rate">₹{{ v.custom_diamond_rate | default: v.diamond_rate | default: '0' }} / ct</div>
             <div class="bd-col-qty" id="ui-bd-dia-qty">{{ p.diamond_weight | default: '0' }}</div>
-            <div class="bd-col-amt" id="ui-price-diamond">₹{{ v.diamond_value | default: '0' }}</div>
+            <div class="bd-col-amt money" id="ui-price-diamond" data-inr-price="{{ v.diamond_value | default: '0' | times: 100 }}">₹{{ v.diamond_value | default: '0' }}</div>
           </div>
           <div class="pp-row-divider"></div>
 
@@ -597,7 +597,7 @@
             </div>
             <div class="bd-col-rate" id="ui-bd-stone-rate">₹{{ v.custom_stone_rate | default: v.stone_rate | default: '0' }} / ct</div>
             <div class="bd-col-qty" id="ui-bd-stone-qty">{{ stone_wt }}</div>
-            <div class="bd-col-amt" id="ui-price-stone">₹{{ stone_val }}</div>
+            <div class="bd-col-amt money" id="ui-price-stone" data-inr-price="{{ stone_val | times: 100 }}">₹{{ stone_val }}</div>
           </div>
           <div class="pp-row-divider" id="ui-divider-stone" {% unless stone_val > 0 %}style="display: none !important;"{% endunless %}></div>
 
@@ -609,7 +609,7 @@
             </div>
             <div class="bd-col-rate" id="ui-bd-making-rate">₹{{ v.custom_making_charge_rate | default: v.making_charge_rate | default: '0' }} / gm</div>
             <div class="bd-col-qty" id="ui-bd-making-qty">{{ p.net_weight | default: p.net_wight | default: '0' }}</div>
-            <div class="bd-col-amt" id="ui-price-making">₹{{ v.making_charges | default: '0' }}</div>
+            <div class="bd-col-amt money" id="ui-price-making" data-inr-price="{{ v.making_charges | default: '0' | times: 100 }}">₹{{ v.making_charges | default: '0' }}</div>
           </div>
           <div class="pp-row-divider"></div>
 
@@ -620,13 +620,13 @@
             </div>
             <div class="bd-col-rate" style="color: #ccc;"><span class="bd-desktop-text">—</span></div>
             <div class="bd-col-qty" style="color: #ccc;"><span class="bd-desktop-text">—</span></div>
-            <div class="bd-col-amt" id="ui-price-gst">₹{{ v.gst_amount | default: '0' }}</div>
+            <div class="bd-col-amt money" id="ui-price-gst" data-inr-price="{{ v.gst_amount | default: '0' | times: 100 }}">₹{{ v.gst_amount | default: '0' }}</div>
           </div>
 
           <!-- Total Price -->
           <div class="bd-total-row">
             <span class="bd-total-label">TOTAL PRICE</span>
-            <span class="bd-total-val" id="ui-price-total">{{ current_variant.price | money }}</span>
+            <span class="bd-total-val money" id="ui-price-total" data-inr-price="{{ current_variant.price }}">{{ current_variant.price | money }}</span>
           </div>
         </div>
       </div>
@@ -2712,23 +2712,166 @@
         {% if section.settings.guide_gold_color != blank and section.settings.guide_gold_color.content != blank %}
           {{ section.settings.guide_gold_color.content }}
         {% else %}
-          <div style="padding: 20px;">
-            <h2 style="margin-bottom: 15px; color: #163D39; font-size: 22px; font-weight: 600;">Gold Color Guide</h2>
-            <div style="display: flex; flex-direction: column; gap: 15px;">
-              <div>
-                <h3 style="font-size: 16px; margin-bottom: 5px; color: #D4AF37; font-weight: 600;">Yellow Gold</h3>
-                <p style="font-size: 14px; color: #555; line-height: 1.5;">Classic and timeless, yellow gold offers a warm, traditional glow that complements diamonds beautifully.</p>
+          <div class="gold-color-modal-wrapper" style="padding: 10px;">
+            <h2 class="gold-color-modal-title">
+              Swastik Jewels
+              <span class="gold-color-modal-title-main">GOLD COLOR GUIDE</span>
+            </h2>
+            
+            <div class="gold-color-modal-divider">
+              <span class="gold-color-divider-line line-left"></span>
+              <span class="gold-color-divider-star">&#x2726;</span>
+              <span class="gold-color-divider-line line-right"></span>
+            </div>
+            
+            <div class="gold-color-modal-grid">
+              <!-- Yellow Gold Card -->
+              <div class="gold-color-modal-card">
+                <div class="gold-color-swatch-wrapper">
+                  <div class="gold-color-swatch yellow-gold-swatch"></div>
+                </div>
+                <div class="gold-color-card-header">Yellow Gold</div>
+                <div class="gold-color-card-desc">Classic and timeless, yellow gold offers a warm, traditional glow that complements diamonds beautifully.</div>
               </div>
-              <div>
-                <h3 style="font-size: 16px; margin-bottom: 5px; color: #E0BFB8; font-weight: 600;">Rose Gold</h3>
-                <p style="font-size: 14px; color: #555; line-height: 1.5;">With its romantic pink hue, rose gold is created by mixing gold with copper, offering a unique and vintage feel.</p>
+
+              <!-- Rose Gold Card -->
+              <div class="gold-color-modal-card">
+                <div class="gold-color-swatch-wrapper">
+                  <div class="gold-color-swatch rose-gold-swatch"></div>
+                </div>
+                <div class="gold-color-card-header">Rose Gold</div>
+                <div class="gold-color-card-desc">With its romantic pink hue, rose gold is created by mixing gold with copper, offering a unique and vintage feel.</div>
               </div>
-              <div>
-                <h3 style="font-size: 16px; margin-bottom: 5px; color: #C0C0C0; font-weight: 600;">White Gold</h3>
-                <p style="font-size: 14px; color: #555; line-height: 1.5;">Sleek and modern, white gold is plated with rhodium for a brilliant white finish that enhances the sparkle of diamonds.</p>
+
+              <!-- White Gold Card -->
+              <div class="gold-color-modal-card">
+                <div class="gold-color-swatch-wrapper">
+                  <div class="gold-color-swatch white-gold-swatch"></div>
+                </div>
+                <div class="gold-color-card-header">White Gold</div>
+                <div class="gold-color-card-desc">Sleek and modern, white gold is plated with rhodium for a brilliant white finish that enhances the sparkle of diamonds.</div>
               </div>
             </div>
           </div>
+
+          <style>
+            .gold-color-modal-title {
+              font-family: var(--pp-font-serif), 'Playfair Display', Georgia, serif;
+              font-size: 20px;
+              color: var(--pp-primary, #013F3E);
+              text-align: center;
+              text-transform: uppercase;
+              letter-spacing: 0.05em;
+              margin: 0 0 4px 0;
+              font-weight: 500;
+              line-height: 1.2;
+            }
+            .gold-color-modal-title-main {
+              display: block;
+              font-size: 28px;
+              font-weight: 600;
+              letter-spacing: 0.08em;
+              margin-top: 4px;
+            }
+            .gold-color-modal-divider {
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              width: 50%;
+              margin: 12px auto 28px auto;
+            }
+            .gold-color-divider-line {
+              height: 1px;
+              flex-grow: 1;
+            }
+            .gold-color-divider-line.line-left {
+              background: linear-gradient(to right, transparent, var(--pp-accent, #D4AF37));
+            }
+            .gold-color-divider-line.line-right {
+              background: linear-gradient(to left, transparent, var(--pp-accent, #D4AF37));
+            }
+            .gold-color-divider-star {
+              font-size: 12px;
+              color: var(--pp-accent, #D4AF37);
+              margin: 0 12px;
+            }
+            .gold-color-modal-grid {
+              display: grid;
+              grid-template-columns: repeat(3, 1fr);
+              gap: 20px;
+            }
+            .gold-color-modal-card {
+              background: var(--pp-bg-light, #FAF7F0);
+              border: 1px solid var(--pp-border, #EAE0D5);
+              border-radius: 16px;
+              padding: 24px 16px;
+              text-align: center;
+              transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+              display: flex;
+              flex-direction: column;
+              align-items: center;
+            }
+            .gold-color-modal-card:hover {
+              transform: translateY(-4px);
+              border-color: var(--pp-accent, #D4AF37);
+              box-shadow: 0 8px 24px rgba(212, 175, 55, 0.12);
+            }
+            .gold-color-swatch-wrapper {
+              width: 64px;
+              height: 64px;
+              border-radius: 50%;
+              padding: 4px;
+              border: 1px solid var(--pp-border, #EAE0D5);
+              background: #FFFFFF;
+              margin-bottom: 16px;
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              box-shadow: inset 0 2px 4px rgba(0,0,0,0.05);
+            }
+            .gold-color-swatch {
+              width: 100%;
+              height: 100%;
+              border-radius: 50%;
+              box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            }
+            .yellow-gold-swatch {
+              background: linear-gradient(135deg, #FCE0AD 0%, #DFAC6C 50%, #C68B45 100%);
+            }
+            .rose-gold-swatch {
+              background: linear-gradient(135deg, #F7D6C8 0%, #E2A796 50%, #B87A6B 100%);
+            }
+            .white-gold-swatch {
+              background: linear-gradient(135deg, #F9F9F9 0%, #D8D8D8 50%, #AEAEAE 100%);
+            }
+            .gold-color-card-header {
+              font-family: var(--pp-font-serif), 'Playfair Display', Georgia, serif;
+              font-size: 22px;
+              color: var(--pp-primary, #013F3E);
+              font-weight: 600;
+              margin-bottom: 12px;
+              letter-spacing: 0.02em;
+            }
+            .gold-color-card-desc {
+              font-family: var(--pp-font-sans), 'Inter', sans-serif;
+              font-size: 13px;
+              line-height: 1.6;
+              color: var(--pp-text-muted, #666666);
+              margin: 0;
+            }
+            @media screen and (max-width: 600px) {
+              .gold-color-modal-grid {
+                grid-template-columns: 1fr;
+                gap: 16px;
+              }
+              .gold-color-modal-divider {
+                width: 70%;
+              }
+              .gold-color-modal-card {
+                padding: 20px 16px;
+              }
+            }
+          </style>
         {% endif %}
       </div>
     </div>

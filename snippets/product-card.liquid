@@ -49,9 +49,9 @@
     </div>
 
     <div class="product-card-ui__price-row">
-      <span class="price-current">{{ price | money_without_trailing_zeros | replace: 'Rs.', '₹' | replace: 'Rs ', '₹' | replace: 'Rs', '₹' | replace: '$', '₹' | replace: 'USD', '₹' | replace: '₹ ', '₹' }}</span>
+      <span class="price-current money" data-inr-price="{{ price }}">{{ price | money_without_trailing_zeros | replace: 'Rs.', '₹' | replace: 'Rs ', '₹' | replace: 'Rs', '₹' | replace: '$', '₹' | replace: 'USD', '₹' | replace: '₹ ', '₹' }}</span>
       {% if original_price > price %}
-        <s class="price-original">{{ original_price | money_without_trailing_zeros | replace: 'Rs.', '₹' | replace: 'Rs ', '₹' | replace: 'Rs', '₹' | replace: '$', '₹' | replace: 'USD', '₹' | replace: '₹ ', '₹' }}</s>
+        <s class="price-original money" data-inr-price="{{ original_price }}">{{ original_price | money_without_trailing_zeros | replace: 'Rs.', '₹' | replace: 'Rs ', '₹' | replace: 'Rs', '₹' | replace: '$', '₹' | replace: 'USD', '₹' | replace: '₹ ', '₹' }}</s>
       {% endif %}
     </div>
 
