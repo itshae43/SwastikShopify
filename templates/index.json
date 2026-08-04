@@ -30,8 +30,8 @@
         "slide_WxzxDN": {
           "type": "slide",
           "settings": {
-            "image_desktop": "shopify://shop_images/Bannerimage_2880_1100.png",
-            "image_mobile": "shopify://shop_images/gold_904e1440-3445-4292-9e3e-71af326e9333.png",
+            "image_desktop": "shopify://shop_images/goldc_jewel_banner.png",
+            "image_mobile": "shopify://shop_images/mobile_banner_gold_jewel.png",
             "alignment": "left",
             "subheading": "",
             "title": "",
@@ -45,8 +45,8 @@
         "slide_4LQDeb": {
           "type": "slide",
           "settings": {
-            "image_desktop": "shopify://shop_images/hero_banner_2880_x_1620_px_2800_x_1100_px_6.png",
-            "image_mobile": "shopify://shop_images/gold_offer.png",
+            "image_desktop": "shopify://shop_images/bridal_offer_her_banner.png",
+            "image_mobile": "shopify://shop_images/mobile_banner_bridal_offer.png",
             "alignment": "left",
             "subheading": "",
             "title": "",
