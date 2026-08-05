@@ -43,7 +43,7 @@
         <form id="CollectionFiltersForm" class="collection-filters__form">
           <div class="collection-filters__body">
             <!-- Custom Tag Filter for Bonds -->
-            {%- if collection.handle == 'all' or collection.all_tags contains 'For Mothers' or collection.all_tags contains 'For Sisters' or collection.all_tags contains 'For Brides' or collection.all_tags contains 'for-mothers' or collection.all_tags contains 'for-sisters' or collection.all_tags contains 'for-brides' -%}
+            {%- if collection.handle == 'all' or collection.handle == 'made-for-every-bond' or collection.all_tags contains 'For Mothers' or collection.all_tags contains 'For Sisters' or collection.all_tags contains 'For Brides' or collection.all_tags contains 'for-mothers' or collection.all_tags contains 'for-sisters' or collection.all_tags contains 'for-brides' -%}
               <div class="filter-group">
                 <details class="filter-group__details" open>
                   <summary class="filter-group__summary">
