@@ -124,7 +124,7 @@
   width: 400px;
   height: 480px;
   will-change: transform, opacity, z-index;
-  pointer-events: none;
+  cursor: pointer;
 }
 
 .for-every-you__image-wrapper {
@@ -317,6 +317,29 @@ class ForEveryYouCarousel {
       });
     }
 
+    // Click events for slides
+    this.slides.forEach(slide => {
+      slide.addEventListener('click', (e) => {
+        if (!slide.classList.contains('is-active')) {
+          e.preventDefault();
+          e.stopPropagation();
+          
+          const targetIndex = parseInt(slide.getAttribute('data-index'), 10);
+          if (!isNaN(targetIndex)) {
+            const N = this.N;
+            let currentMod = this.targetProgress % N;
+            if (currentMod < 0) currentMod += N;
+            
+            let diff = targetIndex - currentMod;
+            if (diff > N / 2) diff -= N;
+            if (diff < -N / 2) diff += N;
+            
+            this.targetProgress += diff;
+          }
+        }
+      });
+    });
+
     // Drag events
     this.track.addEventListener('mousedown', this.onDragStart.bind(this));
     window.addEventListener('mousemove', this.onDragMove.bind(this));
@@ -446,7 +469,7 @@ class ForEveryYouCarousel {
         slide.style.pointerEvents = 'auto';
       } else {
         slide.classList.remove('is-active');
-        slide.style.pointerEvents = 'none';
+        slide.style.pointerEvents = 'auto';
       }
     });
   }
