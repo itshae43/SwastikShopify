@@ -1,7 +1,10 @@
 {%- style -%}
   .section-instagram-reels {
     background-color: {{ section.settings.bg_color }};
-    padding: 60px 20px;
+    padding-top: var(--padding-top, 40px);
+    padding-bottom: var(--padding-bottom, 60px);
+    padding-left: 20px;
+    padding-right: 20px;
     font-family: var(--font-body-family, sans-serif);
   }
 
@@ -120,7 +123,10 @@
 
   @media (max-width: 767px) {
     .section-instagram-reels {
-      padding: 40px 0; /* no horizontal padding to allow full bleed scroll */
+      padding-top: calc(var(--padding-top, 40px) * 0.67);
+      padding-bottom: calc(var(--padding-bottom, 60px) * 0.67);
+      padding-left: 0;
+      padding-right: 0;
     }
     
     .instagram-reels__header {
@@ -295,7 +301,11 @@
   }
 {%- endstyle -%}
 
-<div class="section-instagram-reels" style="background-color: {{ section.settings.bg_color }}">
+<div class="section-instagram-reels" style="
+  background-color: {{ section.settings.bg_color }};
+  --padding-top: {{ section.settings.padding_top | default: 40 }}px;
+  --padding-bottom: {{ section.settings.padding_bottom | default: 60 }}px;
+">
   <div class="instagram-reels__header">
     {% if section.settings.subheading != blank %}
       <div class="instagram-reels__subheading-wrapper">
@@ -332,8 +342,26 @@
             {% if block.settings.video != blank %}
               {{ block.settings.video | video_tag: image_size: "600x", autoplay: true, loop: true, muted: true, controls: false, class: "instagram-reel__media" }}
             {% elsif block.settings.video_url != blank %}
+              {%- liquid
+                assign video_src = block.settings.video_url
+                if video_src contains 'shopify://files/videos/'
+                  assign file_name = video_src | remove: 'shopify://files/videos/'
+                  assign video_src = file_name | file_url
+                elsif video_src contains 'shopify://files/'
+                  assign file_name = video_src | remove: 'shopify://files/'
+                  assign video_src = file_name | file_url
+                elsif video_src contains '.mp4'
+                  assign is_external = false
+                  if video_src contains '/'
+                    assign is_external = true
+                  endif
+                  if is_external == false
+                    assign video_src = video_src | file_url
+                  endif
+                endif
+              -%}
               <video class="instagram-reel__media" autoplay loop muted playsinline>
-                <source src="{{ block.settings.video_url }}" type="video/mp4">
+                <source src="{{ video_src }}" type="video/mp4">
               </video>
             {% elsif block.settings.image != blank %}
               {{ block.settings.image | image_url: width: 600 | image_tag: class: "instagram-reel__media" }}
@@ -470,6 +498,30 @@
       "id": "bg_color",
       "label": "Background Color",
       "default": "#fdfaf7"
+    },
+    {
+      "type": "header",
+      "content": "Section Spacing"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding Top",
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding Bottom",
+      "default": 60
     }
   ],
   "blocks": [

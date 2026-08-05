@@ -1366,7 +1366,7 @@
   
   /* Base Modal Styles (Mobile First) */
   .pp-guide-modal-box {
-    background: #fff; width: 95%; max-width: 950px; max-height: 85vh; border-radius: 20px; padding: 24px;
+    background: #fff; width: 92%; max-width: 650px; max-height: 85vh; border-radius: 20px; padding: 24px;
     position: relative; overflow-y: auto; box-shadow: 0 20px 60px rgba(0,0,0,0.2); transform: translateY(30px) scale(0.98); transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
   }
   .pp-guide-modal-overlay.is-active .pp-guide-modal-box { transform: translateY(0) scale(1); }
@@ -2834,12 +2834,7 @@
         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
       </button>
       <div class="pp-guide-modal-content">
-        {{ section.settings.guide_gold_color | image_url: width: 2048 | image_tag: loading: 'lazy', class: 'pp-guide-image', alt: 'Gold Color Guide' }}
-        <div style="text-align: center; margin-top: 15px;">
-          <a href="{{ section.settings.guide_gold_color | image_url: width: 2048 }}" target="_blank" style="font-size: 13px; font-weight: 500; color: var(--pp-primary); text-decoration: underline; display: inline-flex; align-items: center; gap: 4px;">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg> View Full Image / Zoom
-          </a>
-        </div>
+        {{ section.settings.guide_gold_color | image_url: width: 1000 | image_tag: loading: 'lazy', class: 'pp-guide-image', alt: 'Gold Color Guide' }}
       </div>
     </div>
   </div>
@@ -2852,12 +2847,7 @@
         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
       </button>
       <div class="pp-guide-modal-content">
-        {{ section.settings.guide_gold_purity | image_url: width: 2048 | image_tag: loading: 'lazy', class: 'pp-guide-image', alt: 'Gold Purity Guide' }}
-        <div style="text-align: center; margin-top: 15px;">
-          <a href="{{ section.settings.guide_gold_purity | image_url: width: 2048 }}" target="_blank" style="font-size: 13px; font-weight: 500; color: var(--pp-primary); text-decoration: underline; display: inline-flex; align-items: center; gap: 4px;">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg> View Full Image / Zoom
-          </a>
-        </div>
+        {{ section.settings.guide_gold_purity | image_url: width: 1000 | image_tag: loading: 'lazy', class: 'pp-guide-image', alt: 'Gold Purity Guide' }}
       </div>
     </div>
   </div>
@@ -2870,12 +2860,7 @@
         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
       </button>
       <div class="pp-guide-modal-content">
-        {{ section.settings.guide_diamond_quality | image_url: width: 2048 | image_tag: loading: 'lazy', class: 'pp-guide-image', alt: 'Diamond Quality Guide' }}
-        <div style="text-align: center; margin-top: 15px;">
-          <a href="{{ section.settings.guide_diamond_quality | image_url: width: 2048 }}" target="_blank" style="font-size: 13px; font-weight: 500; color: var(--pp-primary); text-decoration: underline; display: inline-flex; align-items: center; gap: 4px;">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg> View Full Image / Zoom
-          </a>
-        </div>
+        {{ section.settings.guide_diamond_quality | image_url: width: 1000 | image_tag: loading: 'lazy', class: 'pp-guide-image', alt: 'Diamond Quality Guide' }}
       </div>
     </div>
   </div>
@@ -2888,12 +2873,7 @@
         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
       </button>
       <div class="pp-guide-modal-content">
-        {{ section.settings.guide_ring_size | image_url: width: 2048 | image_tag: loading: 'lazy', class: 'pp-guide-image', alt: 'Ring Size Guide' }}
-        <div style="text-align: center; margin-top: 15px;">
-          <a href="{{ section.settings.guide_ring_size | image_url: width: 2048 }}" target="_blank" style="font-size: 13px; font-weight: 500; color: var(--pp-primary); text-decoration: underline; display: inline-flex; align-items: center; gap: 4px;">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg> View Full Image / Zoom
-          </a>
-        </div>
+        {{ section.settings.guide_ring_size | image_url: width: 1000 | image_tag: loading: 'lazy', class: 'pp-guide-image', alt: 'Ring Size Guide' }}
       </div>
     </div>
   </div>

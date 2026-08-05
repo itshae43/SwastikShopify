@@ -136,7 +136,7 @@
         "padding_top": 64,
         "padding_bottom": 40,
         "button_label": "Browse Collections",
-        "button_link": "",
+        "button_link": "/collections/all",
         "btn_bg_color": "#013f3e",
         "btn_text_color": "#fdfcfa",
         "btn_hover_bg_color": "#025654",
@@ -394,7 +394,7 @@
             "image": "shopify://shop_images/ChatGPT_Image_Jul_14_2026_04_44_45_PM.png",
             "title": "For Mothers",
             "subtitle": "Her love, our forever.",
-            "link": "shopify://collections/for-mothers",
+            "link": "/collections/all/for-mothers",
             "icon": "mother",
             "custom_icon_svg": ""
           }
@@ -405,7 +405,7 @@
             "image": "shopify://shop_images/sisters_3.png",
             "title": "For Sisters",
             "subtitle": "Partners in all things.",
-            "link": "shopify://collections/for-sisters",
+            "link": "/collections/all/for-sisters",
             "icon": "sister",
             "custom_icon_svg": ""
           }
@@ -416,7 +416,7 @@
             "image": "shopify://shop_images/b21_bride.png",
             "title": "For Brides",
             "subtitle": "For the beginning of forever.",
-            "link": "shopify://collections/for-brides",
+            "link": "/collections/all/for-brides",
             "icon": "bride",
             "custom_icon_svg": ""
           }
@@ -432,7 +432,7 @@
         "heading_accent": "Every Bond",
         "description": "Beautiful jewellery for the people who make every moment special.",
         "button_label": "Explore Collection",
-        "button_link": "",
+        "button_link": "/collections/all",
         "bg_color": "#fdfcfa",
         "text_color": "#0a2a26",
         "accent_color": "#b38245"

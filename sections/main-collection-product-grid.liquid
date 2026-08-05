@@ -42,6 +42,41 @@
         
         <form id="CollectionFiltersForm" class="collection-filters__form">
           <div class="collection-filters__body">
+            <!-- Custom Tag Filter for Bonds -->
+            {%- if collection.handle == 'all' or collection.all_tags contains 'For Mothers' or collection.all_tags contains 'For Sisters' or collection.all_tags contains 'For Brides' or collection.all_tags contains 'for-mothers' or collection.all_tags contains 'for-sisters' or collection.all_tags contains 'for-brides' -%}
+              <div class="filter-group">
+                <details class="filter-group__details" open>
+                  <summary class="filter-group__summary">
+                    <span class="filter-group__name">Shop by Bond</span>
+                    <svg class="icon-caret" width="12" height="7" viewBox="0 0 12 7" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M1 1L6 6L11 1" stroke="#D4AF37" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                  </summary>
+                  <div class="filter-group__display">
+                    <ul class="filter-group__list">
+                      {%- assign bond_tags = "For Mothers, For Sisters, For Brides" | split: ", " -%}
+                      {%- for bond_tag in bond_tags -%}
+                        {%- assign tag_handle = bond_tag | handleize -%}
+                        <li class="filter-group__list-item">
+                          {%- if current_tags contains bond_tag or current_tags contains tag_handle -%}
+                            <a href="{{ '' | link_to_remove_tag: bond_tag | split: 'href="' | last | split: '"' | first }}" class="filter-checkbox is-active-tag">
+                              <span class="filter-checkbox__box"></span>
+                              <span class="filter-checkbox__label">{{ bond_tag }}</span>
+                            </a>
+                          {%- else -%}
+                            <a href="{{ bond_tag | link_to_add_tag: bond_tag | split: 'href="' | last | split: '"' | first }}" class="filter-checkbox">
+                              <span class="filter-checkbox__box"></span>
+                              <span class="filter-checkbox__label">{{ bond_tag }}</span>
+                            </a>
+                          {%- endif -%}
+                        </li>
+                      {%- endfor -%}
+                    </ul>
+                  </div>
+                </details>
+              </div>
+            {%- endif -%}
+
             {%- for filter in collection.filters -%}
               <div class="filter-group">
                 <details class="filter-group__details" open>
@@ -921,6 +956,31 @@
       grid-template-columns: repeat(2, 1fr);
       gap: 10px;
     }
+  }
+
+  /* Active tag checkboxes styling */
+  .filter-checkbox.is-active-tag {
+    text-decoration: none;
+  }
+  .filter-checkbox.is-active-tag .filter-checkbox__box {
+    background-color: #013F3E;
+    border-color: #013F3E;
+    box-shadow: 0 3px 8px rgba(1, 63, 62, 0.25);
+  }
+  .filter-checkbox.is-active-tag .filter-checkbox__box::after {
+    content: '';
+    position: absolute;
+    left: 6px;
+    top: 2px;
+    width: 5px;
+    height: 9px;
+    border: solid #FFFFFF;
+    border-width: 0 2.2px 2.2px 0;
+    transform: rotate(45deg);
+  }
+  .filter-checkbox.is-active-tag .filter-checkbox__label {
+    font-weight: 600;
+    color: #013F3E;
   }
 {% endstylesheet %}
 
