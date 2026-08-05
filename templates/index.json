@@ -252,7 +252,7 @@
         "heading": "GOLD JEWELLERY",
         "description": "Classic designs crafted in pure gold, made for every celebration.",
         "button_label": "EXPLORE GOLD COLLECTION",
-        "button_link": "",
+        "button_link": "shopify://collections/gold-jewellery",
         "bg_color": "#fbf6f0",
         "text_color": "#0a2a26",
         "accent_color": "#b38245"
@@ -581,7 +581,6 @@
         "reel_4": {
           "type": "reel",
           "settings": {
-            "video": "",
             "video_url": "shopify://files/videos/Diamond Bali.mp4",
             "view_count": "1M"
           }
@@ -589,7 +588,6 @@
         "reel_2": {
           "type": "reel",
           "settings": {
-            "video": "",
             "video_url": "shopify://files/videos/IGI Certified Diamond Rings.mp4",
             "view_count": "1M"
           }
@@ -597,7 +595,6 @@
         "reel_3": {
           "type": "reel",
           "settings": {
-            "video": "",
             "video_url": "shopify://files/videos/cocktail rings.mp4",
             "view_count": "3.6M"
           }
@@ -605,7 +602,6 @@
         "reel_1": {
           "type": "reel",
           "settings": {
-            "video": "",
             "video_url": "shopify://files/videos/✨ 5 Diamond Bali Designs Under 3 Grams – Lightweight Luxury for Everyday Elegance! ✨Looking for  (1).mp4",
             "view_count": "11.9K"
           }
