@@ -1,3 +1,8 @@
+{%- assign mobile_menu = section.settings.menu -%}
+{%- if mobile_menu == blank -%}
+  {%- assign mobile_menu = linklists['main-menu'] -%}
+{%- endif -%}
+
 {% comment %}
   Mobile Categories Luxury Side Drawer (Like Burger Menu)
   - 85% width side sheet with dark backdrop overlay (no full screen mode)
@@ -48,15 +53,16 @@
     <!-- Live Predictive Search Results Container -->
     <div id="MobileCategorySearchResults" class="mobile-live-search-container" style="display: none;"></div>
 
-    <!-- Top Category Tabs Bar (Sleek Cartier/Tiffany Style Luxury Text Capsules) -->
+    <!-- Top Category Tabs Bar (Dynamic from Menu) -->
     <div class="mobile-categories-drawer__tabs-bar" id="MobileCategoriesTabsBar">
-      <button type="button" class="category-tab-pill active" data-category="rings">Rings</button>
-      <button type="button" class="category-tab-pill" data-category="earrings">Earrings</button>
-      <button type="button" class="category-tab-pill" data-category="bracelets">Bracelets & Bangles</button>
-      <button type="button" class="category-tab-pill" data-category="necklaces">Necklaces</button>
-      <button type="button" class="category-tab-pill" data-category="pendants">Pendants</button>
-      <button type="button" class="category-tab-pill" data-category="solitaires">Solitaires</button>
-      <button type="button" class="category-tab-pill" data-category="diamonds">Diamonds</button>
+      {%- assign is_first = true -%}
+      {%- for link in mobile_menu.links -%}
+        {%- assign link_handle = link.title | handleize -%}
+        <button type="button" class="category-tab-pill{% if is_first %} active{% endif %}" data-category="{{ link_handle }}">
+          {{ link.title }}
+        </button>
+        {%- assign is_first = false -%}
+      {%- endfor -%}
     </div>
 
     <!-- Dynamic Category Content Area (Subcategories + Real Products Grid!) -->
@@ -224,7 +230,7 @@
   border-radius: 50% !important;
   font-size: 11px !important;
   color: #666 !important;
-  display: flex !important;
+  display: flex;
   align-items: center !important;
   justify-content: center !important;
   cursor: pointer !important;
@@ -572,7 +578,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Reusable Luxury Image Interceptor (Catches all Shopify sample drawings like product-1.png to product-6.png)
   function getLuxuryImageUrl(imgUrl, categoryKey = 'rings') {
-    if (!imgUrl || 
+    let isFallback = !imgUrl || 
         imgUrl.includes('no-image') || 
         imgUrl.includes('placeholder') || 
         imgUrl.includes('.gif') || 
@@ -583,86 +589,59 @@ document.addEventListener('DOMContentLoaded', () => {
         imgUrl.includes('product-5') || 
         imgUrl.includes('product-6') || 
         imgUrl.includes('s/images/themes') || 
-        imgUrl.includes('empty-state')) {
-      return '{{ "FallBack image.png" | asset_url }}';
+        imgUrl.includes('empty-state');
+
+    // If it's a predictive search result, prod.image might be an object { url: ... } in some API versions
+    if (imgUrl && typeof imgUrl === 'object' && imgUrl.url) {
+      imgUrl = imgUrl.url;
+      // Re-evaluate fallback with the string URL
+      isFallback = !imgUrl || 
+          imgUrl.includes('no-image') || 
+          imgUrl.includes('placeholder') || 
+          imgUrl.includes('.gif') || 
+          imgUrl.includes('product-1') || 
+          imgUrl.includes('product-2') || 
+          imgUrl.includes('product-3') || 
+          imgUrl.includes('product-4') || 
+          imgUrl.includes('product-5') || 
+          imgUrl.includes('product-6') || 
+          imgUrl.includes('s/images/themes') || 
+          imgUrl.includes('empty-state');
+    }
+
+    if (isFallback) {
+      const key = String(categoryKey).toLowerCase();
+      if (key.includes('earring') || key.includes('stud') || key.includes('jhumka')) {
+        return '{{ "earring_placeholder.png" | asset_url }}';
+      } else if (key.includes('bracelet') || key.includes('bangle') || key.includes('wrist') || key.includes('classic')) {
+        return '{{ "bangle_placeholder.png" | asset_url }}';
+      } else if (key.includes('necklace') || key.includes('choker') || key.includes('jewel')) {
+        return '{{ "necklace_placeholder.png" | asset_url }}';
+      } else if (key.includes('pendant')) {
+        return '{{ "pendant_placeholder.png" | asset_url }}';
+      } else {
+        return '{{ "ring_placeholder.png" | asset_url }}';
+      }
     }
     return imgUrl;
   }
 
-  // Category Subcategories & Links Data
+  // Category Subcategories & Links Data (Dynamic from Menu)
   const categoriesData = {
-    rings: {
-      name: 'Rings',
-      url: '{{ routes.collections_url }}/rings',
-      subcategories: [
-        { title: 'Engagement Rings', url: '{{ routes.collections_url }}/rings?filter.p.m.custom.style=Engagement' },
-        { title: 'Couple Bands', url: '{{ routes.collections_url }}/rings?filter.p.m.custom.style=Couple+Bands' },
-        { title: 'Casual & Daily Wear Rings', url: '{{ routes.collections_url }}/rings?filter.p.m.custom.style=Casual' },
-        { title: 'Eternity Bands', url: '{{ routes.collections_url }}/rings?filter.p.m.custom.style=Eternity' },
-        { title: 'Solitaire Rings', url: '{{ routes.collections_url }}/solitaires' }
-      ]
-    },
-    earrings: {
-      name: 'Earrings',
-      url: '{{ routes.collections_url }}/earrings',
-      subcategories: [
-        { title: 'Diamond Studs', url: '{{ routes.collections_url }}/earrings?filter.p.m.custom.style=Studs' },
-        { title: 'Drop & Dangle Earrings', url: '{{ routes.collections_url }}/earrings?filter.p.m.custom.style=Drops' },
-        { title: 'Hoop Earrings', url: '{{ routes.collections_url }}/earrings?filter.p.m.custom.style=Hoops' },
-        { title: 'Traditional Jhumkas', url: '{{ routes.collections_url }}/earrings?filter.p.m.custom.style=Jhumkas' },
-        { title: 'Huggie Hoops', url: '{{ routes.collections_url }}/earrings' }
-      ]
-    },
-    bracelets: {
-      name: 'Bracelets & Bangles',
-      url: '{{ routes.collections_url }}/bracelets',
-      subcategories: [
-        { title: 'Tennis Bracelets', url: '{{ routes.collections_url }}/bracelets?filter.p.m.custom.style=Tennis' },
-        { title: 'Charm Bracelets', url: '{{ routes.collections_url }}/bracelets?filter.p.m.custom.style=Charm' },
-        { title: 'Diamond Bangles', url: '{{ routes.collections_url }}/bracelets?filter.p.m.custom.style=Bangles' },
-        { title: 'Daily Wear Chain Bracelets', url: '{{ routes.collections_url }}/bracelets' }
-      ]
-    },
-    necklaces: {
-      name: 'Necklaces',
-      url: '{{ routes.collections_url }}/necklaces',
-      subcategories: [
-        { title: 'Diamond Chokers', url: '{{ routes.collections_url }}/necklaces?filter.p.m.custom.style=Choker' },
-        { title: 'Layered Chains', url: '{{ routes.collections_url }}/necklaces?filter.p.m.custom.style=Layered' },
-        { title: 'Minimalist Daily Necklaces', url: '{{ routes.collections_url }}/necklaces' },
-        { title: 'Mangalsutras', url: '{{ routes.collections_url }}/necklaces?filter.p.m.custom.style=Mangalsutra' }
-      ]
-    },
-    pendants: {
-      name: 'Pendants',
-      url: '{{ routes.collections_url }}/pendants',
-      subcategories: [
-        { title: 'Solitaire Pendants', url: '{{ routes.collections_url }}/pendants?filter.p.m.custom.style=Solitaire' },
-        { title: 'Evil Eye & Charm Pendants', url: '{{ routes.collections_url }}/pendants?filter.p.m.custom.style=Charm' },
-        { title: 'Heart & Floral Pendants', url: '{{ routes.collections_url }}/pendants' },
-        { title: 'Religious & Auspicious Pendants', url: '{{ routes.collections_url }}/pendants' }
-      ]
-    },
-    solitaires: {
-      name: 'Solitaires',
-      url: '{{ routes.collections_url }}/solitaires',
-      subcategories: [
-        { title: 'Solitaire Rings', url: '{{ routes.collections_url }}/solitaires?filter.p.m.custom.style=Rings' },
-        { title: 'Solitaire Studs', url: '{{ routes.collections_url }}/solitaires?filter.p.m.custom.style=Studs' },
-        { title: 'Solitaire Pendants', url: '{{ routes.collections_url }}/solitaires?filter.p.m.custom.style=Pendants' },
-        { title: 'Certified Solitaire Diamonds', url: '{{ routes.collections_url }}/solitaires' }
-      ]
-    },
-    diamonds: {
-      name: 'Diamonds & Fine Jewelry',
-      url: '{{ routes.collections_url }}/all',
-      subcategories: [
-        { title: 'Lab Grown Diamond Jewelry', url: '{{ routes.collections_url }}/all' },
-        { title: 'Bridal & Royal Heritage', url: '{{ routes.collections_url }}/all' },
-        { title: 'Gifts For Him & Her', url: '{{ routes.collections_url }}/all' },
-        { title: 'Latest & Best Sellers', url: '{{ routes.collections_url }}/all' }
-      ]
-    }
+    {%- for link in mobile_menu.links -%}
+      {%- assign link_handle = link.title | handleize -%}
+      "{{ link_handle }}": {
+        name: {{ link.title | json }},
+        url: {{ link.url | json }},
+        subcategories: [
+          {%- for childlink in link.links -%}
+            { title: {{ childlink.title | json }}, url: {{ childlink.url | json }} }
+            {%- unless forloop.last -%},{%- endunless -%}
+          {%- endfor -%}
+        ]
+      }
+      {%- unless forloop.last -%},{%- endunless -%}
+    {%- endfor -%}
   };
 
   // Open / Close Drawer Logic
@@ -671,7 +650,14 @@ document.addEventListener('DOMContentLoaded', () => {
     drawer.classList.add('open');
     drawer.setAttribute('aria-hidden', 'false');
     document.body.style.overflow = 'hidden';
-    renderCategoryContent('rings'); // Default to rings
+    
+    // Default to the first key in categoriesData
+    const keys = Object.keys(categoriesData);
+    if (keys.length > 0) {
+      renderCategoryContent(keys[0]);
+    } else {
+      if (bodyArea) bodyArea.innerHTML = '<div style="padding: 2rem 0; text-align: center; color: #7a6f66;">No categories configured.</div>';
+    }
   }
 
   function closeDrawer() {
@@ -706,26 +692,29 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     // 1. Build Subcategories HTML with Luxury Diamond Bullets
-    let subcatsHtml = `
-      <div>
-        <div class="category-section-title">
-          <span>Shop ${cat.name} By</span>
-          <a href="${cat.url}">View All ↗</a>
-        </div>
-        <div class="subcategories-list">
-    `;
-
-    cat.subcategories.forEach(sub => {
-      subcatsHtml += `
-        <a href="${sub.url}" class="subcategory-item">
-          <span class="subcategory-item__label"><span class="subcategory-item__diamond">◈</span> ${sub.title}</span>
-          <span class="subcategory-item__arrow">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
-          </span>
-        </a>
+    let subcatsHtml = '';
+    if (cat.subcategories && cat.subcategories.length > 0) {
+      subcatsHtml = `
+        <div>
+          <div class="category-section-title">
+            <span>Shop ${cat.name} By</span>
+            <a href="${cat.url}">View All ↗</a>
+          </div>
+          <div class="subcategories-list">
       `;
-    });
-    subcatsHtml += `</div></div>`;
+
+      cat.subcategories.forEach(sub => {
+        subcatsHtml += `
+          <a href="${sub.url}" class="subcategory-item">
+            <span class="subcategory-item__label"><span class="subcategory-item__diamond">◈</span> ${sub.title}</span>
+            <span class="subcategory-item__arrow">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+            </span>
+          </a>
+        `;
+      });
+      subcatsHtml += `</div></div>`;
+    }
 
     // 2. Build Featured Products Container (Will be populated via fetch)
     const productsContainerId = `FeaturedProducts_${categoryKey}`;
@@ -770,10 +759,6 @@ document.addEventListener('DOMContentLoaded', () => {
               </div>
               <div class="category-product-card__info">
                 <div class="category-product-card__title">${prod.title}</div>
-                <div class="category-product-card__price-wrap">
-                  <span class="category-product-card__price">${priceFormatted}</span>
-                  ${compareFormatted ? `<span class="category-product-card__compare">${compareFormatted}</span>` : ''}
-                </div>
               </div>
             </a>
           `;
@@ -836,8 +821,24 @@ document.addEventListener('DOMContentLoaded', () => {
         let html = '';
         products.forEach(product => {
           const highlightedTitle = product.title.replace(regex, '<mark class="search-highlight">$1</mark>');
-          const imgUrl = getLuxuryImageUrl(product.image, 'rings');
-          const fallbackUrl = getLuxuryImageUrl(null, 'rings');
+          
+          // Determine category key based on product title/type to show correct placeholder if fallback is triggered
+          let categoryKey = 'rings';
+          if (product.title) {
+            const titleLower = product.title.toLowerCase();
+            if (titleLower.includes('earring') || titleLower.includes('stud') || titleLower.includes('jhumka') || titleLower.includes('hoop')) {
+              categoryKey = 'earrings';
+            } else if (titleLower.includes('bracelet') || titleLower.includes('bangle')) {
+              categoryKey = 'bracelets';
+            } else if (titleLower.includes('necklace') || titleLower.includes('choker') || titleLower.includes('mangalsutra')) {
+              categoryKey = 'necklaces';
+            } else if (titleLower.includes('pendant')) {
+              categoryKey = 'pendants';
+            }
+          }
+          
+          const imgUrl = getLuxuryImageUrl(product.image, categoryKey);
+          const fallbackUrl = getLuxuryImageUrl(null, categoryKey);
           const priceFormatted = product.price ? '₹' + (parseFloat(product.price) / 100).toLocaleString('en-IN') : '';
           const compareFormatted = product.compare_at_price && parseFloat(product.compare_at_price) > parseFloat(product.price) ? '₹' + (parseFloat(product.compare_at_price) / 100).toLocaleString('en-IN') : '';
 
@@ -846,10 +847,6 @@ document.addEventListener('DOMContentLoaded', () => {
               <img src="${imgUrl}" alt="${product.title}" class="live-search-item__img" onerror="this.src='${fallbackUrl}'">
               <div class="live-search-item__info">
                 <div class="live-search-item__title">${highlightedTitle}</div>
-                <div class="category-product-card__price-wrap">
-                  <span class="live-search-item__price">${priceFormatted || 'View Price'}</span>
-                  ${compareFormatted ? `<span class="live-search-item__compare-price">${compareFormatted}</span>` : ''}
-                </div>
               </div>
             </a>
           `;

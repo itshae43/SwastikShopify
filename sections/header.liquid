@@ -307,7 +307,13 @@
         <div class="gold-price__separator"></div>
         <div class="gold-price__text-container">
           <span class="gold-price__label">GOLD RATE</span>
-          <span class="gold-price__value">₹{{ shop.metafields.custom.daily_gold_rate.value | default: '14,500' }}/g</span>
+          <span class="gold-price__value">
+            {%- if shop.metafields.custom.daily_gold_rate.value != blank -%}
+              ₹{{ shop.metafields.custom.daily_gold_rate.value }}/g
+            {%- else -%}
+              {{ section.settings.gold_price }}
+            {%- endif -%}
+          </span>
         </div>
       </div>
 
@@ -553,7 +559,13 @@
             <div class="gold-price__separator"></div>
             <div class="gold-price__text-container">
               <span class="gold-price__label">GOLD RATE</span>
-              <span class="gold-price__value">₹{{ shop.metafields.custom.daily_gold_rate.value | default: '14,422' }}/g</span>
+              <span class="gold-price__value">
+                {%- if shop.metafields.custom.daily_gold_rate.value != blank -%}
+                  ₹{{ shop.metafields.custom.daily_gold_rate.value }}/g
+                {%- else -%}
+                  {{ section.settings.gold_price }}
+                {%- endif -%}
+              </span>
             </div>
           </div>
           <a href="javascript:void(0)" class="mobile-btn mobile-btn--consultation js-open-video-call-modal">
