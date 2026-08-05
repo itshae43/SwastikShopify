@@ -93,7 +93,7 @@
 
     {%- if section.settings.button_label != blank -%}
       <div class="latest-collections__button-container">
-        <a href="{{ section.settings.button_link | default: '#' }}" 
+        <a href="{{ section.settings.button_link | default: routes.all_products_collection_url }}" 
            class="latest-collections__btn pill-button"
            style="--btn-bg: {{ section.settings.btn_bg_color }}; --btn-text: {{ section.settings.btn_text_color }}; --btn-hover-bg: {{ section.settings.btn_hover_bg_color }}; --btn-hover-text: {{ section.settings.btn_hover_text_color }};">
           {{ section.settings.button_label | escape }} &rarr;
