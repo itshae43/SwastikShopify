@@ -22,86 +22,7 @@
       {%- assign total_index = 0 -%}
       {%- for i in (1..3) -%}
         {%- for block in section.blocks -%}
-          {%- liquid
-            assign n = section.blocks.size
-            assign diff = total_index | modulo: n
-            assign half_n = n | divided_by: 2.0
-            if diff > half_n
-              assign diff = diff | minus: n
-            endif
-            
-            assign abs_diff = diff
-            if diff < 0
-              assign abs_diff = diff | times: -1
-            endif
-            
-            assign sign = 0
-            if diff > 0
-              assign sign = 1
-            elsif diff < 0
-              assign sign = -1
-            endif
-            
-            assign ry = 0
-            if abs_diff <= 1
-              assign ry = sign | times: abs_diff | times: -25
-            elsif abs_diff <= 2
-              assign excess = abs_diff | minus: 1
-              assign ry = excess | times: 15 | plus: 25 | times: -1 | times: sign
-            else
-              assign excess = abs_diff | minus: 2
-              assign ry = excess | times: 15 | plus: 40 | times: -1 | times: sign
-            endif
-            
-            assign sc = 1.0
-            if abs_diff <= 1
-              assign sc = abs_diff | times: 0.2 | minus: 1.05 | times: -1
-            elsif abs_diff <= 2
-              assign excess = abs_diff | minus: 1
-              assign sc = excess | times: 0.15 | minus: 0.85 | times: -1
-            else
-              assign excess = abs_diff | minus: 2
-              assign sc = excess | times: 0.15 | minus: 0.70 | times: -1
-            endif
-            
-            assign op = 1.0
-            if abs_diff <= 1
-              assign op = abs_diff | times: 0.2 | minus: 1.0 | times: -1
-            elsif abs_diff <= 2
-              assign excess = abs_diff | minus: 1
-              assign op = excess | times: 0.4 | minus: 0.8 | times: -1
-            else
-              assign excess = abs_diff | minus: 2
-              assign op = excess | times: 0.8 | minus: 0.4 | times: -1
-            endif
-            
-            if op < 0
-              assign op = 0
-            endif
-            
-            assign zi = abs_diff | times: 10 | minus: 100 | times: -1 | round
-            
-            assign pe = 'auto'
-            if op <= 0
-              assign pe = 'none'
-              assign zi = -1
-            endif
-            
-            if abs_diff <= 1
-              assign tx_formula = 'calc(' | append: sign | append: ' * ' | append: abs_diff | append: ' * var(--base-offset))'
-            elsif abs_diff <= 2
-              assign excess = abs_diff | minus: 1
-              assign tx_formula = 'calc(' | append: sign | append: ' * (var(--base-offset) + ' | append: excess | append: ' * var(--extra-offset)))'
-            else
-              assign excess = abs_diff | minus: 2
-              assign tx_formula = 'calc(' | append: sign | append: ' * (var(--base-offset) + var(--extra-offset) + ' | append: excess | append: ' * var(--extra-offset)))'
-            endif
-          -%}
-          <div class="for-every-you__slide" 
-               {% if i == 2 %}{{ block.shopify_attributes }}{% endif %} 
-               data-index="{{ total_index }}" 
-               data-real-index="{{ forloop.index0 }}"
-               style="--tx: {{ tx_formula }}; --ry: {{ ry }}deg; --sc: {{ sc }}; --zi: {{ zi }}; --op: {{ op }}; --pe: {{ pe }};">
+          <div class="for-every-you__slide" {% if i == 2 %}{{ block.shopify_attributes }}{% endif %} data-index="{{ total_index }}" data-real-index="{{ forloop.index0 }}">
             <div class="for-every-you__image-wrapper">
               {%- if block.settings.image != blank -%}
                 <picture class="for-every-you__picture">
@@ -194,8 +115,6 @@
   overflow: hidden;
   user-select: none;
   touch-action: pan-y;
-  --base-offset: 260px;
-  --extra-offset: 200px;
 }
 
 .for-every-you__slide {
@@ -205,13 +124,7 @@
   width: 400px;
   height: 480px;
   will-change: transform, opacity, z-index;
-  cursor: pointer;
-  
-  /* Initial layout fallback set by Liquid */
-  transform: translateX(var(--tx, 0px)) scale(var(--sc, 1)) rotateY(var(--ry, 0deg));
-  z-index: var(--zi, 1);
-  opacity: var(--op, 1);
-  pointer-events: var(--pe, auto);
+  pointer-events: none;
 }
 
 .for-every-you__image-wrapper {
@@ -349,8 +262,6 @@
   }
   .for-every-you__track {
     height: 350px;
-    --base-offset: 180px;
-    --extra-offset: 130px;
   }
   .for-every-you__nav {
     width: 40px;
@@ -405,29 +316,6 @@ class ForEveryYouCarousel {
         this.targetProgress += 1;
       });
     }
-
-    // Click events for slides
-    this.slides.forEach(slide => {
-      slide.addEventListener('click', (e) => {
-        if (!slide.classList.contains('is-active')) {
-          e.preventDefault();
-          e.stopPropagation();
-          
-          const targetIndex = parseInt(slide.getAttribute('data-index'), 10);
-          if (!isNaN(targetIndex)) {
-            const N = this.N;
-            let currentMod = this.targetProgress % N;
-            if (currentMod < 0) currentMod += N;
-            
-            let diff = targetIndex - currentMod;
-            if (diff > N / 2) diff -= N;
-            if (diff < -N / 2) diff += N;
-            
-            this.targetProgress += diff;
-          }
-        }
-      }, true);
-    });
 
     // Drag events
     this.track.addEventListener('mousedown', this.onDragStart.bind(this));
@@ -558,7 +446,7 @@ class ForEveryYouCarousel {
         slide.style.pointerEvents = 'auto';
       } else {
         slide.classList.remove('is-active');
-        slide.style.pointerEvents = 'auto';
+        slide.style.pointerEvents = 'none';
       }
     });
   }
