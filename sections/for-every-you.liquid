@@ -124,7 +124,7 @@
   width: 400px;
   height: 480px;
   will-change: transform, opacity, z-index;
-  pointer-events: none;
+  pointer-events: auto;
 }
 
 .for-every-you__image-wrapper {
@@ -443,11 +443,10 @@ class ForEveryYouCarousel {
       
       if (absDiff < 0.5) {
         slide.classList.add('is-active');
-        slide.style.pointerEvents = 'auto';
       } else {
         slide.classList.remove('is-active');
-        slide.style.pointerEvents = 'none';
       }
+      slide.style.pointerEvents = 'auto';
     });
   }
 }
