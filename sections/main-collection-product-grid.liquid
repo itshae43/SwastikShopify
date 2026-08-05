@@ -77,6 +77,43 @@
               </div>
             {%- endif -%}
 
+            <!-- Custom Tag Filter for Three Worlds of Beauty -->
+            {%- if collection.handle == 'all' or collection.handle == 'three-worlds-of-beauty' or collection.all_tags contains 'Lab Grown Diamond' or collection.all_tags contains 'Natural Diamond' or collection.all_tags contains 'Gold Jewellery' or collection.all_tags contains 'lab-grown-diamond' or collection.all_tags contains 'natural-diamond' or collection.all_tags contains 'gold-jewellery' -%}
+              <div class="filter-group">
+                <details class="filter-group__details" open>
+                  <summary class="filter-group__summary">
+                    <span class="filter-group__name">Shop by Category</span>
+                    <svg class="icon-caret" width="12" height="7" viewBox="0 0 12 7" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M1 1L6 6L11 1" stroke="#D4AF37" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                  </summary>
+                  <div class="filter-group__display">
+                    <ul class="filter-group__list">
+                      {%- assign world_tags = "Lab Grown Diamond, Natural Diamond, Gold Jewellery" | split: ", " -%}
+                      {%- assign world_labels = "Lab Grown, Natural Diamond, Gold Jewellery" | split: ", " -%}
+                      {%- for world_tag in world_tags -%}
+                        {%- assign tag_handle = world_tag | handleize -%}
+                        {%- assign world_label = world_labels[forloop.index0] -%}
+                        <li class="filter-group__list-item">
+                          {%- if current_tags contains world_tag or current_tags contains tag_handle -%}
+                            <a href="{{ '' | link_to_remove_tag: world_tag | split: 'href="' | last | split: '"' | first }}" class="filter-checkbox is-active-tag">
+                              <span class="filter-checkbox__box"></span>
+                              <span class="filter-checkbox__label">{{ world_label }}</span>
+                            </a>
+                          {%- else -%}
+                            <a href="{{ world_tag | link_to_add_tag: world_tag | split: 'href="' | last | split: '"' | first }}" class="filter-checkbox">
+                              <span class="filter-checkbox__box"></span>
+                              <span class="filter-checkbox__label">{{ world_label }}</span>
+                            </a>
+                          {%- endif -%}
+                        </li>
+                      {%- endfor -%}
+                    </ul>
+                  </div>
+                </details>
+              </div>
+            {%- endif -%}
+
             {%- for filter in collection.filters -%}
               <div class="filter-group">
                 <details class="filter-group__details" open>
