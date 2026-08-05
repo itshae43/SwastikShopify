@@ -136,7 +136,11 @@
         "padding_top": 64,
         "padding_bottom": 40,
         "button_label": "Browse Collections",
+<<<<<<< HEAD
         "button_link": "/collections/three-worlds-of-beauty",
+=======
+        "button_link": "shopify://collections/three-worlds-of-beauty",
+>>>>>>> 41b712b445d0ae4d6807dcce618f70284e81d1c7
         "btn_bg_color": "#013f3e",
         "btn_text_color": "#fdfcfa",
         "btn_hover_bg_color": "#025654",
@@ -618,7 +622,9 @@
         "description": "",
         "button_label": "FOLLOW US ON INSTAGRAM",
         "button_link": "https://www.instagram.com/swastikjewels_bynitingupta/",
-        "bg_color": "#fdfaf7"
+        "bg_color": "#fdfaf7",
+        "padding_top": 40,
+        "padding_bottom": 60
       }
     },
     "testimonials_slider": {
@@ -686,7 +692,9 @@
         "text_color": "#013f3e",
         "accent_color": "#d4af37",
         "autoplay": true,
-        "autoplay_speed": 6
+        "autoplay_speed": 6,
+        "padding_top": 40,
+        "padding_bottom": 40
       }
     }
   },
