@@ -2,9 +2,50 @@
   assign bg_color = section.settings.bg_color | default: '#ffffff'
   assign padding_top = section.settings.padding_top | default: 60
   assign padding_bottom = section.settings.padding_bottom | default: 60
+
+  assign active_index = 0
+  for block in section.blocks
+    assign link = block.settings.link | default: '#'
+    if link contains 'natural-diamond'
+      assign active_index = forloop.index0
+      break
+    endif
+  endfor
+
+  assign last_index = section.blocks.size | minus: 1
+  assign left_idx = active_index | minus: 1
+  if active_index == 0
+    assign left_idx = last_index
+  endif
+  assign right_idx = active_index | plus: 1
+  if active_index == last_index
+    assign right_idx = 0
+  endif
 -%}
 
-<latest-collections-slider class="latest-collections" style="--bg-color: {{ bg_color }}; --padding-top: {{ padding_top }}px; --padding-bottom: {{ padding_bottom }}px;">
+<latest-collections-slider class="latest-collections" data-active-index="{{ active_index }}" style="--bg-color: {{ bg_color }}; --padding-top: {{ padding_top }}px; --padding-bottom: {{ padding_bottom }}px;">
+  <style>
+    @media screen and (max-width: 768px) {
+      .latest-collections__col[data-index="{{ active_index }}"] {
+        transform: translate3d(-50%, -50%, 0) scale(1) !important;
+        opacity: 1 !important;
+        z-index: 3 !important;
+        pointer-events: auto !important;
+      }
+      .latest-collections__col[data-index="{{ left_idx }}"] {
+        transform: translate3d(calc(-50% - 96%), calc(-50% + 12px), 0) scale(0.85) !important;
+        opacity: 0.8 !important;
+        z-index: 2 !important;
+        pointer-events: auto !important;
+      }
+      .latest-collections__col[data-index="{{ right_idx }}"] {
+        transform: translate3d(calc(-50% + 96%), calc(-50% + 12px), 0) scale(0.85) !important;
+        opacity: 0.8 !important;
+        z-index: 2 !important;
+        pointer-events: auto !important;
+      }
+    }
+  </style>
   <div class="latest-collections__container">
     <div class="latest-collections__header">
       {%- if section.settings.eyebrow != blank -%}
@@ -38,7 +79,7 @@
           assign fallback_image_name = 'FallBack image.png'
         -%}
         
-        <div class="latest-collections__col {% if forloop.first %}is-active{% endif %}" data-index="{{ forloop.index0 }}">
+        <div class="latest-collections__col {% if forloop.index0 == active_index %}is-active{% endif %}" data-index="{{ forloop.index0 }}">
           <div class="latest-collections__card" {{ block.shopify_attributes }}>
             <a href="{{ link }}" class="latest-collections__card-link" aria-label="{{ title | escape }}">
               <div class="latest-collections__image-wrap">
@@ -75,13 +116,13 @@
       
       <div class="latest-collections__pagination">
         <div class="latest-collections__pagination-text">
-          <span class="latest-collections__current-page">01</span>
+          <span class="latest-collections__current-page">0{{ active_index | plus: 1 }}</span>
           <span class="latest-collections__divider">/</span>
           <span class="latest-collections__total-pages">{% if section.blocks.size < 10 %}0{% endif %}{{ section.blocks.size }}</span>
         </div>
         <div class="latest-collections__pagination-bars">
           {%- for block in section.blocks -%}
-            <button class="latest-collections__bar {% if forloop.first %}is-active{% endif %}" data-index="{{ forloop.index0 }}" aria-label="Go to slide {{ forloop.index }}"></button>
+            <button class="latest-collections__bar {% if forloop.index0 == active_index %}is-active{% endif %}" data-index="{{ forloop.index0 }}" aria-label="Go to slide {{ forloop.index }}"></button>
           {%- endfor -%}
         </div>
       </div>
@@ -625,7 +666,8 @@
       this.slides = Array.from(this.slider.children);
       if (this.slides.length === 0) return;
 
-      this.currentIndex = 0;
+      const activeIdxAttr = this.getAttribute('data-active-index');
+      this.currentIndex = activeIdxAttr ? parseInt(activeIdxAttr) : 0;
       this.totalSlides = this.slides.length;
 
       this.init();
