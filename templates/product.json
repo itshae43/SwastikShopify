@@ -44,10 +44,9 @@
         "buy_buttons"
       ],
       "settings": {
-        "guide_gold_color": "",
-        "guide_gold_purity": "",
-        "guide_diamond_quality": "",
-        "guide_ring_size": ""
+        "guide_gold_color": "shopify://shop_images/ChatGPT_Image_Aug_5_2026_01_26_23_PM.png",
+        "guide_gold_purity": "shopify://shop_images/ChatGPT_Image_Aug_5_2026_01_29_13_PM.png",
+        "guide_diamond_quality": "shopify://shop_images/ChatGPT_Image_Aug_5_2026_12_44_08_PM_1_1.png"
       }
     },
     "product_reviews": {
