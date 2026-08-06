@@ -709,94 +709,55 @@
   </div>
 
   <!-- You May Also Like Product Recommendations (Shopify Native AI & Luxury Fallback without Bounding Box) -->
+  {%- assign has_products = false -%}
+  {%- if recommendations.performed and recommendations.products_count > 0 -%}
+    {%- assign has_products = true -%}
+    {%- assign display_products = recommendations.products -%}
+  {%- else -%}
+    {%- assign fallback_col = collections[section.settings.recommendations_fallback_collection] | default: collections['frontpage'] | default: collections.all -%}
+    {%- if fallback_col.products.size > 0 -%}
+      {%- assign has_products = true -%}
+      {%- assign display_products = fallback_col.products -%}
+    {%- endif -%}
+  {%- endif -%}
+
   <product-recommendations class="pp-recommendations-section" data-url="{{ routes.product_recommendations_url }}?section_id={{ section.id }}&product_id={{ product.id }}&limit=4">
-    <div class="pp-section-header-wrap">
-      <h2 class="pp-section-title">People Also Bought</h2>
-    </div>
+    {%- if has_products -%}
+      <div class="pp-section-header-wrap">
+        <h2 class="pp-section-title">{{ section.settings.recommendations_heading | default: "People Also Bought" }}</h2>
+      </div>
 
-    <div class="pp-related-carousel-container">
-      <button type="button" class="pp-rel-arrow pp-rel-prev" aria-label="Previous Products">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg>
-      </button>
+      <div class="pp-related-carousel-container">
+        <button type="button" class="pp-rel-arrow pp-rel-prev" aria-label="Previous Products">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg>
+        </button>
 
-      <div class="pp-related-grid" id="pp-related-grid">
-        {% assign rel_count = 0 %}
-        {% if recommendations.performed and recommendations.products_count > 0 %}
-          {% for rel_product in recommendations.products %}
-            {% if rel_count < 4 %}
-              {% assign rel_count = rel_count | plus: 1 %}
-                <a href="{{ rel_product.url }}" class="pp-related-item-card" style="text-decoration: none;">
-                  <div class="pp-related-img-wrap">
-                  {% if rel_product.featured_image %}
-                    <img src="{{ rel_product.featured_image | image_url: width: 400 }}" alt="{{ rel_product.title | escape }}" width="400" height="400" loading="lazy">
-                  {% else %}
-                    <img src="{{ 'fallback-image.png' | asset_url }}" alt="Jewelry" width="400" height="400" loading="lazy">
-                  {% endif %}
-                </div>
-                <div class="pp-related-info">
-                  <h3 class="pp-related-item-title">{{ rel_product.title }}</h3>
-                  <div class="pp-related-pills">
-                    <span class="pp-rel-pill">BIS 916</span>
-                    <span class="pp-rel-pill">Certified</span>
-                    {%- assign rel_variant = rel_product.selected_or_first_available_variant -%}
-                    {%- if rel_variant.available -%}
-                      {%- if rel_variant.inventory_management and rel_variant.inventory_quantity <= 0 and rel_variant.inventory_policy == 'continue' -%}
-                        <span class="pp-rel-pill pp-rel-pill--made-to-order">Made to Order</span>
-                      {%- else -%}
-                        <span class="pp-rel-pill pp-rel-pill--in-stock">In Stock</span>
-                      {%- endif -%}
-                    {%- else -%}
-                      <span class="pp-rel-pill pp-rel-pill--sold-out">Sold Out</span>
-                    {%- endif -%}
-                  </div>
-                  {% assign rev_count = rel_product.id | modulo: 80 | plus: 48 %}
-                  <div class="pp-related-reviews">
-                    <span class="pp-rel-stars">★★★★★</span>
-                    <span class="pp-rel-rev-count">({{ rev_count }})</span>
-                  </div>
-                  <div class="pp-related-price-row">
-                    <span class="pp-rel-current">{{ rel_product.price | money | replace: '$', '₹' | replace: 'USD', '₹' }}</span>
-                    {% if rel_product.compare_at_price > rel_product.price %}
-                      <s class="pp-rel-compare">{{ rel_product.compare_at_price | money | replace: '$', '₹' | replace: 'USD', '₹' }}</s>
-                    {% else %}
-                        {% assign approx_comp = rel_product.price | times: 1.6 | divided_by: 100 | round | times: 100 %}
-                      <s class="pp-rel-compare">{{ approx_comp | money | replace: '$', '₹' | replace: 'USD', '₹' }}</s>
-                    {% endif %}
-                  </div>
-                  <div class="pp-rel-view-btn">
-                    <span>View Details</span>
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="pp-rel-bag-icon"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
-                  </div>
-                </div>
-              </a>
-            {% endif %}
-          {% endfor %}
-        {% else %}
-          {% assign related_collection = collections['frontpage'] | default: collections.all %}
-          {% for rel_product in related_collection.products %}
-            {% unless rel_product.id == product.id %}
-              {% if rel_count < 4 %}
-                {% assign rel_count = rel_count | plus: 1 %}
-                {% assign badge_disc = 25 %}
-                {% if rel_product.compare_at_price > rel_product.price %}
-                  {% assign badge_disc = rel_product.compare_at_price | minus: rel_product.price | times: 100 | divided_by: rel_product.compare_at_price %}
-                {% elsif rel_count == 1 %}
-                  {% assign badge_disc = 60 %}
-                {% elsif rel_count == 2 %}
-                  {% assign badge_disc = 61 %}
-                {% elsif rel_count == 3 %}
-                  {% assign badge_disc = 55 %}
-                {% else %}
-                  {% assign badge_disc = 50 %}
-                {% endif %}
+        <div class="pp-related-grid" id="pp-related-grid">
+          {%- assign rel_count = 0 -%}
+          {%- for rel_product in display_products -%}
+            {%- unless rel_product.id == product.id -%}
+              {%- if rel_count < 4 -%}
+                {%- assign rel_count = rel_count | plus: 1 -%}
+                {%- assign badge_disc = 25 -%}
+                {%- if rel_product.compare_at_price > rel_product.price -%}
+                  {%- assign badge_disc = rel_product.compare_at_price | minus: rel_product.price | times: 100 | divided_by: rel_product.compare_at_price -%}
+                {%- elsif rel_count == 1 -%}
+                  {%- assign badge_disc = 60 -%}
+                {%- elsif rel_count == 2 -%}
+                  {%- assign badge_disc = 61 -%}
+                {%- elsif rel_count == 3 -%}
+                  {%- assign badge_disc = 55 -%}
+                {%- else -%}
+                  {%- assign badge_disc = 50 -%}
+                {%- endif -%}
                 <a href="{{ rel_product.url }}" class="pp-related-item-card" style="text-decoration: none;">
                   <div class="pp-related-img-wrap">
                     <span class="pp-rel-badge">-{{ badge_disc }}%</span>
-                    {% if rel_product.featured_image %}
+                    {%- if rel_product.featured_image -%}
                       <img src="{{ rel_product.featured_image | image_url: width: 400 }}" alt="{{ rel_product.title | escape }}" width="400" height="400" loading="lazy">
-                    {% else %}
+                    {%- else -%}
                       <img src="{{ 'fallback-image.png' | asset_url }}" alt="Jewelry" width="400" height="400" loading="lazy">
-                    {% endif %}
+                    {%- endif -%}
                   </div>
                   <div class="pp-related-info">
                     <h3 class="pp-related-item-title">{{ rel_product.title }}</h3>
@@ -814,19 +775,19 @@
                         <span class="pp-rel-pill pp-rel-pill--sold-out">Sold Out</span>
                       {%- endif -%}
                     </div>
-                    {% assign rev_count = rel_product.id | modulo: 80 | plus: 48 %}
+                    {%- assign rev_count = rel_product.id | modulo: 80 | plus: 48 -%}
                     <div class="pp-related-reviews">
                       <span class="pp-rel-stars">★★★★★</span>
                       <span class="pp-rel-rev-count">({{ rev_count }})</span>
                     </div>
                     <div class="pp-related-price-row">
                       <span class="pp-rel-current">{{ rel_product.price | money | replace: '$', '₹' | replace: 'USD', '₹' }}</span>
-                      {% if rel_product.compare_at_price > rel_product.price %}
+                      {%- if rel_product.compare_at_price > rel_product.price -%}
                         <s class="pp-rel-compare">{{ rel_product.compare_at_price | money | replace: '$', '₹' | replace: 'USD', '₹' }}</s>
-                      {% else %}
-                          {% assign approx_comp = rel_product.price | times: 1.6 | divided_by: 100 | round | times: 100 %}
+                      {%- else -%}
+                        {%- assign approx_comp = rel_product.price | times: 1.6 | divided_by: 100 | round | times: 100 -%}
                         <s class="pp-rel-compare">{{ approx_comp | money | replace: '$', '₹' | replace: 'USD', '₹' }}</s>
-                      {% endif %}
+                      {%- endif -%}
                     </div>
                     <div class="pp-rel-view-btn">
                       <span>View Details</span>
@@ -834,87 +795,24 @@
                     </div>
                   </div>
                 </a>
-              {% endif %}
-            {% endunless %}
-          {% endfor %}
-        {% endif %}
+              {%- endif -%}
+            {%- endunless -%}
+          {%- endfor -%}
+        </div>
 
-        {% if rel_count < 4 %}
-          {% assign missing_count = 4 | minus: rel_count %}
-          {% for i in (1..missing_count) %}
-            {% assign demo_index = i | plus: rel_count %}
-            {% if demo_index == 1 %}
-              {% assign fallback_title = "Swastik Diamond Stud Earrings" %}
-              {% assign fallback_price = "₹2,499.00" %}
-              {% assign fallback_comp = "₹3,998.00" %}
-              {% assign fallback_disc = "60" %}
-              {% assign fallback_img = "fallback-image.png" %}
-            {% elsif demo_index == 2 %}
-              {% assign fallback_title = "Gold & Diamond Earrings" %}
-              {% assign fallback_price = "₹89,900.00" %}
-              {% assign fallback_comp = "₹2,30,500.00" %}
-              {% assign fallback_disc = "61" %}
-              {% assign fallback_img = "fallback-image.png" %}
-            {% elsif demo_index == 3 %}
-              {% assign fallback_title = "Classic Gold Ring" %}
-              {% assign fallback_price = "₹59,900.00" %}
-              {% assign fallback_comp = "₹1,33,000.00" %}
-              {% assign fallback_disc = "55" %}
-              {% assign fallback_img = "fallback-image.png" %}
-            {% else %}
-              {% assign fallback_title = "Diamond Bracelet" %}
-              {% assign fallback_price = "₹1,25,900.00" %}
-              {% assign fallback_comp = "₹2,51,800.00" %}
-              {% assign fallback_disc = "50" %}
-              {% assign fallback_img = "fallback-image.png" %}
-            {% endif %}
-            <div class="pp-related-item-card">
-              <div class="pp-related-img-wrap">
-                <span class="pp-rel-badge">-{{ fallback_disc }}%</span>
-                <img src="{{ fallback_img | asset_url }}" alt="{{ fallback_title }}" width="400" height="400" loading="lazy">
-              </div>
-              <div class="pp-related-info">
-                <h3 class="pp-related-item-title">{{ fallback_title }}</h3>
-                <div class="pp-related-pills">
-                  <span class="pp-rel-pill">BIS 916</span>
-                  <span class="pp-rel-pill">Certified</span>
-                  {%- if demo_index == 2 -%}
-                    <span class="pp-rel-pill pp-rel-pill--made-to-order">Made to Order</span>
-                  {%- else -%}
-                    <span class="pp-rel-pill pp-rel-pill--in-stock">In Stock</span>
-                  {%- endif -%}
-                </div>
-                {% assign demo_rev = demo_index | times: 32 | plus: 64 %}
-                <div class="pp-related-reviews">
-                  <span class="pp-rel-stars">★★★★★</span>
-                  <span class="pp-rel-rev-count">({{ demo_rev }})</span>
-                </div>
-                <div class="pp-related-price-row">
-                  <span class="pp-rel-current">{{ fallback_price }}</span>
-                  <s class="pp-rel-compare">{{ fallback_comp }}</s>
-                </div>
-                <div class="pp-rel-view-btn">
-                  <span>View Details</span>
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="pp-rel-bag-icon"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
-                </div>
-              </div>
-            </div>
-          {% endfor %}
-        {% endif %}
+        <button type="button" class="pp-rel-arrow pp-rel-next" aria-label="Next Products">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg>
+        </button>
       </div>
 
-      <button type="button" class="pp-rel-arrow pp-rel-next" aria-label="Next Products">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg>
-      </button>
-    </div>
-
-    <div class="pp-rel-dots" id="pp-rel-dots">
-      <span class="pp-rel-dot is-active" data-index="0"></span>
-      <span class="pp-rel-dot" data-index="1"></span>
-      <span class="pp-rel-dot" data-index="2"></span>
-      <span class="pp-rel-dot" data-index="3"></span>
-      <span class="pp-rel-dot" data-index="4"></span>
-    </div>
+      <div class="pp-rel-dots" id="pp-rel-dots">
+        {%- if rel_count > 1 -%}
+          {%- for i in (1..rel_count) -%}
+            <span class="pp-rel-dot{% if forloop.first %} is-active{% endif %}" data-index="{{ forloop.index0 }}"></span>
+          {%- endfor -%}
+        {%- endif -%}
+      </div>
+    {%- endif -%}
   </product-recommendations>
 </div>
 
@@ -2749,28 +2647,8 @@
       }
     }, { passive: true });
   }
+  // Recommendations Carousel Dots and Navigation are now handled dynamically by ProductRecommendations custom element class in sections/product-recommendations.liquid
 
-  // Recommendations Carousel Dots Logic
-  const relGrid = document.getElementById('pp-related-grid');
-  const relDots = document.querySelectorAll('.pp-rel-dot');
-  if (relGrid && relDots.length) {
-    relGrid.addEventListener('scroll', function() {
-      const scrollLeft = relGrid.scrollLeft;
-      const cardWidth = relGrid.querySelector('.pp-related-item-card') ? relGrid.querySelector('.pp-related-item-card').offsetWidth + 10 : 200;
-      const activeIdx = Math.min(Math.round(scrollLeft / (cardWidth * (window.innerWidth < 768 ? 2 : 4))), relDots.length - 1);
-      relDots.forEach((d, i) => {
-        if (i === activeIdx) d.classList.add('is-active');
-        else d.classList.remove('is-active');
-      });
-    }, { passive: true });
-
-    relDots.forEach((dot, idx) => {
-      dot.addEventListener('click', function() {
-        const cardWidth = relGrid.querySelector('.pp-related-item-card') ? relGrid.querySelector('.pp-related-item-card').offsetWidth + 10 : 200;
-        relGrid.scrollTo({ left: idx * cardWidth * (window.innerWidth < 768 ? 2 : 4), behavior: 'smooth' });
-      });
-    });
-  }
 
   // Guide Modals Logic
   const guideBtns = document.querySelectorAll('.pp-guide-btn');
@@ -2910,6 +2788,22 @@
       "id": "guide_ring_size",
       "label": "Ring Size Guide Image",
       "info": "Select the image containing the guide content for Ring Size."
+    },
+    {
+      "type": "header",
+      "content": "Product Recommendations"
+    },
+    {
+      "type": "text",
+      "id": "recommendations_heading",
+      "label": "Recommendations Heading",
+      "default": "People Also Bought"
+    },
+    {
+      "type": "collection",
+      "id": "recommendations_fallback_collection",
+      "label": "Recommendations Fallback Collection",
+      "info": "Choose a collection to show if Shopify's AI recommendations are empty."
     }
   ],
   "blocks": [

@@ -504,15 +504,25 @@
         .then(text => {
           const html = document.createElement('div');
           html.innerHTML = text;
-          const recommendations = html.querySelector('.pr-recommendations-section');
+          const recommendations = html.querySelector('.pr-recommendations-section') || html.querySelector('.pp-recommendations-section');
 
-          if (recommendations && recommendations.querySelector('.pr-rec-card')) {
+          if (recommendations && (recommendations.querySelector('.pr-rec-card') || recommendations.querySelector('.pp-related-item-card'))) {
             this.innerHTML = recommendations.innerHTML;
           }
-          this.setupCarousel();
+          
+          if (this.classList.contains('pp-recommendations-section')) {
+            this.setupProductPageCarousel();
+          } else {
+            this.setupCarousel();
+          }
         })
         .catch(e => {
           console.error(e);
+          if (this.classList.contains('pp-recommendations-section')) {
+            this.setupProductPageCarousel();
+          } else {
+            this.setupCarousel();
+          }
         });
     }
 
@@ -561,6 +571,57 @@
               dot.classList.add('active');
             } else {
               dot.classList.remove('active');
+            }
+          });
+        }, { passive: true });
+      }
+    }
+
+    setupProductPageCarousel() {
+      const carousel = this.querySelector('#pp-related-grid');
+      const prevBtn = this.querySelector('.pp-rel-prev');
+      const nextBtn = this.querySelector('.pp-rel-next');
+      const dots = this.querySelectorAll('.pp-rel-dot');
+
+      if (!carousel) return;
+
+      const getCardWidth = () => {
+        const card = carousel.querySelector('.pp-related-item-card');
+        return card ? card.offsetWidth + 10 : 220;
+      };
+
+      if (prevBtn && nextBtn) {
+        nextBtn.addEventListener('click', () => {
+          carousel.scrollBy({ left: getCardWidth() * 2, behavior: 'smooth' });
+        });
+        prevBtn.addEventListener('click', () => {
+          carousel.scrollBy({ left: -getCardWidth() * 2, behavior: 'smooth' });
+        });
+      }
+
+      if (dots.length > 0) {
+        dots.forEach((dot, index) => {
+          dot.addEventListener('click', () => {
+            carousel.scrollTo({
+              left: index * getCardWidth() * (window.innerWidth < 768 ? 2 : 4),
+              behavior: 'smooth'
+            });
+          });
+        });
+
+        carousel.addEventListener('scroll', () => {
+          const scrollPos = carousel.scrollLeft;
+          const cardWidth = getCardWidth();
+          const activeIndex = Math.min(
+            Math.round(scrollPos / (cardWidth * (window.innerWidth < 768 ? 2 : 4))),
+            dots.length - 1
+          );
+
+          dots.forEach((dot, idx) => {
+            if (idx === activeIndex) {
+              dot.classList.add('is-active');
+            } else {
+              dot.classList.remove('is-active');
             }
           });
         }, { passive: true });
