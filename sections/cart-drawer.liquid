@@ -36,15 +36,6 @@
               <div class="cart-item__price">{{ item.final_line_price | money }}</div>
               
               <div class="cart-item__bottom">
-                <div class="cart-item__qty">
-                  <button type="button" onclick="updateCartItem('{{ item.key }}', {{ item.quantity | minus: 1 }})">
-                    <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 12h14"/></svg>
-                  </button>
-                  <input type="number" value="{{ item.quantity }}" readonly>
-                  <button type="button" onclick="updateCartItem('{{ item.key }}', {{ item.quantity | plus: 1 }})">
-                    <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M12 5v14M5 12h14"/></svg>
-                  </button>
-                </div>
                 <button type="button" class="cart-item__remove" onclick="updateCartItem('{{ item.key }}', 0)">Remove</button>
               </div>
             </div>
@@ -291,6 +282,7 @@
     font-family: 'Montserrat', sans-serif;
     font-weight: 500;
     transition: color 0.2s ease;
+    margin-left: auto;
   }
   .cart-item__remove:hover {
     color: #D32F2F;
@@ -441,15 +433,6 @@
             <div class="cart-item__price">${drawerFormatMoney(itemPrice)}</div>
             
             <div class="cart-item__bottom">
-              <div class="cart-item__qty">
-                <button type="button" onclick="updateCartItem('${item.key}', ${item.quantity - 1})">
-                  <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 12h14"/></svg>
-                </button>
-                <input type="number" value="${item.quantity}" readonly>
-                <button type="button" onclick="updateCartItem('${item.key}', ${item.quantity + 1})">
-                  <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M12 5v14M5 12h14"/></svg>
-                </button>
-              </div>
               <button type="button" class="cart-item__remove" onclick="updateCartItem('${item.key}', 0)">Remove</button>
             </div>
           </div>
