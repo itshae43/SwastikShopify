@@ -112,7 +112,7 @@
             "image": "shopify://shop_images/sj_collection_desktop_396_x_460_px_31.png",
             "title": "",
             "subtitle": "",
-            "link": "/collections/three-worlds-of-beauty/gold-jewellery",
+            "link": "shopify://collections/gold-jewellery",
             "text_position": "middle-right",
             "title_style": "gold",
             "custom_title_color": "#ffffff",
