@@ -34,10 +34,12 @@
         
         <!-- Thumbnails Horizontal Carousel Below Main Image -->
         {% if product.images.size > 1 %}
-          <div class="pp-thumbnails-section">
-            <button class="pp-thumb-nav-btn pp-thumb-nav-prev" type="button" aria-label="Previous Thumbnails">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg>
-            </button>
+          <div class="pp-thumbnails-section{% if product.images.size < 5 %} pp-thumbnails-lenient{% endif %}">
+            {% if product.images.size >= 5 %}
+              <button class="pp-thumb-nav-btn pp-thumb-nav-prev" type="button" aria-label="Previous Thumbnails">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg>
+              </button>
+            {% endif %}
 
             <div class="pp-thumbnails-wrapper">
               <div class="pp-thumbnails">
@@ -51,9 +53,11 @@
               </div>
             </div>
 
-            <button class="pp-thumb-nav-btn pp-thumb-nav-next" type="button" aria-label="Next Thumbnails">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg>
-            </button>
+            {% if product.images.size >= 5 %}
+              <button class="pp-thumb-nav-btn pp-thumb-nav-next" type="button" aria-label="Next Thumbnails">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg>
+              </button>
+            {% endif %}
           </div>
         {% endif %}
       </div>
@@ -1009,6 +1013,8 @@
 
   /* Thumbnails Carousel */
   .pp-thumbnails-section { display: flex; align-items: center; gap: 12px; margin-top: 16px; width: 100%; max-width: 540px; position: relative; }
+  .pp-thumbnails-lenient { justify-content: center; }
+  .pp-thumbnails-lenient .pp-thumbnails-wrapper { display: flex; justify-content: center; flex: 0 1 auto; }
   .pp-thumb-nav-btn {
     width: 36px; height: 36px; border-radius: 50%; background: #ffffff; border: 1px solid var(--pp-border);
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05); display: flex; align-items: center; justify-content: center; cursor: pointer; flex-shrink: 0; color: #222222; transition: all 0.2s ease;
