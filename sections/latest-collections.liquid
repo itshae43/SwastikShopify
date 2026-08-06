@@ -26,19 +26,19 @@
 <latest-collections-slider class="latest-collections" data-active-index="{{ active_index }}" style="--bg-color: {{ bg_color }}; --padding-top: {{ padding_top }}px; --padding-bottom: {{ padding_bottom }}px;">
   <style>
     @media screen and (max-width: 768px) {
-      .latest-collections__col[data-index="{{ active_index }}"] {
+      latest-collections-slider:not([js-initialized]) .latest-collections__col[data-index="{{ active_index }}"] {
         transform: translate3d(-50%, -50%, 0) scale(1) !important;
         opacity: 1 !important;
         z-index: 3 !important;
         pointer-events: auto !important;
       }
-      .latest-collections__col[data-index="{{ left_idx }}"] {
+      latest-collections-slider:not([js-initialized]) .latest-collections__col[data-index="{{ left_idx }}"] {
         transform: translate3d(calc(-50% - 96%), calc(-50% + 12px), 0) scale(0.85) !important;
         opacity: 0.8 !important;
         z-index: 2 !important;
         pointer-events: auto !important;
       }
-      .latest-collections__col[data-index="{{ right_idx }}"] {
+      latest-collections-slider:not([js-initialized]) .latest-collections__col[data-index="{{ right_idx }}"] {
         transform: translate3d(calc(-50% + 96%), calc(-50% + 12px), 0) scale(0.85) !important;
         opacity: 0.8 !important;
         z-index: 2 !important;
@@ -748,6 +748,7 @@
         this.update();
       });
 
+      this.setAttribute('js-initialized', 'true');
       this.update();
     }
 
