@@ -14,6 +14,10 @@
   <!-- Mobile Filter Overlay Backdrop -->
   <div class="collection-filters-overlay" id="CollectionFiltersOverlay"></div>
 
+  <div style="--breadcrumb-max-width: 1600px; --breadcrumb-padding: 0 4rem; --breadcrumb-padding-mobile: 0 1.2rem;">
+    {% render 'breadcrumb', collection: collection %}
+  </div>
+
   <div class="collection-page__container">
     
     <!-- Sidebar Filters (Desktop Sidebar / Mobile Bottom Sheet) -->
@@ -119,115 +123,6 @@
                 </div>
             {%- endif -%}
           {%- endif -%}
-
-          <!-- Custom Tag Filter for Gender / Segment -->
-          {%- assign found_male_tag = blank -%}
-          {%- assign found_female_tag = blank -%}
-          {%- assign found_unisex_tag = blank -%}
-
-          {%- for tag in collection.all_tags -%}
-            {%- assign tag_handle = tag | handleize -%}
-            {%- if tag_handle == 'for-him' or tag_handle == 'for-men' or tag_handle == 'men' or tag_handle == 'gents' or tag_handle == 'gifts-for-him' -%}
-              {%- assign found_male_tag = tag -%}
-            {%- elsif tag_handle == 'for-her' or tag_handle == 'for-women' or tag_handle == 'women' or tag_handle == 'ladies' or tag_handle == 'gifts-for-her' -%}
-              {%- assign found_female_tag = tag -%}
-            {%- elsif tag_handle == 'unisex' -%}
-              {%- assign found_unisex_tag = tag -%}
-            {%- endif -%}
-          {%- endfor -%}
-
-          {%- if found_male_tag != blank or found_female_tag != blank or found_unisex_tag != blank -%}
-            <div class="filter-group">
-              <details class="filter-group__details" open>
-                <summary class="filter-group__summary">
-                  <span class="filter-group__name">Shop by Gender</span>
-                  <svg class="icon-caret" width="12" height="7" viewBox="0 0 12 7" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M1 1L6 6L11 1" stroke="#D4AF37" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                  </svg>
-                </summary>
-                <div class="filter-group__display">
-                  <ul class="filter-group__list">
-                    {%- if found_male_tag != blank -%}
-                      {%- assign is_male_active = false -%}
-                      {%- for active_tag in current_tags -%}
-                        {%- assign active_tag_h = active_tag | handleize -%}
-                        {%- if active_tag_h == 'for-him' or active_tag_h == 'for-men' or active_tag_h == 'men' or active_tag_h == 'gents' or active_tag_h == 'gifts-for-him' -%}
-                          {%- assign is_male_active = true -%}
-                          {%- assign active_male_tag = active_tag -%}
-                          {%- break -%}
-                        {%- endif -%}
-                      {%- endfor -%}
-                      <li class="filter-group__list-item">
-                        {%- if is_male_active -%}
-                          <a href="{{ '' | link_to_remove_tag: active_male_tag | split: 'href="' | last | split: '"' | first }}" class="filter-checkbox is-active-tag">
-                            <span class="filter-checkbox__box"></span>
-                            <span class="filter-checkbox__label">Men</span>
-                          </a>
-                        {%- else -%}
-                          <a href="{{ found_male_tag | link_to_add_tag: found_male_tag | split: 'href="' | last | split: '"' | first }}" class="filter-checkbox">
-                            <span class="filter-checkbox__box"></span>
-                            <span class="filter-checkbox__label">Men</span>
-                          </a>
-                        {%- endif -%}
-                      </li>
-                    {%- endif -%}
-
-                    {%- if found_female_tag != blank -%}
-                      {%- assign is_female_active = false -%}
-                      {%- for active_tag in current_tags -%}
-                        {%- assign active_tag_h = active_tag | handleize -%}
-                        {%- if active_tag_h == 'for-her' or active_tag_h == 'for-women' or active_tag_h == 'women' or active_tag_h == 'ladies' or active_tag_h == 'gifts-for-her' -%}
-                          {%- assign is_female_active = true -%}
-                          {%- assign active_female_tag = active_tag -%}
-                          {%- break -%}
-                        {%- endif -%}
-                      {%- endfor -%}
-                      <li class="filter-group__list-item">
-                        {%- if is_female_active -%}
-                          <a href="{{ '' | link_to_remove_tag: active_female_tag | split: 'href="' | last | split: '"' | first }}" class="filter-checkbox is-active-tag">
-                            <span class="filter-checkbox__box"></span>
-                            <span class="filter-checkbox__label">Women</span>
-                          </a>
-                        {%- else -%}
-                          <a href="{{ found_female_tag | link_to_add_tag: found_female_tag | split: 'href="' | last | split: '"' | first }}" class="filter-checkbox">
-                            <span class="filter-checkbox__box"></span>
-                            <span class="filter-checkbox__label">Women</span>
-                          </a>
-                        {%- endif -%}
-                      </li>
-                    {%- endif -%}
-
-                    {%- if found_unisex_tag != blank -%}
-                      {%- assign is_unisex_active = false -%}
-                      {%- for active_tag in current_tags -%}
-                        {%- assign active_tag_h = active_tag | handleize -%}
-                        {%- if active_tag_h == 'unisex' -%}
-                          {%- assign is_unisex_active = true -%}
-                          {%- assign active_unisex_tag = active_tag -%}
-                          {%- break -%}
-                        {%- endif -%}
-                      {%- endfor -%}
-                      <li class="filter-group__list-item">
-                        {%- if is_unisex_active -%}
-                          <a href="{{ '' | link_to_remove_tag: active_unisex_tag | split: 'href="' | last | split: '"' | first }}" class="filter-checkbox is-active-tag">
-                            <span class="filter-checkbox__box"></span>
-                            <span class="filter-checkbox__label">Unisex</span>
-                          </a>
-                        {%- else -%}
-                          <a href="{{ found_unisex_tag | link_to_add_tag: found_unisex_tag | split: 'href="' | last | split: '"' | first }}" class="filter-checkbox">
-                            <span class="filter-checkbox__box"></span>
-                            <span class="filter-checkbox__label">Unisex</span>
-                          </a>
-                        {%- endif -%}
-                      </li>
-                    {%- endif -%}
-                  </ul>
-                </div>
-              </details>
-            </div>
-          {%- endif -%}
-
-
 
             {%- for filter in collection.filters -%}
               {%- assign show_filter_group = false -%}
