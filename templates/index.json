@@ -136,11 +136,7 @@
         "padding_top": 64,
         "padding_bottom": 40,
         "button_label": "Browse Collections",
-<<<<<<< HEAD
-        "button_link": "/collections/three-worlds-of-beauty",
-=======
         "button_link": "shopify://collections/three-worlds-of-beauty",
->>>>>>> 41b712b445d0ae4d6807dcce618f70284e81d1c7
         "btn_bg_color": "#013f3e",
         "btn_text_color": "#fdfcfa",
         "btn_hover_bg_color": "#025654",
@@ -457,8 +453,8 @@
           "type": "highlight",
           "settings": {
             "icon": "diamond",
-            "title": "CERTIFIED DIAMONDS",
-            "description": "Sourced with integrity, crafted to perfection."
+            "title": "IGI CERTIFIED",
+            "description": "100% IGI certified diamonds you can trust."
           }
         },
         "shipping": {
