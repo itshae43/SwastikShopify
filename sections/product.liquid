@@ -762,8 +762,6 @@
                   <div class="pp-related-info">
                     <h3 class="pp-related-item-title">{{ rel_product.title }}</h3>
                     <div class="pp-related-pills">
-                      <span class="pp-rel-pill">BIS 916</span>
-                      <span class="pp-rel-pill">Certified</span>
                       {%- assign rel_variant = rel_product.selected_or_first_available_variant -%}
                       {%- if rel_variant.available -%}
                         {%- if rel_variant.inventory_management and rel_variant.inventory_quantity <= 0 and rel_variant.inventory_policy == 'continue' -%}
@@ -1280,6 +1278,31 @@
   .pp-guide-modal-content p { margin-bottom: 16px; }
   .pp-guide-modal-content img { max-width: 100%; height: auto; border-radius: 12px; margin-bottom: 16px; box-shadow: 0 4px 12px rgba(0,0,0,0.08); }
   
+  /* Scrollable container for widescreen images on mobile */
+  .pp-guide-scroll-wrapper {
+    width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    margin-bottom: 16px;
+    border-radius: 12px;
+  }
+  .pp-guide-scroll-wrapper img {
+    display: block;
+    max-width: 100%;
+    height: auto;
+    margin-bottom: 0;
+  }
+  @media (max-width: 767px) {
+    .pp-guide-scroll-wrapper {
+      border: 1px solid var(--pp-border, #e5e5e5);
+      background: #fff;
+    }
+    .pp-guide-scroll-wrapper img {
+      max-width: none !important;
+      width: 750px !important;
+    }
+  }
+
   /* Premium Tables */
   .pp-guide-modal-content table { width: 100%; border-collapse: separate; border-spacing: 0; border: 1px solid var(--pp-border); border-radius: 12px; overflow: hidden; margin-bottom: 20px; }
   .pp-guide-modal-content th, .pp-guide-modal-content td { padding: 14px 16px; border-bottom: 1px solid var(--pp-border); border-right: 1px solid var(--pp-border); text-align: left; font-size: 14px; }
@@ -1289,7 +1312,7 @@
 
   /* Desktop Adjustments */
   @media (min-width: 768px) {
-    .pp-guide-modal-box { padding: 40px; border-radius: 24px; max-height: 90vh; }
+    .pp-guide-modal-box { padding: 40px; border-radius: 24px; max-height: 90vh; max-width: 800px; }
     .pp-guide-modal-close { top: 24px; right: 24px; width: 40px; height: 40px; }
     .pp-guide-modal-content { font-size: 16px; margin-top: 0; }
     .pp-guide-modal-content h1, .pp-guide-modal-content h2, .pp-guide-modal-content h3 { font-size: 28px; }
@@ -2712,7 +2735,9 @@
         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
       </button>
       <div class="pp-guide-modal-content">
-        {{ section.settings.guide_gold_color | image_url: width: 1000 | image_tag: loading: 'lazy', class: 'pp-guide-image', alt: 'Gold Color Guide' }}
+        <div class="pp-guide-scroll-wrapper">
+          {{ section.settings.guide_gold_color | image_url: width: 1000 | image_tag: loading: 'lazy', class: 'pp-guide-image', alt: 'Gold Color Guide' }}
+        </div>
       </div>
     </div>
   </div>
@@ -2725,7 +2750,9 @@
         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
       </button>
       <div class="pp-guide-modal-content">
-        {{ section.settings.guide_gold_purity | image_url: width: 1000 | image_tag: loading: 'lazy', class: 'pp-guide-image', alt: 'Gold Purity Guide' }}
+        <div class="pp-guide-scroll-wrapper">
+          {{ section.settings.guide_gold_purity | image_url: width: 1000 | image_tag: loading: 'lazy', class: 'pp-guide-image', alt: 'Gold Purity Guide' }}
+        </div>
       </div>
     </div>
   </div>
@@ -2738,7 +2765,9 @@
         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
       </button>
       <div class="pp-guide-modal-content">
-        {{ section.settings.guide_diamond_quality | image_url: width: 1000 | image_tag: loading: 'lazy', class: 'pp-guide-image', alt: 'Diamond Quality Guide' }}
+        <div class="pp-guide-scroll-wrapper">
+          {{ section.settings.guide_diamond_quality | image_url: width: 1000 | image_tag: loading: 'lazy', class: 'pp-guide-image', alt: 'Diamond Quality Guide' }}
+        </div>
       </div>
     </div>
   </div>
@@ -2751,7 +2780,9 @@
         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
       </button>
       <div class="pp-guide-modal-content">
-        {{ section.settings.guide_ring_size | image_url: width: 1000 | image_tag: loading: 'lazy', class: 'pp-guide-image', alt: 'Ring Size Guide' }}
+        <div class="pp-guide-scroll-wrapper">
+          {{ section.settings.guide_ring_size | image_url: width: 1000 | image_tag: loading: 'lazy', class: 'pp-guide-image', alt: 'Ring Size Guide' }}
+        </div>
       </div>
     </div>
   </div>

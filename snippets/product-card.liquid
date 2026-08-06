@@ -37,8 +37,6 @@
     <h3 class="product-card-ui__title">{{ product_title }}</h3>
     
     <div class="product-card-ui__pills">
-      <span class="product-card-ui__pill">BIS 916</span>
-      <span class="product-card-ui__pill">Certified</span>
       {%- if current_variant.available -%}
         {%- if current_variant.inventory_management and current_variant.inventory_quantity <= 0 and current_variant.inventory_policy == 'continue' -%}
           <span class="product-card-ui__pill product-card-ui__pill--made-to-order">Made to Order</span>
