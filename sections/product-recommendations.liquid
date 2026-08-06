@@ -626,6 +626,32 @@
           });
         }, { passive: true });
       }
+
+      // Check if carousel overflows and hide/show navigation arrows & dots accordingly
+      const checkOverflow = () => {
+        const hasOverflow = carousel.scrollWidth > carousel.clientWidth;
+        
+        if (prevBtn && nextBtn) {
+          if (hasOverflow && window.innerWidth >= 768) {
+            prevBtn.style.display = 'flex';
+            nextBtn.style.display = 'flex';
+          } else {
+            prevBtn.style.display = 'none';
+            nextBtn.style.display = 'none';
+          }
+        }
+
+        const dotsWrapper = this.querySelector('#pp-rel-dots');
+        if (dotsWrapper) {
+          dotsWrapper.style.display = hasOverflow ? 'flex' : 'none';
+        }
+      };
+
+      // Run check on initialization
+      setTimeout(checkOverflow, 100);
+
+      // Run check on screen resize
+      window.addEventListener('resize', checkOverflow);
     }
   }
   
