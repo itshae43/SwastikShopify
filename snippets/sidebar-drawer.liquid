@@ -295,7 +295,7 @@
         const itemHtml = `
           <div class="sidebar-drawer__item" data-id="${item.id}">
             <div class="sidebar-drawer__item-image-wrapper">
-              <img src="${item.image || '//cdn.shopify.com/s/images/themes/product-1.png'}" alt="${item.title}" class="sidebar-drawer__item-image">
+              <img src="${item.image || window.themeFallbackImage || '//cdn.shopify.com/s/images/themes/product-1.png'}" alt="${item.title}" class="sidebar-drawer__item-image">
             </div>
             <div class="sidebar-drawer__item-details">
               <a href="${item.url || '#'}" class="sidebar-drawer__item-title">${item.title}</a>

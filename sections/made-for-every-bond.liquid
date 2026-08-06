@@ -58,7 +58,7 @@
               {%- else -%}
                 {%- comment -%}Use generated fallback image based on the block index or settings{%- endcomment -%}
                 {%- assign fallback_img_name = '' -%}
-                {%- assign fallback_img_name = 'FallBack image.png' -%}
+                {%- assign fallback_img_name = 'fallback-image.png' -%}
 
                 {%- if fallback_img_name != '' -%}
                   <img src="{{ fallback_img_name | asset_url }}" alt="{{ title }}" loading="lazy" width="600" height="800" class="every-bond__img">

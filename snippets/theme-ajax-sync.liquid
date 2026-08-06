@@ -144,6 +144,7 @@
 <div class="toast-container" id="toast-container"></div>
 
 <script>
+  window.themeFallbackImage = '{{ "fallback-image.png" | asset_url }}';
   (function() {
     // 1. Initialize Mock Wishlist & Cart from initial values in header badges
     const wishlistBadge = document.getElementById('wishlist-count-badge');

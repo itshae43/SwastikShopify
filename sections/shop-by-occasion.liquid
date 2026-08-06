@@ -47,7 +47,7 @@
             {% if block.settings.image != blank %}
               {{ block.settings.image | image_url: width: 500, height: 600 | image_tag: class: 'shop-by-occasion__img', loading: 'lazy' }}
             {% else %}
-              {% assign fallback_image_name = 'FallBack image.png' %}
+              {% assign fallback_image_name = 'fallback-image.png' %}
               <img src="{{ fallback_image_name | asset_url }}" 
                    alt="{{ block.settings.title | escape }}" 
                    class="shop-by-occasion__img"

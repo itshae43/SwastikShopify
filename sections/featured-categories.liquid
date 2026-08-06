@@ -20,7 +20,7 @@
                 {{ block.settings.image | image_url: width: 300, height: 300 | image_tag: class: 'featured-categories__img', loading: 'lazy' }}
               {% else %}
                 {% # Use static asset image name matches if present, else fallback %}
-                {% assign fallback_image_name = 'FallBack image.png' %}
+                {% assign fallback_image_name = 'fallback-image.png' %}
                 <img src="{{ fallback_image_name | asset_url }}" 
                      alt="{{ block.settings.title | escape }}" 
                      class="featured-categories__img"

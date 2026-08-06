@@ -76,7 +76,7 @@
           assign font_sz_mobile = block.settings.title_font_size_mobile | default: 20
           assign font_weight = block.settings.title_font_weight | default: '400'
           
-          assign fallback_image_name = 'FallBack image.png'
+          assign fallback_image_name = 'fallback-image.png'
         -%}
         
         <div class="latest-collections__col {% if forloop.index0 == active_index %}is-active{% endif %}" data-index="{{ forloop.index0 }}">

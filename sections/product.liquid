@@ -19,7 +19,7 @@
             {% if product.featured_image %}
               <img id="pp-main-image" src="{{ product.featured_image | image_url: width: 1000 }}" alt="{{ product.title | escape }}" width="1000" height="1000">
             {% else %}
-              <img id="pp-main-image" src="{{ 'FallBack image.png' | asset_url }}" alt="Image coming soon" width="1000" height="1000">
+              <img id="pp-main-image" src="{{ 'fallback-image.png' | asset_url }}" alt="Image coming soon" width="1000" height="1000">
             {% endif %}
           </div>
           
@@ -730,7 +730,7 @@
                   {% if rel_product.featured_image %}
                     <img src="{{ rel_product.featured_image | image_url: width: 400 }}" alt="{{ rel_product.title | escape }}" width="400" height="400" loading="lazy">
                   {% else %}
-                    <img src="{{ 'FallBack image.png' | asset_url }}" alt="Jewelry" width="400" height="400" loading="lazy">
+                    <img src="{{ 'fallback-image.png' | asset_url }}" alt="Jewelry" width="400" height="400" loading="lazy">
                   {% endif %}
                 </div>
                 <div class="pp-related-info">
@@ -795,7 +795,7 @@
                     {% if rel_product.featured_image %}
                       <img src="{{ rel_product.featured_image | image_url: width: 400 }}" alt="{{ rel_product.title | escape }}" width="400" height="400" loading="lazy">
                     {% else %}
-                      <img src="{{ 'FallBack image.png' | asset_url }}" alt="Jewelry" width="400" height="400" loading="lazy">
+                      <img src="{{ 'fallback-image.png' | asset_url }}" alt="Jewelry" width="400" height="400" loading="lazy">
                     {% endif %}
                   </div>
                   <div class="pp-related-info">
@@ -848,25 +848,25 @@
               {% assign fallback_price = "₹2,499.00" %}
               {% assign fallback_comp = "₹3,998.00" %}
               {% assign fallback_disc = "60" %}
-              {% assign fallback_img = "FallBack image.png" %}
+              {% assign fallback_img = "fallback-image.png" %}
             {% elsif demo_index == 2 %}
               {% assign fallback_title = "Gold & Diamond Earrings" %}
               {% assign fallback_price = "₹89,900.00" %}
               {% assign fallback_comp = "₹2,30,500.00" %}
               {% assign fallback_disc = "61" %}
-              {% assign fallback_img = "FallBack image.png" %}
+              {% assign fallback_img = "fallback-image.png" %}
             {% elsif demo_index == 3 %}
               {% assign fallback_title = "Classic Gold Ring" %}
               {% assign fallback_price = "₹59,900.00" %}
               {% assign fallback_comp = "₹1,33,000.00" %}
               {% assign fallback_disc = "55" %}
-              {% assign fallback_img = "FallBack image.png" %}
+              {% assign fallback_img = "fallback-image.png" %}
             {% else %}
               {% assign fallback_title = "Diamond Bracelet" %}
               {% assign fallback_price = "₹1,25,900.00" %}
               {% assign fallback_comp = "₹2,51,800.00" %}
               {% assign fallback_disc = "50" %}
-              {% assign fallback_img = "FallBack image.png" %}
+              {% assign fallback_img = "fallback-image.png" %}
             {% endif %}
             <div class="pp-related-item-card">
               <div class="pp-related-img-wrap">

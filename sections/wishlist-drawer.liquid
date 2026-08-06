@@ -307,7 +307,7 @@
     items.forEach(item => {
       html += `
         <div class="wishlist-item" data-id="${item.id}">
-          <img src="${item.image || '//cdn.shopify.com/s/images/themes/product-1.png'}" alt="${item.title}" class="wishlist-item__image">
+          <img src="${item.image || window.themeFallbackImage || '//cdn.shopify.com/s/images/themes/product-1.png'}" alt="${item.title}" class="wishlist-item__image">
           <div class="wishlist-item__details">
             <a href="${item.url || '#'}" class="wishlist-item__title">${item.title}</a>
             <div class="wishlist-item__price">${formatMoneyWishlist(item.price)}</div>
@@ -357,7 +357,7 @@
     localStorage.setItem('wishlist', JSON.stringify(wishlistIds));
 
     // Optional: uncheck the heart icon on the main product grid if it's visible on the page
-    const heartBtn = document.querySelector(`[data-product-id="${id}"] .wishlist-btn.active`);
+    const heartBtn = document.querySelector(`[data-product-id="${id}"] .active`);
     if (heartBtn) {
        heartBtn.classList.remove('active');
     }

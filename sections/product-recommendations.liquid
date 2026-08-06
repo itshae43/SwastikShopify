@@ -106,7 +106,7 @@
                 {%- if recommendation.featured_image -%}
                   <img src="{{ recommendation.featured_image | image_url: width: 400 }}" alt="{{ recommendation.title | escape }}" width="400" height="400" loading="lazy">
                 {%- else -%}
-                  <img src="{{ 'FallBack image.png' | asset_url }}" alt="Jewelry" width="400" height="400" loading="lazy">
+                  <img src="{{ 'fallback-image.png' | asset_url }}" alt="Jewelry" width="400" height="400" loading="lazy">
                 {%- endif -%}
               </div>
               <div class="pp-related-info">
