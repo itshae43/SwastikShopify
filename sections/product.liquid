@@ -727,9 +727,6 @@
       </div>
 
       <div class="pp-related-carousel-container">
-        <button type="button" class="pp-rel-arrow pp-rel-prev" aria-label="Previous Products">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg>
-        </button>
 
         <div class="pp-related-grid" id="pp-related-grid">
           {%- assign rel_count = 0 -%}
@@ -796,18 +793,6 @@
             {%- endunless -%}
           {%- endfor -%}
         </div>
-
-        <button type="button" class="pp-rel-arrow pp-rel-next" aria-label="Next Products">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg>
-        </button>
-      </div>
-
-      <div class="pp-rel-dots" id="pp-rel-dots">
-        {%- if rel_count > 1 -%}
-          {%- for i in (1..rel_count) -%}
-            <span class="pp-rel-dot{% if forloop.first %} is-active{% endif %}" data-index="{{ forloop.index0 }}"></span>
-          {%- endfor -%}
-        {%- endif -%}
       </div>
     {%- endif -%}
   </product-recommendations>
