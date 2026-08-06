@@ -44,132 +44,283 @@
           <div class="collection-filters__body">
             <!-- Custom Tag Filter for Bonds -->
             {%- if collection.handle == 'all' or collection.handle == 'made-for-every-bond' or collection.all_tags contains 'For Mothers' or collection.all_tags contains 'For Sisters' or collection.all_tags contains 'For Brides' or collection.all_tags contains 'for-mothers' or collection.all_tags contains 'for-sisters' or collection.all_tags contains 'for-brides' -%}
-              <div class="filter-group">
-                <details class="filter-group__details" open>
-                  <summary class="filter-group__summary">
-                    <span class="filter-group__name">Shop by Bond</span>
-                    <svg class="icon-caret" width="12" height="7" viewBox="0 0 12 7" fill="none" xmlns="http://www.w3.org/2000/svg">
-                      <path d="M1 1L6 6L11 1" stroke="#D4AF37" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                    </svg>
-                  </summary>
-                  <div class="filter-group__display">
-                    <ul class="filter-group__list">
-                      {%- assign bond_tags = "For Mothers, For Sisters, For Brides" | split: ", " -%}
-                      {%- for bond_tag in bond_tags -%}
-                        {%- assign tag_handle = bond_tag | handleize -%}
-                        <li class="filter-group__list-item">
-                          {%- if current_tags contains bond_tag or current_tags contains tag_handle -%}
-                            <a href="{{ '' | link_to_remove_tag: bond_tag | split: 'href="' | last | split: '"' | first }}" class="filter-checkbox is-active-tag">
-                              <span class="filter-checkbox__box"></span>
-                              <span class="filter-checkbox__label">{{ bond_tag }}</span>
-                            </a>
+              {%- assign bond_tags = "For Mothers, For Sisters, For Brides" | split: ", " -%}
+              {%- assign showable_bond_count = 0 -%}
+              {%- for bond_tag in bond_tags -%}
+                {%- assign tag_handle = bond_tag | handleize -%}
+                {%- for tag in collection.all_tags -%}
+                  {%- assign t_handle = tag | handleize -%}
+                  {%- if t_handle == tag_handle -%}
+                    {%- assign showable_bond_count = showable_bond_count | plus: 1 -%}
+                    {%- break -%}
+                  {%- endif -%}
+                {%- endfor -%}
+              {%- endfor -%}
+
+              {%- if collection.handle == 'all' or showable_bond_count > 1 or current_tags.size > 0 -%}
+                <div class="filter-group">
+                  <details class="filter-group__details" open>
+                    <summary class="filter-group__summary">
+                      <span class="filter-group__name">Shop by Bond</span>
+                      <svg class="icon-caret" width="12" height="7" viewBox="0 0 12 7" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M1 1L6 6L11 1" stroke="#D4AF37" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                      </svg>
+                    </summary>
+                    <div class="filter-group__display">
+                      <ul class="filter-group__list">
+                        {%- for bond_tag in bond_tags -%}
+                          {%- assign tag_handle = bond_tag | handleize -%}
+                          {%- assign show_bond_tag = false -%}
+                          {%- if collection.handle == 'all' -%}
+                            {%- assign show_bond_tag = true -%}
                           {%- else -%}
-                            <a href="{{ bond_tag | link_to_add_tag: bond_tag | split: 'href="' | last | split: '"' | first }}" class="filter-checkbox">
-                              <span class="filter-checkbox__box"></span>
-                              <span class="filter-checkbox__label">{{ bond_tag }}</span>
-                            </a>
+                            {%- for tag in collection.all_tags -%}
+                              {%- assign t_handle = tag | handleize -%}
+                              {%- if t_handle == tag_handle -%}
+                                {%- assign show_bond_tag = true -%}
+                                {%- break -%}
+                              {%- endif -%}
+                            {%- endfor -%}
                           {%- endif -%}
-                        </li>
-                      {%- endfor -%}
-                    </ul>
-                  </div>
-                </details>
-              </div>
+
+                          {%- if show_bond_tag -%}
+                            <li class="filter-group__list-item">
+                              {%- if current_tags contains bond_tag or current_tags contains tag_handle -%}
+                                <a href="{{ '' | link_to_remove_tag: bond_tag | split: 'href="' | last | split: '"' | first }}" class="filter-checkbox is-active-tag">
+                                  <span class="filter-checkbox__box"></span>
+                                  <span class="filter-checkbox__label">{{ bond_tag }}</span>
+                                </a>
+                              {%- else -%}
+                                <a href="{{ bond_tag | link_to_add_tag: bond_tag | split: 'href="' | last | split: '"' | first }}" class="filter-checkbox">
+                                  <span class="filter-checkbox__box"></span>
+                                  <span class="filter-checkbox__label">{{ bond_tag }}</span>
+                                </a>
+                              {%- endif -%}
+                            </li>
+                          {%- endif -%}
+                        {%- endfor -%}
+                      </ul>
+                    </div>
+                  </details>
+                </div>
+              {%- endif -%}
             {%- endif -%}
 
             <!-- Custom Tag Filter for Three Worlds of Beauty -->
             {%- if collection.handle == 'all' or collection.handle == 'three-worlds-of-beauty' or collection.all_tags contains 'Lab Grown Diamond' or collection.all_tags contains 'Natural Diamond' or collection.all_tags contains 'Gold Jewellery' or collection.all_tags contains 'lab-grown-diamond' or collection.all_tags contains 'natural-diamond' or collection.all_tags contains 'gold-jewellery' -%}
-              <div class="filter-group">
-                <details class="filter-group__details" open>
-                  <summary class="filter-group__summary">
-                    <span class="filter-group__name">Shop by Category</span>
-                    <svg class="icon-caret" width="12" height="7" viewBox="0 0 12 7" fill="none" xmlns="http://www.w3.org/2000/svg">
-                      <path d="M1 1L6 6L11 1" stroke="#D4AF37" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                    </svg>
-                  </summary>
-                  <div class="filter-group__display">
-                    <ul class="filter-group__list">
-                      {%- assign world_tags = "Lab Grown Diamond, Natural Diamond, Gold Jewellery" | split: ", " -%}
-                      {%- assign world_labels = "Lab Grown, Natural Diamond, Gold Jewellery" | split: ", " -%}
-                      {%- for world_tag in world_tags -%}
-                        {%- assign tag_handle = world_tag | handleize -%}
-                        {%- assign world_label = world_labels[forloop.index0] -%}
-                        <li class="filter-group__list-item">
-                          {%- if current_tags contains world_tag or current_tags contains tag_handle -%}
-                            <a href="{{ '' | link_to_remove_tag: world_tag | split: 'href="' | last | split: '"' | first }}" class="filter-checkbox is-active-tag">
-                              <span class="filter-checkbox__box"></span>
-                              <span class="filter-checkbox__label">{{ world_label }}</span>
-                            </a>
+              {%- assign world_tags = "Lab Grown Diamond, Natural Diamond, Gold Jewellery" | split: ", " -%}
+              {%- assign world_labels = "Lab Grown, Natural Diamond, Gold Jewellery" | split: ", " -%}
+              {%- assign showable_world_count = 0 -%}
+              {%- for world_tag in world_tags -%}
+                {%- assign tag_handle = world_tag | handleize -%}
+                {%- for tag in collection.all_tags -%}
+                  {%- assign t_handle = tag | handleize -%}
+                  {%- if t_handle == tag_handle -%}
+                    {%- assign showable_world_count = showable_world_count | plus: 1 -%}
+                    {%- break -%}
+                  {%- endif -%}
+                {%- endfor -%}
+              {%- endfor -%}
+
+              {%- if collection.handle == 'all' or showable_world_count > 1 or current_tags.size > 0 -%}
+                <div class="filter-group">
+                  <details class="filter-group__details" open>
+                    <summary class="filter-group__summary">
+                      <span class="filter-group__name">Shop by Category</span>
+                      <svg class="icon-caret" width="12" height="7" viewBox="0 0 12 7" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M1 1L6 6L11 1" stroke="#D4AF37" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                      </svg>
+                    </summary>
+                    <div class="filter-group__display">
+                      <ul class="filter-group__list">
+                        {%- for world_tag in world_tags -%}
+                          {%- assign tag_handle = world_tag | handleize -%}
+                          {%- assign world_label = world_labels[forloop.index0] -%}
+                          {%- assign show_world_tag = false -%}
+                          {%- if collection.handle == 'all' -%}
+                            {%- assign show_world_tag = true -%}
                           {%- else -%}
-                            <a href="{{ world_tag | link_to_add_tag: world_tag | split: 'href="' | last | split: '"' | first }}" class="filter-checkbox">
-                              <span class="filter-checkbox__box"></span>
-                              <span class="filter-checkbox__label">{{ world_label }}</span>
-                            </a>
+                            {%- for tag in collection.all_tags -%}
+                              {%- assign t_handle = tag | handleize -%}
+                              {%- if t_handle == tag_handle -%}
+                                {%- assign show_world_tag = true -%}
+                                {%- break -%}
+                              {%- endif -%}
+                            {%- endfor -%}
                           {%- endif -%}
-                        </li>
-                      {%- endfor -%}
-                    </ul>
-                  </div>
-                </details>
-              </div>
+
+                          {%- if show_world_tag -%}
+                            <li class="filter-group__list-item">
+                              {%- if current_tags contains world_tag or current_tags contains tag_handle -%}
+                                <a href="{{ '' | link_to_remove_tag: world_tag | split: 'href="' | last | split: '"' | first }}" class="filter-checkbox is-active-tag">
+                                  <span class="filter-checkbox__box"></span>
+                                  <span class="filter-checkbox__label">{{ world_label }}</span>
+                                </a>
+                              {%- else -%}
+                                <a href="{{ world_tag | link_to_add_tag: world_tag | split: 'href="' | last | split: '"' | first }}" class="filter-checkbox">
+                                  <span class="filter-checkbox__box"></span>
+                                  <span class="filter-checkbox__label">{{ world_label }}</span>
+                                </a>
+                              {%- endif -%}
+                            </li>
+                          {%- endif -%}
+                        {%- endfor -%}
+                      </ul>
+                    </div>
+                  </details>
+                </div>
+              {%- endif -%}
             {%- endif -%}
 
             {%- for filter in collection.filters -%}
-              <div class="filter-group">
-                <details class="filter-group__details" open>
-                  <summary class="filter-group__summary">
-                    <span class="filter-group__name">{{ filter.label }}</span>
-                    <svg class="icon-caret" width="12" height="7" viewBox="0 0 12 7" fill="none" xmlns="http://www.w3.org/2000/svg">
-                      <path d="M1 1L6 6L11 1" stroke="#D4AF37" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                    </svg>
-                  </summary>
-                  
-                  <div class="filter-group__display">
-                    {%- case filter.type -%}
-                      {%- when 'boolean' or 'list' -%}
-                        <ul class="filter-group__list">
-                          {%- for filter_value in filter.values -%}
-                            <li class="filter-group__list-item">
-                              <label for="Filter-{{ filter.param_name }}-{{ forloop.index }}" class="filter-checkbox">
-                                <input type="checkbox" 
-                                  name="{{ filter_value.param_name }}"
-                                  value="{{ filter_value.value }}"
-                                  id="Filter-{{ filter.param_name }}-{{ forloop.index }}"
-                                  {% if filter_value.active -%}checked{%- endif %}
-                                  onchange="this.form.submit()">
-                                <span class="filter-checkbox__box"></span>
-                                <span class="filter-checkbox__label">{{ filter_value.label }}</span>
-                              </label>
-                            </li>
+              {%- assign show_filter_group = false -%}
+              {%- assign valid_values_count = 0 -%}
+              
+              {%- if filter.type == 'boolean' or filter.type == 'list' -%}
+                {%- for filter_value in filter.values -%}
+                  {%- assign value_is_present = false -%}
+                  {%- if filter_value.active -%}
+                    {%- assign value_is_present = true -%}
+                  {%- else -%}
+                    {%- if current_tags.size > 0 -%}
+                      {%- for prod in collection.products -%}
+                        {%- if filter.param_name contains 'product_type' -%}
+                          {%- if prod.type == filter_value.label -%}
+                            {%- assign value_is_present = true -%}{%- break -%}
+                          {%- endif -%}
+                        {%- elsif filter.param_name contains 'vendor' -%}
+                          {%- if prod.vendor == filter_value.label -%}
+                            {%- assign value_is_present = true -%}{%- break -%}
+                          {%- endif -%}
+                        {%- elsif filter.param_name contains 'availability' -%}
+                          {%- if filter_value.value == '1' and prod.available -%}
+                            {%- assign value_is_present = true -%}{%- break -%}
+                          {%- elsif filter_value.value == '0' and prod.available == false -%}
+                            {%- assign value_is_present = true -%}{%- break -%}
+                          {%- endif -%}
+                        {%- else -%}
+                          {%- for option in prod.options_with_values -%}
+                            {%- for val in option.values -%}
+                              {%- if val == filter_value.label -%}
+                                {%- assign value_is_present = true -%}{%- break -%}
+                              {%- endif -%}
+                            {%- endfor -%}
+                            {%- if value_is_present -%}{%- break -%}{%- endif -%}
                           {%- endfor -%}
-                        </ul>
-                        
-                      {%- when 'price_range' -%}
-                        <div class="filter-group__price-range">
-                          <div class="price-slider-container">
-                            <div class="price-slider">
-                              <div class="price-slider__track" id="slider-track-{{ filter.label | handleize }}"></div>
-                              <input type="range" min="0" max="{{ filter.range_max | divided_by: 100.0 | ceil }}" 
-                                     value="{{ filter.min_value.value | default: 0 | divided_by: 100.0 | floor }}" 
-                                     class="price-slider__range price-slider__range--min" id="slider-min-{{ filter.label | handleize }}">
-                              <input type="range" min="0" max="{{ filter.range_max | divided_by: 100.0 | ceil }}" 
-                                     value="{{ filter.max_value.value | default: filter.range_max | divided_by: 100.0 | ceil }}" 
-                                     class="price-slider__range price-slider__range--max" id="slider-max-{{ filter.label | handleize }}">
-                            </div>
-                            
-                            <div class="price-slider__labels">
-                              <span class="price-slider__label">{{ cart.currency.symbol }} <span id="label-min-{{ filter.label | handleize }}">{{ filter.min_value.value | default: 0 | divided_by: 100.0 | floor }}</span></span>
-                              <span class="price-slider__label">{{ cart.currency.symbol }} <span id="label-max-{{ filter.label | handleize }}">{{ filter.max_value.value | default: filter.range_max | divided_by: 100.0 | ceil }}</span>+</span>
-                            </div>
+                        {%- endif -%}
+                      {%- endfor -%}
+                    {%- else -%}
+                      {%- assign value_is_present = true -%}
+                    {%- endif -%}
+                  {%- endif -%}
+                  
+                  {%- if value_is_present -%}
+                    {%- assign valid_values_count = valid_values_count | plus: 1 -%}
+                  {%- endif -%}
+                {%- endfor -%}
+              {%- else -%}
+                {%- assign show_filter_group = true -%}
+              {%- endif -%}
 
-                            <input type="hidden" name="{{ filter.min_value.param_name }}" id="Filter-{{ filter.min_value.param_name }}" value="{{ filter.min_value.value | divided_by: 100.0 | floor | default: 0 }}" {% if filter.min_value.value == blank %}disabled{% endif %}>
-                            <input type="hidden" name="{{ filter.max_value.param_name }}" id="Filter-{{ filter.max_value.param_name }}" value="{{ filter.max_value.value | divided_by: 100.0 | ceil | default: '' }}" {% if filter.max_value.value == blank %}disabled{% endif %}>
+              {%- if valid_values_count > 0 -%}
+                {%- assign show_filter_group = true -%}
+              {%- endif -%}
+
+              {%- if show_filter_group -%}
+                <div class="filter-group">
+                  <details class="filter-group__details" open>
+                    <summary class="filter-group__summary">
+                      <span class="filter-group__name">{{ filter.label }}</span>
+                      <svg class="icon-caret" width="12" height="7" viewBox="0 0 12 7" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M1 1L6 6L11 1" stroke="#D4AF37" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                      </svg>
+                    </summary>
+                    
+                    <div class="filter-group__display">
+                      {%- case filter.type -%}
+                        {%- when 'boolean' or 'list' -%}
+                          <ul class="filter-group__list">
+                            {%- for filter_value in filter.values -%}
+                              {%- assign value_is_present = false -%}
+                              {%- if filter_value.active -%}
+                                {%- assign value_is_present = true -%}
+                              {%- else -%}
+                                {%- if current_tags.size > 0 -%}
+                                  {%- for prod in collection.products -%}
+                                    {%- if filter.param_name contains 'product_type' -%}
+                                      {%- if prod.type == filter_value.label -%}
+                                        {%- assign value_is_present = true -%}{%- break -%}
+                                      {%- endif -%}
+                                    {%- elsif filter.param_name contains 'vendor' -%}
+                                      {%- if prod.vendor == filter_value.label -%}
+                                        {%- assign value_is_present = true -%}{%- break -%}
+                                      {%- endif -%}
+                                    {%- elsif filter.param_name contains 'availability' -%}
+                                      {%- if filter_value.value == '1' and prod.available -%}
+                                        {%- assign value_is_present = true -%}{%- break -%}
+                                      {%- elsif filter_value.value == '0' and prod.available == false -%}
+                                        {%- assign value_is_present = true -%}{%- break -%}
+                                      {%- endif -%}
+                                    {%- else -%}
+                                      {%- for option in prod.options_with_values -%}
+                                        {%- for val in option.values -%}
+                                          {%- if val == filter_value.label -%}
+                                            {%- assign value_is_present = true -%}{%- break -%}
+                                          {%- endif -%}
+                                        {%- endfor -%}
+                                        {%- if value_is_present -%}{%- break -%}{%- endif -%}
+                                      {%- endfor -%}
+                                    {%- endif -%}
+                                  {%- endfor -%}
+                                {%- else -%}
+                                  {%- assign value_is_present = true -%}
+                                {%- endif -%}
+                              {%- endif -%}
+                              
+                              {%- if value_is_present -%}
+                                <li class="filter-group__list-item">
+                                  <label for="Filter-{{ filter.param_name }}-{{ forloop.index }}" class="filter-checkbox">
+                                    <input type="checkbox" 
+                                      name="{{ filter_value.param_name }}"
+                                      value="{{ filter_value.value }}"
+                                      id="Filter-{{ filter.param_name }}-{{ forloop.index }}"
+                                      {% if filter_value.active -%}checked{%- endif %}
+                                      onchange="this.form.submit()">
+                                    <span class="filter-checkbox__box"></span>
+                                    <span class="filter-checkbox__label">{{ filter_value.label }}</span>
+                                  </label>
+                                </li>
+                              {%- endif -%}
+                            {%- endfor -%}
+                          </ul>
+                          
+                        {%- when 'price_range' -%}
+                          <div class="filter-group__price-range">
+                            <div class="price-slider-container">
+                              <div class="price-slider">
+                                <div class="price-slider__track" id="slider-track-{{ filter.label | handleize }}"></div>
+                                <input type="range" min="0" max="{{ filter.range_max | divided_by: 100.0 | ceil }}" 
+                                       value="{{ filter.min_value.value | default: 0 | divided_by: 100.0 | floor }}" 
+                                       class="price-slider__range price-slider__range--min" id="slider-min-{{ filter.label | handleize }}">
+                                <input type="range" min="0" max="{{ filter.range_max | divided_by: 100.0 | ceil }}" 
+                                       value="{{ filter.max_value.value | default: filter.range_max | divided_by: 100.0 | ceil }}" 
+                                       class="price-slider__range price-slider__range--max" id="slider-max-{{ filter.label | handleize }}">
+                              </div>
+                              
+                              <div class="price-slider__labels">
+                                <span class="price-slider__label">{{ cart.currency.symbol }} <span id="label-min-{{ filter.label | handleize }}">{{ filter.min_value.value | default: 0 | divided_by: 100.0 | floor }}</span></span>
+                                <span class="price-slider__label">{{ cart.currency.symbol }} <span id="label-max-{{ filter.label | handleize }}">{{ filter.max_value.value | default: filter.range_max | divided_by: 100.0 | ceil }}</span>+</span>
+                              </div>
+
+                              <input type="hidden" name="{{ filter.min_value.param_name }}" id="Filter-{{ filter.min_value.param_name }}" value="{{ filter.min_value.value | divided_by: 100.0 | floor | default: 0 }}" {% if filter.min_value.value == blank %}disabled{% endif %}>
+                              <input type="hidden" name="{{ filter.max_value.param_name }}" id="Filter-{{ filter.max_value.param_name }}" value="{{ filter.max_value.value | divided_by: 100.0 | ceil | default: '' }}" {% if filter.max_value.value == blank %}disabled{% endif %}>
+                            </div>
                           </div>
-                        </div>
-                    {%- endcase -%}
-                  </div>
-                </details>
-              </div>
+                      {%- endcase -%}
+                    </div>
+                  </details>
+                </div>
+              {%- endif -%}
             {%- endfor -%}
           </div>
           
