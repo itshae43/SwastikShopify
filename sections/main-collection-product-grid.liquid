@@ -127,9 +127,9 @@
 
           {%- for tag in collection.all_tags -%}
             {%- assign tag_handle = tag | handleize -%}
-            {%- if tag_handle == 'for-him' or tag_handle == 'for-men' or tag_handle == 'men' or tag_handle == 'gents' -%}
+            {%- if tag_handle == 'for-him' or tag_handle == 'for-men' or tag_handle == 'men' or tag_handle == 'gents' or tag_handle == 'gifts-for-him' -%}
               {%- assign found_male_tag = tag -%}
-            {%- elsif tag_handle == 'for-her' or tag_handle == 'for-women' or tag_handle == 'women' or tag_handle == 'ladies' -%}
+            {%- elsif tag_handle == 'for-her' or tag_handle == 'for-women' or tag_handle == 'women' or tag_handle == 'ladies' or tag_handle == 'gifts-for-her' -%}
               {%- assign found_female_tag = tag -%}
             {%- elsif tag_handle == 'unisex' -%}
               {%- assign found_unisex_tag = tag -%}
@@ -151,7 +151,7 @@
                       {%- assign is_male_active = false -%}
                       {%- for active_tag in current_tags -%}
                         {%- assign active_tag_h = active_tag | handleize -%}
-                        {%- if active_tag_h == 'for-him' or active_tag_h == 'for-men' or active_tag_h == 'men' or active_tag_h == 'gents' -%}
+                        {%- if active_tag_h == 'for-him' or active_tag_h == 'for-men' or active_tag_h == 'men' or active_tag_h == 'gents' or active_tag_h == 'gifts-for-him' -%}
                           {%- assign is_male_active = true -%}
                           {%- assign active_male_tag = active_tag -%}
                           {%- break -%}
@@ -176,7 +176,7 @@
                       {%- assign is_female_active = false -%}
                       {%- for active_tag in current_tags -%}
                         {%- assign active_tag_h = active_tag | handleize -%}
-                        {%- if active_tag_h == 'for-her' or active_tag_h == 'for-women' or active_tag_h == 'women' or active_tag_h == 'ladies' -%}
+                        {%- if active_tag_h == 'for-her' or active_tag_h == 'for-women' or active_tag_h == 'women' or active_tag_h == 'ladies' or active_tag_h == 'gifts-for-her' -%}
                           {%- assign is_female_active = true -%}
                           {%- assign active_female_tag = active_tag -%}
                           {%- break -%}
