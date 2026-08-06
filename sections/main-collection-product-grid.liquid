@@ -132,36 +132,7 @@
                   {%- if filter_value.active -%}
                     {%- assign value_is_present = true -%}
                   {%- else -%}
-                    {%- if current_tags.size > 0 -%}
-                      {%- for prod in collection.products -%}
-                        {%- if filter.param_name contains 'product_type' -%}
-                          {%- if prod.type == filter_value.label -%}
-                            {%- assign value_is_present = true -%}{%- break -%}
-                          {%- endif -%}
-                        {%- elsif filter.param_name contains 'vendor' -%}
-                          {%- if prod.vendor == filter_value.label -%}
-                            {%- assign value_is_present = true -%}{%- break -%}
-                          {%- endif -%}
-                        {%- elsif filter.param_name contains 'availability' -%}
-                          {%- if filter_value.value == '1' and prod.available -%}
-                            {%- assign value_is_present = true -%}{%- break -%}
-                          {%- elsif filter_value.value == '0' and prod.available == false -%}
-                            {%- assign value_is_present = true -%}{%- break -%}
-                          {%- endif -%}
-                        {%- else -%}
-                          {%- for option in prod.options_with_values -%}
-                            {%- for val in option.values -%}
-                              {%- if val == filter_value.label -%}
-                                {%- assign value_is_present = true -%}{%- break -%}
-                              {%- endif -%}
-                            {%- endfor -%}
-                            {%- if value_is_present -%}{%- break -%}{%- endif -%}
-                          {%- endfor -%}
-                        {%- endif -%}
-                      {%- endfor -%}
-                    {%- else -%}
-                      {%- assign value_is_present = true -%}
-                    {%- endif -%}
+                    {%- assign value_is_present = true -%}
                   {%- endif -%}
                   
                   {%- if value_is_present -%}
@@ -195,36 +166,7 @@
                               {%- if filter_value.active -%}
                                 {%- assign value_is_present = true -%}
                               {%- else -%}
-                                {%- if current_tags.size > 0 -%}
-                                  {%- for prod in collection.products -%}
-                                    {%- if filter.param_name contains 'product_type' -%}
-                                      {%- if prod.type == filter_value.label -%}
-                                        {%- assign value_is_present = true -%}{%- break -%}
-                                      {%- endif -%}
-                                    {%- elsif filter.param_name contains 'vendor' -%}
-                                      {%- if prod.vendor == filter_value.label -%}
-                                        {%- assign value_is_present = true -%}{%- break -%}
-                                      {%- endif -%}
-                                    {%- elsif filter.param_name contains 'availability' -%}
-                                      {%- if filter_value.value == '1' and prod.available -%}
-                                        {%- assign value_is_present = true -%}{%- break -%}
-                                      {%- elsif filter_value.value == '0' and prod.available == false -%}
-                                        {%- assign value_is_present = true -%}{%- break -%}
-                                      {%- endif -%}
-                                    {%- else -%}
-                                      {%- for option in prod.options_with_values -%}
-                                        {%- for val in option.values -%}
-                                          {%- if val == filter_value.label -%}
-                                            {%- assign value_is_present = true -%}{%- break -%}
-                                          {%- endif -%}
-                                        {%- endfor -%}
-                                        {%- if value_is_present -%}{%- break -%}{%- endif -%}
-                                      {%- endfor -%}
-                                    {%- endif -%}
-                                  {%- endfor -%}
-                                {%- else -%}
-                                  {%- assign value_is_present = true -%}
-                                {%- endif -%}
+                                {%- assign value_is_present = true -%}
                               {%- endif -%}
                               
                               {%- if value_is_present -%}
