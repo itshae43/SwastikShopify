@@ -68,19 +68,33 @@
                     </summary>
                     <div class="filter-group__display">
                       <ul class="filter-group__list">
+                        {%- assign has_any_active_bond = false -%}
+                        {%- for active_tag in current_tags -%}
+                          {%- assign active_tag_h = active_tag | handleize -%}
+                          {%- if active_tag_h == 'for-mothers' or active_tag_h == 'for-sisters' or active_tag_h == 'for-brides' -%}
+                            {%- assign has_any_active_bond = true -%}
+                            {%- break -%}
+                          {%- endif -%}
+                        {%- endfor -%}
                         {%- for bond_tag in bond_tags -%}
                           {%- assign tag_handle = bond_tag | handleize -%}
                           {%- assign show_bond_tag = false -%}
-                          {%- if collection.handle == 'all' -%}
-                            {%- assign show_bond_tag = true -%}
+                          {%- if has_any_active_bond -%}
+                            {%- if current_tags contains bond_tag or current_tags contains tag_handle -%}
+                              {%- assign show_bond_tag = true -%}
+                            {%- endif -%}
                           {%- else -%}
-                            {%- for tag in collection.all_tags -%}
-                              {%- assign t_handle = tag | handleize -%}
-                              {%- if t_handle == tag_handle -%}
-                                {%- assign show_bond_tag = true -%}
-                                {%- break -%}
-                              {%- endif -%}
-                            {%- endfor -%}
+                            {%- if collection.handle == 'all' -%}
+                              {%- assign show_bond_tag = true -%}
+                            {%- else -%}
+                              {%- for tag in collection.all_tags -%}
+                                {%- assign t_handle = tag | handleize -%}
+                                {%- if t_handle == tag_handle -%}
+                                  {%- assign show_bond_tag = true -%}
+                                  {%- break -%}
+                                {%- endif -%}
+                              {%- endfor -%}
+                            {%- endif -%}
                           {%- endif -%}
 
                           {%- if show_bond_tag -%}
@@ -133,20 +147,34 @@
                     </summary>
                     <div class="filter-group__display">
                       <ul class="filter-group__list">
+                        {%- assign has_any_active_world = false -%}
+                        {%- for active_tag in current_tags -%}
+                          {%- assign active_tag_h = active_tag | handleize -%}
+                          {%- if active_tag_h == 'lab-grown-diamond' or active_tag_h == 'natural-diamond' or active_tag_h == 'gold-jewellery' -%}
+                            {%- assign has_any_active_world = true -%}
+                            {%- break -%}
+                          {%- endif -%}
+                        {%- endfor -%}
                         {%- for world_tag in world_tags -%}
                           {%- assign tag_handle = world_tag | handleize -%}
                           {%- assign world_label = world_labels[forloop.index0] -%}
                           {%- assign show_world_tag = false -%}
-                          {%- if collection.handle == 'all' or collection.handle == 'three-worlds-of-beauty' -%}
-                            {%- assign show_world_tag = true -%}
+                          {%- if has_any_active_world -%}
+                            {%- if current_tags contains world_tag or current_tags contains tag_handle -%}
+                              {%- assign show_world_tag = true -%}
+                            {%- endif -%}
                           {%- else -%}
-                            {%- for tag in collection.all_tags -%}
-                              {%- assign t_handle = tag | handleize -%}
-                              {%- if t_handle == tag_handle -%}
-                                {%- assign show_world_tag = true -%}
-                                {%- break -%}
-                              {%- endif -%}
-                            {%- endfor -%}
+                            {%- if collection.handle == 'all' or collection.handle == 'three-worlds-of-beauty' -%}
+                              {%- assign show_world_tag = true -%}
+                            {%- else -%}
+                              {%- for tag in collection.all_tags -%}
+                                {%- assign t_handle = tag | handleize -%}
+                                {%- if t_handle == tag_handle -%}
+                                  {%- assign show_world_tag = true -%}
+                                  {%- break -%}
+                                {%- endif -%}
+                              {%- endfor -%}
+                            {%- endif -%}
                           {%- endif -%}
 
                           {%- if show_world_tag -%}
@@ -353,20 +381,7 @@
           {% endif %}
         </button>
         
-        <div class="mobile-collection-bar__divider"></div>
 
-        <div class="mobile-collection-bar__sort">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <path d="M7 15l5 5 5-5M7 9l5-5 5 5"/>
-          </svg>
-          <select name="sort_by" class="mobile-sort-select" form="CollectionFiltersForm" onchange="this.form.submit()">
-            {%- for option in collection.sort_options -%}
-              <option value="{{ option.value }}" {% if option.value == collection.sort_by %}selected="selected"{% endif %}>
-                {{ option.name }}
-              </option>
-            {%- endfor -%}
-          </select>
-        </div>
       </div>
 
       <!-- Active Filters Chips -->
@@ -404,16 +419,7 @@
           All Products ({{ collection.products_count }})
         </div>
         
-        <div class="collection-toolbar__sort">
-          <label for="SortBy" class="collection-toolbar__sort-label">Sort by:</label>
-          <select name="sort_by" id="SortBy" form="CollectionFiltersForm" onchange="this.form.submit()">
-            {%- for option in collection.sort_options -%}
-              <option value="{{ option.value }}" {% if option.value == collection.sort_by %}selected="selected"{% endif %}>
-                {{ option.name }}
-              </option>
-            {%- endfor -%}
-          </select>
-        </div>
+
       </div>
       
       {% paginate collection.products by 24 %}
@@ -909,7 +915,7 @@
     .mobile-collection-bar {
       display: flex;
       align-items: center;
-      justify-content: space-between;
+      justify-content: center;
       background: #FFFFFF;
       border: 1px solid #EAE5DD;
       border-radius: 30px;
