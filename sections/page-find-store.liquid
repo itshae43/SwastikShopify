@@ -14,30 +14,45 @@
   
   /* --- HERO SECTION --- */
   .fs-hero {
-    display: flex;
-    flex-wrap: wrap;
-    background: linear-gradient(135deg, #FFF9F2 0%, #F5EBE1 100%);
     position: relative;
+    display: flex;
+    align-items: center;
+    min-height: 550px;
+    background-color: #FFF9F2;
+    overflow: hidden;
     border-bottom: 1px solid #efe4d8;
   }
-  .fs-hero-content {
-    flex: 1 1 500px;
-    padding: 80px 5%;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-  }
   .fs-hero-image {
-    flex: 1 1 500px;
-    min-height: 500px;
-    position: relative;
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 60%;
+    height: 100%;
+    z-index: 1;
   }
   .fs-hero-image img {
     width: 100%;
     height: 100%;
     object-fit: cover;
+    object-position: center;
+  }
+  .fs-hero-image::after {
+    content: '';
     position: absolute;
-    top: 0; left: 0;
+    top: 0;
+    left: -1px;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(to right, #FFF9F2 0%, rgba(255,249,242,0) 60%);
+  }
+  .fs-hero-content {
+    position: relative;
+    z-index: 2;
+    width: 55%;
+    padding: 80px 6%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
   }
   .fs-hero-subtitle {
     font-size: 1.1rem;
@@ -195,38 +210,6 @@
   .fs-info-text a:hover {
     color: #b08958;
   }
-  .fs-facilities {
-    display: flex;
-    gap: 15px;
-    margin-top: 25px;
-    padding-top: 30px;
-    border-top: 1px solid #f0f0f0;
-  }
-  .fs-facility-item {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 10px;
-    text-align: center;
-    font-size: 1.1rem;
-    color: #555;
-    flex: 1;
-    font-weight: 500;
-  }
-  .fs-facility-icon {
-    width: 40px;
-    height: 40px;
-    color: #b08958;
-    background: #FFF9F2;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-  .fs-facility-icon svg {
-    width: 20px;
-    height: 20px;
-  }
 
   /* --- WHY VISIT US --- */
   .fs-features-section {
@@ -286,8 +269,22 @@
     line-height: 1.4;
   }
 
+  @media screen and (max-width: 990px) {
+    .fs-hero-image { width: 70%; }
+    .fs-hero-image::after {
+      background: linear-gradient(to right, #FFF9F2 0%, rgba(255,249,242,0.8) 40%, rgba(255,249,242,0) 100%);
+    }
+    .fs-hero-content { width: 70%; }
+  }
+
   @media screen and (max-width: 768px) {
-    .fs-hero-title { font-size: 4rem; }
+    .fs-hero { min-height: 450px; }
+    .fs-hero-image { width: 100%; }
+    .fs-hero-image::after {
+      background: linear-gradient(to right, rgba(255,249,242,0.95) 0%, rgba(255,249,242,0.8) 100%);
+    }
+    .fs-hero-content { width: 100%; padding: 60px 20px; }
+    .fs-hero-title { font-size: 3.5rem; }
     .fs-store-name { font-size: 2.6rem; }
     .fs-details-wrapper { flex-direction: column; }
     .fs-details-map { min-height: 350px; }
@@ -371,32 +368,7 @@
             </div>
           </div>
 
-          <div class="fs-facilities">
-            {% if section.settings.facility_1_text != blank %}
-            <div class="fs-facility-item">
-              <div class="fs-facility-icon">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><path d="M9 16V8h4a3 3 0 0 1 0 6H9"></path></svg>
-              </div>
-              {{ section.settings.facility_1_text }}
-            </div>
-            {% endif %}
-            {% if section.settings.facility_2_text != blank %}
-            <div class="fs-facility-item">
-              <div class="fs-facility-icon">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><path d="M12 16v-4"></path><path d="M12 8h.01"></path></svg>
-              </div>
-              {{ section.settings.facility_2_text }}
-            </div>
-            {% endif %}
-            {% if section.settings.facility_3_text != blank %}
-            <div class="fs-facility-item">
-              <div class="fs-facility-icon">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v20"></path><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>
-              </div>
-              {{ section.settings.facility_3_text }}
-            </div>
-            {% endif %}
-          </div>
+
         </div>
         
         <div class="fs-details-map">
@@ -551,24 +523,7 @@
       "label": "Store Email",
       "default": "support@swastikjewel.in"
     },
-    {
-      "type": "text",
-      "id": "facility_1_text",
-      "label": "Facility 1 Text",
-      "default": "Parking Available"
-    },
-    {
-      "type": "text",
-      "id": "facility_2_text",
-      "label": "Facility 2 Text",
-      "default": "Wheelchair Accessible"
-    },
-    {
-      "type": "text",
-      "id": "facility_3_text",
-      "label": "Facility 3 Text",
-      "default": "Air Conditioned Showroom"
-    },
+
     {
       "type": "html",
       "id": "map_iframe",
