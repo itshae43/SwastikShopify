@@ -167,5 +167,31 @@
     {% section 'wishlist-drawer' %}
     {% section 'whatsapp-widget' %}
     {% section 'video-call-modal' %}
+    <script>
+      // Global interceptor: catch ANY click going to /cart and open sidebar instead
+      document.addEventListener('click', function(e) {
+        var link = e.target.closest('a[href]');
+        if (!link) return;
+        var href = link.getAttribute('href') || '';
+        var cartPath = (window.Shopify && window.Shopify.routes && window.Shopify.routes.root)
+          ? window.Shopify.routes.root + 'cart'
+          : '/cart';
+        // Match /cart exactly or as a path segment
+        if (href === '/cart' || href === cartPath || href.match(/^\/cart(\?|$)/)) {
+          e.preventDefault();
+          e.stopPropagation();
+          if (typeof window.openCartDrawer === 'function') {
+            window.openCartDrawer();
+          } else {
+            // Fallback: directly open drawer DOM (same as wishlist fallback)
+            var drawer = document.getElementById('CartDrawer');
+            if (drawer) {
+              drawer.classList.add('is-open');
+              document.body.style.overflow = 'hidden';
+            }
+          }
+        }
+      }, true); // capture phase = runs before ALL other handlers
+    </script>
   </body>
 </html>
