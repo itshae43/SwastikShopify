@@ -43,7 +43,7 @@
           "type": "question",
           "settings": {
             "title": "Are the prices inclusive of taxes?",
-            "answer": "<p>Yes, the final \"Total Price\" shown on the product page is inclusive of all taxes, including the standard 3% GST on jewellery. We provide a fully transparent price breakdown (Gold Value + Diamond Value + Making Charges + GST) so you know exactly what you are paying for.</p>"
+            "answer": "<p><strong>Yes.</strong> The final price displayed on the product page is <strong>inclusive of all taxes</strong>, including the standard <strong>3% GST</strong> on jewellery. We also provide a <strong>transparent price breakdown</strong>—including <strong>Gold Value, Diamond Value, Making Charges, and GST</strong>—so you know exactly what you're paying for.</p>"
           }
         },
         "category-2": {
