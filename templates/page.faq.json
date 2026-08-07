@@ -29,14 +29,14 @@
           "type": "question",
           "settings": {
             "title": "What types of diamonds do you sell?",
-            "answer": "<p><strong>We offer both Natural Diamonds and Lab-Grown Diamonds (made to order)</strong>, available in their respective collections. Every diamond is carefully selected and certified for its <strong>Cut, Color, Clarity, and Carat</strong>. You can also customize your diamond by selecting your preferred <strong>color and clarity combination</strong>—such as <strong>F-G / SI-I, G-H / VS-SI, or I-J / SI-I</strong>—directly on the product page to match your style and budget.</p>"
+            "answer": "<p>We offer both Natural Diamonds and Lab-Grown Diamonds(made on order), available in their respective collections. Every diamond is carefully selected and certified for its Cut, Color, Clarity, and Carat. On each product page, you can customize and choose your preferred diamond color and clarity combination (such as F-G / SI-I, G-H / VS-SI, or I-J / SI-I) based on your preference and budget.</p>"
           }
         },
         "q3": {
           "type": "question",
           "settings": {
             "title": "Can I customize the gold color or purity?",
-            "answer": "<p>Yes! For most of our pieces, you can choose your preferred gold color (Yellow Gold, Rose Gold, or White Gold) and gold purity directly on the product page before adding it to your cart.</p>"
+            "answer": "<p><strong>Yes!</strong> For most of our jewellery, you can customize your order by selecting your preferred <strong>gold color</strong>—<strong>Yellow Gold, Rose Gold, or White Gold</strong>—and <strong>gold purity</strong> directly on the product page before adding it to your cart.</p>"
           }
         },
         "q4": {
