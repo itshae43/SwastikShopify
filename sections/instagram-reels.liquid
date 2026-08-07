@@ -192,11 +192,13 @@
   }
 
   .instagram-reel__media-container {
+    display: block;
     position: relative;
     width: 100%;
     padding-top: 160%; /* Taller aspect ratio for reels */
     background-color: #f4f4f4;
     cursor: pointer;
+    text-decoration: none;
   }
 
   .instagram-reel__media {
@@ -338,7 +340,11 @@
     <div class="instagram-reels__grid">
       {% for block in section.blocks %}
         <div class="instagram-reel__card" {{ block.shopify_attributes }}>
-          <div class="instagram-reel__media-container" onclick="togglePlay(this)">
+          {% if block.settings.reel_link != blank %}
+            <a href="{{ block.settings.reel_link }}" class="instagram-reel__media-container" target="_blank" rel="noopener noreferrer">
+          {% else %}
+            <div class="instagram-reel__media-container" onclick="togglePlay(this)">
+          {% endif %}
             {% if block.settings.video != blank %}
               {{ block.settings.video | video_tag: image_size: "600x", autoplay: true, loop: true, muted: true, controls: false, class: "instagram-reel__media" }}
             {% elsif block.settings.video_url != blank %}
@@ -384,7 +390,11 @@
                 {{ block.settings.view_count }}
               </div>
             {% endif %}
-          </div>
+          {% if block.settings.reel_link != blank %}
+            </a>
+          {% else %}
+            </div>
+          {% endif %}
         </div>
       {% endfor %}
     </div>
@@ -552,6 +562,12 @@
           "id": "view_count",
           "label": "View Count",
           "default": "12.6K"
+        },
+        {
+          "type": "url",
+          "id": "reel_link",
+          "label": "Instagram Reel Link",
+          "info": "Link to open when the reel is clicked."
         }
       ]
     }
