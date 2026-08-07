@@ -132,14 +132,7 @@
     border-color: #013F3E;
     color: #013F3E;
   }
-  .fs-btn-gold {
-    background-color: #b08958;
-    color: white;
-  }
-  .fs-btn-gold:hover {
-    background-color: #9c7849;
-  }
-
+  
   /* --- DETAILS & MAP --- */
   .fs-details-section {
     padding: 60px 0;
@@ -147,7 +140,6 @@
   .fs-details-wrapper {
     display: flex;
     flex-wrap: wrap;
-    gap: 0px;
     background: white;
     box-shadow: 0 10px 40px rgba(0,0,0,0.06);
     border-radius: 12px;
@@ -368,7 +360,6 @@
             </div>
           </div>
 
-
         </div>
         
         <div class="fs-details-map">
@@ -376,13 +367,6 @@
             {{ section.settings.map_iframe }}
           {% else %}
             <div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;padding:20px;text-align:center;color:#888;">Please paste your Google Maps embed iframe in the theme editor.</div>
-          {% endif %}
-          
-          {% if section.settings.map_link != blank %}
-            <a href="{{ section.settings.map_link }}" target="_blank" class="fs-map-overlay-btn">
-              VIEW ON GOOGLE MAPS
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width: 14px; height: 14px;"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
-            </a>
           {% endif %}
         </div>
       </div>
@@ -413,8 +397,6 @@
       </div>
     </div>
   </section>
-
-
 
 </div>
 
@@ -523,16 +505,10 @@
       "label": "Store Email",
       "default": "support@swastikjewel.in"
     },
-
     {
       "type": "html",
       "id": "map_iframe",
       "label": "Google Map Iframe HTML"
-    },
-    {
-      "type": "url",
-      "id": "map_link",
-      "label": "Google Maps Link (For the View on Google Maps button)"
     }
   ],
   "blocks": [
@@ -554,7 +530,6 @@
           "default": "Feature Name"
         }
       ]
-    },
     }
   ],
   "presets": [
