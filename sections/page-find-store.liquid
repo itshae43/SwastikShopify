@@ -377,6 +377,9 @@
           <div class="fs-info-row">
             <div class="fs-info-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg></div>
             <div class="fs-info-text">
+              {% if section.settings.store_address_label != blank %}
+                <strong>{{ section.settings.store_address_label }}</strong>
+              {% endif %}
               {% if section.settings.btn_directions_link != blank and section.settings.btn_directions_link != '#' %}
                 <a href="{{ section.settings.btn_directions_link }}" target="_blank">
                   {{ section.settings.store_address | newline_to_br }}
@@ -531,6 +534,12 @@
       "id": "store_name",
       "label": "Store Name",
       "default": "Swastik Jewels"
+    },
+    {
+      "type": "text",
+      "id": "store_address_label",
+      "label": "Store Address Label",
+      "info": "Optional text to show above the address (e.g., 'Visit Us')"
     },
     {
       "type": "textarea",
