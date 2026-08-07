@@ -55,12 +55,22 @@
     justify-content: center;
   }
   .fs-hero-subtitle {
-    font-size: 1.1rem;
+    font-size: 1.05rem;
     font-weight: 700;
     text-transform: uppercase;
     letter-spacing: 2px;
     color: #b08958;
     margin-bottom: 15px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .fs-hero-subtitle::before {
+    content: '';
+    display: block;
+    width: 30px;
+    height: 1px;
+    background-color: #b08958;
   }
   .fs-hero-title {
     font-family: var(--font-heading-family, 'Playfair Display', serif);
@@ -89,7 +99,7 @@
     padding: 0 5px;
   }
   .fs-hero-text {
-    font-size: 1.5rem;
+    font-size: 1.25rem;
     line-height: 1.6;
     color: #555;
     margin-bottom: 40px;
@@ -105,49 +115,55 @@
     align-items: center;
     justify-content: center;
     gap: 10px;
-    padding: 12px 24px;
-    border-radius: 4px;
-    font-size: 1.2rem;
+    padding: 14px 28px;
+    border-radius: 6px;
+    font-size: 1.1rem;
     font-weight: 600;
     text-transform: uppercase;
     letter-spacing: 0.5px;
     text-decoration: none;
-    transition: all 0.3s ease;
+    transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
     cursor: pointer;
     border: 1px solid transparent;
   }
   .fs-btn-primary {
     background-color: #013F3E;
     color: white;
+    box-shadow: 0 4px 15px rgba(1,63,62,0.15);
   }
   .fs-btn-primary:hover {
     background-color: #025958;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(1,63,62,0.25);
   }
   .fs-btn-secondary {
     background-color: white;
-    border-color: #ddd;
-    color: #333;
+    border-color: #e5e5e5;
+    color: #013F3E;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.02);
   }
   .fs-btn-secondary:hover {
     border-color: #013F3E;
     color: #013F3E;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(0,0,0,0.05);
   }
   
   /* --- DETAILS & MAP --- */
   .fs-details-section {
-    padding: 60px 0;
+    padding: 80px 0;
   }
   .fs-details-wrapper {
     display: flex;
     flex-wrap: wrap;
     background: white;
-    box-shadow: 0 10px 40px rgba(0,0,0,0.06);
-    border-radius: 12px;
+    box-shadow: 0 20px 50px rgba(0,0,0,0.05);
+    border-radius: 16px;
     overflow: hidden;
   }
   .fs-details-info {
     flex: 1 1 350px;
-    padding: 50px 40px;
+    padding: 60px 50px;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -156,7 +172,7 @@
     flex: 2 1 500px;
     min-height: 400px;
     position: relative;
-    background: #e9e9e9;
+    background: #f4f4f4;
   }
   .fs-details-map iframe {
     width: 100%;
@@ -167,37 +183,47 @@
   }
   .fs-store-name {
     font-family: var(--font-heading-family, 'Playfair Display', serif);
-    font-size: 3rem;
+    font-size: 3.2rem;
     color: #013F3E;
-    margin-bottom: 30px;
+    margin-bottom: 40px;
   }
   .fs-info-row {
     display: flex;
     align-items: flex-start;
-    gap: 15px;
-    margin-bottom: 20px;
+    gap: 20px;
+    margin-bottom: 25px;
   }
   .fs-info-icon {
-    width: 22px;
-    height: 22px;
+    width: 44px;
+    height: 44px;
+    background: #FFF9F2;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     color: #b08958;
     flex-shrink: 0;
-    margin-top: 2px;
+  }
+  .fs-info-icon svg {
+    width: 20px;
+    height: 20px;
   }
   .fs-info-text {
-    font-size: 1.35rem;
+    font-size: 1.25rem;
     line-height: 1.5;
-    color: #555;
+    color: #666;
+    padding-top: 5px;
   }
   .fs-info-text strong {
     color: #222;
     display: block;
-    margin-bottom: 2px;
+    margin-bottom: 4px;
     font-weight: 600;
   }
   .fs-info-text a {
-    color: #555;
+    color: #666;
     text-decoration: none;
+    transition: color 0.2s;
   }
   .fs-info-text a:hover {
     color: #b08958;
@@ -205,7 +231,7 @@
 
   /* --- WHY VISIT US --- */
   .fs-features-section {
-    padding: 70px 0;
+    padding: 90px 0;
     background: #FAF8F5;
     border-top: 1px solid #efe4d8;
     border-bottom: 1px solid #efe4d8;
@@ -213,7 +239,7 @@
   .fs-section-title {
     text-align: center;
     font-family: var(--font-heading-family, 'Playfair Display', serif);
-    font-size: 2.8rem;
+    font-size: 3rem;
     color: #013F3E;
     margin-bottom: 15px;
     letter-spacing: 1px;
@@ -223,7 +249,7 @@
     width: 40px;
     height: 1px;
     background: #b08958;
-    margin: 0 auto 50px;
+    margin: 0 auto 60px;
     position: relative;
   }
   .fs-title-divider::after {
@@ -239,25 +265,48 @@
   }
   .fs-features-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
     gap: 30px;
     text-align: center;
   }
   .fs-feature-item {
+    background: white;
+    padding: 40px 30px;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.03);
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 15px;
+    gap: 20px;
+    transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+  }
+  .fs-feature-item:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 12px 30px rgba(0,0,0,0.06);
   }
   .fs-feature-icon {
-    width: 55px;
-    height: 55px;
+    width: 70px;
+    height: 70px;
+    background: #FAF8F5;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     color: #013F3E;
+    transition: background 0.3s ease;
+  }
+  .fs-feature-item:hover .fs-feature-icon {
+    background: #FFF9F2;
+    color: #b08958;
+  }
+  .fs-feature-icon svg {
+    width: 32px;
+    height: 32px;
   }
   .fs-feature-text {
-    font-size: 1.3rem;
-    color: #333;
-    font-weight: 500;
+    font-size: 1.25rem;
+    color: #222;
+    font-weight: 600;
     line-height: 1.4;
   }
 
@@ -267,6 +316,7 @@
       background: linear-gradient(to right, #FFF9F2 0%, rgba(255,249,242,0.8) 40%, rgba(255,249,242,0) 100%);
     }
     .fs-hero-content { width: 70%; }
+    .fs-details-info { padding: 40px 30px; }
   }
 
   @media screen and (max-width: 768px) {
@@ -280,6 +330,7 @@
     .fs-store-name { font-size: 2.6rem; }
     .fs-details-wrapper { flex-direction: column; }
     .fs-details-map { min-height: 350px; }
+    .fs-features-grid { grid-template-columns: 1fr; }
   }
 {% endstylesheet %}
 
