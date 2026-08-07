@@ -393,8 +393,13 @@
           <div class="fs-info-row">
             <div class="fs-info-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg></div>
             <div class="fs-info-text">
-              <strong>{{ section.settings.store_hours | newline_to_br }}</strong>
+              {% if section.settings.store_hours_label != blank %}
+                <strong>{{ section.settings.store_hours_label }}</strong>
+              {% endif %}
+              {{ section.settings.store_hours | newline_to_br }}
+              
               {% if section.settings.store_status_text != blank %}
+                <br>
                 <span style="display:inline-block; margin-top: 5px; background: #013F3E; color: white; padding: 3px 10px; border-radius: 12px; font-size: 1rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px;">{{ section.settings.store_status_text }}</span>
               {% endif %}
             </div>
@@ -548,9 +553,15 @@
       "default": "123, Bank Street,\nKarol Bagh,\nNew Delhi - 110005"
     },
     {
+      "type": "text",
+      "id": "store_hours_label",
+      "label": "Store Hours Label",
+      "info": "Optional text to show above the hours (e.g., 'Opening Hours')"
+    },
+    {
       "type": "textarea",
       "id": "store_hours",
-      "label": "Store Hours",
+      "label": "Store Hours Text",
       "default": "Monday - Sunday\n11:00 AM - 8:00 PM"
     },
     {

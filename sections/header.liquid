@@ -84,6 +84,11 @@
     <!-- Center: Navigation Menu -->
     <nav class="header__nav" role="navigation">
       <ul class="header__menu-list">
+        <li class="header__menu-item">
+          <a href="{{ routes.root_url }}" class="header__menu-link {% if request.page_type == 'index' %}header__menu-link--active{% endif %}">
+            Home
+          </a>
+        </li>
         {% if section.settings.menu != blank %}
           {% for link in section.settings.menu.links %}
             {%- assign downcase_title = link.title | downcase -%}
@@ -371,6 +376,11 @@
       <!-- Drawer Nav Items (Dynamic Desktop & Detailed Swastik Categories) -->
       <nav class="mobile-menu-drawer__nav">
         <ul class="mobile-menu-list">
+          <li class="mobile-menu-item">
+            <a href="{{ routes.root_url }}" class="mobile-menu-link">
+              <span class="mobile-menu-title">HOME</span>
+            </a>
+          </li>
           {%- assign menu_links = section.settings.menu.links -%}
           {%- if menu_links != blank -%}
             {%- for link in menu_links -%}
