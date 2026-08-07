@@ -77,11 +77,12 @@
         "store_name": "Swastik Jewels",
         "store_address_label": "Address",
         "store_address": "2549, Gali No. 6, Block 35M,\nBeadonpura, Karol Bagh,\nNew Delhi, Delhi 110005",
-        "store_hours": "Tuesday - Sunday\n12:00 AM - 08:00 PM",
+        "store_hours_label": " Tuesday - Sunday",
+        "store_hours": "12:00 AM - 08:00 PM",
         "store_status_text": "",
-        "store_phone_label": "",
+        "store_phone_label": "Phone",
         "store_phone": "+91 96600 96700",
-        "store_email_label": "",
+        "store_email_label": "Email",
         "store_email": "contact@swastikjewel.in",
         "map_iframe": "<iframe src=\"https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3501.311038825487!2d77.19130161040479!3d28.650404083168546!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x390d03d719622805%3A0x646d4d936b614f0c!2sSwastik%20Jewels!5e0!3m2!1sen!2sin!4v1786083321426!5m2!1sen!2sin\" width=\"600\" height=\"450\" style=\"border:0;\" allowfullscreen=\"\" loading=\"lazy\" referrerpolicy=\"strict-origin-when-cross-origin\"></iframe>"
       }
