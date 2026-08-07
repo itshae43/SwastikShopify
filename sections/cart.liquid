@@ -1,9 +1,12 @@
 <script>
-  // Redirect /cart to homepage and open the cart drawer sidebar instead
   (function() {
-    var referrer = document.referrer;
-    // Go back to the page the user came from, or fallback to homepage
-    var destination = (referrer && referrer !== window.location.href) ? referrer : '/';
+    // Set a flag so the cart drawer auto-opens after redirect
+    try { sessionStorage.setItem('swastik_open_cart_drawer', '1'); } catch(e) {}
+
+    // Go back to where the user came from, or homepage
+    var ref = document.referrer;
+    var here = window.location.href;
+    var destination = (ref && ref !== here && ref.indexOf('/cart') === -1) ? ref : '/';
     window.location.replace(destination);
   })();
 </script>

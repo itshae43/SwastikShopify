@@ -501,6 +501,25 @@
     document.body.classList.remove('drawer-open');
     document.body.classList.remove('body-lock');
   };
+
+  // Auto-open cart drawer if redirected from /cart
+  (function() {
+    function tryOpenDrawer() {
+      try {
+        if (sessionStorage.getItem('swastik_open_cart_drawer')) {
+          sessionStorage.removeItem('swastik_open_cart_drawer');
+          if (typeof window.openCartDrawer === 'function') {
+            window.openCartDrawer();
+          }
+        }
+      } catch(e) {}
+    }
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', tryOpenDrawer);
+    } else {
+      tryOpenDrawer();
+    }
+  })();
 </script>
 
 {% schema %}
