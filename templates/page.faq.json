@@ -76,7 +76,7 @@
           "type": "question",
           "settings": {
             "title": "What payment methods do you accept?",
-            "answer": "<p>We accept all major secure payment methods, including UPI, RuPay, Visa, Mastercard, and American Express.</p>"
+            "answer": "<p><strong>Yes.</strong> We accept all major secure payment methods, including <strong>UPI, RuPay, Visa, Mastercard, and American Express</strong>, ensuring a safe and seamless checkout experience.</p>"
           }
         },
         "q8": {
