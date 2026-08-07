@@ -292,7 +292,7 @@
           {%- for product in collection.products -%}
             {% render 'product-card', product: product, class_prefix: 'best-sellers' %}
           {%- else -%}
-            {%- if collection.handle == 'gold-jewellery' -%}
+            {%- if section.settings.show_coming_soon -%}
               {{ 'component-product-card.css' | asset_url | stylesheet_tag }}
               {%- for i in (1..8) -%}
                 <div class="product-card-ui" style="pointer-events: none; opacity: 0.85;">
@@ -307,7 +307,7 @@
                     </div>
                   </div>
                   <div class="product-card-ui__content" style="align-items: center; justify-content: center; text-align: center;">
-                    <h3 class="product-card-ui__title" style="color: #013F3E; font-family: 'Inter', serif;">New Gold Design</h3>
+                    <h3 class="product-card-ui__title" style="color: #013F3E; font-family: 'Inter', serif;">{{ section.settings.coming_soon_text | default: 'New Design' }}</h3>
                     <div class="product-card-ui__price-row" style="justify-content: center;">
                       <span class="price-current" style="color: #7B6A58; font-size: 14px; text-transform: uppercase; letter-spacing: 1px;">Launching Soon</span>
                     </div>
@@ -1052,6 +1052,18 @@
       "id": "bg_color",
       "label": "Background Color",
       "default": "#ffffff"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_coming_soon",
+      "label": "Show Coming Soon Cards if Empty",
+      "default": false
+    },
+    {
+      "type": "text",
+      "id": "coming_soon_text",
+      "label": "Coming Soon Text",
+      "default": "New Design"
     }
   ]
 }
