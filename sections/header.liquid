@@ -624,7 +624,7 @@
       <span>Wishlist</span>
     </a>
 
-    <a href="{{ routes.cart_url }}" class="mobile-bottom-nav__item js-mobile-cart-trigger" aria-label="Bag">
+    <a href="javascript:void(0)" class="mobile-bottom-nav__item js-mobile-cart-trigger" aria-label="Bag">
       <div class="mobile-bottom-nav__icon-wrapper">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
           <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path>
@@ -2161,10 +2161,17 @@
     const cartTriggers = document.querySelectorAll('.js-mobile-cart-trigger');
     cartTriggers.forEach(btn => {
       btn.addEventListener('click', function(e) {
-        const drawer = document.getElementById('CartDrawer');
-        if (drawer && typeof window.openCartDrawer === 'function') {
-          e.preventDefault();
+        e.preventDefault();
+        e.stopPropagation();
+        if (typeof window.openCartDrawer === 'function') {
           window.openCartDrawer();
+        } else {
+          // openCartDrawer not ready yet — wait a tick and try again
+          setTimeout(function() {
+            if (typeof window.openCartDrawer === 'function') {
+              window.openCartDrawer();
+            }
+          }, 100);
         }
       });
     });
