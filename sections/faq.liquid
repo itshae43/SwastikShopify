@@ -1,0 +1,199 @@
+<div class="faq-section">
+  <div class="faq-container">
+    {%- if section.settings.subtitle != blank -%}
+      <div class="faq-subtitle">{{ section.settings.subtitle }}</div>
+    {%- endif -%}
+    
+    {%- if section.settings.title != blank -%}
+      <h2 class="faq-title">{{ section.settings.title }}</h2>
+    {%- endif -%}
+
+    <div class="faq-list">
+      {%- for block in section.blocks -%}
+        {%- case block.type -%}
+          {%- when 'category' -%}
+            <h3 class="faq-category-title" {{ block.shopify_attributes }}>
+              {{ block.settings.title }}
+            </h3>
+          {%- when 'question' -%}
+            <div class="faq-item" {{ block.shopify_attributes }}>
+              <button class="faq-question" aria-expanded="false" aria-controls="faq-answer-{{ block.id }}">
+                <span class="faq-question-text">{{ block.settings.title }}</span>
+                <span class="faq-icon">
+                  <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M7 0V14M0 7H14" stroke="currentColor" stroke-width="1.5"/>
+                  </svg>
+                </span>
+              </button>
+              <div class="faq-answer" id="faq-answer-{{ block.id }}">
+                <div class="faq-answer-inner">
+                  {{ block.settings.answer }}
+                </div>
+              </div>
+            </div>
+        {%- endcase -%}
+      {%- endfor -%}
+    </div>
+  </div>
+</div>
+
+{% stylesheet %}
+  .faq-section {
+    padding: 60px 20px;
+    background: #ffffff;
+  }
+  .faq-container {
+    max-width: 800px;
+    margin: 0 auto;
+  }
+  .faq-subtitle {
+    color: #e53935;
+    font-size: 14px;
+    font-weight: 500;
+    margin-bottom: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+  .faq-title {
+    font-size: 36px;
+    font-weight: 600;
+    margin-bottom: 40px;
+    color: #111111;
+  }
+  .faq-category-title {
+    font-size: 24px;
+    font-weight: 600;
+    margin-top: 40px;
+    margin-bottom: 20px;
+    color: #111111;
+  }
+  .faq-category-title:first-child {
+    margin-top: 0;
+  }
+  .faq-list {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+  .faq-item {
+    background-color: #f5f5f5;
+    border-radius: 8px;
+    overflow: hidden;
+  }
+  .faq-question {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 24px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    text-align: left;
+    font-size: 16px;
+    font-weight: 500;
+    color: #111111;
+    font-family: inherit;
+  }
+  .faq-icon {
+    flex-shrink: 0;
+    margin-left: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.3s ease;
+  }
+  .faq-question[aria-expanded="true"] .faq-icon {
+    transform: rotate(45deg);
+  }
+  .faq-answer {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease, padding 0.3s ease;
+  }
+  .faq-question[aria-expanded="true"] + .faq-answer {
+    max-height: 1000px; /* arbitrary large value */
+  }
+  .faq-answer-inner {
+    padding: 0 24px 24px;
+    font-size: 15px;
+    line-height: 1.6;
+    color: #555555;
+  }
+  .faq-answer-inner p {
+    margin: 0 0 10px 0;
+  }
+  .faq-answer-inner p:last-child {
+    margin-bottom: 0;
+  }
+{% endstylesheet %}
+
+{% javascript %}
+  document.addEventListener('DOMContentLoaded', function() {
+    const questions = document.querySelectorAll('.faq-question');
+    questions.forEach(question => {
+      question.addEventListener('click', function() {
+        const expanded = this.getAttribute('aria-expanded') === 'true';
+        this.setAttribute('aria-expanded', !expanded);
+      });
+    });
+  });
+{% endjavascript %}
+
+{% schema %}
+{
+  "name": "FAQ",
+  "settings": [
+    {
+      "type": "text",
+      "id": "subtitle",
+      "label": "Subtitle",
+      "default": "FAQs"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Title",
+      "default": "Questions & Answers"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "category",
+      "name": "Category Heading",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Heading",
+          "default": "Category"
+        }
+      ]
+    },
+    {
+      "type": "question",
+      "name": "Question",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Question",
+          "default": "What is your question?"
+        },
+        {
+          "type": "richtext",
+          "id": "answer",
+          "label": "Answer",
+          "default": "<p>Provide the answer to the question here.</p>"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "FAQ",
+      "category": "Text"
+    }
+  ]
+}
+{% endschema %}
