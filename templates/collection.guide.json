@@ -16,6 +16,43 @@
     },
     "discover_grid": {
       "type": "discover-grid",
+      "blocks": {
+        "rings": {
+          "type": "card",
+          "settings": {
+            "image": "shopify://shop_images/new.png",
+            "link": ""
+          }
+        },
+        "earrings": {
+          "type": "card",
+          "settings": {
+            "image": "shopify://shop_images/new_2.png",
+            "image_mobile": "shopify://shop_images/latest_ear_ring_flipped_version.png",
+            "link": ""
+          }
+        },
+        "pendants": {
+          "type": "card",
+          "settings": {
+            "image": "shopify://shop_images/sj_narrow_category.png",
+            "link": ""
+          }
+        },
+        "tennis": {
+          "type": "card",
+          "settings": {
+            "image": "shopify://shop_images/new_3.png",
+            "link": ""
+          }
+        }
+      },
+      "block_order": [
+        "rings",
+        "earrings",
+        "pendants",
+        "tennis"
+      ],
       "settings": {
         "subheading": "DISCOVER",
         "title": "Styles that stay with you",
@@ -27,6 +64,60 @@
     },
     "category_showcase": {
       "type": "category-showcase",
+      "blocks": {
+        "ring": {
+          "type": "collection",
+          "settings": {
+            "collection": "",
+            "title": "RINGS",
+            "image": "shopify://shop_images/latest_4.png",
+            "is_coming_soon": false
+          }
+        },
+        "necklace": {
+          "type": "collection",
+          "settings": {
+            "collection": "",
+            "title": "NECKLACES",
+            "image": "shopify://shop_images/latest_7.png",
+            "is_coming_soon": false
+          }
+        },
+        "pendant_set": {
+          "type": "collection",
+          "settings": {
+            "collection": "",
+            "title": "PENDANT SETS",
+            "image": "shopify://shop_images/latest_6.png",
+            "is_coming_soon": false
+          }
+        },
+        "earring": {
+          "type": "collection",
+          "settings": {
+            "collection": "",
+            "title": "BRACELETS",
+            "image": "shopify://shop_images/latest_5.png",
+            "is_coming_soon": false
+          }
+        },
+        "bangle": {
+          "type": "collection",
+          "settings": {
+            "collection": "",
+            "title": "CHIKPATTIS",
+            "image": "shopify://shop_images/Gold_Jewellery_1_a2a98288-c703-4edc-b5f2-9cdee7d1d7ac.png",
+            "is_coming_soon": false
+          }
+        }
+      },
+      "block_order": [
+        "ring",
+        "necklace",
+        "pendant_set",
+        "earring",
+        "bangle"
+      ],
       "settings": {
         "subheading": "TIMELESS. TRADITIONAL. YOU.",
         "heading": "COLLECTION SHOWCASE",
