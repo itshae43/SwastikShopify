@@ -83,14 +83,14 @@
           "type": "question",
           "settings": {
             "title": "Can I save an item to buy it later?",
-            "answer": "<p>Yes! You can click the \"Heart\" icon on any product to add it to your Wishlist. Please note that your wishlist is saved to the current browser/device you are using.</p>"
+            "answer": "<p><strong>Yes!</strong> Simply click the <strong>Heart</strong> icon on any product to add it to your <strong>Wishlist</strong>. Your wishlist is automatically saved on the <strong>current browser and device</strong> you're using, making it easy to revisit your favorite pieces later.</p>"
           }
         },
         "q9": {
           "type": "question",
           "settings": {
             "title": "Where is your physical store located?",
-            "answer": "<p>Our flagship store is located in Delhi. You can find our exact location, get directions via Google Maps, or contact us directly by checking the footer at the bottom of our website or visiting the \"Find Store\" page.</p>"
+            "answer": "<p><strong>Yes!</strong> Our flagship store is located in <strong>Delhi</strong>. You can find our exact store location, get directions via <strong>Google Maps</strong>, and view our contact details by visiting the <strong>Find Store</strong> page or checking the <strong>website footer</strong>.</p>"
           }
         }
       },
