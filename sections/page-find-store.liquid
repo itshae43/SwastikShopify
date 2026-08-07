@@ -286,199 +286,11 @@
     line-height: 1.4;
   }
 
-  /* --- APPOINTMENT SECTION --- */
-  .fs-appointment-section {
-    padding: 80px 0;
-  }
-  .fs-appointment-wrapper {
-    background: #013F3E;
-    border-radius: 12px;
-    overflow: hidden;
-    display: flex;
-    flex-wrap: wrap;
-    color: white;
-  }
-  .fs-apt-content {
-    flex: 1 1 300px;
-    padding: 60px 50px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-  }
-  .fs-apt-subtitle {
-    font-size: 1.1rem;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 2px;
-    color: #b08958;
-    margin-bottom: 12px;
-  }
-  .fs-apt-title {
-    font-family: var(--font-heading-family, 'Playfair Display', serif);
-    font-size: 4rem;
-    margin-bottom: 20px;
-    line-height: 1.1;
-  }
-  .fs-apt-text {
-    font-size: 1.4rem;
-    color: #e0e0e0;
-    line-height: 1.6;
-    margin-bottom: 30px;
-  }
-  .fs-apt-divider {
-    width: 40px;
-    height: 1px;
-    background: #b08958;
-    position: relative;
-  }
-  .fs-apt-divider::after {
-    content: '❖';
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    background: #013F3E;
-    color: #b08958;
-    font-size: 14px;
-    padding: 0 5px;
-  }
-  .fs-apt-form-wrapper {
-    flex: 2 1 450px;
-    background: white;
-    padding: 40px;
-    margin: 20px 0 20px 0;
-    border-radius: 8px 0 0 8px;
-    color: #333;
-  }
-  .fs-apt-image {
-    flex: 1 1 250px;
-    position: relative;
-    min-height: 300px;
-  }
-  .fs-apt-image img {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-  }
-  
-  .fs-form-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 20px;
-  }
-  .fs-form-field {
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-  }
-  .fs-form-field label {
-    font-size: 1.2rem;
-    font-weight: 500;
-    color: #444;
-  }
-  .fs-form-input {
-    padding: 12px 15px;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-    font-size: 1.3rem;
-    font-family: inherit;
-    width: 100%;
-    box-sizing: border-box;
-    background: #fafafa;
-    color: #333;
-  }
-  .fs-form-input:focus {
-    outline: none;
-    border-color: #013F3E;
-  }
-  .fs-form-submit {
-    grid-column: 1 / -1;
-    margin-top: 10px;
-  }
-
-  /* --- STATS SECTION --- */
-  .fs-stats-section {
-    padding: 0 0 70px;
-  }
-  .fs-stats-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 30px;
-    border-top: 1px solid #eaeaea;
-    border-bottom: 1px solid #eaeaea;
-    padding: 40px 0;
-  }
-  .fs-stat-item {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 15px;
-  }
-  .fs-stat-icon {
-    width: 45px;
-    height: 45px;
-    color: #b08958;
-  }
-  .fs-stat-content h4 {
-    font-family: var(--font-heading-family, 'Playfair Display', serif);
-    font-size: 1.8rem;
-    color: #111;
-    margin: 0 0 4px;
-  }
-  .fs-stat-content p {
-    font-size: 1.2rem;
-    color: #555;
-    margin: 0;
-    font-weight: 500;
-  }
-
-  /* --- BOTTOM CTA --- */
-  .fs-cta-section {
-    padding-bottom: 80px;
-  }
-  .fs-cta-wrapper {
-    background: #013F3E;
-    border-radius: 12px;
-    padding: 60px 20px;
-    text-align: center;
-    color: white;
-  }
-  .fs-cta-wrapper h2 {
-    font-family: var(--font-heading-family, 'Playfair Display', serif);
-    font-size: 3.6rem;
-    margin-bottom: 15px;
-    color: white;
-  }
-  .fs-cta-wrapper p {
-    font-size: 1.4rem;
-    color: #e0e0e0;
-    margin-bottom: 30px;
-  }
-  .fs-cta-buttons {
-    display: flex;
-    justify-content: center;
-    gap: 15px;
-    flex-wrap: wrap;
-  }
-  
-  @media screen and (max-width: 990px) {
-    .fs-apt-form-wrapper {
-      margin: 0;
-      border-radius: 0;
-    }
-    .fs-apt-image {
-      display: none;
-    }
-  }
-
   @media screen and (max-width: 768px) {
     .fs-hero-title { font-size: 4rem; }
     .fs-store-name { font-size: 2.6rem; }
-    .fs-details-wrapper, .fs-appointment-wrapper { flex-direction: column; }
-    .fs-form-grid { grid-template-columns: 1fr; }
+    .fs-details-wrapper { flex-direction: column; }
     .fs-details-map { min-height: 350px; }
-    .fs-apt-form-wrapper { padding: 30px 20px; }
   }
 {% endstylesheet %}
 
@@ -593,6 +405,13 @@
           {% else %}
             <div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;padding:20px;text-align:center;color:#888;">Please paste your Google Maps embed iframe in the theme editor.</div>
           {% endif %}
+          
+          {% if section.settings.map_link != blank %}
+            <a href="{{ section.settings.map_link }}" target="_blank" class="fs-map-overlay-btn">
+              VIEW ON GOOGLE MAPS
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width: 14px; height: 14px;"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
+            </a>
+          {% endif %}
         </div>
       </div>
     </div>
@@ -623,118 +442,7 @@
     </div>
   </section>
 
-  <!-- APPOINTMENT SECTION -->
-  <section class="fs-appointment-section">
-    <div class="fs-container">
-      <div class="fs-appointment-wrapper">
-        <div class="fs-apt-content">
-          <div class="fs-apt-subtitle">{{ section.settings.apt_subtitle }}</div>
-          <h2 class="fs-apt-title">{{ section.settings.apt_title }}</h2>
-          <p class="fs-apt-text">{{ section.settings.apt_text }}</p>
-          <div class="fs-apt-divider"></div>
-        </div>
-        
-        <div class="fs-apt-form-wrapper">
-          {% form 'contact', id: 'StoreAppointmentForm' %}
-            {% if form.posted_successfully? %}
-              <div style="background: #e8f5e9; color: #2e7d32; padding: 15px; border-radius: 4px; margin-bottom: 20px;">
-                Your appointment request has been sent! We will contact you shortly to confirm.
-              </div>
-            {% elsif form.errors %}
-              <div style="background: #ffebee; color: #c62828; padding: 15px; border-radius: 4px; margin-bottom: 20px;">
-                Please correct the errors and try again.
-              </div>
-            {% endif %}
 
-            <input type="hidden" name="contact[Subject]" value="Store Appointment Request">
-            
-            <div class="fs-form-grid">
-              <div class="fs-form-field">
-                <label for="AptFormName">Your Name</label>
-                <input type="text" id="AptFormName" name="contact[name]" class="fs-form-input" placeholder="Enter your name" required>
-              </div>
-              <div class="fs-form-field">
-                <label for="AptFormPhone">Phone Number</label>
-                <input type="tel" id="AptFormPhone" name="contact[phone]" class="fs-form-input" placeholder="Enter your number" required>
-              </div>
-              <div class="fs-form-field">
-                <label for="AptFormDate">Preferred Date</label>
-                <input type="date" id="AptFormDate" name="contact[Preferred Date]" class="fs-form-input" required>
-              </div>
-              <div class="fs-form-field">
-                <label for="AptFormTime">Preferred Time</label>
-                <input type="time" id="AptFormTime" name="contact[Preferred Time]" class="fs-form-input" required>
-              </div>
-              <div class="fs-form-field" style="grid-column: 1 / -1;">
-                <label for="AptFormPurpose">Purpose of Visit</label>
-                <select id="AptFormPurpose" name="contact[Purpose of Visit]" class="fs-form-input" style="appearance: auto;">
-                  <option value="General Viewing">General Viewing</option>
-                  <option value="Bridal Consultation">Bridal Consultation</option>
-                  <option value="Custom Jewellery Design">Custom Jewellery Design</option>
-                  <option value="Gold Exchange">Gold Exchange</option>
-                  <option value="Repair / Polishing">Repair / Polishing</option>
-                </select>
-              </div>
-              <div class="fs-form-submit">
-                <button type="submit" class="fs-btn fs-btn-gold" style="width: 100%; border: none; padding: 14px; font-size: 1.3rem;">Book Appointment</button>
-              </div>
-            </div>
-          {% endform %}
-        </div>
-        
-        <div class="fs-apt-image">
-          {% if section.settings.apt_image != blank %}
-            {{ section.settings.apt_image | image_url: width: 800 | image_tag: loading: 'lazy' }}
-          {% else %}
-            <div style="background: #111; width: 100%; height: 100%;"></div>
-          {% endif %}
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- STATS SECTION -->
-  <section class="fs-stats-section">
-    <div class="fs-container">
-      <div class="fs-stats-grid">
-        {% for block in section.blocks %}
-          {% if block.type == 'stat' %}
-            <div class="fs-stat-item">
-              <div class="fs-stat-icon">
-                {% if block.settings.icon != blank %}
-                  {{ block.settings.icon }}
-                {% else %}
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="7"></circle><polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"></polyline></svg>
-                {% endif %}
-              </div>
-              <div class="fs-stat-content">
-                <h4>{{ block.settings.number }}</h4>
-                <p>{{ block.settings.text }}</p>
-              </div>
-            </div>
-          {% endif %}
-        {% endfor %}
-      </div>
-    </div>
-  </section>
-
-  <!-- BOTTOM CTA -->
-  <section class="fs-cta-section">
-    <div class="fs-container">
-      <div class="fs-cta-wrapper">
-        <h2>{{ section.settings.cta_title }}</h2>
-        <p>{{ section.settings.cta_text }}</p>
-        <div class="fs-cta-buttons">
-          {% if section.settings.cta_btn1_link != blank %}
-            <a href="{{ section.settings.cta_btn1_link }}" class="fs-btn fs-btn-gold">{{ section.settings.cta_btn1_text }}</a>
-          {% endif %}
-          {% if section.settings.cta_btn2_link != blank %}
-            <a href="{{ section.settings.cta_btn2_link }}" class="fs-btn fs-btn-secondary" style="background: transparent; border-color: rgba(255,255,255,0.4); color: white;">{{ section.settings.cta_btn2_text }}</a>
-          {% endif %}
-        </div>
-      </div>
-    </div>
-  </section>
 
 </div>
 
@@ -867,69 +575,9 @@
       "label": "Google Map Iframe HTML"
     },
     {
-      "type": "header",
-      "content": "Appointment Section"
-    },
-    {
-      "type": "text",
-      "id": "apt_subtitle",
-      "label": "Appointment Subtitle",
-      "default": "BOOK AN APPOINTMENT"
-    },
-    {
-      "type": "text",
-      "id": "apt_title",
-      "label": "Appointment Title",
-      "default": "Skip The Wait"
-    },
-    {
-      "type": "textarea",
-      "id": "apt_text",
-      "label": "Appointment Text",
-      "default": "Reserve your visit and get one-on-one assistance from our jewellery experts."
-    },
-    {
-      "type": "image_picker",
-      "id": "apt_image",
-      "label": "Appointment Side Image"
-    },
-    {
-      "type": "header",
-      "content": "Bottom CTA Section"
-    },
-    {
-      "type": "text",
-      "id": "cta_title",
-      "label": "CTA Title",
-      "default": "We'd Love to Welcome You"
-    },
-    {
-      "type": "textarea",
-      "id": "cta_text",
-      "label": "CTA Text",
-      "default": "Experience timeless craftsmanship and personalized service at Swastik Jewels."
-    },
-    {
-      "type": "text",
-      "id": "cta_btn1_text",
-      "label": "CTA Button 1 Text",
-      "default": "Visit Showroom"
-    },
-    {
       "type": "url",
-      "id": "cta_btn1_link",
-      "label": "CTA Button 1 Link"
-    },
-    {
-      "type": "text",
-      "id": "cta_btn2_text",
-      "label": "CTA Button 2 Text",
-      "default": "Call Now"
-    },
-    {
-      "type": "url",
-      "id": "cta_btn2_link",
-      "label": "CTA Button 2 Link"
+      "id": "map_link",
+      "label": "Google Maps Link (For the View on Google Maps button)"
     }
   ],
   "blocks": [
@@ -952,29 +600,6 @@
         }
       ]
     },
-    {
-      "type": "stat",
-      "name": "Trust Statistic",
-      "limit": 4,
-      "settings": [
-        {
-          "type": "html",
-          "id": "icon",
-          "label": "SVG Icon HTML"
-        },
-        {
-          "type": "text",
-          "id": "number",
-          "label": "Statistic Heading",
-          "default": "SINCE 2011"
-        },
-        {
-          "type": "text",
-          "id": "text",
-          "label": "Statistic Subtext",
-          "default": "15+ Years of Trust"
-        }
-      ]
     }
   ],
   "presets": [
@@ -1021,38 +646,6 @@
           "settings": {
             "text": "Easy EMI Options",
             "icon": "<svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><rect x=\"2\" y=\"5\" width=\"20\" height=\"14\" rx=\"2\"></rect><line x1=\"2\" y1=\"10\" x2=\"22\" y2=\"10\"></line></svg>"
-          }
-        },
-        {
-          "type": "stat",
-          "settings": {
-            "number": "SINCE 2011",
-            "text": "15+ Years of Trust",
-            "icon": "<svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><circle cx=\"12\" cy=\"8\" r=\"7\"></circle><polyline points=\"8.21 13.89 7 23 12 20 17 23 15.79 13.88\"></polyline></svg>"
-          }
-        },
-        {
-          "type": "stat",
-          "settings": {
-            "number": "10,000+",
-            "text": "Happy Families",
-            "icon": "<svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2\"></path><circle cx=\"9\" cy=\"7\" r=\"4\"></circle><path d=\"M23 21v-2a4 4 0 0 0-3-3.87\"></path><path d=\"M16 3.13a4 4 0 0 1 0 7.75\"></path></svg>"
-          }
-        },
-        {
-          "type": "stat",
-          "settings": {
-            "number": "1000+",
-            "text": "Jewellery Designs",
-            "icon": "<svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M6 3h12l4 6-10 13L2 9Z\"></path><path d=\"M11 3 8 9l4 13 4-13-3-6\"></path><path d=\"M2 9h20\"></path></svg>"
-          }
-        },
-        {
-          "type": "stat",
-          "settings": {
-            "number": "100% BIS Hallmarked",
-            "text": "Gold & Certified Diamonds",
-            "icon": "<svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z\"></path><polyline points=\"9 12 11 14 15 10\"></polyline></svg>"
           }
         }
       ]
