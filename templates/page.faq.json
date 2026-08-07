@@ -11,10 +11,6 @@
   "sections": {
     "main": {
       "type": "faq",
-      "settings": {
-        "subtitle": "FAQs",
-        "title": "Questions & Answers"
-      },
       "blocks": {
         "category-1": {
           "type": "category",
@@ -26,14 +22,14 @@
           "type": "question",
           "settings": {
             "title": "Are your gold products hallmarked?",
-            "answer": "<p>Yes, authenticity is our priority. All our gold jewellery is BIS Hallmarked to guarantee the purity of the gold, whether you choose 14K, 18K, or 22K. You will see the hallmark details in the \"Product Details\" section of every item.</p>"
+            "answer": "<p><strong>Yes, authenticity is our priority.</strong> All our gold jewellery is BIS Hallmarked to certify the purity of the gold, whether you choose <strong>9K, 14K, or 18K</strong>. You can find the hallmark details in the <strong>Product Details</strong> section of every product.</p>"
           }
         },
         "q2": {
           "type": "question",
           "settings": {
             "title": "What types of diamonds do you sell?",
-            "answer": "<p>We offer both Natural Diamonds and Lab-Grown Diamonds, available in their respective collections. Every diamond is carefully selected and certified for its Cut, Color, Clarity, and Carat. On each product page, you can customize and choose your preferred diamond color and clarity combination (such as F-G \/ SI-I, G-H \/ VS-SI, or I-J \/ SI-I) based on your preference and budget.</p>"
+            "answer": "<p>We offer both Natural Diamonds and Lab-Grown Diamonds(made on order), available in their respective collections. Every diamond is carefully selected and certified for its Cut, Color, Clarity, and Carat. On each product page, you can customize and choose your preferred diamond color and clarity combination (such as F-G / SI-I, G-H / VS-SI, or I-J / SI-I) based on your preference and budget.</p>"
           }
         },
         "q3": {
@@ -111,7 +107,12 @@
         "q7",
         "q8",
         "q9"
-      ]
+      ],
+      "settings": {
+        "show_banner": true,
+        "subtitle": "FAQs",
+        "title": "Questions & Answers"
+      }
     }
   },
   "order": [
