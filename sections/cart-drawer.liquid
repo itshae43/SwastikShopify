@@ -46,7 +46,7 @@
 
     <div class="cart-drawer__footer" id="CartDrawerFooter" style="display: {% if cart.item_count > 0 %}block{% else %}none{% endif %};">
       <div class="cart-drawer__subtotal-row">
-        <span class="subtotal-label">Subtotal</span>
+        <span class="subtotal-label">Subtotal.</span>
         <span class="subtotal-price" id="CartDrawerSubtotal">{{ cart.total_price | money }}</span>
       </div>
       <p class="cart-drawer__tax-note">Taxes and shipping calculated at checkout</p>
