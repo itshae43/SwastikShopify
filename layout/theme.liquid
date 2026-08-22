@@ -4,6 +4,16 @@
     {% # Inlined CSS Variables %}
     {% render 'css-variables' %}
 
+    {% if customer %}
+      <script>
+        // Redirect to checkout immediately if intent exists, preventing flash of home page
+        if (sessionStorage.getItem('post_login_redirect') === '/checkout') {
+          sessionStorage.removeItem('post_login_redirect');
+          window.location.replace('/checkout');
+        }
+      </script>
+    {% endif %}
+
     {% comment %}
       Font preloading:
       1. Preconnect to font CDN for faster connection
@@ -20,6 +30,8 @@
     {% comment %} Google Fonts Preconnect & Stylesheet {% endcomment %}
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://account.swastikjewel.in" crossorigin>
+    <link rel="dns-prefetch" href="https://account.swastikjewel.in">
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300..700;1,300..700&family=Inter:wght@300..700&family=Montserrat:wght@300..700&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap" rel="stylesheet">
 
     {% # Load and preload the critical CSS %}
