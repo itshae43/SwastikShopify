@@ -45,7 +45,7 @@
         "slide_4LQDeb": {
           "type": "slide",
           "settings": {
-            "image_desktop": "shopify://shop_images/Untitled_design.png",
+            "image_desktop": "shopify://shop_images/b3_gold_model_new_66695bd0-0bbd-4587-9f7d-32432b48ea1a.png",
             "image_mobile": "shopify://shop_images/mobile_banner_bridal_offer.png",
             "alignment": "left",
             "subheading": "",
@@ -581,28 +581,32 @@
           "type": "reel",
           "settings": {
             "video_url": "shopify://files/videos/Diamond Bali.mp4",
-            "view_count": "1M"
+            "view_count": "1M",
+            "reel_link": ""
           }
         },
         "reel_2": {
           "type": "reel",
           "settings": {
             "video_url": "shopify://files/videos/IGI Certified Diamond Rings.mp4",
-            "view_count": "1M"
+            "view_count": "1M",
+            "reel_link": ""
           }
         },
         "reel_3": {
           "type": "reel",
           "settings": {
             "video_url": "shopify://files/videos/cocktail rings.mp4",
-            "view_count": "3.6M"
+            "view_count": "3.6M",
+            "reel_link": ""
           }
         },
         "reel_1": {
           "type": "reel",
           "settings": {
             "video_url": "shopify://files/videos/✨ 5 Diamond Bali Designs Under 3 Grams – Lightweight Luxury for Everyday Elegance! ✨Looking for  (1).mp4",
-            "view_count": "11.9K"
+            "view_count": "11.9K",
+            "reel_link": ""
           }
         }
       },
